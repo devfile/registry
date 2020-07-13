@@ -13,7 +13,7 @@ components:
        name: m2
  - plugin:
    name: java-vscode-extension
-   id: "vsx/vscode-java:0.63.0"
+   id: "plugins/vscode-java:0.63.0"
    volumeMounts:
      - path: "/home/user/.m2"
        name: m2

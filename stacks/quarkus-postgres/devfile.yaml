@@ -9,7 +9,7 @@ parent:
 components:
   - plugin:
     name: quarkus-vscode-extension
-    id: "vsx/vscode-quarkus:1.3.0"
+    id: "plugins/vscode-quarkus:1.3.0"
   - kubernetes:
     name: postgres-kubernetes-manifest
     id: "manifests/postgres:7"
