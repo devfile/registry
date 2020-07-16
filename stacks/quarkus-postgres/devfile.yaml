@@ -13,4 +13,10 @@ components:
   - kubernetes:
     name: postgres-kubernetes-manifest
     path: ./postgres.yaml
+  - helm:
+    name: hello-world
+    chart: http://helm-chart-url
+    values: 
+      image: quay.io/sample/hello-world # A chart may expose a well-known values.yaml parameter called "image".
+       replicas: 3
  
