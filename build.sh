@@ -9,8 +9,6 @@
 
 #!/bin/sh
 
-DEVFILE_STACKS=$scriptFolder/stacks
-
 # Pull down the index generator/validator if needed
 if [ ! -d "./registry-support" ]; then
   echo "Cloning index-generator tool"
