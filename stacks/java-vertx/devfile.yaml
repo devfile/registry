@@ -1,0 +1,49 @@
+schemaVersion: 2.0.0
+metadata:
+  name: java-vertx
+  version: 1.1.0
+starterProjects:
+  - name: vertx-ex
+    git:
+      remotes:
+        origin: https://github.com/jponge/vertx-ex
+components:
+  - name: runtime
+    container:
+      endpoints:
+      - exposure: public
+        path: /
+        name: '8080-tcp'
+        targetPort: 8080
+        protocol: http
+      image: quay.io/eclipse/che-java11-maven:nightly
+      memoryLimit: 512Mi
+      mountSources: true
+      volumeMounts:
+      - name: m2
+        path: /home/user/.m2
+  - name: m2
+    volume:
+      size: 3Gi
+commands:
+  - id: mvn-package
+    exec:
+      commandLine: mvn package -Dmaven.test.skip=true
+      component: runtime
+      group:
+        isDefault: true
+        kind: build
+  - id: run
+    exec:
+      commandLine: java -jar target/*-all.jar
+      component: runtime
+      group:
+        isDefault: true
+        kind: run
+  - id: debug
+    exec:
+      commandLine: java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=${DEBUG_PORT},suspend=n -jar target/*-all.jar
+      component: runtime
+      group:
+        isDefault: true
+        kind: debug

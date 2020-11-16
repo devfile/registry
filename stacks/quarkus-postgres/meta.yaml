@@ -1,6 +1,0 @@
-name: quarkus-postgres
-displayName: Quarkus stack with postgres Stack
-description: Quarkus stack built on top of the Java 11 Stack with maven
-tags: ["Java", "Quarkus", "Postgres"]
-projectType: "quarkus"
-language: "java"

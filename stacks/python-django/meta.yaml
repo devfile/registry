@@ -1,0 +1,6 @@
+name: python-django
+displayName: Django
+description: Python3.7 with Django
+tags: ["Python", "pip", "Django"]
+projectType: "django"
+language: "python"

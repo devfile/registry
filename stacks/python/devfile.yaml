@@ -1,0 +1,40 @@
+schemaVersion: 2.0.0
+metadata:
+  name: python
+  version: 1.0.0
+starterProjects:
+  - name: python-example
+    git:
+      remotes:
+        origin: https://github.com/odo-devfiles/python-ex
+components:
+  - name: py-web
+    container:
+      image: quay.io/eclipse/che-python-3.7:nightly
+      mountSources: true
+      endpoints:
+        - name: web
+          targetPort: 8080
+commands:
+  - id: pip-install-requirements
+    exec:
+      commandLine: pip install --user -r requirements.txt
+      group:
+        kind: build
+        isDefault: true
+      component: py-web
+  - id: run-app
+    exec:
+      commandLine: "python app.py"
+      workingDir: ${PROJECTS_ROOT}
+      component: py-web
+      group:
+        kind: run
+        isDefault: true
+  - id: debugpy
+    exec:
+      commandLine: "pip install --user debugpy && python -m debugpy --listen 0.0.0.0:${DEBUG_PORT} app.py"
+      workingDir: ${PROJECTS_ROOT}
+      component: py-web
+      group:
+        kind: debug

@@ -1,0 +1,6 @@
+name: java-vertx
+displayName: Vert.x Java
+description: Upstream Vert.x using Java
+tags: ["Java", "Vert.x"]
+projectType: "vertx"
+language: "java"

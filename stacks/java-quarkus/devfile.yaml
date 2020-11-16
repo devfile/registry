@@ -1,0 +1,53 @@
+schemaVersion: 2.0.0
+metadata:
+  name: java-quarkus
+  version: 1.1.0
+  website: https://quarkus.io
+starterProjects:
+  - name: quarkus-ex
+    git:
+      remotes:
+        origin: https://github.com/odo-devfiles/quarkus-ex
+components:
+  - name: tools
+    container:
+      image: quay.io/eclipse/che-quarkus:nightly
+      memoryLimit: 1512Mi
+      mountSources: true
+      volumeMounts:
+        - name: m2
+          path: /home/user/.m2
+      endpoints:
+        - name: '8080-http'
+          targetPort: 8080
+  - name: m2
+    volume:
+      size: 3Gi
+commands:
+  - id: init-compile
+    exec:
+      component: tools
+      commandLine: "mvn -Dmaven.repo.local=/home/user/.m2/repository compile"
+      workingDir: $PROJECTS_ROOT
+  - id: dev-run
+    exec:
+      component: tools
+      commandLine: "mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev"
+      hotReloadCapable: true
+      group:
+        kind: run
+        isDefault: true
+      workingDir: $PROJECTS_ROOT
+  - id: dev-debug
+    exec:
+      component: tools
+      commandLine: "mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Ddebug=${DEBUG_PORT}"
+      hotReloadCapable: true
+      group:
+        kind: debug
+        isDefault: true
+      workingDir: $PROJECTS_ROOT
+        
+events:
+  postStart:
+    - init-compile
