@@ -6,7 +6,7 @@
 #
 # SPDX-License-Identifier: EPL-2.0
 #
-FROM quay.io/devfile/metadata-server:next
+FROM quay.io/devfile/devfile-index-base:next
 
 COPY index.json /index.json
 COPY stacks /stacks
