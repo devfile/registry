@@ -2,6 +2,8 @@ schemaVersion: 2.0.0
 metadata:
   name: nodejs
   version: 1.0.0
+  alpha.build-dockerfile: "https://raw.githubusercontent.com/odo-devfiles/registry/master/devfiles/nodejs/build/Dockerfile"
+  alpha.deployment-manifest: "https://raw.githubusercontent.com/odo-devfiles/registry/master/devfiles/nodejs/deploy/deployment-manifest.yaml"
 starterProjects:
   - name: nodejs-starter
     git:

@@ -1,6 +1,0 @@
-name: java11-maven
-displayName: Java 11 with maven Stack
-description: Java Stack that includes one container image component with OpenJDK 11 and maven
-tags: ["Java", "Maven"]
-projectType: "maven"
-language: "java"

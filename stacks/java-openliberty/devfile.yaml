@@ -1,0 +1,85 @@
+schemaVersion: 2.0.0
+metadata:
+  name: java-openliberty
+  version: 0.3.0
+  description: Java application stack using Open Liberty runtime
+  alpha.build-dockerfile: "https://raw.githubusercontent.com/OpenLiberty/application-stack/master/outer-loop/0.3/Dockerfile"
+  alpha.deployment-manifest: "https://raw.githubusercontent.com/OpenLiberty/application-stack/master/outer-loop/0.3/app-deploy.yaml"
+starterProjects:
+  - name: user-app
+    git:
+      remotes:
+        origin: 'https://github.com/OpenLiberty/application-stack-starters.git'
+components:
+  - name: devruntime
+    container:
+      # this custom image source can be found at:
+      # https://github.com/OpenLiberty/application-stack/tree/master/stackimage
+      image: openliberty/application-stack:0.3
+      memoryLimit: 1512Mi
+      mountSources: true
+      endpoints:
+        - exposure: public
+          path: /
+          name: ep1
+          targetPort: 9080
+          protocol: http
+commands:
+  - id: build
+    exec:  
+      component: devruntime 
+      commandLine: if [ -e /projects/.disable-bld-cmd ];
+                   then
+                       echo "found the disable file" && echo "devBuild command will not run" && exit 0;
+                   else
+                       echo "will run the devBuild command" && mkdir -p /projects/target/liberty
+                                                            && if [ ! -d /projects/target/liberty/wlp ];
+                                                                 then echo "...moving liberty"; mv /opt/ol/wlp /projects/target/liberty; touch ./.liberty-mv;
+                                                               elif [[ -d /projects/target/liberty/wlp && ! -e /projects/.liberty-mv ]];
+                                                                 then echo "STACK WARNING - LIBERTY RUNTIME WAS LOADED FROM HOST";
+                                                               fi
+                                                            && mvn -Dliberty.runtime.version=20.0.0.10 package
+                                                            && touch ./.disable-bld-cmd;
+                   fi
+      workingDir: /projects
+      hotReloadCapable: true
+      group:
+        kind: build 
+        isDefault: true
+  - id: run
+    exec:
+      component: devruntime 
+      commandLine: mvn -Dliberty.runtime.version=20.0.0.10 -Ddebug=false -DhotTests=true -DcompileWait=3 liberty:dev
+      workingDir: /projects
+      hotReloadCapable: true
+      group:
+        kind: run
+        isDefault: true
+  - id: run-test-off
+    exec:
+      component: devruntime
+      commandLine: mvn -Dliberty.runtime.version=20.0.0.10 -Ddebug=false liberty:dev
+      workingDir: /projects
+      hotReloadCapable: true
+      group:
+        kind: run
+        isDefault: false
+  - id: debug
+    exec:
+      component: devruntime 
+      commandLine: mvn -Dliberty.runtime.version=20.0.0.10 -DdebugPort=${DEBUG_PORT} liberty:dev -Dliberty.env.WLP_DEBUG_REMOTE=y
+      workingDir: /projects
+      hotReloadCapable: true
+      group:
+        kind: debug
+        isDefault: true
+  - id: test
+    # The 'test' command requires an active container, so we don't need to specify the liberty runtime version
+    exec:
+      component: devruntime 
+      commandLine: mvn -Dmicroshed_hostname=localhost -Dmicroshed_http_port=9080 -Dmicroshed_manual_env=true -Dmicroshed_app_context_root=/ failsafe:integration-test
+      workingDir: /projects
+      hotReloadCapable: true
+      group:
+        kind: test
+        isDefault: true
