@@ -1,6 +1,0 @@
-name: python
-displayName: Python
-description: Python Stack with Python 3.7
-tags: ["Python", "pip"]
-projectType: "python"
-language: "python"

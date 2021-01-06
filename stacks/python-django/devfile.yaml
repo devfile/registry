@@ -2,6 +2,9 @@ schemaVersion: 2.0.0
 metadata:
   name: python-django
   version: 1.0.0
+  displayName: Django
+  description: Python3.7 with Django
+  tags: ["Python", "pip", "Django"]
 starterProjects:
   - name: django-example
     git:

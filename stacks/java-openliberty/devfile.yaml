@@ -3,6 +3,7 @@ metadata:
   name: java-openliberty
   version: 0.3.0
   description: Java application stack using Open Liberty runtime
+  displayName: "Open Liberty"
 starterProjects:
   - name: user-app
     git:
