@@ -19,13 +19,22 @@ jobs:
     name: Check registry build
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout registry build tools
+      uses: actions/checkout@v2
+      with:
+        repository: devfile/registry-support
+        persist-credentials: false
+        path: registry-support
+
+    
     - name: Check out code
       uses: actions/checkout@v2
-
+      with:
+        path: registry-repo
     - name: Setup Go environment
       uses: actions/setup-go@v2
       with:
         go-version: 1.13
-
+    
     - name: Check if devfile registry build is working
-      run: ./build.sh
+      run: registry-support/build-tools/build.sh registry-repo/
