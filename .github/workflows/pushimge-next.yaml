@@ -11,6 +11,8 @@ name: Next Dockerimage
 on:
   push:
     branches: [ master ]
+  repository_dispatch:
+    types: [build]
 
 jobs:
 
@@ -37,7 +39,7 @@ jobs:
         registry: quay.io
         username: ${{ secrets.QUAY_USERNAME }}
         password: ${{ secrets.QUAY_PASSWORD }}
-    - name: Build the registry index image
+    - name: Build the devfile-index docker image
       run: registry-support/build-tools/build.sh registry-repo/
-    - name: Push the registry index image
+    - name: Push the devfile-index docker image
       run: registry-support/build-tools/push.sh quay.io/devfile/devfile-index:next
