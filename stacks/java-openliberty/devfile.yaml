@@ -3,6 +3,9 @@ metadata:
   name: java-openliberty
   version: 0.3.0
   description: Java application stack using Open Liberty runtime
+  displayName: "Open Liberty"
+  language: "java"
+  projectType: "docker"
 starterProjects:
   - name: user-app
     git:

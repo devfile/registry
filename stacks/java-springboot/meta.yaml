@@ -1,8 +1,0 @@
-name: java-springboot
-displayName: Spring Boot®
-description: Spring Boot® using Java
-tags: ["Java", "Spring"]
-globalMemoryLimit: 2674Mi
-icon: https://www.eclipse.org/che/images/logo-eclipseche.svg
-projectType: "spring"
-language: "java"
