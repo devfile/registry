@@ -15,7 +15,7 @@ starterProjects:
 components:
   - name: runtime
     container:
-      image: registry.access.redhat.com/ubi8/nodejs-12:1-45
+      image: registry.access.redhat.com/ubi8/nodejs-14:latest
       memoryLimit: 1024Mi
       mountSources: true
       sourceMapping: /project

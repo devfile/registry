@@ -14,9 +14,8 @@ starterProjects:
 components:
   - name: devruntime
     container:
-      # this custom image source can be found at:
-      # https://github.com/OpenLiberty/application-stack/tree/master/stackimage
-      image: openliberty/application-stack:0.3
+        # In the original upstream of this devfile, the image used is openliberty/application-stack:<x.y.z>, which is built from the repository: https://github.com/OpenLiberty/application-stack
+      image: openliberty/application-stack:0.4
       memoryLimit: 1512Mi
       mountSources: true
       endpoints:
@@ -39,7 +38,7 @@ commands:
                                                                elif [[ -d /projects/target/liberty/wlp && ! -e /projects/.liberty-mv ]];
                                                                  then echo "STACK WARNING - LIBERTY RUNTIME WAS LOADED FROM HOST";
                                                                fi
-                                                            && mvn -Dliberty.runtime.version=20.0.0.10 package
+                                                            && mvn -Dliberty.runtime.version=20.0.0.12 package
                                                             && touch ./.disable-bld-cmd;
                    fi
       workingDir: /projects
@@ -50,7 +49,7 @@ commands:
   - id: run
     exec:
       component: devruntime 
-      commandLine: mvn -Dliberty.runtime.version=20.0.0.10 -Ddebug=false -DhotTests=true -DcompileWait=3 liberty:dev
+      commandLine: mvn -Dliberty.runtime.version=20.0.0.12 -Ddebug=false -DhotTests=true -DcompileWait=3 liberty:dev
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -59,7 +58,7 @@ commands:
   - id: run-test-off
     exec:
       component: devruntime
-      commandLine: mvn -Dliberty.runtime.version=20.0.0.10 -Ddebug=false liberty:dev
+      commandLine: mvn -Dliberty.runtime.version=20.0.0.12 -Ddebug=false liberty:dev
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -68,7 +67,7 @@ commands:
   - id: debug
     exec:
       component: devruntime 
-      commandLine: mvn -Dliberty.runtime.version=20.0.0.10 -DdebugPort=${DEBUG_PORT} liberty:dev -Dliberty.env.WLP_DEBUG_REMOTE=y
+      commandLine: mvn -Dliberty.runtime.version=20.0.0.12 -DdebugPort=${DEBUG_PORT} liberty:dev -Dliberty.env.WLP_DEBUG_REMOTE=y
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -78,7 +77,7 @@ commands:
     # The 'test' command requires an active container, so we don't need to specify the liberty runtime version
     exec:
       component: devruntime 
-      commandLine: mvn -Dmicroshed_hostname=localhost -Dmicroshed_http_port=9080 -Dmicroshed_manual_env=true -Dmicroshed_app_context_root=/ failsafe:integration-test
+      commandLine: mvn -Dmicroshed_hostname=localhost -Dmicroshed_http_port=9080 -Dmicroshed_manual_env=true -Dmicroshed_app_context_root=/ failsafe:integration-test failsafe:verify
       workingDir: /projects
       hotReloadCapable: true
       group:
