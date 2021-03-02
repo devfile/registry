@@ -1,0 +1,225 @@
+schemaVersion: 2.0.0
+metadata:
+  name: java-wildfly
+  version: 1.0.0
+  website: https://wildfly.org
+  displayName: WildFly Java
+  description: Upstream WildFly
+  tags: ["Java", "WildFly"]
+  projectType: "wildfly"
+  language: "java"
+starterProjects:
+  - name: microprofile-config
+    description: WildFly Eclipse Microprofile Config Quickstart
+    git:
+      checkoutFrom:
+        remote: wildfly-quickstart
+        revision: 22.0.0.Final
+      remotes:
+        wildfly-quickstart: https://github.com/wildfly/quickstart.git
+    subDir: microprofile-config
+  - name: microprofile-fault-tolerance
+    description: WildFly Eclipse Microprofile Fault Tolerance Quickstart
+    git:
+      checkoutFrom:
+        remote: wildfly-quickstart
+        revision: 22.0.0.Final
+      remotes:
+        wildfly-quickstart: https://github.com/wildfly/quickstart.git
+    subDir: microprofile-fault-tolerance
+  - name: microprofile-health
+    description: WildFly Eclipse Microprofile Health Quickstart
+    git:
+      checkoutFrom:
+        remote: wildfly-quickstart
+        revision: 22.0.0.Final
+      remotes:
+        wildfly-quickstart: https://github.com/wildfly/quickstart.git
+    subDir: microprofile-health
+  - name: microprofile-jwt
+    description: WildFly Eclipse Microprofile JWT Quickstart
+    git:
+      checkoutFrom:
+        remote: wildfly-quickstart
+        revision: 22.0.0.Final
+      remotes:
+        wildfly-quickstart: https://github.com/wildfly/quickstart.git
+    subDir: microprofile-jwt
+  - name: microprofile-metrics
+    description: WildFly Eclipse Microprofile Metrics Quickstart
+    git:
+      checkoutFrom:
+        remote: wildfly-quickstart
+        revision: 22.0.0.Final
+      remotes:
+        wildfly-quickstart: https://github.com/wildfly/quickstart.git
+    subDir: microprofile-metrics
+  - name: microprofile-openapi
+    description: WildFly Eclipse Microprofile OpenAPI Quickstart
+    git:
+      checkoutFrom:
+        remote: wildfly-quickstart
+        revision: 22.0.0.Final
+      remotes:
+        wildfly-quickstart: https://github.com/wildfly/quickstart.git
+    subDir: microprofile-openapi
+  - name: microprofile-opentracing
+    description: WildFly Eclipse Microprofile OpenTracing Quickstart
+    git:
+      checkoutFrom:
+        remote: wildfly-quickstart
+        revision: 22.0.0.Final
+      remotes:
+        wildfly-quickstart: https://github.com/wildfly/quickstart.git
+    subDir: microprofile-opentracing
+  - name: microprofile-rest-client
+    description: WildFly Eclipse Microprofile REST Client Quickstart
+    git:
+      checkoutFrom:
+        remote: wildfly-quickstart
+        revision: 22.0.0.Final
+      remotes:
+        wildfly-quickstart: https://github.com/wildfly/quickstart.git
+    subDir: microprofile-rest-client
+components:
+  - name: wildfly
+    container:
+      image:  quay.io/wildfly/wildfly-centos7:latest
+      memoryLimit: 1512Mi
+      mountSources: true
+      volumeMounts:
+        - name: m2-repository
+          path: /home/jboss/.m2/repository
+      env:
+        - name: GC_METASPACE_SIZE
+          value: '96'
+        - name: GC_MAX_METASPACE_SIZE
+          value: '256'
+        - name: GALLEON_PROVISION_LAYERS
+          value: 'jaxrs-server,microprofile-platform'
+        - name: S2I_DESTINATION_DIR
+          value: '/projects'
+        - name: STANDALONE_RESTORE
+          value: /home/jboss/.m2/.lucky
+        - name: JBOSS_HOME
+          value: '/projects/wildfly'
+        - name: MVN_ARGS_APPEND
+          value: '-s /home/jboss/.m2/settings.xml -Dmaven.repo.local=/home/jboss/.m2/repository -Dcom.redhat.xpaas.repo.jbossorg'
+      endpoints:
+        - name: 'wildfly-http'
+          targetPort: 8080
+  - name: m2-repository
+    volume:
+      size: 3Gi
+  - name: jaeger
+    container:
+      image: quay.io/jaegertracing/all-in-one:1.21.0
+      memoryLimit: 128Mi
+      endpoints:
+        - name: 'tracing-ui'
+          targetPort: 16686
+commands:
+  - id: build
+    composite:
+      label: Build and deploy on WildFly Server
+      commands:
+        - compile
+        - copy-artifact
+      parallel: false
+      group:
+        kind: build
+        isDefault: true
+  - id: compile
+    exec:
+      label: Compile and package the application
+      component: wildfly
+      commandLine: source ${JBOSS_CONTAINER_MAVEN_DEFAULT_MODULE}/scl-enable-maven && mvn ${MVN_ARGS_APPEND} -Dmaven.test.skip=true clean package 
+      workingDir: $PROJECTS_ROOT
+      group:
+        kind: build
+        isDefault: false
+  - id: copy-artifact
+    exec:
+      label: Copy application artifact
+      component: wildfly
+      commandLine: cp target/*.war $JBOSS_HOME/standalone/deployments/ROOT.war
+      workingDir: $PROJECTS_ROOT
+      group:
+        kind: build
+        isDefault: false
+  - id: run
+    exec:
+      label: Launch WildFly Server
+      component: wildfly
+      commandLine: cp -f $STANDALONE_RESTORE/standalone.xml $JBOSS_HOME/standalone/configuration/standalone.xml && $JBOSS_HOME/bin/openshift-launch.sh
+      workingDir: $PROJECTS_ROOT
+      hotReloadCapable: true
+      group:
+        kind: run
+        isDefault: true
+  - id: debug
+    exec:
+      label: Launch WildFly Server with debug enabled
+      component: wildfly
+      commandLine: cp -f $STANDALONE_RESTORE/standalone.xml $JBOSS_HOME/standalone/configuration/standalone.xml&& $JBOSS_HOME/bin/openshift-launch.sh
+      workingDir: $PROJECTS_ROOT
+      hotReloadCapable: true
+      env:
+        - name: JAVA_OPTS_APPEND
+          value: '-Xrunjdwp:transport=dt_socket,address=0.0.0.0:$DEBUG_PORT,server=y,suspend=n -Dsun.util.logging.disableCallerCheck=true'
+      group:
+        kind: debug
+        isDefault: true
+#Hack to avoid the file permissions issue with the random openshift user
+  - id: copy-galleon
+    exec:
+      component: wildfly
+      commandLine: cp -Rf /opt/jboss/container/wildfly/s2i/galleon/galleon-m2-repository /tmp/. && cp -Rf /opt/wildfly /tmp/.
+      workingDir: $PROJECTS_ROOT
+      group:
+        kind: build
+        isDefault: false
+  - id: copy-settings
+    exec:
+      component: wildfly
+      commandLine: cp ${JBOSS_CONTAINER_MAVEN_DEFAULT_MODULE}/jboss-settings.xml /tmp/settings.xml
+      workingDir: $PROJECTS_ROOT
+      group:
+        kind: build
+        isDefault: false
+  - id: provision-server
+    exec:
+      component: wildfly
+      commandLine: /usr/local/s2i/assemble && cp -Rf $JBOSS_HOME .
+      workingDir: $PROJECTS_ROOT
+      env:
+        - name: JBOSS_HOME
+          value: '/tmp/wildfly'
+      group:
+        kind: build
+        isDefault: false
+  - id: store-config
+    exec:
+      component: wildfly
+      commandLine: mkdir $STANDALONE_RESTORE && cp -f $JBOSS_HOME/standalone/configuration/standalone.xml $STANDALONE_RESTORE/standalone.xml
+      workingDir: $PROJECTS_ROOT      
+      env:
+        - name: JBOSS_HOME
+          value: '/tmp/wildfly'
+      group:
+        kind: build
+        isDefault: false
+  - id: init-server
+    composite:
+      label: Provision WildFly Server
+      commands:
+        - copy-galleon
+        - provision-server
+        - store-config
+      parallel: false
+      group:
+        kind: build
+        isDefault: false
+events:
+  postStart:
+    - "init-server"

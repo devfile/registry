@@ -7,6 +7,11 @@ metadata:
   tags: ["Java", "Maven"]
   projectType: "maven"
   language: "java"
+starterProjects:
+  - name: springbootproject
+    git:
+      remotes:
+        origin: "https://github.com/odo-devfiles/springboot-ex.git"
 components:
   - name: tools
     container:
