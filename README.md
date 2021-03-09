@@ -1,5 +1,5 @@
 # registry
-Devfiles registry - storing contents of the common devfile registry that feeds into the OCI based common registry
+Devfile registry - storing contents of the common devfile registry that feeds into the OCI based common registry
 
 ## Build
 
