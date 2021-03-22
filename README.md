@@ -17,4 +17,4 @@ From there, push the container image to a container registry of your choice and 
 
 For issues relating to a specific devfile stack in this repository, please reach out to the devfile stack maintainer to determine where to open an issue.
 
-For issues relating to the hosted devfile registry service (https://registry.devfile.io), or devfile registries in general, please use the [devfile/api](github.com/devfile/api/) issue tracker for opening issues related to the devfile registry. Apply the `area/registry` label for registry issues for better visibility.
+For issues relating to the hosted devfile registry service (https://registry.devfile.io), or devfile registries in general, please use the [devfile/api](https://github.com/devfile/api/) issue tracker for opening issues related to the devfile registry. Apply the `area/registry` label for registry issues for better visibility.
