@@ -8,10 +8,82 @@ metadata:
   projectType: "vertx"
   language: "java"
 starterProjects:
-  - name: vertx-ex
+  - name: vertx-http-example
     git:
       remotes:
-        origin: https://github.com/jponge/vertx-ex
+        origin: https://github.com/openshift-vertx-examples/vertx-http-example
+  - name: vertx-istio-circuit-breaker-booster
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-istio-circuit-breaker-booster
+  - name: vertx-istio-routing-booster
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-istio-routing-booster
+  - name: vertx-secured-http-example-redhat
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-secured-http-example-redhat
+  - name: vertx-crud-example-redhat
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-crud-example-redhat
+  - name: vertx-istio-security-booster
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-istio-security-booster
+  - name: vertx-crud-example
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-crud-example
+  - name: vertx-circuit-breaker-example
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-circuit-breaker-example
+  - name: vertx-configmap-example
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-configmap-example
+  - name: vertx-circuit-breaker-example-redhat
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-circuit-breaker-example-redhat
+  - name: vertx-cache-example-redhat
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-cache-example-redhat
+  - name: vertx-cache-example
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-cache-example
+  - name: vertx-secured-http-example
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-secured-http-example
+  - name: vertx-health-checks-example-redhat
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-health-checks-example-redhat
+  - name: vertx-http-example-redhat
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-http-example-redhat
+  - name: vertx-health-checks-example
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-health-checks-example
+  - name: vertx-configmap-example-redhat
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-configmap-example-redhat
+  - name: vertx-messaging-work-queue-booster
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-messaging-work-queue-booster
+  - name: vertx-istio-distributed-tracing-booster
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-istio-distributed-tracing-booster
 components:
   - name: runtime
     container:
@@ -40,14 +112,14 @@ commands:
         kind: build
   - id: run
     exec:
-      commandLine: java -jar target/*-all.jar
+      commandLine: mvn io.reactiverse:vertx-maven-plugin:run
       component: runtime
       group:
         isDefault: true
         kind: run
   - id: debug
     exec:
-      commandLine: java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=${DEBUG_PORT},suspend=n -jar target/*-all.jar
+      commandLine: mvn io.reactiverse:vertx-maven-plugin:debug -Ddebug.port=${DEBUG_PORT}
       component: runtime
       group:
         isDefault: true
