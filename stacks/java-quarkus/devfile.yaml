@@ -9,10 +9,12 @@ metadata:
   projectType: "quarkus"
   language: "java"
 starterProjects:
-  - name: quarkus-ex
-    git:
-      remotes:
-        origin: https://github.com/odo-devfiles/quarkus-ex
+  - name: community
+    zip:
+      location: https://code.quarkus.io/d?e=io.quarkus%3Aquarkus-resteasy&e=io.quarkus%3Aquarkus-micrometer&e=io.quarkus%3Aquarkus-smallrye-health&e=io.quarkus%3Aquarkus-openshift&cn=devfile
+  - name: redhat-product
+    zip:
+      location: https://code.quarkus.redhat.com/d?e=io.quarkus%3Aquarkus-resteasy&e=io.quarkus%3Aquarkus-smallrye-health&e=io.quarkus%3Aquarkus-openshift
 components:
   - name: tools
     container:
@@ -37,7 +39,7 @@ commands:
   - id: dev-run
     exec:
       component: tools
-      commandLine: "mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev"
+      commandLine: "mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
       hotReloadCapable: true
       group:
         kind: run
@@ -46,13 +48,12 @@ commands:
   - id: dev-debug
     exec:
       component: tools
-      commandLine: "mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Ddebug=${DEBUG_PORT}"
+      commandLine: "mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager -Ddebug=${DEBUG_PORT}"
       hotReloadCapable: true
       group:
         kind: debug
         isDefault: true
       workingDir: $PROJECTS_ROOT
-        
 events:
   postStart:
     - init-compile
