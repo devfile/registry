@@ -1,17 +1,31 @@
 # registry
-Devfile registry - storing contents of the common devfile registry that feeds into the OCI based common registry.
+Devfile registry - storing contents of the public devfile registry hosted at https://registry.devfile.io.
 
-The devfiles in this repository feed into the publicly hosted devfile registry at https://registry.devfile.io. 
+The public registry is updated weekly, by 12pm EST Fridays, with any updated stacks in this repository.
 
-## Build
+## Developing
 
-To build this devfile registry into a container image:
+### Prerequisites
 
-1. git clone `github.com/devfile/registry-support`
-2. cd into `registry-support/build-tools`
-3. Run `build.sh <path-to-this-repository-on-disk>`
+- Golang 1.13.x or higher
+- Docker
+- Git
+
+### Build
+
+To build this devfile registry into a container image run `.ci/build.sh`. A container image will be built using the [devfile registry build tools](https://github.com/devfile/registry-support/tree/master/build-tools).
 
 From there, push the container image to a container registry of your choice and deploy using one of the methods outlined [here](https://github.com/devfile/registry-support#deploy).
+
+## Staging and Production
+
+The staging devfile registry, https://registry.stage.devfile.io is refreshed upon each commit to master in this repository. Production, https://registry.devfile.io, promoted manually and as mentioned above, is done each Friday, as needed.
+
+If you are a stack owner and need to request an urgent refresh of https://registry.devfile.io before Friday (for example if a stack is broken), please open an issue in the [devfile/api] repository outlining the following:
+
+- Stack name
+- Why the refresh is needed
+- Why the refresh cannot wait until the next regularly scheduled refresh
 
 ## Reporting any issue
 
