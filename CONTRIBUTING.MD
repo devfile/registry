@@ -13,7 +13,7 @@ This document outlines the requirements for contributing a devfile stack to this
   
     - Name format should be in the form of `<language>-<framework>`. E.g. `java-quarkus`, `python-django`, etc.
 
-3) Add the devfile.yaml and 
+3) Add the devfile.yaml and any other necessary files for the stack under the stack folder.
 
 4) Run the `.ci/build.sh` to build the registry into a container image.
   
