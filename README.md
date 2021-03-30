@@ -1,5 +1,5 @@
 # registry
-Devfile registry - storing contents of the public devfile registry hosted at https://registry.devfile.io.
+Devfile registry - storing contents of the public community, OCI-based devfile registry hosted at https://registry.devfile.io.
 
 The public registry is updated weekly, by 12pm EST Wednesdays, with any updated stacks in this repository.
 
@@ -12,13 +12,14 @@ If you are a stack owner and need to request an urgent refresh of https://regist
 - Stack name
 - Why the refresh is needed
 - Why the refresh cannot wait until the next regularly scheduled refresh
+- The `/area registry` string somewhere in the issue description, so that the `area/registry` label gets added.
 
 ## Developing
 
 ### Prerequisites
 
-- Golang 1.13.x or higher
-- Docker
+- Golang 1.13.x or later
+- Docker 17.06 or later
 - Git
 
 ### Build

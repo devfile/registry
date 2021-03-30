@@ -2,6 +2,14 @@
 
 This document outlines the requirements for contributing a devfile stack to this repository
 
+## Prerequisites
+
+The following are required to build the devfile index container image containing your stack:
+
+- Golang 1.13.x or later
+- Docker 17.06 or later
+- Git
+
 ## Steps
 
 1) Verify your Devfile stack functions with odo.
@@ -20,8 +28,9 @@ This document outlines the requirements for contributing a devfile stack to this
     - This will also validate the devfiles in this repository, making sure they conform to a minimum standard.
     - This step will also be run in the PR build for the repository.
 
-5) (Optional) Push the container image to a container registry and [deploy](https://github.com/devfile/registry-support#deploy) on to Kubernetes or OpenShift.
+5) (Optional) Push the container image to a container registry and [deploy](https://github.com/devfile/registry-support#deploy) a custom devfile registry on to Kubernetes or OpenShift. Test odo with the devfile stack hosted in that registry.
   
     - For now, strictly an optional requirement, but recommended.
+    - PR tests will also verify this.
 
-6) Open a pull request against this repository.
+6) Open a pull request against this repository with a brief description of the change.
