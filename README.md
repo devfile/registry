@@ -7,7 +7,7 @@ The public registry is updated weekly, by 5pm EST Fridays, with any updated stac
 
 The staging devfile registry, https://registry.stage.devfile.io is refreshed upon each commit to master in this repository. Production, https://registry.devfile.io, promoted manually and as mentioned above, is done each Friday, as needed.
 
-If you are a stack owner and need to request an urgent refresh of https://registry.devfile.io before Friday (for example if a stack is broken), please open an issue in the [devfile/api] repository outlining the following:
+If you are a stack owner and need to request an urgent refresh of https://registry.devfile.io before Friday (for example if a stack is broken), please open an issue in the [devfile/api](https://github.com/devfile/api) repository outlining the following:
 
 - Stack name
 - Why the refresh is needed
