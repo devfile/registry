@@ -7,7 +7,7 @@ This document outlines the requirements for contributing a devfile stack to this
 1) Verify your Devfile stack functions with odo.
   
     - Core odo functions such as `odo create --devfile <devfile.yaml>`, `odo push`, `odo url create` should work with the devfile.
-    - CI tests on this repository will verify this functionality as well.
+    - PR tests on this repository will verify this functionality as well.
 
 2) Add a folder for the stack to `stacks/` in this repository.
   
@@ -18,7 +18,7 @@ This document outlines the requirements for contributing a devfile stack to this
 4) Run the `.ci/build.sh` to build the registry into a container image.
   
     - This will also validate the devfiles in this repository, making sure they conform to a minimum standard.
-    - This step will also be run in the CI build for the repository.
+    - This step will also be run in the PR build for the repository.
 
 5) (Optional) Push the container image to a container registry and [deploy](https://github.com/devfile/registry-support#deploy) on to Kubernetes or OpenShift.
   
