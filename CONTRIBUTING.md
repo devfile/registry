@@ -2,6 +2,8 @@
 
 This document outlines the requirements for contributing a devfile stack to this repository
 
+The [devfile registry structure](https://github.com/devfile/api/blob/main/docs/proposals/registry/registry-structure.md#repository-structure) design doc provides some useful background information on the structure of resources in a devfile registry (and its Git repository).
+
 ## Prerequisites
 
 The following are required to build the devfile index container image containing your stack:
