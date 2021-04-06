@@ -1,13 +1,13 @@
 schemaVersion: 2.0.0
 metadata:
   name: java-openliberty
-  version: 0.4.1
+  version: 0.4.3
   description: Java application stack using Open Liberty runtime
   displayName: "Open Liberty"
   language: "java"
   projectType: "docker"
-  alpha.build-dockerfile: "https://github.com/OpenLiberty/application-stack/releases/download/outer-loop-0.5.0/Dockerfile"
-  alpha.deployment-manifest: "https://github.com/OpenLiberty/application-stack/releases/download/outer-loop-0.5.0/app-deploy.yaml"
+  alpha.build-dockerfile: "https://github.com/OpenLiberty/application-stack/releases/download/outer-loop-0.5.1/Dockerfile"
+  alpha.deployment-manifest: "https://github.com/OpenLiberty/application-stack/releases/download/outer-loop-0.5.1/app-deploy.yaml"
 starterProjects:
   - name: user-app
     git:
@@ -30,19 +30,7 @@ commands:
   - id: build
     exec:  
       component: devruntime 
-      commandLine: if [ -e /projects/.disable-bld-cmd ];
-                   then
-                       echo "found the disable file" && echo "devBuild command will not run" && exit 0;
-                   else
-                       echo "will run the devBuild command" && mkdir -p /projects/target/liberty
-                                                            && if [ ! -d /projects/target/liberty/wlp ];
-                                                                 then echo "...moving liberty"; mv /opt/ol/wlp /projects/target/liberty; touch ./.liberty-mv;
-                                                               elif [[ -d /projects/target/liberty/wlp && ! -e /projects/.liberty-mv ]];
-                                                                 then echo "STACK WARNING - LIBERTY RUNTIME WAS LOADED FROM HOST";
-                                                               fi
-                                                            && mvn -Dliberty.runtime.version=20.0.0.12 package
-                                                            && touch ./.disable-bld-cmd;
-                   fi
+      commandLine: /stack/ol/scripts/devbuild-cmd.sh 20.0.0.12
       workingDir: /projects
       hotReloadCapable: true
       group:
