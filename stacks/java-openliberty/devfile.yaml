@@ -1,7 +1,23 @@
+# Copyright (c) 2021 IBM Corporation and others
+#
+# See the NOTICE file(s) distributed with this work for additional
+# information regarding copyright ownership.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# You may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 schemaVersion: 2.0.0
 metadata:
   name: java-openliberty
-  version: 0.4.3
+  version: 0.5.0
   description: Java application stack using Open Liberty runtime
   displayName: "Open Liberty"
   language: "java"
@@ -17,7 +33,7 @@ components:
   - name: devruntime
     container:
         # In the original upstream of this devfile, the image used is openliberty/application-stack:<x.y.z>, which is built from the repository: https://github.com/OpenLiberty/application-stack
-      image: openliberty/application-stack:0.4
+      image: openliberty/application-stack:0.5
       memoryLimit: 1512Mi
       mountSources: true
       endpoints:
@@ -30,7 +46,7 @@ commands:
   - id: build
     exec:  
       component: devruntime 
-      commandLine: /stack/ol/scripts/devbuild-cmd.sh 20.0.0.12
+      commandLine: /stack/ol/scripts/devbuild-cmd.sh 21.0.0.3
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -39,7 +55,7 @@ commands:
   - id: run
     exec:
       component: devruntime 
-      commandLine: mvn -Dliberty.runtime.version=20.0.0.12 -Ddebug=false -DhotTests=true -DcompileWait=3 liberty:dev
+      commandLine: mvn -Dliberty.runtime.version=21.0.0.3 -Ddebug=false -DhotTests=true -DcompileWait=3 liberty:dev
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -48,7 +64,7 @@ commands:
   - id: run-test-off
     exec:
       component: devruntime
-      commandLine: mvn -Dliberty.runtime.version=20.0.0.12 -Ddebug=false liberty:dev
+      commandLine: mvn -Dliberty.runtime.version=21.0.0.3 -Ddebug=false liberty:dev
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -57,7 +73,7 @@ commands:
   - id: debug
     exec:
       component: devruntime 
-      commandLine: mvn -Dliberty.runtime.version=20.0.0.12 -DdebugPort=${DEBUG_PORT} liberty:dev -Dliberty.env.WLP_DEBUG_REMOTE=y
+      commandLine: mvn -Dliberty.runtime.version=21.0.0.3 -DdebugPort=${DEBUG_PORT} liberty:dev -Dliberty.env.WLP_DEBUG_REMOTE=y
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -67,7 +83,7 @@ commands:
     # The 'test' command requires an active container, so we don't need to specify the liberty runtime version
     exec:
       component: devruntime 
-      commandLine: mvn -Dmicroshed_hostname=localhost -Dmicroshed_http_port=9080 -Dmicroshed_manual_env=true -Dmicroshed_app_context_root=/ failsafe:integration-test failsafe:verify
+      commandLine: mvn failsafe:integration-test failsafe:verify
       workingDir: /projects
       hotReloadCapable: true
       group:
