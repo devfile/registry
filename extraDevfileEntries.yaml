@@ -4,7 +4,7 @@ samples:
     displayName: Basic NodeJS
     description: A simple Hello World application
     icon: nodejsIcon.svg
-    tags: ["NodeJS", “Express”]
+    tags: ["NodeJS", "Express"]
     git:
       remotes:
         origin: https://github.com/redhat-developer/devfile-sample
