@@ -5,6 +5,8 @@ samples:
     description: A simple Hello World application
     icon: nodejsIcon.svg
     tags: ["NodeJS", "Express"]
+    projectType: nodejs
+    language: nodejs
     git:
       remotes:
         origin: https://github.com/redhat-developer/devfile-sample
@@ -13,6 +15,8 @@ samples:
     description: A Vert.x application using secured HTTP
     icon: vertxIcon.svg
     tags: ["Java", "Vert.x"]
+    projectType: vertx
+    language: java
     git:
       remotes:
         origin: https://github.com/openshift-vertx-examples/vertx-secured-http-example-redhat
