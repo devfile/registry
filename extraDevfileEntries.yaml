@@ -1,0 +1,18 @@
+schemaVersion: 1.0.0
+samples:
+  - name: nodejs-basic
+    displayName: Basic NodeJS
+    description: A simple Hello World application
+    icon: nodejsIcon.svg
+    tags: ["NodeJS", “Express”]
+    git:
+      remotes:
+        origin: https://github.com/redhat-developer/devfile-sample
+  - name: vertx-secured-http
+    displayName: Vert.x with secured HTTP
+    description: A Vert.x application using secured HTTP
+    icon: vertxIcon.svg
+    tags: ["Java", "Vert.x"]
+    git:
+      remotes:
+        origin: https://github.com/openshift-vertx-examples/vertx-secured-http-example-redhat
