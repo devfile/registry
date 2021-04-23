@@ -6,7 +6,7 @@
 #
 # SPDX-License-Identifier: EPL-2.0
 #
-name: Validate Devfiles (Minikube)
+name: Validate Devfiles
 
 on:
   push:
@@ -17,7 +17,7 @@ on:
 jobs:
 
   test_minikube:
-    name: Minikube
+    name: Test Minikube
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
