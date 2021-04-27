@@ -40,6 +40,6 @@ jobs:
         username: ${{ secrets.QUAY_USERNAME }}
         password: ${{ secrets.QUAY_PASSWORD }}
     - name: Build the devfile-index docker image
-      run: registry-support/build-tools/build.sh registry-repo/
+      run: registry-support/build-tools/build_image.sh registry-repo/
     - name: Push the devfile-index docker image
       run: registry-support/build-tools/push.sh quay.io/devfile/devfile-index:next
