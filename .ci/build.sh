@@ -29,7 +29,7 @@ if [ $? -ne 0 ]; then
   echo "Failed to clone build tools repo"
   cleanup_and_exit 1
 fi
-git checkout cd279527f87340d6b51ee366e70140ecfceef960
+git checkout 17fe1800832a85533438225705644fbc4c41fb79
 
 # Run the build script
 ./registry-support/build-tools/build.sh ../
