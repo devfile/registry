@@ -54,7 +54,12 @@ test() {
         return 1
     fi
     
-    $ODO_PATH create "$devfileName" --devfile "$devfilePath" --starter || error=true
+    if [ "$REGISTRY" = "local" ]; then
+      $ODO_PATH create "$devfileName" --devfile "$devfilePath" --starter || error=true
+    else
+      $ODO_PATH create "$devfileName" --starter || error=true
+    fi
+
     if $error; then
         echo "ERROR create failed"
         $ODO_PATH project delete -f "$devfileName"
@@ -68,6 +73,7 @@ test() {
         # And if there's multiple ports in the devfile, a port must be specified.
         if [ "$devfileName" = "java-wildfly" ] || [ "$devfileName" = "java-wildfly-bootable-jar" ]; then
             $ODO_PATH url create --host "$(minikube ip).nip.io" --port 8080 || error=true
+            $ODO_PATH url create --host "$(minikube ip).nip.io" --port 16686 || error=true
         else
             $ODO_PATH url create --host "$(minikube ip).nip.io" || error=true
         fi
@@ -127,6 +133,13 @@ if [ -z $ENV ]; then
 fi
 if [ "$ENV" != "minikube" || "$ENV" != "openshift" ]; then
   echo "ERROR: Allowed values for ENV are either \"minikube\" (default) or \"openshift\"."
+  exit 1
+fi
+if [ -z $REGISTRY ]; then
+  REGISTRY=local
+fi
+if [ "$REGISTRY" != "local" || "$REGISTRY" != "remote" ]; then
+  echo "ERROR: Allowed values for REGISTRY are either \"local\" (default) or \"remote\"."
   exit 1
 fi
 
