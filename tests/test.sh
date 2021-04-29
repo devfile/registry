@@ -131,14 +131,14 @@ fi
 if [ -z $ENV ]; then
   ENV=minikube
 fi
-if [ "$ENV" != "minikube"] || ["$ENV" != "openshift" ]; then
+if [ "$ENV" != "minikube"] && ["$ENV" != "openshift" ]; then
   echo "ERROR: Allowed values for ENV are either \"minikube\" (default) or \"openshift\"."
   exit 1
 fi
 if [ -z $REGISTRY ]; then
   REGISTRY=local
 fi
-if [ "$REGISTRY" != "local" ] || ["$REGISTRY" != "remote" ]; then
+if [ "$REGISTRY" != "local" ] && ["$REGISTRY" != "remote" ]; then
   echo "ERROR: Allowed values for REGISTRY are either \"local\" (default) or \"remote\"."
   exit 1
 fi
