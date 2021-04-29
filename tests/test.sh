@@ -62,19 +62,21 @@ test() {
         return 1
     fi
 
-    # ToDo: Clean up, I'm not happy about having specific checks for the stacks with multiple ports
-    # But since we're testing against minikube, we need to specifically create the URL/ingress before pushing
-    # And if there's multiple ports in the devfile, a port must be specified.
-    if [ "$devfileName" = "java-wildfly" ] || [ "$devfileName" = "java-wildfly-bootable-jar" ]; then
-        $ODO_PATH url create --host "$(minikube ip).nip.io" --port 8080 || error=true
-    else
-        $ODO_PATH url create --host "$(minikube ip).nip.io" || error=true
-    fi
-    if $error; then
-        echo "ERROR url create failed"
-        $ODO_PATH project delete -f "$devfileName"
-        FAILED_TESTS="$FAILED_TESTS $devfileName"
-        return 1
+    if [ "$ENV" = "minikube" ]; then
+        # ToDo: Clean up, I'm not happy about having specific checks for the stacks with multiple ports
+        # But since we're testing against minikube, we need to specifically create the URL/ingress before pushing
+        # And if there's multiple ports in the devfile, a port must be specified.
+        if [ "$devfileName" = "java-wildfly" ] || [ "$devfileName" = "java-wildfly-bootable-jar" ]; then
+            $ODO_PATH url create --host "$(minikube ip).nip.io" --port 8080 || error=true
+        else
+            $ODO_PATH url create --host "$(minikube ip).nip.io" || error=true
+        fi
+        if $error; then
+            echo "ERROR url create failed"
+            $ODO_PATH project delete -f "$devfileName"
+            FAILED_TESTS="$FAILED_TESTS $devfileName"
+            return 1
+        fi
     fi
 
     $ODO_PATH push || error=true
@@ -115,9 +117,17 @@ test() {
     return 0
 }
 
+
 ODO_PATH=$1
 if [ -z $ODO_PATH ]; then
   ODO_PATH=odo
+fi
+if [ -z $ENV ]; then
+  ENV=minikube
+fi
+if [ "$ENV" != "minikube" || "$ENV" != "openshift" ]; then
+  echo "ERROR: Allowed values for ENV are either \"minikube\" (default) or \"openshift\"."
+  exit 1
 fi
 
 for devfile_dir in $(find $DEVFILES_DIR -maxdepth 1 -type d ! -path $DEVFILES_DIR); do

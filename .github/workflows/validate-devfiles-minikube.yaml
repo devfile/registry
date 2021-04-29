@@ -36,4 +36,4 @@ jobs:
         # Installs the latest release of odo
         odo: "latest"
     - name: Validate the devfile stacks
-      run: tests/test_minikube.sh odo
+      run: tests/test.sh odo
