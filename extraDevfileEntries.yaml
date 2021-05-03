@@ -11,7 +11,7 @@ samples:
       remotes:
         origin: https://github.com/redhat-developer/devfile-sample.git
   - name: code-with-quarkus
-    displayName: Basic Python
+    displayName: Basic Quarkus
     description: A simple Hello World Java application using Quarkus
     icon: .devfile/icon/quarkus.png
     tags: ["Java", "Quarkus"]
@@ -34,7 +34,7 @@ samples:
     displayName: Basic Python
     description: A simple Hello World application using Python
     icon: .devfile/icon/python.png
-    tags: ["python"]
+    tags: ["Python"]
     projectType: python
     language: python
     git:
