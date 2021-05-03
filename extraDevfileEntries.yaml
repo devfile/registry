@@ -2,21 +2,41 @@ schemaVersion: 1.0.0
 samples:
   - name: nodejs-basic
     displayName: Basic NodeJS
-    description: A simple Hello World application
-    icon: nodejsIcon.svg
+    description: A simple Hello World Node.js application
+    icon: https://github.com/maysunfaisal/node-bulletin-board-2/blob/main/nodejs-icon.png
     tags: ["NodeJS", "Express"]
     projectType: nodejs
     language: nodejs
     git:
       remotes:
-        origin: https://github.com/redhat-developer/devfile-sample
-  - name: vertx-secured-http
-    displayName: Vert.x with secured HTTP
-    description: A Vert.x application using secured HTTP
-    icon: vertxIcon.svg
-    tags: ["Java", "Vert.x"]
-    projectType: vertx
+        origin: https://github.com/redhat-developer/devfile-sample.git
+  - name: code-with-quarkus
+    displayName: Basic Python
+    description: A simple Hello World Java application using Quarkus
+    icon: .devfile/icon/quarkus.png
+    tags: ["Java", "Quarkus"]
+    projectType: quarkus
     language: java
     git:
       remotes:
-        origin: https://github.com/openshift-vertx-examples/vertx-secured-http-example-redhat
+        origin: https://github.com/elsony/devfile-sample-code-with-quarkus.git
+  - name: java-springboot-basic
+    displayName: Basic Spring Boot
+    description: A simple Hello World Java Spring Boot application using Maven
+    icon: .devfile/icon/spring-logo.png
+    tags: ["Java", "Spring"]
+    projectType: springboot
+    language: java
+    git:
+      remotes:
+        origin: https://github.com/elsony/devfile-sample-java-springboot-basic.git
+  - name: python-basic
+    displayName: Basic Python
+    description: A simple Hello World application using Python
+    icon: .devfile/icon/python.png
+    tags: ["python"]
+    projectType: python
+    language: python
+    git:
+      remotes:
+        origin: https://github.com/elsony/devfile-sample-python-basic.git
