@@ -146,6 +146,8 @@ fi
 for devfile_dir in $(find $DEVFILES_DIR -maxdepth 1 -type d ! -path $DEVFILES_DIR); do
     devfile_name="$(basename $devfile_dir)"
     devfile_path=$devfile_dir/devfile.yaml
+    # Skipping the java-wildfly-bootable-jar stack right now since it's broken.
+    # ToDo: Uncomment once fixed.
     if [ $devfile_name != "java-wildfly-bootable-jar" ]; then
       test "$devfile_name" "$devfile_path"
     fi
