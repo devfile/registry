@@ -1,0 +1,2 @@
+# Ignore the extraDevfileEntries.yaml file until the devfile registry library can support filtering stacks and samples
+extraDevfileEntries.yaml
