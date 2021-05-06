@@ -6,7 +6,7 @@
 #
 # SPDX-License-Identifier: EPL-2.0
 #
-FROM quay.io/openshift-pipeline/golang:1.15 AS builder
+FROM quay.io/openshift-pipeline/golang:1.15-alpine AS builder
 
 # Install dependencies
 RUN apk add --no-cache git bash
