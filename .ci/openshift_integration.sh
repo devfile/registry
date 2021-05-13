@@ -33,6 +33,8 @@ git clone https://github.com/openshift/odo.git
 cd odo && make
 cd ..
 
+export GLOBALODOCONFIG=$(pwd)/preferences.yaml
+
 # Install the devfile registry
 git clone https://github.com/devfile/registry-support.git
 oc process -f registry-support/deploy/hosted-registry/devfile-registry.yaml -p DEVFILE_INDEX_IMAGE=$IMG -p DEVFILE_INDEX_IMAGE_TAG=$TAG -p REPLICAS=3 | \
