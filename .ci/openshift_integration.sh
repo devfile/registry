@@ -25,6 +25,9 @@ export ODO_DISABLE_TELEMETRY=true
 IMG="$(echo $REGISTRY_IMAGE | cut -d':' -f1)"
 TAG="$(echo $REGISTRY_IMAGE | cut -d':' -f2)"
 
+# Create a project/namespace for running the tests in
+oc new-project devfile-registry-test
+
 # Build odo
 git clone https://github.com/openshift/odo.git
 cd odo && make
