@@ -1,9 +1,9 @@
 schemaVersion: 2.0.0
 metadata:
   name: nodejs
-  version: 1.0.0
+  version: 1.0.1
   displayName: NodeJS Runtime
-  description: Stack with NodeJS 12
+  description: Stack with NodeJS 14
   tags: ["NodeJS", "Express", "ubi8"]
   projectType: "nodejs"
   language: "nodejs"
