@@ -3,7 +3,7 @@ samples:
   - name: nodejs-basic
     displayName: Basic NodeJS
     description: A simple Hello World Node.js application
-    icon: https://github.com/maysunfaisal/node-bulletin-board-2/blob/main/nodejs-icon.png
+    icon: https://raw.githubusercontent.com/maysunfaisal/node-bulletin-board-2/main/nodejs-icon.png
     tags: ["NodeJS", "Express"]
     projectType: nodejs
     language: nodejs
@@ -13,7 +13,7 @@ samples:
   - name: code-with-quarkus
     displayName: Basic Quarkus
     description: A simple Hello World Java application using Quarkus
-    icon: .devfile/icon/quarkus.png
+    icon: https://raw.githubusercontent.com/elsony/devfile-sample-code-with-quarkus/main/.devfile/icon/quarkus.png
     tags: ["Java", "Quarkus"]
     projectType: quarkus
     language: java
@@ -23,7 +23,7 @@ samples:
   - name: java-springboot-basic
     displayName: Basic Spring Boot
     description: A simple Hello World Java Spring Boot application using Maven
-    icon: .devfile/icon/spring-logo.png
+    icon: https://raw.githubusercontent.com/elsony/devfile-sample-java-springboot-basic/main/.devfile/icon/spring-logo.png
     tags: ["Java", "Spring"]
     projectType: springboot
     language: java
@@ -33,7 +33,7 @@ samples:
   - name: python-basic
     displayName: Basic Python
     description: A simple Hello World application using Python
-    icon: .devfile/icon/python.png
+    icon: https://raw.githubusercontent.com/elsony/devfile-sample-python-basic/main/.devfile/icon/python.png
     tags: ["Python"]
     projectType: python
     language: python
