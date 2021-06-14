@@ -18,8 +18,8 @@ starterProjects:
 components:
   - name: tools
     container:
-      image: quay.io/eclipse/che-quarkus:nightly
-      memoryLimit: 1512Mi
+      image: registry.access.redhat.com/ubi8/openjdk-11
+      memoryLimit: 512Mi ## default app nowhere needs this but leaving room for expansion.
       mountSources: true
       volumeMounts:
         - name: m2
