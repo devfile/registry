@@ -1,7 +1,7 @@
 schemaVersion: 2.0.0
 metadata:
   name: java-wildfly
-  version: 1.0.2
+  version: 1.0.3
   website: https://wildfly.org
   displayName: WildFly Java
   description: Upstream WildFly
@@ -14,7 +14,7 @@ starterProjects:
     git:
       checkoutFrom:
         remote: wildfly-quickstart
-        revision: 23.0.2.Final
+        revision: 24.0.0.SP1
       remotes:
         wildfly-quickstart: https://github.com/wildfly/quickstart.git
     subDir: microprofile-config
@@ -23,7 +23,7 @@ starterProjects:
     git:
       checkoutFrom:
         remote: wildfly-quickstart
-        revision: 23.0.2.Final
+        revision: 24.0.0.SP1
       remotes:
         wildfly-quickstart: https://github.com/wildfly/quickstart.git
     subDir: microprofile-fault-tolerance
@@ -32,7 +32,7 @@ starterProjects:
     git:
       checkoutFrom:
         remote: wildfly-quickstart
-        revision: 23.0.2.Final
+        revision: 24.0.0.SP1
       remotes:
         wildfly-quickstart: https://github.com/wildfly/quickstart.git
     subDir: microprofile-health
@@ -41,7 +41,7 @@ starterProjects:
     git:
       checkoutFrom:
         remote: wildfly-quickstart
-        revision: 23.0.2.Final
+        revision: 24.0.0.SP1
       remotes:
         wildfly-quickstart: https://github.com/wildfly/quickstart.git
     subDir: microprofile-jwt
@@ -50,7 +50,7 @@ starterProjects:
     git:
       checkoutFrom:
         remote: wildfly-quickstart
-        revision: 23.0.2.Final
+        revision: 24.0.0.SP1
       remotes:
         wildfly-quickstart: https://github.com/wildfly/quickstart.git
     subDir: microprofile-metrics
@@ -59,7 +59,7 @@ starterProjects:
     git:
       checkoutFrom:
         remote: wildfly-quickstart
-        revision: 23.0.2.Final
+        revision: 24.0.0.SP1
       remotes:
         wildfly-quickstart: https://github.com/wildfly/quickstart.git
     subDir: microprofile-openapi
@@ -68,7 +68,7 @@ starterProjects:
     git:
       checkoutFrom:
         remote: wildfly-quickstart
-        revision: 23.0.2.Final
+        revision: 24.0.0.SP1
       remotes:
         wildfly-quickstart: https://github.com/wildfly/quickstart.git
     subDir: microprofile-opentracing
@@ -77,14 +77,14 @@ starterProjects:
     git:
       checkoutFrom:
         remote: wildfly-quickstart
-        revision: 23.0.2.Final
+        revision: 24.0.0.SP1
       remotes:
         wildfly-quickstart: https://github.com/wildfly/quickstart.git
     subDir: microprofile-rest-client
 components:
   - name: wildfly
     container:
-      image:  quay.io/wildfly/wildfly-centos7:23.0
+      image:  quay.io/wildfly/wildfly-centos7:24.0
       memoryLimit: 1512Mi
       mountSources: true
       volumeMounts:
@@ -115,7 +115,7 @@ components:
       size: 3Gi
   - name: jaeger
     container:
-      image: quay.io/jaegertracing/all-in-one:1.21.0
+      image: quay.io/jaegertracing/all-in-one:1.23.0
       memoryLimit: 128Mi
       endpoints:
         - name: 'tracing-ui'
