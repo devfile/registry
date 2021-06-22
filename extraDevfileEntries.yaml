@@ -1,7 +1,7 @@
 schemaVersion: 1.0.0
 samples:
   - name: nodejs-basic
-    displayName: Basic NodeJS
+    displayName: Basic Node.js
     description: A simple Hello World Node.js application
     icon: https://raw.githubusercontent.com/maysunfaisal/node-bulletin-board-2/main/nodejs-icon.png
     tags: ["NodeJS", "Express"]
@@ -9,7 +9,7 @@ samples:
     language: nodejs
     git:
       remotes:
-        origin: https://github.com/redhat-developer/devfile-sample.git
+        origin: https://github.com/nodeshift-starters/devfile-sample.git
   - name: code-with-quarkus
     displayName: Basic Quarkus
     description: A simple Hello World Java application using Quarkus
