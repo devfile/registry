@@ -9,7 +9,12 @@
 FROM quay.io/openshift-pipeline/golang:1.15-alpine AS builder
 
 # Install dependencies
-RUN apk add --no-cache git bash
+
+RUN apk add --no-cache git bash curl zip
+
+# Install yq
+RUN curl -sL -O https://github.com/mikefarah/yq/releases/download/v4.9.5/yq_linux_amd64 -o /usr/local/bin/yq && mv ./yq_linux_amd64 /usr/local/bin/yq && chmod +x /usr/local/bin/yq
+RUN yq
 
 COPY . /registry
 
@@ -21,5 +26,4 @@ RUN /registry-support/build-tools/build.sh /registry /build
 
 FROM quay.io/devfile/devfile-index-base:next
 
-COPY --from=builder /build/index.json /index.json
-COPY --from=builder /build/stacks /stacks
+COPY --from=builder /build /registry
