@@ -19,14 +19,6 @@ jobs:
     name: Check registry build
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout registry build tools
-      uses: actions/checkout@v2
-      with:
-        repository: devfile/registry-support
-        persist-credentials: false
-        path: registry-support
-
-    
     - name: Check out code
       uses: actions/checkout@v2
       with:
