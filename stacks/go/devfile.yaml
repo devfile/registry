@@ -1,0 +1,45 @@
+commands:
+  - exec:
+      commandLine: GOCACHE=/project/.cache go build main.go
+      component: runtime
+      group:
+        isDefault: true
+        kind: build
+      workingDir: /project
+    id: build
+  - exec:
+      commandLine: ./main
+      component: runtime
+      group:
+        isDefault: true
+        kind: run
+      workingDir: /project
+    id: run
+components:
+  - container:
+      endpoints:
+        - name: http
+          targetPort: 8080
+      image: golang:latest
+      memoryLimit: 1024Mi
+      mountSources: true
+      sourceMapping: /project
+    name: runtime
+metadata:
+  description: Stack with Go 16
+  displayName: Go Runtime
+  language: go
+  name: go
+  projectType: go
+  tags:
+    - Go
+  version: 1.0.1
+schemaVersion: 2.0.0
+starterProjects:
+  - name: go-starter
+    git:
+      checkoutFrom:
+        revision: main
+      remotes:
+        origin: https://github.com/schultzp2020/devfile-starter-projects.git
+    subDir: go

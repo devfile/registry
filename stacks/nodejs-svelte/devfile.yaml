@@ -1,0 +1,61 @@
+commands:
+  - exec:
+      commandLine: yarn install --frozen-lockfile
+      component: builder
+      group:
+        isDefault: true
+        kind: build
+      workingDir: /project
+    id: install
+  - exec:
+      commandLine: yarn build && yarn install --production --ignore-scripts --prefer-offline
+      component: builder
+      group:
+        isDefault: true
+        kind: run
+      workingDir: /project
+    id: run
+components:
+  - container:
+      image: node:slim
+      memoryLimit: 1024Mi
+      mountSources: true
+      sourceMapping: /project
+      volumeMounts:
+        - name: dist
+          path: /project/public
+    name: builder
+  - container:
+      endpoints:
+        - name: http
+          targetPort: 8080
+      image: nginxinc/nginx-unprivileged:alpine
+      memoryLimit: 1024Mi
+      mountSources: false
+      volumeMounts:
+        - name: dist
+          path: /usr/share/nginx/html
+    name: server
+  - name: dist
+    volume:
+      size: 4Gi
+metadata:
+  description: Stack with Node.js 14
+  displayName: Node.js Runtime
+  language: nodejs
+  name: nodejs-svelte
+  projectType: nodejs
+  tags:
+    - NodeJS
+    - Express
+    - ubi8
+  version: 1.0.1
+schemaVersion: 2.0.0
+starterProjects:
+  - name: nodejs-svelte-starter
+    git:
+      checkoutFrom:
+        revision: main
+      remotes:
+        origin: https://github.com/schultzp2020/devfile-starter-projects.git
+    subDir: nodejs-svelte
