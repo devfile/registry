@@ -46,7 +46,7 @@ The following are required to build the devfile index container image containing
 Updating an existing devfile stack is relatively straightforward:
 
 1) Find the stack under the `stacks/` folder that you wish to update.
-2) Make the necessary changes to the stack (such as updating image tags, commands, starter projects, etc).
+2) Make the necessary changes to the stack, such as: updating image tags, commands, starter projects, etc.
 3) Update the version of stack, following the [semantic versioning format](https://semver.org/).
 4) Test your changes:
     
