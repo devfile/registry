@@ -29,7 +29,7 @@ The following are required to build the devfile index container image containing
 
 2) Add a folder for the stack to `stacks/` in this repository.
   
-    - The name should match the devfile stack's name, and be in the format `<language>-<framework>`. E.g. `java-quarkus`, `python-django`, etc.
+    - Make sure the name matches the devfile stack's name and be in the format `<language>-<framework>`. E.g. `java-quarkus`, `python-django`, etc.
 
 3) Add the devfile.yaml and any other necessary files for the stack under the stack folder.
 
