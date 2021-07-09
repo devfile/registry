@@ -1,5 +1,13 @@
 commands:
   - exec:
+      commandLine: yarn add sharp
+      component: runtime
+      group:
+        isDefault: false
+        kind: build
+      workingDir: /project
+    id: add-sharp
+  - exec:
       commandLine: yarn install --frozen-lockfile
       component: runtime
       group:
@@ -17,6 +25,7 @@ commands:
     id: build
   - composite:
       commands:
+	- add-sharp
         - install
         - build
       group:
