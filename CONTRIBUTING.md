@@ -1,6 +1,6 @@
 # Contributing to this registry
 
-This document outlines the requirements for contributing a devfile stack or sample to this repository
+This document outlines the requirements for contributing a devfile stack or sample to this repository.
 
 The [devfile registry structure](https://github.com/devfile/api/blob/main/docs/proposals/registry/registry-structure.md#repository-structure) design doc provides some useful background information on the structure of resources in a devfile registry (and its Git repository).
 
@@ -22,10 +22,10 @@ The following are required to build the devfile index container image containing
 
 2) Verify your Devfile stack has the following metadata fields at a minimum:
 
-    - Name: The name of the devfile stack, e.g. `java-springboot`
-    - Display Name: The longer name of your devfile stack, e.g. `Spring Boot®`
-    - Description: A brief description of your devfile stack, e.g. `Spring Boot® using Java`
-    - Version: The version of your stack, in semnatic version format, e.g. `1.0.0`
+    - Name: The name of the devfile stack, e.g. `java-springboot`.
+    - Display Name: The longer name of your devfile stack, e.g. `Spring Boot®`.
+    - Description: A brief description of your devfile stack, e.g. `Spring Boot® using Java`.
+    - Version: The version of your stack, in semnatic version format, e.g. `1.0.0`.
 
 2) Add a folder for the stack to `stacks/` in this repository.
   
@@ -45,13 +45,13 @@ The following are required to build the devfile index container image containing
 
 Updating an existing devfile stack is relatively straightforward:
 
-1) Find the stack under the `stacks/` folder that you wish to update
-2) Make the necessary changes to the stack (such as updating image tags, commands, starter projects, etc)
-3) Update the version of stack, following the [semantic versioning format](https://semver.org/)
+1) Find the stack under the `stacks/` folder that you wish to update.
+2) Make the necessary changes to the stack (such as updating image tags, commands, starter projects, etc).
+3) Update the version of stack, following the [semantic versioning format](https://semver.org/).
 4) Test your changes:
     
-    - Minimally, testing with odo (`odo create`, `odo push`, etc) is recommended, however if your Devfile is used with other tools, it's recommended to test there as well
-5) Open a pull request against this repository with your changes
+    - Minimally, testing with odo (`odo create`, `odo push`, etc) is recommended, however if your Devfile is used with other tools, it's recommended to test there as well.
+5) Open a pull request against this repository with your changes.
 
 ## Samples
 
@@ -73,14 +73,14 @@ The devfile samples used in this devfile registry are stored in the `extraDevfil
       remotes:
         origin: <link-to-sample-git-repository>
 ```
-3) Fill in the fields in the angle brackets based on your sample
-4) Open a pull request against this repository with your changes
+3) Fill in the fields in the angle brackets based on your sample.
+4) Open a pull request against this repository with your changes.
 
 ### Updating
 
 To update a sample:
 
-1) Open `extraDevfileEntries.yaml` in an editor
-2) Find the entry for the sample you wish to update
-3) Make the necessary changes
-4) Open a pull request against this repository with your changes
+1) Open `extraDevfileEntries.yaml` in an editor.
+2) Find the entry for the sample you wish to update.
+3) Make the necessary changes.
+4) Open a pull request against this repository with your changes.
