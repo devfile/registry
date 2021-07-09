@@ -37,3 +37,15 @@ jobs:
         odo: "latest"
     - name: Validate the devfile stacks
       run: tests/test.sh odo
+  check_architectures:
+    name: Check Stack and Sample Architectures
+    continue-on-error: true
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Download yq
+      run: wget https://github.com/mikefarah/yq/releases/download/v4.9.8/yq_linux_amd64 -O ./yq && chmod +x ./yq
+    - name: Check stacks and samples
+      continue-on-error: true
+      run: tests/check_architectures.sh ./yq
