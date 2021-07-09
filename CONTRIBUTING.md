@@ -51,7 +51,6 @@ Updating an existing devfile stack is relatively straightforward:
 4) Test your changes:
     
     - Minimally, testing with odo (`odo create`, `odo push`, etc) is recommended, however if your Devfile is used with other tools, it's recommended to test there as well
-    - The 
 5) Open a pull request against this repository with your changes
 
 ## Samples
