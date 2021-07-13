@@ -39,13 +39,50 @@ jobs:
       run: tests/test.sh odo
   check_architectures:
     name: Check Stack and Sample Architectures
-    continue-on-error: true
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v1
-    - name: Download yq
-      run: wget https://github.com/mikefarah/yq/releases/download/v4.9.8/yq_linux_amd64 -O ./yq && chmod +x ./yq
+    - name: Install yq command
+      uses: redhat-actions/openshift-tools-installer@v1
+      with:
+        source: "github"
+        github_pat: ${{ secrets.GITHUB_TOKEN }}
+        # Installs the latest release of yq
+        yq: "latest"
     - name: Check stacks and samples
       continue-on-error: true
-      run: tests/check_architectures.sh ./yq
+      # Redirect test output to a file because github steps dont exec commands
+      # following an error command in multi-line commands for steps[*].run
+      run: tests/check_architectures.sh yq >> output.txt
+    - name: Save test output
+      id: save
+      run: |
+          body=$(cat output.txt)
+          body="${body//'%'/'%25'}"
+          body="${body//$'\n'/'%0A'}"
+          body="${body//$'\r'/'%0D'}" 
+          echo $body
+          echo "::set-output name=body::$body"
+    - name: Find Comment in PR
+      if: ${{ github.event_name == 'pull_request' && steps.save.outputs.body != '' }}
+      uses: peter-evans/find-comment@v1
+      id: find
+      with:
+        issue-number: ${{ github.event.pull_request.number }}
+        comment-author: 'github-actions[bot]'
+        body-includes: Please check if your stack/sample devfile has architectures mentioned.
+    - name: Create or update comment in PR
+      if: ${{ github.event_name == 'pull_request' && steps.save.outputs.body != '' }}
+      uses: peter-evans/create-or-update-comment@v1
+      with:
+        comment-id: ${{ steps.find.outputs.comment-id }}
+        issue-number: ${{ github.event.pull_request.number }}
+        # WARNING: When updating the body below, remember to make the corresponding update on the Find Comment in PR step
+        body: |
+          This comment was written by the github action!
+          Please check if your stack/sample devfile has architectures mentioned.
+          While not mandatory, it is good practice to mention the architectures supported by the stack/sample devfile.
+
+          ${{ steps.save.outputs.body }}
+        edit-mode: replace
