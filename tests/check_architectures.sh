@@ -11,11 +11,12 @@ checkStacks() {
         DEVFILE_ARCHITECTURES=$(cat $DEVFILE_PATH | grep architectures)
 
         if [ -z $DEVFILE_ARCHITECTURES ]; then
-            missingStackDevfileArch="$missingStackDevfileArch$STACK_NAME "
+            missingStackDevfileArch="$missingStackDevfileArch$STACK_NAME, "
         fi
     done
 
     if [ ! -z "$missingStackDevfileArch" ]; then
+        missingStackDevfileArch=$(echo $missingStackDevfileArch | sed s'/,$//')
         echo stacks with missing architectures: $missingStackDevfileArch
     fi
 }
@@ -34,11 +35,12 @@ checkSamples() {
         SAMPLE_ARCHS="$($YQ_PATH e .samples[$(($i-1))].architectures $EXTRA_DEVFILES_FILE)"
 
         if [[ $SAMPLE_ARCHS == "null" ]]; then
-            missingSampleArch="$missingSampleArch$SAMPLE_NAME "
+            missingSampleArch="$missingSampleArch$SAMPLE_NAME, "
         fi
     done
 
     if [ ! -z "$missingSampleArch" ]; then
+        missingSampleArch=$(echo $missingSampleArch | sed s'/,$//')
         echo samples with missing architectures: $missingSampleArch
     fi
 }
@@ -49,8 +51,9 @@ if [ -z $YQ_PATH ]; then
 fi
 
 checkStacks
-checkSamples
-
+if [ -f $EXTRA_DEVFILES_FILE ]; then
+    checkSamples
+fi
 
 if [[ ! -z "$missingStackDevfileArch" || ! -z "$missingSampleArch" ]]; then
     exit 1
