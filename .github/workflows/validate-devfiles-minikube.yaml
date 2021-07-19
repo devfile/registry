@@ -10,9 +10,9 @@ name: Validate Devfiles
 
 on:
   push:
-    branches: [ main ]
+    branches: [ mainss ]
   pull_request:
-    branches: [ main ]
+    branches: [ mainss ]
 
 jobs:
 

@@ -9,9 +9,7 @@
 name: Check Architectures
 
 on:
-  push:
-    branches: [ main ]
-  pull_request_target:
+  pull_request:
     branches: [ main ]
 
 jobs:
@@ -20,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
     - name: Install yq command
       uses: redhat-actions/openshift-tools-installer@v1
       with:
@@ -28,39 +26,26 @@ jobs:
         github_pat: ${{ secrets.GITHUB_TOKEN }}
         # Installs the latest release of yq
         yq: "latest"
-    - name: Check stacks and samples
-      continue-on-error: true
-      # Redirect test output to a file because github steps dont exec commands
-      # following an error command in multi-line commands for steps[*].run
-      run: tests/check_architectures.sh yq >> output.txt
-    - name: Save test output
-      id: save
+    - name: test action out
+      id: mf
+      uses: technote-space/get-diff-action@v4
+      with:
+        PATTERNS: |
+          +(stacks)/**/devfile.yaml
+          extraDevfileEntries.yaml
+    - name: print diff with env
+      run: echo GIT_DIFF ${{ env.GIT_DIFF }}
+    - name: Save PR number
       run: |
-          body=$(cat output.txt)
-          body="${body//'%'/'%25'}"
-          body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}" 
-          echo $body
-          echo "::set-output name=body::$body"
-    - name: Find Comment in PR
-      if: ${{ github.event_name == 'pull_request_target' && steps.save.outputs.body != '' }}
-      uses: peter-evans/find-comment@v1
-      id: find
+        mkdir -p ./pr
+        echo ${{ github.event.number }} > ./pr/number
+    - name: Check stacks and samples ouput
+      continue-on-error: true
+      run: tests/check_architectures.sh "${{ env.GIT_DIFF }}" yq >> ./pr/output
+    - name: dummy
+      continue-on-error: true
+      run: tests/check_architectures.sh "${{ env.GIT_DIFF }}" yq
+    - uses: actions/upload-artifact@v2
       with:
-        issue-number: ${{ github.event.pull_request.number }}
-        comment-author: 'github-actions[bot]'
-        body-includes: Please check if your stack/sample devfile has architectures mentioned.
-    - name: Create or update comment in PR
-      if: ${{ github.event_name == 'pull_request_target' && steps.save.outputs.body != '' }}
-      uses: peter-evans/create-or-update-comment@v1
-      with:
-        comment-id: ${{ steps.find.outputs.comment-id }}
-        issue-number: ${{ github.event.pull_request.number }}
-        # WARNING: When updating the body below, remember to make the corresponding update on the Find Comment in PR step
-        body: |
-          This comment was written by the github action!
-          Please check if your stack/sample devfile has architectures mentioned.
-          While not mandatory, it is good practice to mention the architectures supported by the stack/sample devfile.
-
-          ${{ steps.save.outputs.body }}
-        edit-mode: replace
+        name: pr
+        path: pr/
