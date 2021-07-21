@@ -3,22 +3,25 @@
 STACKS_DIR="$(pwd)/stacks/"
 EXTRA_DEVFILES_FILE="$(pwd)/extraDevfileEntries.yaml"
 
+display_usage() { 
+  echo "usage: check_architectures.sh \"stacks/java-maven/devfile.yaml stacks/java-openliberty/devfile.yaml\" [/path/to/yq]" 
+} 
+
 checkStacks() {
+    STACK=$1
     for STACK_DIR in $(find $STACKS_DIR -maxdepth 1 -type d ! -path $STACKS_DIR); do
         STACK_NAME="$(basename $STACK_DIR)"
-        DEVFILE_PATH=$STACK_DIR/devfile.yaml
-    
-        DEVFILE_ARCHITECTURES=$(cat $DEVFILE_PATH | grep architectures)
 
-        if [ -z $DEVFILE_ARCHITECTURES ]; then
-            missingStackDevfileArch="$missingStackDevfileArch$STACK_NAME, "
+        if [[ $STACK_NAME == $STACK ]]; then
+            DEVFILE_PATH=$STACK_DIR/devfile.yaml
+    
+            DEVFILE_ARCHITECTURES=$(cat $DEVFILE_PATH | grep architectures)
+
+            if [[ -z $DEVFILE_ARCHITECTURES ]]; then
+                missingStackDevfileArch="$missingStackDevfileArch$STACK_NAME, "
+            fi
         fi
     done
-
-    if [ ! -z "$missingStackDevfileArch" ]; then
-        missingStackDevfileArch=$(echo $missingStackDevfileArch | sed s'/,$//')
-        echo stacks with missing architectures: $missingStackDevfileArch
-    fi
 }
 
 checkSamples() {
@@ -38,23 +41,41 @@ checkSamples() {
             missingSampleArch="$missingSampleArch$SAMPLE_NAME, "
         fi
     done
+}
+
+# Check if stack devfiles to scan were passed in, if not, exit
+if [ $# -lt 1 ]; then
+  display_usage
+  exit 1
+fi
+
+YQ_PATH=$2
+if [[ -z $YQ_PATH ]]; then
+  YQ_PATH=yq
+fi
+
+FILE_DIFF=$1
+for file in $FILE_DIFF
+do
+    file="${file//\'}"
+    if [ $file == "extraDevfileEntries.yaml" ]; then
+        checkSamples
+    elif [[ $file == stacks/*/devfile.yaml ]]; then
+        STACK_TEMP="$(echo $file | cut -d'/' -f2)"
+        checkStacks $STACK_TEMP
+    fi
+done
+
+if [[ ! -z "$missingStackDevfileArch" || ! -z "$missingSampleArch" ]]; then
+    if [ ! -z "$missingStackDevfileArch" ]; then
+        missingStackDevfileArch=$(echo $missingStackDevfileArch | sed s'/,$//')
+        echo stacks with missing architectures: $missingStackDevfileArch
+    fi
 
     if [ ! -z "$missingSampleArch" ]; then
         missingSampleArch=$(echo $missingSampleArch | sed s'/,$//')
         echo samples with missing architectures: $missingSampleArch
     fi
-}
 
-YQ_PATH=$1
-if [ -z $YQ_PATH ]; then
-  YQ_PATH=yq
-fi
-
-checkStacks
-if [ -f $EXTRA_DEVFILES_FILE ]; then
-    checkSamples
-fi
-
-if [[ ! -z "$missingStackDevfileArch" || ! -z "$missingSampleArch" ]]; then
     exit 1
 fi
