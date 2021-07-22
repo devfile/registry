@@ -17,24 +17,24 @@
 schemaVersion: 2.0.0
 metadata:
   name: java-openliberty
-  version: 0.5.0
-  displayName: "Open Liberty"
+  version: 0.6.0
+  displayName: "Open Liberty Maven"
   description: Java application stack using Open Liberty runtime
   tags: ["Java", "Maven"]
   language: "java"
   projectType: "openliberty"
-  alpha.build-dockerfile: "https://github.com/OpenLiberty/application-stack/releases/download/outer-loop-0.5.1/Dockerfile"
-  alpha.deployment-manifest: "https://github.com/OpenLiberty/application-stack/releases/download/outer-loop-0.5.1/app-deploy.yaml"
+  alpha.build-dockerfile: "https://github.com/OpenLiberty/application-stack/releases/download/maven-0.6.0/Dockerfile"
+  alpha.deployment-manifest: "https://github.com/OpenLiberty/application-stack/releases/download/maven-0.6.0/app-deploy.yaml"
 starterProjects:
   - name: user-app
     git:
       remotes:
         origin: "https://github.com/OpenLiberty/application-stack-starters.git"
 components:
-  - name: devruntime
+  - name: dev
     container:
       # In the original upstream of this devfile, the image used is openliberty/application-stack:<x.y.z>, which is built from the repository: https://github.com/OpenLiberty/application-stack
-      image: openliberty/application-stack:0.5
+      image: openliberty/application-stack:0.6
       memoryLimit: 1512Mi
       mountSources: true
       endpoints:
@@ -46,8 +46,8 @@ components:
 commands:
   - id: build
     exec:
-      component: devruntime
-      commandLine: /stack/ol/scripts/devbuild-cmd.sh 21.0.0.3
+      component: dev
+      commandLine: /stack/ol/scripts/maven/devbuild-cmd.sh 21.0.0.6
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -55,8 +55,8 @@ commands:
         isDefault: true
   - id: run
     exec:
-      component: devruntime
-      commandLine: mvn -Dliberty.runtime.version=21.0.0.3 -Ddebug=false -DhotTests=true -DcompileWait=3 liberty:dev
+      component: dev
+      commandLine: mvn -Dliberty.runtime.version=21.0.0.6 -Ddebug=false -DhotTests=true -DcompileWait=3 liberty:dev
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -64,8 +64,8 @@ commands:
         isDefault: true
   - id: run-test-off
     exec:
-      component: devruntime
-      commandLine: mvn -Dliberty.runtime.version=21.0.0.3 -Ddebug=false liberty:dev
+      component: dev
+      commandLine: mvn -Dliberty.runtime.version=21.0.0.6 -Ddebug=false liberty:dev
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -73,8 +73,8 @@ commands:
         isDefault: false
   - id: debug
     exec:
-      component: devruntime
-      commandLine: mvn -Dliberty.runtime.version=21.0.0.3 -DdebugPort=${DEBUG_PORT} liberty:dev -Dliberty.env.WLP_DEBUG_REMOTE=y
+      component: dev
+      commandLine: mvn -Dliberty.runtime.version=21.0.0.6 -DdebugPort=${DEBUG_PORT} liberty:dev -Dliberty.env.WLP_DEBUG_REMOTE=y
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -83,7 +83,7 @@ commands:
   - id: test
     # The 'test' command requires an active container, so we don't need to specify the liberty runtime version
     exec:
-      component: devruntime
+      component: dev
       commandLine: mvn failsafe:integration-test failsafe:verify
       workingDir: /projects
       hotReloadCapable: true
