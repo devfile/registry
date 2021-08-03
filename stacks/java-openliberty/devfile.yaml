@@ -22,18 +22,18 @@ metadata:
   description: Java application stack using Open Liberty runtime
   tags: ["Java", "Maven"]
   language: "java"
-  projectType: "docker"
+  projectType: "openliberty"
   alpha.build-dockerfile: "https://github.com/OpenLiberty/application-stack/releases/download/outer-loop-0.5.1/Dockerfile"
   alpha.deployment-manifest: "https://github.com/OpenLiberty/application-stack/releases/download/outer-loop-0.5.1/app-deploy.yaml"
 starterProjects:
   - name: user-app
     git:
       remotes:
-        origin: 'https://github.com/OpenLiberty/application-stack-starters.git'
+        origin: "https://github.com/OpenLiberty/application-stack-starters.git"
 components:
   - name: devruntime
     container:
-        # In the original upstream of this devfile, the image used is openliberty/application-stack:<x.y.z>, which is built from the repository: https://github.com/OpenLiberty/application-stack
+      # In the original upstream of this devfile, the image used is openliberty/application-stack:<x.y.z>, which is built from the repository: https://github.com/OpenLiberty/application-stack
       image: openliberty/application-stack:0.5
       memoryLimit: 1512Mi
       mountSources: true
@@ -45,17 +45,17 @@ components:
           protocol: http
 commands:
   - id: build
-    exec:  
-      component: devruntime 
+    exec:
+      component: devruntime
       commandLine: /stack/ol/scripts/devbuild-cmd.sh 21.0.0.3
       workingDir: /projects
       hotReloadCapable: true
       group:
-        kind: build 
+        kind: build
         isDefault: true
   - id: run
     exec:
-      component: devruntime 
+      component: devruntime
       commandLine: mvn -Dliberty.runtime.version=21.0.0.3 -Ddebug=false -DhotTests=true -DcompileWait=3 liberty:dev
       workingDir: /projects
       hotReloadCapable: true
@@ -73,7 +73,7 @@ commands:
         isDefault: false
   - id: debug
     exec:
-      component: devruntime 
+      component: devruntime
       commandLine: mvn -Dliberty.runtime.version=21.0.0.3 -DdebugPort=${DEBUG_PORT} liberty:dev -Dliberty.env.WLP_DEBUG_REMOTE=y
       workingDir: /projects
       hotReloadCapable: true
@@ -83,7 +83,7 @@ commands:
   - id: test
     # The 'test' command requires an active container, so we don't need to specify the liberty runtime version
     exec:
-      component: devruntime 
+      component: devruntime
       commandLine: mvn failsafe:integration-test failsafe:verify
       workingDir: /projects
       hotReloadCapable: true
