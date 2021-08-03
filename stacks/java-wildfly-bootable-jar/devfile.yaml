@@ -5,6 +5,7 @@ metadata:
   website: https://docs.wildfly.org/bootablejar/
   displayName: WildFly Bootable Jar
   description: Java stack with WildFly in bootable Jar mode, OpenJDK 11 and Maven 3.5
+  icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark.svg
   tags:  ["RHEL8", "Java", "OpenJDK", "Maven", "WildFly", "Microprofile", "WildFly Bootable"]
   projectType: "WildFly"
   language: "java"
