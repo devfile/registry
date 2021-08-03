@@ -69,6 +69,11 @@ objects:
             limits:
               cpu: 100m
               memory: ${DEVFILE_INDEX_MEMORY_LIMIT}
+          env:
+          - name: ENABLE_TELEMETRY
+            value: true
+          - name: REGISTRY
+            value: devfile-community-registry
         - image: ${OCI_REGISTRY_IMAGE}:${OCI_REGISTRY_IMAGE_TAG}
           imagePullPolicy: "${OCI_REGISTRY_PULL_POLICY}"
           name: oci-registry
