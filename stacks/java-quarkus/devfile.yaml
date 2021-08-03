@@ -5,6 +5,7 @@ metadata:
   website: https://quarkus.io
   displayName: Quarkus Java
   description: Quarkus with Java
+  icon: https://design.jboss.org/quarkus/logo/final/SVG/quarkus_icon_rgb_default.svg
   tags: ["Java", "Quarkus"]
   projectType: "quarkus"
   language: "java"
