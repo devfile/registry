@@ -4,6 +4,7 @@ metadata:
   version: 1.0.0
   displayName: Django
   description: Python3.7 with Django
+  icon: https://static.djangoproject.com/img/logos/django-logo-positive.svg
   tags: ["Python", "pip", "Django"]
   projectType: "django"
   language: "python"
