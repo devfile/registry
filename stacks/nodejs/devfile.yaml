@@ -4,6 +4,7 @@ metadata:
   version: 1.0.1
   displayName: Node.js Runtime
   description: Stack with Node.js 14
+  icon: https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg
   tags: ["NodeJS", "Express", "ubi8"]
   projectType: "nodejs"
   language: "nodejs"
