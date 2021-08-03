@@ -3,7 +3,7 @@ metadata:
   name: nodejs
   version: 1.0.1
   displayName: Node.js Runtime
-  description: Stack with Node.js 14
+  description: Stack with Node.js 14, test change
   tags: ["NodeJS", "Express", "ubi8"]
   projectType: "nodejs"
   language: "nodejs"
