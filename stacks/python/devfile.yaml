@@ -4,6 +4,7 @@ metadata:
   version: 1.0.0
   displayName: Python
   description: Python Stack with Python 3.7
+  icon: https://www.python.org/static/community_logos/python-logo-generic.svg
   tags: ["Python", "pip"]
   projectType: "python"
   language: "python"
