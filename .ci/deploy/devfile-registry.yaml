@@ -71,9 +71,9 @@ objects:
               memory: ${DEVFILE_INDEX_MEMORY_LIMIT}
           env:
           - name: ENABLE_TELEMETRY
-            value: true
-          - name: REGISTRY
-            value: devfile-community-registry
+            value: ${ENABLE_TELEMETRY}
+          - name: REGISTRY_NAME
+            value: ${REGISTRY_NAME}
         - image: ${OCI_REGISTRY_IMAGE}:${OCI_REGISTRY_IMAGE_TAG}
           imagePullPolicy: "${OCI_REGISTRY_PULL_POLICY}"
           name: oci-registry
@@ -190,3 +190,11 @@ parameters:
   value: "1"
   displayName: Devfile registry replicas
   description: The number of replicas for the hosted devfile registry service
+- name: ENABLE_TELEMETRY
+  value: false
+  displayName: Devfile registry telemetry enablement
+  description: Option to opt in or opt out devfile registry telemetry
+- name: REGISTRY_NAME
+  value: devfile-community-registry
+  displayName: Devfile registry name
+  description: The registry name that is used as identifier for devfile telemetry
