@@ -44,7 +44,7 @@ objects:
                   path: config.yml
           - name: viewer-config
             configMap:
-              name: devfile-registry-viewer
+              name: devfile-registry
               items:
                 - key: devfile-registry-hosts.json
                   path: devfile-registry-hosts.json
@@ -75,8 +75,8 @@ objects:
               path: /viewer
               port: 8080
               scheme: HTTP
-            initialDelaySeconds: 30
-            periodSeconds: 1
+            initialDelaySeconds: 15
+            periodSeconds: 10
             timeoutSeconds: 10
           resources:
             requests:
@@ -170,13 +170,7 @@ objects:
           prometheus:
             enabled: true
             path: /metrics
-- apiVersion: v1
-  kind: ConfigMap
-  metadata:
-    name: devfile-registry-viewer
-    annotations:
-      qontract.recycle: "true"
-  data:
+
     devfile-registry-hosts.json: |
       {
         "Community": {
