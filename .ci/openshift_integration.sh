@@ -37,7 +37,7 @@ export GLOBALODOCONFIG=$(pwd)/preferences.yaml
 
 # Install the devfile registry
 git clone https://github.com/devfile/registry-support.git
-oc process -f registry-support/deploy/hosted-registry/devfile-registry.yaml -p DEVFILE_INDEX_IMAGE=$IMG -p DEVFILE_INDEX_IMAGE_TAG=$TAG -p REPLICAS=3 | \
+oc process -f deploy/devfile-registry.yaml -p DEVFILE_INDEX_IMAGE=$IMG -p DEVFILE_INDEX_IMAGE_TAG=$TAG -p REPLICAS=3 | \
   oc apply -f -
 
 # Deploy the routes for the registry

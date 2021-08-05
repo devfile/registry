@@ -191,7 +191,7 @@ parameters:
   displayName: Devfile registry replicas
   description: The number of replicas for the hosted devfile registry service
 - name: ENABLE_TELEMETRY
-  value: false
+  value: "false"
   displayName: Devfile registry telemetry enablement
   description: Option to opt in or opt out devfile registry telemetry
 - name: REGISTRY_NAME
