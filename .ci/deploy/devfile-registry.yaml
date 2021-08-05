@@ -42,6 +42,12 @@ objects:
               items:
                 - key: registry-config.yml
                   path: config.yml
+          - name: viewer-config
+            configMap:
+              name: devfile-registry-viewer
+              items:
+                - key: devfile-registry-hosts.json
+                  path: devfile-registry-hosts.json
         containers:
         - image: ${DEVFILE_INDEX_IMAGE}:${DEVFILE_INDEX_IMAGE_TAG}
           imagePullPolicy: "${DEVFILE_INDEX_PULL_POLICY}"
@@ -52,36 +58,53 @@ objects:
             httpGet:
               path: /health
               port: 8080
-            initialDelaySeconds: 30
+              scheme: HTTP
+            initialDelaySeconds: 15
             periodSeconds: 10
             timeoutSeconds: 3
           readinessProbe:
             httpGet:
               path: /health
               port: 8080
-            initialDelaySeconds: 3
+              scheme: HTTP
+            initialDelaySeconds: 15
             periodSeconds: 10
             timeoutSeconds: 3
+          startupProbe:
+            httpGet:
+              path: /viewer
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 1
+            timeoutSeconds: 10
           resources:
             requests:
-              cpu: 1m
-              memory: 5Mi
-            limits:
               cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 500m
               memory: ${DEVFILE_INDEX_MEMORY_LIMIT}
+          env:
+            - name: DEVFILE_VIEWER_ROOT
+              value: "/viewer"
+          volumeMounts:
+          - name: viewer-config
+            mountPath: "/app/config"
+            readOnly: false
         - image: ${OCI_REGISTRY_IMAGE}:${OCI_REGISTRY_IMAGE_TAG}
           imagePullPolicy: "${OCI_REGISTRY_PULL_POLICY}"
           name: oci-registry
           livenessProbe:
             httpGet:
-              path: /v2/
+              path: /v2
               port: 5000
             initialDelaySeconds: 30
             periodSeconds: 10
             timeoutSeconds: 3
           readinessProbe:
             httpGet:
-              path: /v2/
+              path: /v2
               port: 5000
             initialDelaySeconds: 3
             periodSeconds: 10
@@ -147,14 +170,27 @@ objects:
           prometheus:
             enabled: true
             path: /metrics
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: devfile-registry-viewer
+    annotations:
+      qontract.recycle: "true"
+  data:
+    devfile-registry-hosts.json: |
+      {
+        "Community": {
+          "url": "http://localhost:8080"
+        }
+      }
 
 parameters:
 - name: DEVFILE_INDEX_IMAGE
-  value: quay.io/devfile/devfile-index
+  value: quay.io/jcollier/devfile-index
   displayName: Devfile registry index image
   description: Devfile registry index docker image. Defaults to quay.io/devfile/devfile-index
 - name: DEVFILE_INDEX_IMAGE_TAG
-  value: next
+  value: latest
   displayName: Devfile registry version
   description: Devfile registry version which defaults to next
 - name: DEVFILE_INDEX_MEMORY_LIMIT
