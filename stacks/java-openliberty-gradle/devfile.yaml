@@ -20,6 +20,7 @@ metadata:
   version: 0.1.0
   displayName: "Open Liberty Gradle"
   description: Java application Gradle built stack using the Open Liberty runtime
+  icon: https://raw.githubusercontent.com/OpenLiberty/logos/7fbb132949b9b2589e18c8d5665c1b107028a21d/logomark/svg/OL_logomark.svg
   tags: ["Java", "Gradle"]
   language: "java"
   projectType: "openliberty"
