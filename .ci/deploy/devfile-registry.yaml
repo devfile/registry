@@ -184,7 +184,7 @@ parameters:
   displayName: Devfile registry index image
   description: Devfile registry index docker image. Defaults to quay.io/devfile/devfile-index
 - name: DEVFILE_INDEX_IMAGE_TAG
-  value: latest
+  value: next
   displayName: Devfile registry version
   description: Devfile registry version which defaults to next
 - name: DEVFILE_INDEX_MEMORY_LIMIT
