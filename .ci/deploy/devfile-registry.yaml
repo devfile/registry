@@ -75,7 +75,7 @@ objects:
               path: /viewer
               port: 8080
               scheme: HTTP
-            initialDelaySeconds: 15
+            initialDelaySeconds: 30
             periodSeconds: 10
             timeoutSeconds: 10
           resources:
@@ -83,7 +83,7 @@ objects:
               cpu: 100m
               memory: 64Mi
             limits:
-              cpu: 500m
+              cpu: 250m
               memory: ${DEVFILE_INDEX_MEMORY_LIMIT}
           env:
             - name: DEVFILE_VIEWER_ROOT
@@ -180,11 +180,11 @@ objects:
 
 parameters:
 - name: DEVFILE_INDEX_IMAGE
-  value: quay.io/devfile/devfile-index
+  value: quay.io/jcollier/devfile-index
   displayName: Devfile registry index image
   description: Devfile registry index docker image. Defaults to quay.io/devfile/devfile-index
 - name: DEVFILE_INDEX_IMAGE_TAG
-  value: next
+  value: latest
   displayName: Devfile registry version
   description: Devfile registry version which defaults to next
 - name: DEVFILE_INDEX_MEMORY_LIMIT
