@@ -180,7 +180,7 @@ objects:
 
 parameters:
 - name: DEVFILE_INDEX_IMAGE
-  value: quay.io/jcollier/devfile-index
+  value: quay.io/devfile/devfile-index
   displayName: Devfile registry index image
   description: Devfile registry index docker image. Defaults to quay.io/devfile/devfile-index
 - name: DEVFILE_INDEX_IMAGE_TAG
