@@ -5,6 +5,7 @@ metadata:
   website: https://wildfly.org
   displayName: WildFly Java
   description: Upstream WildFly
+  icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark.svg
   tags: ["Java", "WildFly"]
   projectType: "wildfly"
   language: "java"
