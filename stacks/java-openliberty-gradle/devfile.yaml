@@ -16,16 +16,16 @@
 # limitations under the License.
 schemaVersion: 2.0.0
 metadata:
-  name: java-openliberty
-  version: 0.6.0
-  displayName: "Open Liberty Maven"
-  description: Java application stack using Open Liberty runtime
+  name: java-openliberty-gradle
+  version: 0.1.0
+  displayName: "Open Liberty Gradle"
+  description: Java application Gradle built stack using the Open Liberty runtime
   icon: https://raw.githubusercontent.com/OpenLiberty/logos/7fbb132949b9b2589e18c8d5665c1b107028a21d/logomark/svg/OL_logomark.svg
-  tags: ["Java", "Maven"]
+  tags: ["Java", "Gradle"]
   language: "java"
   projectType: "openliberty"
-  alpha.build-dockerfile: "https://github.com/OpenLiberty/application-stack/releases/download/maven-0.6.0/Dockerfile"
-  alpha.deployment-manifest: "https://github.com/OpenLiberty/application-stack/releases/download/maven-0.6.0/app-deploy.yaml"
+  alpha.build-dockerfile: "https://github.com/OpenLiberty/application-stack/releases/download/gradle-0.1.0/Dockerfile"
+  alpha.deployment-manifest: "https://github.com/OpenLiberty/application-stack/releases/download/gradle-0.1.0/app-deploy.yaml"
 starterProjects:
   - name: user-app
     git:
@@ -34,8 +34,7 @@ starterProjects:
 components:
   - name: dev
     container:
-      # In the original upstream of this devfile, the image used is openliberty/application-stack:<x.y.z>, which is built from the repository: https://github.com/OpenLiberty/application-stack
-      image: openliberty/application-stack:0.6
+      image: openliberty/application-stack:gradle-0.1
       memoryLimit: 1512Mi
       mountSources: true
       endpoints:
@@ -48,7 +47,7 @@ commands:
   - id: build
     exec:
       component: dev
-      commandLine: /stack/ol/scripts/maven/devbuild-cmd.sh 21.0.0.6
+      commandLine: /stack/ol/scripts/gradle/devbuild-cmd.sh 21.0.0.6
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -57,7 +56,7 @@ commands:
   - id: run
     exec:
       component: dev
-      commandLine: mvn -Dliberty.runtime.version=21.0.0.6 -Ddebug=false -DhotTests=true -DcompileWait=3 liberty:dev
+      commandLine: gradle -Dgradle.user.home=/.gradle libertyDev -Pliberty.runtime.version=21.0.0.6 --libertyDebug=false --hotTests --compileWait=3
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -66,7 +65,7 @@ commands:
   - id: run-test-off
     exec:
       component: dev
-      commandLine: mvn -Dliberty.runtime.version=21.0.0.6 -Ddebug=false liberty:dev
+      commandLine: gradle -Dgradle.user.home=/.gradle libertyDev -Pliberty.runtime.version=21.0.0.6 --libertyDebug=false
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -75,17 +74,16 @@ commands:
   - id: debug
     exec:
       component: dev
-      commandLine: mvn -Dliberty.runtime.version=21.0.0.6 -DdebugPort=${DEBUG_PORT} liberty:dev -Dliberty.env.WLP_DEBUG_REMOTE=y
+      commandLine: gradle -Dgradle.user.home=/.gradle libertyDev -Pliberty.runtime.version=21.0.0.6 --libertyDebugPort=${DEBUG_PORT} -Pliberty.server.env.WLP_DEBUG_REMOTE=y
       workingDir: /projects
       hotReloadCapable: true
       group:
         kind: debug
         isDefault: true
   - id: test
-    # The 'test' command requires an active container, so we don't need to specify the liberty runtime version
     exec:
       component: dev
-      commandLine: mvn failsafe:integration-test failsafe:verify
+      commandLine: gradle -Dgradle.user.home=/.gradle test -Pliberty.runtime.version=21.0.0.6
       workingDir: /projects
       hotReloadCapable: true
       group:

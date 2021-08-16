@@ -88,6 +88,10 @@ objects:
           env:
             - name: DEVFILE_VIEWER_ROOT
               value: "/viewer"
+            - name: ENABLE_TELEMETRY
+              value: ${ENABLE_TELEMETRY}
+            - name: REGISTRY_NAME
+              value: ${REGISTRY_NAME}
           volumeMounts:
           - name: viewer-config
             mountPath: "/app/config"
@@ -215,3 +219,11 @@ parameters:
   value: "1"
   displayName: Devfile registry replicas
   description: The number of replicas for the hosted devfile registry service
+- name: ENABLE_TELEMETRY
+  value: "false"
+  displayName: Devfile registry telemetry enablement
+  description: Option to opt in or opt out devfile registry telemetry
+- name: REGISTRY_NAME
+  value: devfile-community-registry
+  displayName: Devfile registry name
+  description: The registry name that is used as identifier for devfile telemetry
