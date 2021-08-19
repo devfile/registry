@@ -19,7 +19,7 @@ samples:
     language: java
     git:
       remotes:
-        origin: https://github.com/elsony/devfile-sample-code-with-quarkus.git
+        origin: https://github.com/devfile-samples/devfile-sample-code-with-quarkus.git
   - name: java-springboot-basic
     displayName: Basic Spring Boot
     description: A simple Hello World Java Spring Boot application using Maven
@@ -29,7 +29,7 @@ samples:
     language: java
     git:
       remotes:
-        origin: https://github.com/elsony/devfile-sample-java-springboot-basic.git
+        origin: https://github.com/devfile-samples/devfile-sample-java-springboot-basic.git
   - name: python-basic
     displayName: Basic Python
     description: A simple Hello World application using Python
@@ -39,4 +39,4 @@ samples:
     language: python
     git:
       remotes:
-        origin: https://github.com/elsony/devfile-sample-python-basic.git
+        origin: https://github.com/devfile-samples/devfile-sample-python-basic.git
