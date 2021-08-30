@@ -6,9 +6,9 @@ metadata:
   displayName: WildFly Java
   description: Upstream WildFly
   icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark.svg
-  tags: ["Java", "WildFly"]
-  projectType: "wildfly"
-  language: "java"
+  tags: ['Java', 'WildFly']
+  projectType: 'wildfly'
+  language: 'java'
 starterProjects:
   - name: microprofile-config
     description: WildFly Eclipse Microprofile Config Quickstart
@@ -85,7 +85,7 @@ starterProjects:
 components:
   - name: wildfly
     container:
-      image:  quay.io/wildfly/wildfly-centos7:24.0
+      image: quay.io/wildfly/wildfly-centos7:24.0
       memoryLimit: 1512Mi
       mountSources: true
       volumeMounts:
@@ -136,7 +136,7 @@ commands:
     exec:
       label: Compile and package the application
       component: wildfly
-      commandLine: source ${JBOSS_CONTAINER_MAVEN_DEFAULT_MODULE}/scl-enable-maven && mvn ${MVN_ARGS_APPEND} -Dmaven.test.skip=true clean package 
+      commandLine: source ${JBOSS_CONTAINER_MAVEN_DEFAULT_MODULE}/scl-enable-maven && mvn ${MVN_ARGS_APPEND} -Dmaven.test.skip=true clean package
       workingDir: $PROJECTS_ROOT
       group:
         kind: build
@@ -173,7 +173,7 @@ commands:
       group:
         kind: debug
         isDefault: true
-#Hack to avoid the file permissions issue with the random openshift user
+  #Hack to avoid the file permissions issue with the random openshift user
   - id: copy-galleon
     exec:
       component: wildfly
@@ -205,7 +205,7 @@ commands:
     exec:
       component: wildfly
       commandLine: mkdir $STANDALONE_RESTORE && cp -f $JBOSS_HOME/standalone/configuration/standalone.xml $STANDALONE_RESTORE/standalone.xml
-      workingDir: $PROJECTS_ROOT      
+      workingDir: $PROJECTS_ROOT
       env:
         - name: JBOSS_HOME
           value: '/tmp/wildfly'
@@ -225,4 +225,4 @@ commands:
         isDefault: false
 events:
   postStart:
-    - "init-server"
+    - 'init-server'

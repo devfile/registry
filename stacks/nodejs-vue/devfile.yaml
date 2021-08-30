@@ -1,20 +1,22 @@
-commands:
-  - exec:
-      commandLine: yarn install --frozen-lockfile
-      component: builder
-      group:
-        isDefault: true
-        kind: build
-      workingDir: /project
-    id: install
-  - exec:
-      commandLine: yarn build && yarn install --production --ignore-scripts --prefer-offline
-      component: builder
-      group:
-        isDefault: true
-        kind: run
-      workingDir: /project
-    id: build
+schemaVersion: 2.0.0
+metadata:
+  description: Stack with Vue 3
+  displayName: Vue
+  language: javascript
+  name: nodejs-vue
+  projectType: vue
+  tags:
+    - NodeJS
+    - Vue
+  version: 1.0.0
+starterProjects:
+  - name: nodejs-vue-starter
+    git:
+      checkoutFrom:
+        revision: main
+      remotes:
+        origin: https://github.com/schultzp2020/devfile-starter-projects.git
+    subDir: nodejs-vue
 components:
   - container:
       image: node:slim
@@ -39,23 +41,20 @@ components:
   - name: dist
     volume:
       size: 4Gi
-metadata:
-  description: Stack with Node.js 14
-  displayName: Node.js Runtime
-  language: nodejs
-  name: nodejs-vue
-  projectType: nodejs
-  tags:
-    - NodeJS
-    - Express
-    - ubi8
-  version: 1.0.1
-schemaVersion: 2.0.0
-starterProjects:
-  - name: nodejs-vue-starter
-    git:
-      checkoutFrom:
-        revision: main
-      remotes:
-        origin: https://github.com/schultzp2020/devfile-starter-projects.git
-    subDir: nodejs-vue
+commands:
+  - exec:
+      commandLine: yarn install --frozen-lockfile
+      component: builder
+      group:
+        isDefault: true
+        kind: build
+      workingDir: /project
+    id: install
+  - exec:
+      commandLine: yarn build && yarn install --production --ignore-scripts --prefer-offline
+      component: builder
+      group:
+        isDefault: true
+        kind: run
+      workingDir: /project
+    id: build

@@ -1,3 +1,32 @@
+schemaVersion: 2.0.0
+metadata:
+  description: Stack with Nuxt.js 2
+  displayName: Nuxt.js
+  language: javascript
+  name: nodejs-nuxtjs
+  projectType: nuxtjs
+  tags:
+    - NodeJS
+    - Nuxtjs
+  version: 1.0.0
+starterProjects:
+  - name: nodejs-nuxtjs-starter
+    git:
+      checkoutFrom:
+        revision: main
+      remotes:
+        origin: https://github.com/schultzp2020/devfile-starter-projects.git
+    subDir: nodejs-nuxtjs
+components:
+  - container:
+      endpoints:
+        - name: http
+          targetPort: 3000
+      image: node:latest
+      memoryLimit: 1024Mi
+      mountSources: true
+      sourceMapping: /project
+    name: runtime
 commands:
   - exec:
       commandLine: yarn install --frozen-lockfile
@@ -33,33 +62,3 @@ commands:
         kind: run
       workingDir: /project
     id: run
-components:
-  - container:
-      endpoints:
-        - name: http
-          targetPort: 3000
-      image: node:latest
-      memoryLimit: 1024Mi
-      mountSources: true
-      sourceMapping: /project
-    name: runtime
-metadata:
-  description: Stack with Node.js 14
-  displayName: Node.js Runtime
-  language: nodejs
-  name: nodejs-nuxtjs
-  projectType: nodejs
-  tags:
-    - NodeJS
-    - Express
-    - ubi8
-  version: 1.0.1
-schemaVersion: 2.0.0
-starterProjects:
-  - name: nodejs-nuxtjs-starter
-    git:
-      checkoutFrom:
-        revision: main
-      remotes:
-        origin: https://github.com/schultzp2020/devfile-starter-projects.git
-    subDir: nodejs-nuxtjs

@@ -5,9 +5,9 @@ metadata:
   displayName: Vert.x Java
   description: Upstream Vert.x using Java
   icon: https://raw.githubusercontent.com/vertx-web-site/vertx-logo/master/vertx-logo.svg
-  tags: ["Java", "Vert.x"]
-  projectType: "vertx"
-  language: "java"
+  tags: ['Java', 'Vert.x']
+  projectType: 'vertx'
+  language: 'java'
 starterProjects:
   - name: vertx-http-example
     git:
@@ -89,17 +89,17 @@ components:
   - name: runtime
     container:
       endpoints:
-      - exposure: public
-        path: /
-        name: '8080-tcp'
-        targetPort: 8080
-        protocol: http
+        - exposure: public
+          path: /
+          name: '8080-tcp'
+          targetPort: 8080
+          protocol: http
       image: quay.io/eclipse/che-java11-maven:next
       memoryLimit: 512Mi
       mountSources: true
       volumeMounts:
-      - name: m2
-        path: /home/user/.m2
+        - name: m2
+          path: /home/user/.m2
   - name: m2
     volume:
       size: 3Gi

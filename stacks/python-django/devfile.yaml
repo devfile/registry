@@ -5,9 +5,9 @@ metadata:
   displayName: Django
   description: Python3.7 with Django
   icon: https://static.djangoproject.com/img/logos/django-logo-positive.svg
-  tags: ["Python", "pip", "Django"]
-  projectType: "django"
-  language: "python"
+  tags: ['Python', 'pip', 'Django']
+  projectType: 'django'
+  language: 'python'
 starterProjects:
   - name: django-example
     git:
@@ -31,7 +31,7 @@ commands:
       component: py-web
   - id: run-app
     exec:
-      commandLine: "python manage.py runserver 0.0.0.0:8000"
+      commandLine: 'python manage.py runserver 0.0.0.0:8000'
       workingDir: ${PROJECTS_ROOT}
       component: py-web
       group:
@@ -39,12 +39,12 @@ commands:
         isDefault: true
   - id: run-migrations
     exec:
-      commandLine: "python manage.py migrate"
+      commandLine: 'python manage.py migrate'
       workingDir: ${PROJECTS_ROOT}
       component: py-web
   - id: debug
     exec:
-      commandLine: "pip install --user debugpy && export DEBUG_MODE=True && python -m debugpy --listen 0.0.0.0:${DEBUG_PORT} manage.py runserver 0.0.0.0:8000 --noreload --nothreading"
+      commandLine: 'pip install --user debugpy && export DEBUG_MODE=True && python -m debugpy --listen 0.0.0.0:${DEBUG_PORT} manage.py runserver 0.0.0.0:8000 --noreload --nothreading'
       workingDir: ${PROJECTS_ROOT}
       component: py-web
       group:

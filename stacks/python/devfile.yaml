@@ -5,9 +5,9 @@ metadata:
   displayName: Python
   description: Python Stack with Python 3.7
   icon: https://www.python.org/static/community_logos/python-logo-generic.svg
-  tags: ["Python", "pip"]
-  projectType: "python"
-  language: "python"
+  tags: ['Python', 'pip']
+  projectType: 'python'
+  language: 'python'
 starterProjects:
   - name: python-example
     git:
@@ -31,7 +31,7 @@ commands:
       component: py-web
   - id: run-app
     exec:
-      commandLine: "python app.py"
+      commandLine: 'python app.py'
       workingDir: ${PROJECTS_ROOT}
       component: py-web
       group:
@@ -39,7 +39,7 @@ commands:
         isDefault: true
   - id: debugpy
     exec:
-      commandLine: "pip install --user debugpy && python -m debugpy --listen 0.0.0.0:${DEBUG_PORT} app.py"
+      commandLine: 'pip install --user debugpy && python -m debugpy --listen 0.0.0.0:${DEBUG_PORT} app.py'
       workingDir: ${PROJECTS_ROOT}
       component: py-web
       group:
