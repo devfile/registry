@@ -5,6 +5,7 @@ metadata:
   website: https://quarkus.io
   displayName: Quarkus Java
   description: Quarkus with Java
+  icon: https://design.jboss.org/quarkus/logo/final/SVG/quarkus_icon_rgb_default.svg
   tags: ["Java", "Quarkus"]
   projectType: "quarkus"
   language: "java"
@@ -18,8 +19,8 @@ starterProjects:
 components:
   - name: tools
     container:
-      image: quay.io/eclipse/che-quarkus:nightly
-      memoryLimit: 1512Mi
+      image: registry.access.redhat.com/ubi8/openjdk-11
+      memoryLimit: 512Mi ## default app nowhere needs this but leaving room for expansion.
       mountSources: true
       volumeMounts:
         - name: m2

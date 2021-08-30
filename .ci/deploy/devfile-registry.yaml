@@ -1,0 +1,229 @@
+#
+# Copyright (c) 2021 Red Hat, Inc.
+# This program and the accompanying materials are made
+# available under the terms of the Eclipse Public License 2.0
+# which is available at https://www.eclipse.org/legal/epl-2.0/
+#
+# SPDX-License-Identifier: EPL-2.0
+#
+---
+apiVersion: v1
+kind: Template
+metadata:
+  name: devfile-registry
+objects:
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app: devfile-registry
+    name: devfile-registry
+  spec:
+    replicas: ${{REPLICAS}}
+    selector:
+      matchLabels:
+        app: devfile-registry
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+    template:
+      metadata:
+        labels:
+          app: devfile-registry
+      spec:
+        volumes:
+          - name: devfile-registry-storage
+            emptyDir: {}
+          - name: config
+            configMap:
+              name: devfile-registry
+              items:
+                - key: registry-config.yml
+                  path: config.yml
+          - name: viewer-config
+            configMap:
+              name: devfile-registry
+              items:
+                - key: devfile-registry-hosts.json
+                  path: devfile-registry-hosts.json
+        containers:
+        - image: ${DEVFILE_INDEX_IMAGE}:${DEVFILE_INDEX_IMAGE_TAG}
+          imagePullPolicy: "${DEVFILE_INDEX_PULL_POLICY}"
+          name: devfile-registry
+          ports:
+          - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 3
+          startupProbe:
+            httpGet:
+              path: /viewer
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: ${DEVFILE_INDEX_MEMORY_LIMIT}
+          env:
+            - name: DEVFILE_VIEWER_ROOT
+              value: "/viewer"
+            - name: ENABLE_TELEMETRY
+              value: ${ENABLE_TELEMETRY}
+            - name: REGISTRY_NAME
+              value: ${REGISTRY_NAME}
+          volumeMounts:
+          - name: viewer-config
+            mountPath: "/app/config"
+            readOnly: false
+        - image: ${OCI_REGISTRY_IMAGE}:${OCI_REGISTRY_IMAGE_TAG}
+          imagePullPolicy: "${OCI_REGISTRY_PULL_POLICY}"
+          name: oci-registry
+          livenessProbe:
+            httpGet:
+              path: /v2
+              port: 5000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /v2
+              port: 5000
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            timeoutSeconds: 3
+          resources:
+            requests:
+              cpu: 1m
+              memory: 5Mi
+            limits:
+              cpu: 100m
+              memory: ${OCI_REGISTRY_MEMORY_LIMIT}
+          volumeMounts:
+          - name: devfile-registry-storage
+            mountPath: "/var/lib/registry"
+          - name: config
+            mountPath: "/etc/docker/registry"
+            readOnly: true
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: devfile-registry
+    labels:
+      app: devfile-registry
+  spec:
+    ports:
+      - name: http
+        protocol: TCP
+        port: 8080
+        targetPort: 8080
+      - name: oci-metrics
+        protocol: TCP
+        port: 5001
+        targetPort: 5001
+      - name: index-metrics
+        protocol: TCP
+        port: 7071
+        targetPort: 7071
+    selector:
+      app: devfile-registry
+- apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: devfile-registry
+    annotations:
+      qontract.recycle: "true"
+  data:
+    registry-config.yml: |
+      version: 0.1
+      log:
+        fields:
+          service: registry
+      storage:
+        cache:
+          blobdescriptor: inmemory
+        filesystem:
+          rootdirectory: /var/lib/registry
+      http:
+        addr: :5000
+        headers:
+          X-Content-Type-Options: [nosniff]
+        debug:
+          addr: :5001
+          prometheus:
+            enabled: true
+            path: /metrics
+
+    devfile-registry-hosts.json: |
+      {
+        "Community": {
+          "url": "http://localhost:8080"
+        }
+      }
+
+parameters:
+- name: DEVFILE_INDEX_IMAGE
+  value: quay.io/devfile/devfile-index
+  displayName: Devfile registry index image
+  description: Devfile registry index docker image. Defaults to quay.io/devfile/devfile-index
+- name: DEVFILE_INDEX_IMAGE_TAG
+  value: next
+  displayName: Devfile registry version
+  description: Devfile registry version which defaults to next
+- name: DEVFILE_INDEX_MEMORY_LIMIT
+  value: 256Mi
+  displayName: Memory Limit
+  description: Maximum amount of memory the container can use. Defaults 256Mi
+- name: DEVFILE_INDEX_PULL_POLICY
+  value: Always
+  displayName: Devfile registry image pull policy
+  description: Always pull by default. Can be IfNotPresent
+- name: OCI_REGISTRY_IMAGE
+  value: quay.io/devfile/oci-registry
+  displayName: OCI registry index image
+  description: OCI registry index docker image. Defaults to quay.io/devfile/devfile-index
+- name: OCI_REGISTRY_IMAGE_TAG
+  value: next
+  displayName: OCI registry version
+  description: OCI registry version which defaults to next
+- name: OCI_REGISTRY_MEMORY_LIMIT
+  value: 256Mi
+  displayName: Memory Limit
+  description: Maximum amount of memory the OCI registry container can use. Defaults 256Mi
+- name: OCI_REGISTRY_PULL_POLICY
+  value: Always
+  displayName: Devfile registry image pull policy
+  description: Always pull by default. Can be IfNotPresent
+- name: REPLICAS
+  value: "1"
+  displayName: Devfile registry replicas
+  description: The number of replicas for the hosted devfile registry service
+- name: ENABLE_TELEMETRY
+  value: "false"
+  displayName: Devfile registry telemetry enablement
+  description: Option to opt in or opt out devfile registry telemetry
+- name: REGISTRY_NAME
+  value: devfile-community-registry
+  displayName: Devfile registry name
+  description: The registry name that is used as identifier for devfile telemetry

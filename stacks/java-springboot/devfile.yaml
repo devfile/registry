@@ -6,7 +6,7 @@ metadata:
   description: Spring Boot® using Java
   tags: ["Java", "Spring"]
   globalMemoryLimit: 2674Mi
-  icon: https://www.eclipse.org/che/images/logo-eclipseche.svg
+  icon: https://spring.io/images/projects/spring-edf462fec682b9d48cf628eaf9e19521.svg
   projectType: "spring"
   language: "java"
 starterProjects:
@@ -17,7 +17,7 @@ starterProjects:
 components:
   - name: tools
     container:
-      image: quay.io/eclipse/che-java11-maven:nightly
+      image: quay.io/eclipse/che-java11-maven:next
       memoryLimit: 768Mi
       mountSources: true
       endpoints:

@@ -4,6 +4,7 @@ metadata:
   version: 1.1.0
   displayName: Vert.x Java
   description: Upstream Vert.x using Java
+  icon: https://raw.githubusercontent.com/vertx-web-site/vertx-logo/master/vertx-logo.svg
   tags: ["Java", "Vert.x"]
   projectType: "vertx"
   language: "java"
@@ -93,7 +94,7 @@ components:
         name: '8080-tcp'
         targetPort: 8080
         protocol: http
-      image: quay.io/eclipse/che-java11-maven:nightly
+      image: quay.io/eclipse/che-java11-maven:next
       memoryLimit: 512Mi
       mountSources: true
       volumeMounts:
