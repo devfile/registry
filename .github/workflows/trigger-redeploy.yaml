@@ -1,0 +1,30 @@
+#
+# Copyright (c) 2021 Red Hat, Inc.
+# This program and the accompanying materials are made
+# available under the terms of the Eclipse Public License 2.0
+# which is available at https://www.eclipse.org/legal/epl-2.0/
+#
+# SPDX-License-Identifier: EPL-2.0
+#
+name: CI
+
+on:
+  repository_dispatch:
+    types: [trigger-redeploy]
+
+jobs:
+  build:
+    name: Check registry build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v2
+    
+    - name: Trigger Deploy to Staging
+      run: |
+        echo ${{ github.event.client_payload.repo }}
+        echo ${{ github.event.client_payload.sha }}
+        git config --global user.email "jcollier@redhat.com"
+        git config --global user.name "John Collier"
+        git commit --allow-empty -m "Trigger deploy based on devfile/${{ github.event.client_payload.repo }}@${{ github.event.client_payload.sha }}"
+        git push "https://${{secrets.CI_ROBOT}}:${{secrets.REPO_ACCESS_TOKEN}}@github.com/devfile/registry"
