@@ -154,6 +154,7 @@ objects:
     name: devfile-registry
     annotations:
       qontract.recycle: "true"
+      registry.version: "2ca701f108df91385368c620cc23cc65b38aaf77"
   data:
     registry-config.yml: |
       version: 0.1
