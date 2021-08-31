@@ -36,7 +36,7 @@ cd ..
 export GLOBALODOCONFIG=$(pwd)/preferences.yaml
 
 # Install the devfile registry
-oc process -f .ci/deploy/devfile-registry.yaml -p DEVFILE_INDEX_IMAGE=$IMG -p DEVFILE_INDEX_IMAGE_TAG=$TAG -p REPLICAS=3 | \
+oc process -f .ci/deploy/devfile-registry.yaml -p IMAGE=$IMG -p IMAGE_TAG=$TAG -p REPLICAS=3 | \
   oc apply -f -
 
 # Deploy the routes for the registry
