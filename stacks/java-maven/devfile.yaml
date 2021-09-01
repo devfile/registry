@@ -7,6 +7,7 @@ metadata:
   tags: ['Java', 'Maven']
   projectType: 'maven'
   language: 'java'
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/java-maven.jpg
 starterProjects:
   - name: springbootproject
     git:
