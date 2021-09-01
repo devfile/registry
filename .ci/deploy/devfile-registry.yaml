@@ -49,7 +49,7 @@ objects:
                 - key: devfile-registry-hosts.json
                   path: devfile-registry-hosts.json
         containers:
-        - image: ${DEVFILE_INDEX_IMAGE}:${DEVFILE_INDEX_IMAGE_TAG}
+        - image: ${DEVFILE_INDEX_IMAGE}:${IMAGE_TAG}
           imagePullPolicy: "${DEVFILE_INDEX_PULL_POLICY}"
           name: devfile-registry
           ports:
@@ -154,6 +154,7 @@ objects:
     name: devfile-registry
     annotations:
       qontract.recycle: "true"
+      registry.version: "2ca701f108df91385368c620cc23cc65b38aaf77"
   data:
     registry-config.yml: |
       version: 0.1
@@ -188,6 +189,10 @@ parameters:
   displayName: Devfile registry index image
   description: Devfile registry index docker image. Defaults to quay.io/devfile/devfile-index
 - name: DEVFILE_INDEX_IMAGE_TAG
+  value: next
+  displayName: Devfile registry version
+  description: Devfile registry version which defaults to next
+- name: IMAGE_TAG
   value: next
   displayName: Devfile registry version
   description: Devfile registry version which defaults to next
