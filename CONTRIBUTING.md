@@ -60,7 +60,7 @@ Updating an existing devfile stack is relatively straightforward:
 The devfile samples used in this devfile registry are stored in the `extraDevfileEntries.yaml` file in the root of the repository. To add a devfile sample:
 
 1) Open `extraDevfileEntries.yaml` in an editor
-2) Add an entry to the file similar to the following:
+2) Add an entry to the file with the following required fields:
 ```
   - name: <sample-name>
     displayName: <sample-display-name>
@@ -73,7 +73,7 @@ The devfile samples used in this devfile registry are stored in the `extraDevfil
       remotes:
         origin: <link-to-sample-git-repository>
 ```
-3) Fill in the fields in the angle brackets based on your sample.
+3) Fill in the fields in the angle brackets based on your sample. Note that there must be only one git remote for the devfile sample. 
 4) Open a pull request against this repository with your changes.
 
 ### Updating
