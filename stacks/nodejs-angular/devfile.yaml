@@ -1,0 +1,60 @@
+schemaVersion: 2.0.0
+metadata:
+  description: Stack with Angular 12
+  displayName: Angular
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/angular.svg
+  language: typescript
+  name: nodejs-angular
+  projectType: angular
+  tags:
+    - NodeJS
+    - Angular
+  version: 1.0.0
+starterProjects:
+  - name: nodejs-angular-starter
+    git:
+      checkoutFrom:
+        revision: main
+      remotes:
+        origin: https://github.com/devfile-samples/devfile-stack-nodejs-angular.git
+components:
+  - container:
+      image: node:slim
+      memoryLimit: 1024Mi
+      mountSources: true
+      sourceMapping: /project
+      volumeMounts:
+        - name: dist
+          path: /project/dist/nodejs-angular
+    name: builder
+  - container:
+      endpoints:
+        - name: http
+          targetPort: 8080
+      image: nginxinc/nginx-unprivileged:alpine
+      memoryLimit: 1024Mi
+      mountSources: false
+      volumeMounts:
+        - name: dist
+          path: /usr/share/nginx/html
+    name: server
+  - name: dist
+    volume:
+      size: 4Gi
+commands:
+  - exec:
+      commandLine: yarn install --frozen-lockfile
+      component: builder
+      group:
+        isDefault: true
+        kind: build
+      workingDir: /project
+    id: install
+  - exec:
+      commandLine: yarn build && yarn install --production --ignore-scripts --prefer-offline
+      component: builder
+      group:
+        isDefault: true
+        kind: run
+      workingDir: /project
+    id: run

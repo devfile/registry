@@ -4,14 +4,14 @@ metadata:
   version: 1.1.0
   displayName: Maven Java
   description: Upstream Maven and OpenJDK 11
-  tags: ["Java", "Maven"]
-  projectType: "maven"
-  language: "java"
+  tags: ['Java', 'Maven']
+  projectType: 'maven'
+  language: 'java'
 starterProjects:
   - name: springbootproject
     git:
       remotes:
-        origin: "https://github.com/odo-devfiles/springboot-ex.git"
+        origin: 'https://github.com/odo-devfiles/springboot-ex.git'
 components:
   - name: tools
     container:
@@ -30,21 +30,21 @@ commands:
   - id: mvn-package
     exec:
       component: tools
-      commandLine: "mvn -Dmaven.repo.local=/home/user/.m2/repository package"
+      commandLine: 'mvn -Dmaven.repo.local=/home/user/.m2/repository package'
       group:
         kind: build
         isDefault: true
-  - id: run 
+  - id: run
     exec:
       component: tools
-      commandLine: "java -jar target/*.jar"
+      commandLine: 'java -jar target/*.jar'
       group:
         kind: run
         isDefault: true
   - id: debug
     exec:
       component: tools
-      commandLine: "java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=${DEBUG_PORT},suspend=n -jar target/*.jar"
+      commandLine: 'java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=${DEBUG_PORT},suspend=n -jar target/*.jar'
       group:
         kind: debug
         isDefault: true

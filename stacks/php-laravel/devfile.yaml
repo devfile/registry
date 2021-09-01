@@ -1,0 +1,92 @@
+schemaVersion: 2.0.0
+metadata:
+  description: Stack with Laravel 8
+  displayName: Laravel
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/laravel.svg
+  language: php
+  name: php-laravel
+  projectType: laravel
+  tags:
+    - PHP
+    - Composer
+    - Laravel
+  version: 1.0.0
+starterProjects:
+  - name: php-laravel-starter
+    git:
+      checkoutFrom:
+        revision: main
+      remotes:
+        origin: https://github.com/devfile-samples/devfile-stack-php-laravel.git
+components:
+  - container:
+      endpoints:
+        - name: http
+          targetPort: 8000
+      image: composer:latest
+      memoryLimit: 1024Mi
+      mountSources: true
+      sourceMapping: /project
+    name: runtime
+commands:
+  - exec:
+      commandLine: composer install
+      component: runtime
+      group:
+        isDefault: false
+        kind: build
+      workingDir: /project
+    id: install
+  - exec:
+      commandLine: cp .env.example .env
+      component: runtime
+      group:
+        isDefault: false
+        kind: build
+      workingDir: /project
+    id: cp-env
+  - exec:
+      commandLine: php artisan config:clear
+      component: runtime
+      group:
+        isDefault: false
+        kind: build
+      workingDir: /project
+    id: clear-config
+  - exec:
+      commandLine: php artisan key:generate
+      component: runtime
+      group:
+        isDefault: false
+        kind: build
+      workingDir: /project
+    id: gen-new-app-key
+  - exec:
+      commandLine: composer dump-autoload
+      component: runtime
+      group:
+        isDefault: false
+        kind: build
+      workingDir: /project
+    id: composer-dump
+  - composite:
+      commands:
+        - install
+        - cp-env
+        - clear-config
+        - gen-new-app-key
+        - composer-dump
+      group:
+        isDefault: true
+        kind: build
+      label: Provision Laravel Server
+      parallel: false
+    id: init-server
+  - exec:
+      commandLine: php artisan serve --host=0.0.0.0
+      component: runtime
+      group:
+        isDefault: true
+        kind: run
+      workingDir: /project
+    id: run

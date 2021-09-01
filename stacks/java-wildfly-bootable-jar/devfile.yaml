@@ -6,9 +6,9 @@ metadata:
   displayName: WildFly Bootable Jar
   description: Java stack with WildFly in bootable Jar mode, OpenJDK 11 and Maven 3.5
   icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark.svg
-  tags:  ["RHEL8", "Java", "OpenJDK", "Maven", "WildFly", "Microprofile", "WildFly Bootable"]
-  projectType: "WildFly"
-  language: "java"
+  tags: ['RHEL8', 'Java', 'OpenJDK', 'Maven', 'WildFly', 'Microprofile', 'WildFly Bootable']
+  projectType: 'WildFly'
+  language: 'java'
 starterProjects:
   - name: microprofile-config
     description: WildFly Eclipse Microprofile Config Quickstart
@@ -102,11 +102,11 @@ components:
         # Enabling Jaeger tracing
         - name: WILDFLY_TRACING_ENABLED
           value: 'true'
-        # Define the Jaeger service name 
+        # Define the Jaeger service name
         - name: JAEGER_SERVICE_NAME
           value: 'microprofile-opentracing'
         # Configure Jaeger traces
-        - name: JAEGER_REPORTER_LOG_SPANS 
+        - name: JAEGER_REPORTER_LOG_SPANS
           value: 'true'
         - name: JAEGER_SAMPLER_TYPE
           value: 'const'

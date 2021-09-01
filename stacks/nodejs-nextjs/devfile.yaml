@@ -1,0 +1,64 @@
+schemaVersion: 2.0.0
+metadata:
+  description: Stack with Next.js 11
+  displayName: Next.js
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/next-js.svg
+  language: javascript
+  name: nodejs-nextjs
+  projectType: nextjs
+  tags:
+    - NodeJS
+    - Nextjs
+  version: 1.0.0
+starterProjects:
+  - name: nodejs-nextjs-starter
+    git:
+      checkoutFrom:
+        revision: main
+      remotes:
+        origin: https://github.com/devfile-samples/devfile-stack-nodejs-nextjs.git
+components:
+  - container:
+      endpoints:
+        - name: http
+          targetPort: 3000
+      image: node:slim
+      memoryLimit: 1024Mi
+      mountSources: true
+      sourceMapping: /project
+    name: runtime
+commands:
+  - exec:
+      commandLine: yarn install --frozen-lockfile
+      component: runtime
+      group:
+        isDefault: false
+        kind: build
+      workingDir: /project
+    id: install
+  - exec:
+      commandLine: yarn build && yarn install --production --ignore-scripts --prefer-offline
+      component: runtime
+      group:
+        isDefault: false
+        kind: build
+      workingDir: /project
+    id: build
+  - composite:
+      commands:
+        - install
+        - build
+      group:
+        isDefault: true
+        kind: build
+      label: Provision Next.js Server
+      parallel: false
+    id: init-server
+  - exec:
+      commandLine: yarn start
+      component: runtime
+      group:
+        isDefault: true
+        kind: run
+      workingDir: /project
+    id: run

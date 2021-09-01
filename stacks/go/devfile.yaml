@@ -1,0 +1,45 @@
+schemaVersion: 2.0.0
+metadata:
+  description: Stack with the latest Go version
+  displayName: Go Runtime
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/golang.svg
+  language: go
+  name: go
+  projectType: go
+  tags:
+    - Go
+  version: 1.0.0
+starterProjects:
+  - name: go-starter
+    git:
+      checkoutFrom:
+        revision: main
+      remotes:
+        origin: https://github.com/devfile-samples/devfile-stack-go.git
+components:
+  - container:
+      endpoints:
+        - name: http
+          targetPort: 8080
+      image: golang:latest
+      memoryLimit: 1024Mi
+      mountSources: true
+      sourceMapping: /project
+    name: runtime
+commands:
+  - exec:
+      commandLine: GOCACHE=/project/.cache go build main.go
+      component: runtime
+      group:
+        isDefault: true
+        kind: build
+      workingDir: /project
+    id: build
+  - exec:
+      commandLine: ./main
+      component: runtime
+      group:
+        isDefault: true
+        kind: run
+      workingDir: /project
+    id: run

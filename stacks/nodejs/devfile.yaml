@@ -5,14 +5,14 @@ metadata:
   displayName: Node.js Runtime
   description: Stack with Node.js 14
   icon: https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg
-  tags: ["NodeJS", "Express", "ubi8"]
-  projectType: "nodejs"
-  language: "nodejs"
+  tags: ['NodeJS', 'Express', 'ubi8']
+  projectType: 'nodejs'
+  language: 'javascript'
 starterProjects:
   - name: nodejs-starter
     git:
       remotes:
-        origin: "https://github.com/odo-devfiles/nodejs-ex.git"
+        origin: 'https://github.com/odo-devfiles/nodejs-ex.git'
 components:
   - name: runtime
     container:
