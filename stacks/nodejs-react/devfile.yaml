@@ -2,6 +2,7 @@ schemaVersion: 2.0.0
 metadata:
   description: Stack with React 17
   displayName: React
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/react.svg
   language: javascript
   name: nodejs-react
   projectType: react
@@ -15,8 +16,7 @@ starterProjects:
       checkoutFrom:
         revision: main
       remotes:
-        origin: https://github.com/schultzp2020/devfile-starter-projects.git
-    subDir: nodejs-react
+        origin: https://github.com/devfile-samples/devfile-stacks-nodejs-react.git
 components:
   - container:
       image: node:slim

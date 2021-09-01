@@ -2,6 +2,7 @@ schemaVersion: 2.0.0
 metadata:
   description: Stack with Next.js 11
   displayName: Next.js
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/next-js.svg
   language: javascript
   name: nodejs-nextjs
   projectType: nextjs
@@ -15,8 +16,7 @@ starterProjects:
       checkoutFrom:
         revision: main
       remotes:
-        origin: https://github.com/schultzp2020/devfile-starter-projects.git
-    subDir: nodejs-nextjs
+        origin: https://github.com/devfile-samples/devfile-stack-nodejs-nextjs.git
 components:
   - container:
       endpoints:

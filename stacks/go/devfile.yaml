@@ -2,6 +2,7 @@ schemaVersion: 2.0.0
 metadata:
   description: Stack with the latest Go version
   displayName: Go Runtime
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/golang.svg
   language: go
   name: go
   projectType: go
@@ -14,7 +15,7 @@ starterProjects:
       checkoutFrom:
         revision: main
       remotes:
-        origin: https://github.com/schultzp2020/devfile-starter-projects.git
+        origin: https://github.com/devfile-samples/devfile-stack-go.git
     subDir: go
 components:
   - container:

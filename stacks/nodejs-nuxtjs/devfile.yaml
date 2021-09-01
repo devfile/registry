@@ -2,6 +2,7 @@ schemaVersion: 2.0.0
 metadata:
   description: Stack with Nuxt.js 2
   displayName: Nuxt.js
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/nuxt-js.svg
   language: javascript
   name: nodejs-nuxtjs
   projectType: nuxtjs
@@ -15,8 +16,7 @@ starterProjects:
       checkoutFrom:
         revision: main
       remotes:
-        origin: https://github.com/schultzp2020/devfile-starter-projects.git
-    subDir: nodejs-nuxtjs
+        origin: https://github.com/devfile-samples/devfile-stack-nodejs-nuxtjs.git
 components:
   - container:
       endpoints:

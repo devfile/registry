@@ -2,6 +2,7 @@ schemaVersion: 2.0.0
 metadata:
   description: Stack with Angular 12
   displayName: Angular
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/angular.svg
   language: typescript
   name: nodejs-angular
   projectType: angular
@@ -15,8 +16,7 @@ starterProjects:
       checkoutFrom:
         revision: main
       remotes:
-        origin: https://github.com/schultzp2020/devfile-starter-projects.git
-    subDir: nodejs-angular
+        origin: https://github.com/devfile-samples/devfile-stack-nodejs-angular.git
 components:
   - container:
       image: node:slim

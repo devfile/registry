@@ -2,6 +2,7 @@ schemaVersion: 2.0.0
 metadata:
   description: Stack with Vue 3
   displayName: Vue
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/vue.svg
   language: javascript
   name: nodejs-vue
   projectType: vue
@@ -15,8 +16,7 @@ starterProjects:
       checkoutFrom:
         revision: main
       remotes:
-        origin: https://github.com/schultzp2020/devfile-starter-projects.git
-    subDir: nodejs-vue
+        origin: https://github.com/devfile-samples/devfile-stack-nodejs-vue.git
 components:
   - container:
       image: node:slim

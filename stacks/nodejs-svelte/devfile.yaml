@@ -2,6 +2,7 @@ schemaVersion: 2.0.0
 metadata:
   description: Stack with Svelte 3
   displayName: Svelte
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/svelte.svg
   language: javascript
   name: nodejs-svelte
   projectType: svelte
@@ -15,8 +16,7 @@ starterProjects:
       checkoutFrom:
         revision: main
       remotes:
-        origin: https://github.com/schultzp2020/devfile-starter-projects.git
-    subDir: nodejs-svelte
+        origin: https://github.com/devfile-samples/devfile-stack-nodejs-svelte.git
 components:
   - container:
       image: node:slim
