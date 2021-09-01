@@ -16,7 +16,6 @@ starterProjects:
         revision: main
       remotes:
         origin: https://github.com/devfile-samples/devfile-stack-go.git
-    subDir: go
 components:
   - container:
       endpoints:
