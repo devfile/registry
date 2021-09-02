@@ -10,7 +10,7 @@ name: CI
 
 on:
   repository_dispatch:
-    types: [trigger-redeploy]
+    types: [build]
 
 jobs:
   build:
