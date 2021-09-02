@@ -19,7 +19,9 @@ jobs:
     steps:
     - name: Check out code
       uses: actions/checkout@v2
-    
+      with:
+        persist-credentials: false
+
     - name: Trigger Deploy to Staging
       run: |
         git config --global user.email "${{secrets.CI_ROBOT_EMAIL}}"
