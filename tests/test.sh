@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# DUMMY comment to test a PR build.
+
 set -x
 DEVFILES_DIR="$(pwd)/stacks/"
 FAILED_TESTS=""
