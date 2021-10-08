@@ -28,6 +28,9 @@ TAG="$(echo $REGISTRY_IMAGE | cut -d':' -f2)"
 # Create a project/namespace for running the tests in
 oc new-project devfile-registry-test
 
+# Install yq
+curl -sL -O https://github.com/mikefarah/yq/releases/download/v4.9.5/yq_linux_amd64 -o /usr/local/bin/yq && mv ./yq_linux_amd64 /usr/local/bin/yq && chmod +x /usr/local/bin/yq
+
 # Build odo
 git clone https://github.com/openshift/odo.git
 cd odo && make
