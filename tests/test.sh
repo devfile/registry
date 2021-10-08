@@ -54,10 +54,12 @@ test() {
         return 1
     fi
     
+    # Get the starter project name
+    starterProject=$(yq e '.starterProjects[0].name' devfile.yaml)
     if [ "$REGISTRY" = "local" ]; then
-      $ODO_PATH create "$devfileName" --devfile "$devfilePath" --starter || error=true
+      $ODO_PATH create "$devfileName" --devfile "$devfilePath" --starter $starterProject || error=true
     else
-      $ODO_PATH create "$devfileName" --starter || error=true
+      $ODO_PATH create "$devfileName" --starter $starterProject || error=true
     fi
 
     if $error; then
