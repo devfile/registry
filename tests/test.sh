@@ -127,8 +127,12 @@ test() {
 
 
 ODO_PATH=$1
+YQ_PATH=$2
 if [ -z $ODO_PATH ]; then
   ODO_PATH=odo
+fi
+if [ -z $YQ_PATH ]; then
+  YQ_PATH=yq
 fi
 if [ -z $ENV ]; then
   ENV=minikube
