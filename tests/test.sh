@@ -56,10 +56,12 @@ test() {
         return 1
     fi
     
+    # Get the starter project name
+    starterProject=$(yq e '.starterProjects[0].name' $devfilePath)
     if [ "$REGISTRY" = "local" ]; then
-      $ODO_PATH create "$devfileName" --devfile "$devfilePath" --starter || error=true
+      $ODO_PATH create --devfile "$devfilePath" --starter $starterProject || error=true
     else
-      $ODO_PATH create "$devfileName" --starter || error=true
+      $ODO_PATH create "$devfileName" --starter $starterProject || error=true
     fi
 
     if $error; then
@@ -127,8 +129,12 @@ test() {
 
 
 ODO_PATH=$1
+YQ_PATH=$2
 if [ -z $ODO_PATH ]; then
   ODO_PATH=odo
+fi
+if [ -z $YQ_PATH ]; then
+  YQ_PATH=yq
 fi
 if [ -z $ENV ]; then
   ENV=minikube
