@@ -29,6 +29,8 @@ components:
         value: app.csproj
       - name: ASPNETCORE_ENVIRONMENT
         value: Development
+      - name: ASPNETCORE_URLS
+        value: http://*:8080
     endpoints:
     - name: http-8080
       targetPort: 8080
