@@ -4,7 +4,11 @@ metadata:
   displayName: .NET Core 3.1
   description: Stack with .NET Core 3.1
   icon: https://developers.redhat.com/sites/default/files/styles/large/public/dotnet-logo3x3.jpg
+  language: C#
   projectType: dotnet
+  tags:
+    - C#
+    - dotnet
   version: 1.0.0
 
 starterProjects:
