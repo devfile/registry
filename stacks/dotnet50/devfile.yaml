@@ -4,10 +4,9 @@ metadata:
   displayName: .NET 5.0
   description: Stack with .NET 5.0
   icon: https://developers.redhat.com/sites/default/files/styles/large/public/dotnet-logo3x3.jpg
-  language: C#
+  language: dotnet
   projectType: dotnet
   tags:
-    - C#
     - dotnet
   version: 1.0.0
 
