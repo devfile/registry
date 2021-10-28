@@ -43,7 +43,7 @@ commands:
 - id: build
   exec:
     workingDir: ${PROJECTS_ROOT}
-    commandLine: dotnet build -c $CONFIGURATION $STARTUP_PROJECT
+    commandLine: kill $(pidof dotnet); dotnet build -c $CONFIGURATION $STARTUP_PROJECT /p:UseSharedCompilation=false
     component: dotnet
     group:
       isDefault: true
