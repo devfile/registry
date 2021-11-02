@@ -180,7 +180,7 @@ objects:
       {
         "Community": {
           "url": "http://localhost:8080",
-          "alias": "$REGISTRY_HOST_ALIAS"
+          "alias": "${REGISTRY_HOST_ALIAS}"
         }
       }
 
