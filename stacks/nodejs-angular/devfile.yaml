@@ -19,7 +19,7 @@ starterProjects:
         origin: https://github.com/devfile-samples/devfile-stack-nodejs-angular.git
 components:
   - container:
-      image: node:slim
+      image: node:lts-slim
       memoryLimit: 1024Mi
       mountSources: true
       sourceMapping: /project
