@@ -8,10 +8,10 @@ metadata:
   projectType: dotnet
   tags:
     - dotnet
-  version: 1.0.0
+  version: 1.0.1
 
 starterProjects:
-  - name: dotnet
+  - name: s2i-example
     git:
       checkoutFrom:
         remote: origin
@@ -42,7 +42,7 @@ commands:
 - id: build
   exec:
     workingDir: ${PROJECTS_ROOT}
-    commandLine: dotnet build -c $CONFIGURATION $STARTUP_PROJECT
+    commandLine: kill $(pidof dotnet); dotnet build -c $CONFIGURATION $STARTUP_PROJECT /p:UseSharedCompilation=false
     component: dotnet
     group:
       isDefault: true
