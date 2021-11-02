@@ -90,6 +90,7 @@ test() {
     $ODO_PATH push || error=true
     if $error; then
         echo "ERROR push failed"
+        $ODO_PATH delete -f -a || error=true
         $ODO_PATH project delete -f "$devfileName"
         FAILED_TESTS="$FAILED_TESTS $devfileName"
         return 1

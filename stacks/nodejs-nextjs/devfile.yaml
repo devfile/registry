@@ -22,7 +22,7 @@ components:
       endpoints:
         - name: http
           targetPort: 3000
-      image: node:slim
+      image: node:lts-slim
       memoryLimit: 1024Mi
       mountSources: true
       sourceMapping: /project

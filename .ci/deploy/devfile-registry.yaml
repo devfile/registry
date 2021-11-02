@@ -179,7 +179,8 @@ objects:
     devfile-registry-hosts.json: |
       {
         "Community": {
-          "url": "http://localhost:8080"
+          "url": "http://localhost:8080",
+          "alias": "$REGISTRY_HOST_ALIAS"
         }
       }
 
@@ -232,3 +233,7 @@ parameters:
   value: devfile-community-registry
   displayName: Devfile registry name
   description: The registry name that is used as identifier for devfile telemetry
+- name: REGISTRY_HOST_ALIAS
+  value: https://registry.stage.devfile.io
+  displayName: Devfile registry hostname alias
+  description: The hostname alias to pass in to the devfile registry viewer's config.
