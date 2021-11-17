@@ -92,6 +92,8 @@ objects:
               value: ${ENABLE_TELEMETRY}
             - name: REGISTRY_NAME
               value: ${REGISTRY_NAME}
+            - name: ANALYTICS_WRITE_KEY
+              value: ${ANALYTICS_WRITE_KEY}
           volumeMounts:
           - name: viewer-config
             mountPath: "/app/config"
@@ -237,3 +239,7 @@ parameters:
   value: https://registry.stage.devfile.io
   displayName: Devfile registry hostname alias
   description: The hostname alias to pass in to the devfile registry viewer's config.
+- name: ANALYTICS_WRITE_KEY
+  value: S2rfQJo8xA9nyLhdY2CnTrWqlUgHqmwq
+  displayName: Public write key for segment.io
+  description: The public write key to send viewer analytics to segment.io
