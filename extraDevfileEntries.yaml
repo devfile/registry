@@ -7,6 +7,7 @@ samples:
     tags: ["NodeJS", "Express"]
     projectType: nodejs
     language: nodejs
+    provider: Red Hat
     git:
       remotes:
         origin: https://github.com/nodeshift-starters/devfile-sample.git
@@ -17,6 +18,7 @@ samples:
     tags: ["Java", "Quarkus"]
     projectType: quarkus
     language: java
+    provider: Red Hat
     git:
       remotes:
         origin: https://github.com/devfile-samples/devfile-sample-code-with-quarkus.git
@@ -27,6 +29,7 @@ samples:
     tags: ["Java", "Spring"]
     projectType: springboot
     language: java
+    provider: Red Hat
     git:
       remotes:
         origin: https://github.com/devfile-samples/devfile-sample-java-springboot-basic.git
@@ -37,6 +40,7 @@ samples:
     tags: ["Python"]
     projectType: python
     language: python
+    provider: Red Hat
     git:
       remotes:
         origin: https://github.com/devfile-samples/devfile-sample-python-basic.git
