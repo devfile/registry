@@ -26,7 +26,6 @@ components:
       image: composer:2.1.11
       memoryLimit: 1024Mi
       mountSources: true
-      sourceMapping: /project
     name: runtime
 commands:
   - exec:
@@ -35,7 +34,7 @@ commands:
       group:
         isDefault: false
         kind: build
-      workingDir: /project
+      workingDir: ${PROJECT_SOURCE}
     id: install
   - exec:
       commandLine: cp .env.example .env
@@ -43,7 +42,7 @@ commands:
       group:
         isDefault: false
         kind: build
-      workingDir: /project
+      workingDir: ${PROJECT_SOURCE}
     id: cp-env
   - exec:
       commandLine: php artisan config:clear
@@ -51,7 +50,7 @@ commands:
       group:
         isDefault: false
         kind: build
-      workingDir: /project
+      workingDir: ${PROJECT_SOURCE}
     id: clear-config
   - exec:
       commandLine: php artisan key:generate
@@ -59,7 +58,7 @@ commands:
       group:
         isDefault: false
         kind: build
-      workingDir: /project
+      workingDir: ${PROJECT_SOURCE}
     id: gen-new-app-key
   - exec:
       commandLine: composer dump-autoload
@@ -67,7 +66,7 @@ commands:
       group:
         isDefault: false
         kind: build
-      workingDir: /project
+      workingDir: ${PROJECT_SOURCE}
     id: composer-dump
   - composite:
       commands:
@@ -88,5 +87,5 @@ commands:
       group:
         isDefault: true
         kind: run
-      workingDir: /project
+      workingDir: ${PROJECT_SOURCE}
     id: run

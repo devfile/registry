@@ -24,16 +24,15 @@ components:
       image: golang:latest
       memoryLimit: 1024Mi
       mountSources: true
-      sourceMapping: /project
     name: runtime
 commands:
   - exec:
-      commandLine: GOCACHE=/project/.cache go build main.go
+      commandLine: GOCACHE=${PROJECT_SOURCE}/.cache go build main.go
       component: runtime
       group:
         isDefault: true
         kind: build
-      workingDir: /project
+      workingDir: ${PROJECT_SOURCE}
     id: build
   - exec:
       commandLine: ./main
@@ -41,5 +40,5 @@ commands:
       group:
         isDefault: true
         kind: run
-      workingDir: /project
+      workingDir: ${PROJECT_SOURCE}
     id: run
