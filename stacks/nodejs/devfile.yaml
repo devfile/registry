@@ -19,7 +19,6 @@ components:
       image: registry.access.redhat.com/ubi8/nodejs-14:latest
       memoryLimit: 1024Mi
       mountSources: true
-      sourceMapping: /project
       endpoints:
         - name: http-3000
           targetPort: 3000
@@ -28,7 +27,7 @@ commands:
     exec:
       component: runtime
       commandLine: npm install
-      workingDir: /project
+      workingDir: ${PROJECT_SOURCE}
       group:
         kind: build
         isDefault: true
@@ -36,7 +35,7 @@ commands:
     exec:
       component: runtime
       commandLine: npm start
-      workingDir: /project
+      workingDir: ${PROJECT_SOURCE}
       group:
         kind: run
         isDefault: true
@@ -44,7 +43,7 @@ commands:
     exec:
       component: runtime
       commandLine: npm run debug
-      workingDir: /project
+      workingDir: ${PROJECT_SOURCE}
       group:
         kind: debug
         isDefault: true
@@ -52,7 +51,7 @@ commands:
     exec:
       component: runtime
       commandLine: npm test
-      workingDir: /project
+      workingDir: ${PROJECT_SOURCE}
       group:
         kind: test
         isDefault: true

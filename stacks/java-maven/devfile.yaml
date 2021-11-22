@@ -31,6 +31,7 @@ commands:
   - id: mvn-package
     exec:
       component: tools
+      workingDir: ${PROJECT_SOURCE}
       commandLine: 'mvn -Dmaven.repo.local=/home/user/.m2/repository package'
       group:
         kind: build
@@ -38,6 +39,7 @@ commands:
   - id: run
     exec:
       component: tools
+      workingDir: ${PROJECT_SOURCE}
       commandLine: 'java -jar target/*.jar'
       group:
         kind: run
@@ -45,6 +47,7 @@ commands:
   - id: debug
     exec:
       component: tools
+      workingDir: ${PROJECT_SOURCE}
       commandLine: 'java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=${DEBUG_PORT},suspend=n -jar target/*.jar'
       group:
         kind: debug

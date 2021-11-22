@@ -108,6 +108,7 @@ commands:
     exec:
       commandLine: mvn package -Dmaven.test.skip=true
       component: runtime
+      workingDir: ${PROJECT_SOURCE}
       group:
         isDefault: true
         kind: build
@@ -115,6 +116,7 @@ commands:
     exec:
       commandLine: mvn io.reactiverse:vertx-maven-plugin:run
       component: runtime
+      workingDir: ${PROJECT_SOURCE}
       group:
         isDefault: true
         kind: run
@@ -122,6 +124,7 @@ commands:
     exec:
       commandLine: mvn io.reactiverse:vertx-maven-plugin:debug -Ddebug.port=${DEBUG_PORT}
       component: runtime
+      workingDir: ${PROJECT_SOURCE}
       group:
         isDefault: true
         kind: debug

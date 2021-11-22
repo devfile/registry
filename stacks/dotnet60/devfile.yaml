@@ -42,7 +42,7 @@ components:
 commands:
 - id: build
   exec:
-    workingDir: ${PROJECTS_ROOT}
+    workingDir: ${PROJECT_SOURCE}
     commandLine: kill $(pidof dotnet); dotnet build -c $CONFIGURATION $STARTUP_PROJECT /p:UseSharedCompilation=false
     component: dotnet
     group:
@@ -51,7 +51,7 @@ commands:
 
 - id: run
   exec:
-    workingDir: ${PROJECTS_ROOT}
+    workingDir: ${PROJECT_SOURCE}
     commandLine: dotnet run -c $CONFIGURATION --no-build --project $STARTUP_PROJECT --no-launch-profile
     component: dotnet
     group:

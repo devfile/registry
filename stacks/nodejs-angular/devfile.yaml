@@ -48,7 +48,7 @@ commands:
       group:
         isDefault: true
         kind: build
-      workingDir: /project
+      workingDir: ${PROJECT_SOURCE}
     id: install
   - exec:
       commandLine: yarn build && yarn install --production --ignore-scripts --prefer-offline
@@ -56,5 +56,5 @@ commands:
       group:
         isDefault: true
         kind: run
-      workingDir: /project
+      workingDir: ${PROJECT_SOURCE}
     id: run

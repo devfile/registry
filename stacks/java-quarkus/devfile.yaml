@@ -36,7 +36,7 @@ commands:
     exec:
       component: tools
       commandLine: 'mvn -Dmaven.repo.local=/home/user/.m2/repository compile'
-      workingDir: $PROJECTS_ROOT
+      workingDir: ${PROJECT_SOURCE}
   - id: dev-run
     exec:
       component: tools
@@ -45,7 +45,7 @@ commands:
       group:
         kind: run
         isDefault: true
-      workingDir: $PROJECTS_ROOT
+      workingDir: ${PROJECT_SOURCE}
   - id: dev-debug
     exec:
       component: tools
@@ -54,7 +54,7 @@ commands:
       group:
         kind: debug
         isDefault: true
-      workingDir: $PROJECTS_ROOT
+      workingDir: ${PROJECT_SOURCE}
 events:
   postStart:
     - init-compile
