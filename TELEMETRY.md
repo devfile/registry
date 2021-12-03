@@ -4,12 +4,12 @@ Red Hat may collect telemetry data about your use of the _**Devfile Registry and
 
 _**Devfile Registry and supporting features***_ includes the following:
 
-**Hosted Services**
+#### Hosted Services
 * Community devfile registry
 * Openshift product registry
-* Devfile landing page at https://devfile.io/
+* [Devfile landing page](https://devfile.io/)
 
-**Client Integrations**
+#### Client Integrations
 * Registry library calls from client such as ODO and Openshift Developer Console
 
 # What information is collected?
@@ -34,8 +34,8 @@ Red Hat does not intend to collect personal information. If we find that persona
 
 # Opting out of Telemetry Data Collection
 
-The hosted services are public, anonymous use services which do not provide an option to disable telemetry.
+The [hosted services](#hosted-services) are public, anonymous use services which do not provide an option to disable telemetry.
 
-For client integrations, telemetry consent is managed by those tools and the decision to opt-in/out will have an impact on the type of data that is sent to the Devfile Registry.
+For [client integrations](#client-integrations), telemetry consent is managed by those tools and the decision to opt-in/out will have an impact on the type of data that is sent to the Devfile Registry.
 Users that opt-out will not have their client collected data sent to the integration, however information about the type of client and its interactions with the Devfile Registry will be tracked.
 
