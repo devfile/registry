@@ -1,11 +1,16 @@
 # Telemetry Data Collection Notice
 
-Red Hat may collect telemetry data about your use of the _Devfile Registry and supporting features*_. This data allows Red Hat to monitor the service and improve Red Hat offerings and support.
+Red Hat may collect telemetry data about your use of the _**Devfile Registry and supporting features***_. This data allows Red Hat to monitor the service and improve Red Hat offerings and support.
 
-_Devfile Registry and supporting features*_ includes the following:
-* Hosted devfile registry at https://registry.devfile.io
+_**Devfile Registry and supporting features***_ includes the following:
+
+**Hosted Services**
+* Community devfile registry
+* Openshift product registry
 * Devfile landing page at https://devfile.io/
-* Registry library calls from client integrations such as ODO and Openshift Developer Console
+
+**Client Integrations**
+* Registry library calls from client such as ODO and Openshift Developer Console
 
 # What information is collected?
 
@@ -13,7 +18,7 @@ Metrics include data such as:
 
 * Usage information regarding components, features and extensions
 * A unique random identifier generated during a visit used solely to identify the number of unique users of the software
-* Country/region information derived from a browser's language setting and **not** based on a user's IP address
+* Country/region information derived from a browser's or OS locale setting
 
 # Third Party Service Providers
 
@@ -29,6 +34,8 @@ Red Hat does not intend to collect personal information. If we find that persona
 
 # Opting out of Telemetry Data Collection
 
-The Devfile Registry, being a public, anonymous use service does not provide the option to disable telemetry.    
-For users of local clients such as ODO or Openshift Developer Console, the decision to opt-out will be made in those tools and will be respected across the integration
+The hosted services are public, anonymous use services which do not provide an option to disable telemetry.
+
+For client integrations, telemetry consent is managed by those tools and the decision to opt-in/out will have an impact on the type of data that is sent to the Devfile Registry.
+Users that opt-out will not have their client collected data sent to the integration, however information about the type of client and its interactions with the Devfile Registry will be tracked.
 
