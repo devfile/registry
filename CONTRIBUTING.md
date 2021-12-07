@@ -20,25 +20,29 @@ The following are required to build the devfile index container image containing
     - Core odo functions such as `odo create --devfile <devfile.yaml>`, `odo push`, `odo url create` should work with the devfile.
     - PR tests on this repository will verify this functionality as well.
 
-2) Verify your Devfile stack has the following metadata fields at a minimum:
+2) Verify your Devfile stack functions with Che.
+  
+    - Opening the URL `https://workspaces.openshift.com/#<devfile_url>` in your browser should start a workspace where `exec` commands run successfully. Type `task+<space>` in the IDE command palette to see the list of available commands.
+
+3) Verify your Devfile stack has the following metadata fields at a minimum:
 
     - Name: The name of the devfile stack, e.g. `java-springboot`.
     - Display Name: The longer name of your devfile stack, e.g. `Spring Boot®`.
     - Description: A brief description of your devfile stack, e.g. `Spring Boot® using Java`.
     - Version: The version of your stack, in semnatic version format, e.g. `1.0.0`.
 
-2) Add a folder for the stack to `stacks/` in this repository.
+4) Add a folder for the stack to `stacks/` in this repository.
   
     - Make sure the name matches the devfile stack's name and be in the format `<language>-<framework>`. E.g. `java-quarkus`, `python-django`, etc.
 
-3) Add the devfile.yaml and any other necessary files for the stack under the stack folder.
+5) Add the devfile.yaml and any other necessary files for the stack under the stack folder.
 
-4) Run the `.ci/build.sh` to build the registry into a container image.
+6) Run the `.ci/build.sh` to build the registry into a container image.
   
     - This will also validate the devfiles in this repository, making sure they conform to a minimum standard.
     - This step will also be run in the PR build for the repository.
 
-5) Open a pull request against this repository with a brief description of the change.
+7) Open a pull request against this repository with a brief description of the change.
 
 
 ### Updating
@@ -59,8 +63,12 @@ Updating an existing devfile stack is relatively straightforward:
 
 The devfile samples used in this devfile registry are stored in the `extraDevfileEntries.yaml` file in the root of the repository. To add a devfile sample:
 
-1) Open `extraDevfileEntries.yaml` in an editor
-2) Add an entry to the file with the following required fields:
+1) Verify your Sample functions with Che.
+  
+    - Opening the URL `https://workspaces.openshift.com/#<repository_url>` in your browser should start a workspace where `exec` commands run successfully. Type `task+<space>` in the IDE command palette to see the list of available commands.
+
+2) Open `extraDevfileEntries.yaml` in an editor
+3) Add an entry to the file with the following required fields:
 ```
   - name: <sample-name>
     displayName: <sample-display-name>
@@ -73,8 +81,8 @@ The devfile samples used in this devfile registry are stored in the `extraDevfil
       remotes:
         origin: <link-to-sample-git-repository>
 ```
-3) Fill in the fields in the angle brackets based on your sample. Note that there must be only one git remote for the devfile sample. 
-4) Open a pull request against this repository with your changes.
+4) Fill in the fields in the angle brackets based on your sample. Note that there must be only one git remote for the devfile sample. 
+5) Open a pull request against this repository with your changes.
 
 ### Updating
 
