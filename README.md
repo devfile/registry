@@ -31,6 +31,10 @@ From there, push the container image to a container registry of your choice and 
 
 For contributing Devfile stacks to this registry, please see [CONTRIBUTING.md](CONTRIBUTING.md).
 
+## Telemetry
+The Devfile Registry is configured with telemetry to collect only the necessary information to improve the value of our service.  For further details, refer to 
+the [Telemetry Data Collection Notice](TELEMETRY.md)
+
 
 ## Reporting any issue
 
