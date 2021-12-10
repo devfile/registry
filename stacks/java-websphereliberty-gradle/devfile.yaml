@@ -16,17 +16,17 @@
 # limitations under the License.
 schemaVersion: 2.1.0
 metadata:
-  name: java-openliberty
-  version: 0.8.0
-  displayName: 'Open Liberty Maven'
-  description: Java application Maven-built stack using the Open Liberty runtime
+  name: java-websphereliberty-gradle
+  version: 0.3.0
+  displayName: 'WebSphere Liberty Gradle'
+  description: Java application Gradle-built stack using the WebSphere Liberty runtime
   icon: https://raw.githubusercontent.com/OpenLiberty/logos/7fbb132949b9b2589e18c8d5665c1b107028a21d/logomark/svg/OL_logomark.svg
-  tags: ['Java', 'Maven']
+  tags: ['Java', 'Gradle']
   architectures: ['amd64', 'ppc64le', 's390x']
   language: 'java'
-  projectType: 'openliberty'
-  alpha.build-dockerfile: 'https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-maven-0.8.0/Dockerfile'
-  alpha.deployment-manifest: 'https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-maven-0.8.0/app-deploy.yaml'
+  projectType: 'websphereliberty'
+  alpha.build-dockerfile: 'https://github.com/OpenLiberty/devfile-stack/releases/download/websphere-liberty-gradle-0.3.0/Dockerfile'
+  alpha.deployment-manifest: 'https://github.com/OpenLiberty/devfile-stack/releases/download/websphere-liberty-gradle-0.3.0/app-deploy.yaml'
 starterProjects:
   - name: rest
     git:
@@ -34,13 +34,11 @@ starterProjects:
         origin: 'https://github.com/OpenLiberty/devfile-stack-starters.git'
 variables:
   # Liberty runtime version. Minimum recommended: 21.0.0.9
-  liberty-version: "21.0.0.12"
-  liberty-plugin-version: "3.5.1"
+  liberty-version: 21.0.0.12
 components:
   - name: dev
     container:
-      # In the original upstream of this devfile, the image used is openliberty/devfile-stack:<x.y.z>, which is built from the repository: https://github.com/OpenLiberty/devfile-stack
-      image: icr.io/appcafe/open-liberty-devfile-stack:{{liberty-version}}
+      image: icr.io/appcafe/websphere-liberty-devfile-stack:{{liberty-version}}-gradle
       memoryLimit: 1512Mi
       mountSources: true
       endpoints:
@@ -53,7 +51,7 @@ commands:
   - id: run
     exec:
       component: dev
-      commandLine: mvn -DinstallDirectory=/opt/ol/wlp -Ddebug=false -DhotTests=true -DcompileWait=3 io.openliberty.tools:liberty-maven-plugin:{{liberty-plugin-version}}:dev
+      commandLine: gradle -Dgradle.user.home=/.gradle libertyDev -Pliberty.runtime.version={{liberty-version}} -Pliberty.runtime.name=wlp-javaee8 -Pliberty.runtime.group=com.ibm.websphere.appserver.runtime --libertyDebug=false --hotTests --compileWait=3
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -62,7 +60,7 @@ commands:
   - id: run-test-off
     exec:
       component: dev
-      commandLine: mvn -DinstallDirectory=/opt/ol/wlp -Ddebug=false io.openliberty.tools:liberty-maven-plugin:{{liberty-plugin-version}}:dev
+      commandLine: gradle -Dgradle.user.home=/.gradle libertyDev -Pliberty.runtime.version={{liberty-version}} -Pliberty.runtime.name=wlp-javaee8 -Pliberty.runtime.group=com.ibm.websphere.appserver.runtime --libertyDebug=false
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -71,17 +69,16 @@ commands:
   - id: debug
     exec:
       component: dev
-      commandLine: mvn -DinstallDirectory=/opt/ol/wlp -DdebugPort=${DEBUG_PORT} io.openliberty.tools:liberty-maven-plugin:{{liberty-plugin-version}}:dev -Dliberty.env.WLP_DEBUG_REMOTE=y
+      commandLine: gradle -Dgradle.user.home=/.gradle libertyDev -Pliberty.runtime.version={{liberty-version}} -Pliberty.runtime.name=wlp-javaee8 -Pliberty.runtime.group=com.ibm.websphere.appserver.runtime --libertyDebugPort=${DEBUG_PORT} -Pliberty.server.env.WLP_DEBUG_REMOTE=y
       workingDir: /projects
       hotReloadCapable: true
       group:
         kind: debug
         isDefault: true
   - id: test
-    # The 'test' command requires an already active container. Multi-module apps require compilation prior to test processing.
     exec:
       component: dev
-      commandLine: mvn compiler:compile failsafe:integration-test failsafe:verify
+      commandLine: gradle -Dgradle.user.home=/.gradle test -Pliberty.runtime.version={{liberty-version}} -Pliberty.runtime.name=wlp-javaee8 -Pliberty.runtime.group=com.ibm.websphere.appserver.runtime
       workingDir: /projects
       hotReloadCapable: true
       group:

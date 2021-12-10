@@ -16,17 +16,17 @@
 # limitations under the License.
 schemaVersion: 2.1.0
 metadata:
-  name: java-openliberty
+  name: java-websphereliberty
   version: 0.8.0
-  displayName: 'Open Liberty Maven'
-  description: Java application Maven-built stack using the Open Liberty runtime
+  displayName: 'WebSphere Liberty Maven'
+  description: Java application Maven-built stack using the WebSphere Liberty runtime
   icon: https://raw.githubusercontent.com/OpenLiberty/logos/7fbb132949b9b2589e18c8d5665c1b107028a21d/logomark/svg/OL_logomark.svg
   tags: ['Java', 'Maven']
   architectures: ['amd64', 'ppc64le', 's390x']
   language: 'java'
-  projectType: 'openliberty'
-  alpha.build-dockerfile: 'https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-maven-0.8.0/Dockerfile'
-  alpha.deployment-manifest: 'https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-maven-0.8.0/app-deploy.yaml'
+  projectType: 'websphereliberty'
+  alpha.build-dockerfile: 'https://github.com/OpenLiberty/devfile-stack/releases/download/websphere-liberty-maven-0.8.0/Dockerfile'
+  alpha.deployment-manifest: 'https://github.com/OpenLiberty/devfile-stack/releases/download/websphere-liberty-maven-0.8.0/app-deploy.yaml'
 starterProjects:
   - name: rest
     git:
@@ -40,7 +40,7 @@ components:
   - name: dev
     container:
       # In the original upstream of this devfile, the image used is openliberty/devfile-stack:<x.y.z>, which is built from the repository: https://github.com/OpenLiberty/devfile-stack
-      image: icr.io/appcafe/open-liberty-devfile-stack:{{liberty-version}}
+      image: icr.io/appcafe/websphere-liberty-devfile-stack:{{liberty-version}}
       memoryLimit: 1512Mi
       mountSources: true
       endpoints:
@@ -53,7 +53,7 @@ commands:
   - id: run
     exec:
       component: dev
-      commandLine: mvn -DinstallDirectory=/opt/ol/wlp -Ddebug=false -DhotTests=true -DcompileWait=3 io.openliberty.tools:liberty-maven-plugin:{{liberty-plugin-version}}:dev
+      commandLine: mvn -DinstallDirectory=/opt/ibm/wlp -Ddebug=false -DhotTests=true -DcompileWait=3 io.openliberty.tools:liberty-maven-plugin:{{liberty-plugin-version}}:dev
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -62,7 +62,7 @@ commands:
   - id: run-test-off
     exec:
       component: dev
-      commandLine: mvn -DinstallDirectory=/opt/ol/wlp -Ddebug=false io.openliberty.tools:liberty-maven-plugin:{{liberty-plugin-version}}:dev
+      commandLine: mvn -DinstallDirectory=/opt/ibm/wlp -Ddebug=false io.openliberty.tools:liberty-maven-plugin:{{liberty-plugin-version}}:dev
       workingDir: /projects
       hotReloadCapable: true
       group:
@@ -71,7 +71,7 @@ commands:
   - id: debug
     exec:
       component: dev
-      commandLine: mvn -DinstallDirectory=/opt/ol/wlp -DdebugPort=${DEBUG_PORT} io.openliberty.tools:liberty-maven-plugin:{{liberty-plugin-version}}:dev -Dliberty.env.WLP_DEBUG_REMOTE=y
+      commandLine: mvn -DinstallDirectory=/opt/ibm/wlp -DdebugPort=${DEBUG_PORT} io.openliberty.tools:liberty-maven-plugin:{{liberty-plugin-version}}:dev -Dliberty.env.WLP_DEBUG_REMOTE=y
       workingDir: /projects
       hotReloadCapable: true
       group:
