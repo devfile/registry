@@ -1,4 +1,4 @@
-schemaVersion: 2.0.0
+schemaVersion: 2.1.0
 metadata:
   description: Stack with Nuxt.js 2
   displayName: Nuxt.js
@@ -9,7 +9,7 @@ metadata:
   tags:
     - NodeJS
     - Nuxtjs
-  version: 1.0.0
+  version: 1.0.1
 starterProjects:
   - name: nodejs-nuxtjs-starter
     git:
@@ -24,41 +24,19 @@ components:
           targetPort: 3000
       image: node:lts
       memoryLimit: 1024Mi
-      mountSources: true
-      sourceMapping: /project
     name: runtime
 commands:
   - exec:
-      commandLine: yarn install --frozen-lockfile
+      commandLine: yarn install
       component: runtime
-      group:
-        isDefault: false
-        kind: build
-      workingDir: /project
-    id: install
-  - exec:
-      commandLine: yarn build && yarn install --production --ignore-scripts --prefer-offline
-      component: runtime
-      group:
-        isDefault: false
-        kind: build
-      workingDir: /project
-    id: build
-  - composite:
-      commands:
-        - install
-        - build
       group:
         isDefault: true
         kind: build
-      label: Provision Nuxt.js Server
-      parallel: false
-    id: init-server
+    id: install
   - exec:
-      commandLine: yarn start
+      commandLine: yarn dev
       component: runtime
       group:
         isDefault: true
         kind: run
-      workingDir: /project
     id: run

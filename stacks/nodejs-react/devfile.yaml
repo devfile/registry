@@ -1,4 +1,4 @@
-schemaVersion: 2.0.0
+schemaVersion: 2.1.0
 metadata:
   description: Stack with React 17
   displayName: React
@@ -9,7 +9,7 @@ metadata:
   tags:
     - NodeJS
     - React
-  version: 1.0.0
+  version: 1.0.1
 starterProjects:
   - name: nodejs-react-starter
     git:
@@ -19,42 +19,24 @@ starterProjects:
         origin: https://github.com/devfile-samples/devfile-stacks-nodejs-react.git
 components:
   - container:
-      image: node:lts-slim
-      memoryLimit: 1024Mi
-      mountSources: true
-      sourceMapping: /project
-      volumeMounts:
-        - name: dist
-          path: /project/build
-    name: builder
-  - container:
       endpoints:
         - name: http
-          targetPort: 8080
-      image: nginxinc/nginx-unprivileged:alpine
+          targetPort: 3000
+      image: node:lts-slim
       memoryLimit: 1024Mi
-      mountSources: false
-      volumeMounts:
-        - name: dist
-          path: /usr/share/nginx/html
-    name: server
-  - name: dist
-    volume:
-      size: 4Gi
+    name: runtime
 commands:
   - exec:
-      commandLine: yarn install --frozen-lockfile
-      component: builder
+      commandLine: yarn install
+      component: runtime
       group:
         isDefault: true
         kind: build
-      workingDir: /project
     id: install
   - exec:
-      commandLine: yarn build && yarn install --production --ignore-scripts --prefer-offline
-      component: builder
+      commandLine: yarn dev
+      component: runtime
       group:
         isDefault: true
         kind: run
-      workingDir: /project
     id: run
