@@ -34,7 +34,7 @@ commands:
         kind: build
     id: install
   - exec:
-      commandLine: yarn dev
+      commandLine: yarn start
       component: runtime
       group:
         isDefault: true
