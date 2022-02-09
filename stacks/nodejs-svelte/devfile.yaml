@@ -19,6 +19,9 @@ starterProjects:
         origin: https://github.com/devfile-samples/devfile-stack-nodejs-svelte.git
 components:
   - container:
+      env:
+        - name: HOST
+          value: '0.0.0.0'
       endpoints:
         - name: http
           targetPort: 5000
