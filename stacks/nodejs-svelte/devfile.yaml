@@ -35,7 +35,7 @@ commands:
       group:
         isDefault: true
         kind: build
-      workingDir: /projects
+      workingDir: ${PROJECT_SOURCE}
     id: install
   - exec:
       commandLine: yarn dev
@@ -43,5 +43,5 @@ commands:
       group:
         isDefault: true
         kind: run
-      workingDir: /projects
+      workingDir: ${PROJECT_SOURCE}
     id: run

@@ -32,7 +32,7 @@ commands:
   - id: run-app
     exec:
       commandLine: 'python app.py'
-      workingDir: ${PROJECTS_ROOT}
+      workingDir: ${PROJECT_SOURCE}
       component: py-web
       group:
         kind: run
@@ -40,7 +40,7 @@ commands:
   - id: debugpy
     exec:
       commandLine: 'pip install --user debugpy && python -m debugpy --listen 0.0.0.0:${DEBUG_PORT} app.py'
-      workingDir: ${PROJECTS_ROOT}
+      workingDir: ${PROJECT_SOURCE}
       component: py-web
       group:
         kind: debug

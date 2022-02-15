@@ -19,9 +19,6 @@ starterProjects:
         origin: https://github.com/devfile-samples/devfile-stack-nodejs-angular.git
 components:
   - container:
-      env:
-        - name: HOST
-          value: '0.0.0.0'
       endpoints:
         - name: http
           targetPort: 4200
@@ -35,7 +32,7 @@ commands:
       group:
         isDefault: true
         kind: build
-      workingDir: /projects
+      workingDir: ${PROJECT_SOURCE}
     id: install
   - exec:
       commandLine: yarn start
@@ -43,5 +40,5 @@ commands:
       group:
         isDefault: true
         kind: run
-      workingDir: /projects
+      workingDir: ${PROJECT_SOURCE}
     id: run
