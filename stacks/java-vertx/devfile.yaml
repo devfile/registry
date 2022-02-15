@@ -100,6 +100,9 @@ components:
       volumeMounts:
         - name: m2
           path: /home/user/.m2
+      env:
+        - name: DEBUG_PORT
+          value: "5858"
   - name: m2
     volume:
       size: 3Gi

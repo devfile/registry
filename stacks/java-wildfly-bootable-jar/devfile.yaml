@@ -120,6 +120,8 @@ components:
           value: '-Djava.security.egd=file:/dev/urandom'
         - name: MVN_ARGS_APPEND
           value: '-Pbootable-jar-openshift -Djkube.skip=true -s /home/jboss/.m2/settings.xml -Dmaven.repo.local=/home/jboss/.m2/repository -Dcom.redhat.xpaas.repo.jbossorg'
+        - name: DEBUG_PORT
+          value: "5858"
       endpoints:
         - name: 'http'
           targetPort: 8080
