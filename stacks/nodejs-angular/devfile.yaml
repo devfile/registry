@@ -1,4 +1,4 @@
-schemaVersion: 2.0.0
+schemaVersion: 2.1.0
 metadata:
   description: Stack with Angular 12
   displayName: Angular
@@ -9,7 +9,7 @@ metadata:
   tags:
     - NodeJS
     - Angular
-  version: 1.0.0
+  version: 1.0.1
 starterProjects:
   - name: nodejs-angular-starter
     git:
@@ -19,42 +19,27 @@ starterProjects:
         origin: https://github.com/devfile-samples/devfile-stack-nodejs-angular.git
 components:
   - container:
-      image: node:lts-slim
-      memoryLimit: 1024Mi
-      mountSources: true
-      sourceMapping: /project
-      volumeMounts:
-        - name: dist
-          path: /project/dist/nodejs-angular
-    name: builder
-  - container:
       endpoints:
         - name: http
-          targetPort: 8080
-      image: nginxinc/nginx-unprivileged:alpine
+          targetPort: 4200
+      image: node:lts-slim
       memoryLimit: 1024Mi
-      mountSources: false
-      volumeMounts:
-        - name: dist
-          path: /usr/share/nginx/html
-    name: server
-  - name: dist
-    volume:
-      size: 4Gi
+    name: runtime
 commands:
   - exec:
-      commandLine: yarn install --frozen-lockfile
-      component: builder
+      commandLine: yarn install
+      component: runtime
       group:
         isDefault: true
         kind: build
       workingDir: ${PROJECT_SOURCE}
     id: install
   - exec:
-      commandLine: yarn build && yarn install --production --ignore-scripts --prefer-offline
-      component: builder
+      commandLine: yarn start
+      component: runtime
       group:
         isDefault: true
         kind: run
+      hotReloadCapable: true
       workingDir: ${PROJECT_SOURCE}
     id: run
