@@ -19,8 +19,6 @@ starterProjects:
         origin: https://github.com/devfile-samples/devfile-stacks-nodejs-react.git
 components:
   - container:
-      command:
-        - tail -f /dev/null
       endpoints:
         - name: http
           targetPort: 3000

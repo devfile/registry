@@ -19,8 +19,6 @@ starterProjects:
         origin: https://github.com/devfile-samples/devfile-stack-nodejs-svelte.git
 components:
   - container:
-      command:
-        - tail -f /dev/null
       env:
         - name: HOST
           value: '0.0.0.0'

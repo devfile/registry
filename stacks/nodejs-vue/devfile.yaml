@@ -19,8 +19,6 @@ starterProjects:
         origin: https://github.com/devfile-samples/devfile-stack-nodejs-vue.git
 components:
   - container:
-      command:
-        - tail -f /dev/null
       endpoints:
         - name: http
           targetPort: 3000
