@@ -12,7 +12,7 @@ starterProjects:
   - name: django-example
     git:
       remotes:
-        origin: https://github.com/odo-devfiles/python-django-ex
+        origin: https://github.com/devfile-samples/python-django-ex
 components:
   - name: py-web
     container:

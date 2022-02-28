@@ -12,7 +12,7 @@ starterProjects:
   - name: python-example
     git:
       remotes:
-        origin: https://github.com/odo-devfiles/python-ex
+        origin: https://github.com/devfile-samples/python-ex
 components:
   - name: py-web
     container:

@@ -32,11 +32,8 @@ oc new-project devfile-registry-test
 curl -sL https://github.com/mikefarah/yq/releases/download/v4.9.5/yq_linux_amd64 -o yq && chmod +x yq
 YQ_PATH=$(realpath yq)
 
-# Build odo
-git clone https://github.com/openshift/odo.git
-cd odo && make
-cd ..
-
+# Download odo
+curl -sL https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/latest/odo-linux-amd64 -o odo && chmod +x odo
 export GLOBALODOCONFIG=$(pwd)/preferences.yaml
 
 # Install the devfile registry
@@ -55,8 +52,8 @@ REGISTRY_HOSTNAME=$(oc get route devfile-registry -o jsonpath="{.spec.host}")
 echo $REGISTRY_HOSTNAME
 
 # Delete the default devfile registry and add the test one we just stood up
-$(realpath odo/odo) registry delete DefaultDevfileRegistry -f
-$(realpath odo/odo) registry add TestDevfileRegistry http://$REGISTRY_HOSTNAME
+$(realpath odo) registry delete DefaultDevfileRegistry -f
+$(realpath odo) registry add TestDevfileRegistry http://$REGISTRY_HOSTNAME
 
 # Run the devfile validation tests
-ENV=openshift REGISTRY=remote tests/test.sh $(realpath odo/odo) $YQ_PATH
+ENV=openshift REGISTRY=remote tests/test.sh $(realpath odo) $YQ_PATH
