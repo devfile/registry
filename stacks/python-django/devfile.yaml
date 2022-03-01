@@ -25,6 +25,7 @@ commands:
   - id: pip-install-requirements
     exec:
       commandLine: pip install --user -r requirements.txt
+      workingDir: ${PROJECT_SOURCE}
       group:
         kind: build
         isDefault: true
