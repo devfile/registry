@@ -14,10 +14,10 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-schemaVersion: 2.1.0
+schemaVersion: 2.2.0
 metadata:
   name: java-openliberty
-  version: 0.8.1
+  version: 0.9.0
   displayName: 'Open Liberty Maven'
   description: Java application Maven-built stack using the Open Liberty runtime
   icon: https://raw.githubusercontent.com/OpenLiberty/logos/7fbb132949b9b2589e18c8d5665c1b107028a21d/logomark/svg/OL_logomark.svg
@@ -25,8 +25,8 @@ metadata:
   architectures: ['amd64', 'ppc64le', 's390x']
   language: 'java'
   projectType: 'openliberty'
-  alpha.build-dockerfile: 'https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-maven-0.8.1/Dockerfile'
-  alpha.deployment-manifest: 'https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-maven-0.8.1/app-deploy.yaml'
+  alpha.build-dockerfile: 'https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-maven-0.9.0/Dockerfile'
+  alpha.deployment-manifest: 'https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-maven-0.9.0/app-deploy.yaml'
 starterProjects:
   - name: rest
     git:
@@ -37,6 +37,8 @@ variables:
   liberty-version: '22.0.0.1'
   liberty-plugin-version: '3.5.1'
   mvn-cmd: 'mvn'
+  CONTAINER_IMAGE: 'demo-image:0'
+  COMPONENT_NAME: 'demo-app'
 components:
   - name: dev
     container:
@@ -50,6 +52,26 @@ components:
           name: ep1
           targetPort: 9080
           protocol: http
+#
+#deploy components
+#
+  - name: outerloop-build-app
+    image:
+        imageName: "{{CONTAINER_IMAGE}}"
+        dockerfile:
+          uri: ./Dockerfile
+          buildContext: ${PROJECTS_ROOT}
+  - name: outerloop-build-stack
+    image:
+       imageName: "{{CONTAINER_IMAGE}}"
+       dockerfile:
+        # eventually should be remote stack based Dockerfile: odo github issue #5450  
+        # ie: 'https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-maven-0.9.0/Dockerfile'
+        uri: ./Dockerfile
+        buildContext: ${PROJECTS_ROOT}  
+  - name: myk8sdeploy
+    kubernetes:
+     uri: 'https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-maven-0.9.0/app-deploy.yaml' 
 commands:
   - id: run
     exec:
@@ -88,3 +110,36 @@ commands:
       group:
         kind: test
         isDefault: true
+#
+# Build and Deploy cmds
+#
+
+  # Build an image using the stack provided dockerfile
+  - id: build-image-stack-provided
+    apply:
+        component: outerloop-build-stack
+  # Build an app image using a developer provided dockerfile
+  - id: build-image-app-provided
+    apply:
+       component: outerloop-build-app
+  # Apply an app image using the stack provided deployment manifest file
+  - id: outerloop-deploy
+    apply:
+       component: myk8sdeploy
+  # Deploy an app image built with the stack provided dockerfile - default action 
+  - id: deploy
+    composite:
+        commands:
+          - build-image-stack-provided
+          - outerloop-deploy
+        group:
+          kind: deploy
+          isDefault: true   
+  # Deploy an app image built with a developer provided dockerfile - non-default action
+  - id: deploy-app-image
+    composite:
+       commands:
+         - build-image-app-provided
+         - outerloop-deploy
+       group:
+         kind: deploy
