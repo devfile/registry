@@ -108,6 +108,8 @@ components:
           value: '/projects/wildfly'
         - name: MVN_ARGS_APPEND
           value: '-s /home/jboss/.m2/settings.xml -Dmaven.repo.local=/home/jboss/.m2/repository -Dcom.redhat.xpaas.repo.jbossorg'
+        - name: DEBUG_PORT
+          value: "5858"
       endpoints:
         - name: 'wildfly-http'
           targetPort: 8080

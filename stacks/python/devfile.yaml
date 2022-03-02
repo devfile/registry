@@ -21,6 +21,9 @@ components:
       endpoints:
         - name: web
           targetPort: 8080
+      env:
+        - name: DEBUG_PORT
+          value: "5858"
 commands:
   - id: pip-install-requirements
     exec:
