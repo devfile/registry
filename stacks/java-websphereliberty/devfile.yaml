@@ -58,7 +58,7 @@ commands:
     exec:
       component: dev
       commandLine:  echo "run command "; {{mvn-cmd}} -DinstallDirectory=/opt/ibm/wlp -Ddebug=false -DhotTests=true -DcompileWait=3 io.openliberty.tools:liberty-maven-plugin:{{liberty-plugin-version}}:dev
-      workingDir: /projects
+      workingDir: ${PROJECT_SOURCE}
       hotReloadCapable: true
       group:
         kind: run
@@ -67,7 +67,7 @@ commands:
     exec:
       component: dev
       commandLine: echo "run-test-off command "; {{mvn-cmd}} -DinstallDirectory=/opt/ibm/wlp -Ddebug=false io.openliberty.tools:liberty-maven-plugin:{{liberty-plugin-version}}:dev
-      workingDir: /projects
+      workingDir: ${PROJECT_SOURCE}
       hotReloadCapable: true
       group:
         kind: run
@@ -76,7 +76,7 @@ commands:
     exec:
       component: dev
       commandLine: echo "debug command "; {{mvn-cmd}} -DinstallDirectory=/opt/ibm/wlp -DdebugPort=${DEBUG_PORT} io.openliberty.tools:liberty-maven-plugin:{{liberty-plugin-version}}:dev -Dliberty.env.WLP_DEBUG_REMOTE=y
-      workingDir: /projects
+      workingDir: ${PROJECT_SOURCE}
       hotReloadCapable: true
       group:
         kind: debug
@@ -86,7 +86,7 @@ commands:
     exec:
       component: dev
       commandLine: echo "test command "; {{mvn-cmd}} compiler:compile failsafe:integration-test failsafe:verify
-      workingDir: /projects
+      workingDir: ${PROJECT_SOURCE}
       hotReloadCapable: true
       group:
         kind: test
