@@ -1,0 +1,12 @@
+# See the OWNERS docs: https://go.k8s.io/owners
+
+approvers:
+- elsony
+- johnmcollier
+
+reviewers:
+- elsony
+- kadel
+- ibuziuk
+- rohitkrai03
+- jerolimov
