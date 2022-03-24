@@ -24,6 +24,7 @@ components:
   - name: dotnet
     container:
       image: registry.access.redhat.com/ubi8/dotnet-31:3.1
+      command: ["tail", "-f", "/dev/null"]
       mountSources: true
       env:
         - name: CONFIGURATION

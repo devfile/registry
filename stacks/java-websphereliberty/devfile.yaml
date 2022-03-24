@@ -42,6 +42,7 @@ components:
     container:
       # In the original upstream of this devfile, the image used is openliberty/devfile-stack:<x.y.z>, which is built from the repository: https://github.com/OpenLiberty/devfile-stack
       image: icr.io/appcafe/websphere-liberty-devfile-stack:{{liberty-version}}
+      command: ["tail", "-f", "/dev/null"]
       memoryLimit: 768Mi
       mountSources: true
       endpoints:

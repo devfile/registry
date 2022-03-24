@@ -28,6 +28,7 @@ components:
         - name: http-angular
           targetPort: 4200
       image: registry.access.redhat.com/ubi8/nodejs-16:latest
+      command: ["tail", "-f", "/dev/null"]
       memoryLimit: 1024Mi
     name: runtime
 commands:
