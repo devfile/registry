@@ -94,6 +94,8 @@ objects:
               value: ${REGISTRY_NAME}
             - name: ANALYTICS_WRITE_KEY
               value: ${ANALYTICS_WRITE_KEY}
+            - name: TELEMETRY_KEY
+              value: ${TELEMETRY_KEY}
           volumeMounts:
           - name: viewer-config
             mountPath: "/app/config"
@@ -243,3 +245,7 @@ parameters:
   value: S2rfQJo8xA9nyLhdY2CnTrWqlUgHqmwq
   displayName: Public write key for segment.io
   description: The public write key to send viewer analytics to segment.io
+- name: TELEMETRY_KEY
+  value: 6HBMiy5UxBtsbxXx7O4n0t0u4dt8IAR3
+  displayName: The registry's public write key for segment.io
+  description: The public write key to send registry analytics to segment.io
