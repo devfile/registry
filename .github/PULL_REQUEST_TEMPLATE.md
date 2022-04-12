@@ -13,7 +13,7 @@ _Does this repository's tests pass with your changes?_
 - [ ] Documentation
 _Does any documentation need to be updated with your changes?_
 - [ ] Check Tools Provider
-_Does this change impact existing tools, i.e. Odo, Che, Console? If it does, have you tested the change with those tools?_
+_Have you tested the changes with existing tools, i.e. Odo, Che, Console? (See [devfile registry contributing guide](https://github.com/devfile/registry/blob/main/CONTRIBUTING.md) on how to test changes)_
 
 
 ### How to test changes / Special notes to the reviewer:
