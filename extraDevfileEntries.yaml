@@ -44,3 +44,14 @@ samples:
     git:
       remotes:
         origin: https://github.com/devfile-samples/devfile-sample-python-basic.git
+  - name: go-basic
+    displayName: Basic Go
+    description: A simple Hello World application using Go
+    icon: https://go.dev/blog/go-brand/Go-Logo/SVG/Go-Logo_Blue.svg
+    tags: ["Go"]
+    projectType: go
+    language: go
+    provider: Red Hat
+    git:
+      remotes:
+        origin: https://github.com/devfile-samples/devfile-sample-go-basic.git
