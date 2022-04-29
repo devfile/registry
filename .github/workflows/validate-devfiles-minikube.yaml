@@ -36,6 +36,6 @@ jobs:
       uses: redhat-actions/openshift-tools-installer@v1
       with:
         # Installs the latest release of odo
-        odo: "latest"
+        odo: "2.5.1"
     - name: Validate the devfile stacks
       run: tests/test.sh odo
