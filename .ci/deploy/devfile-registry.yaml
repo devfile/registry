@@ -1,5 +1,5 @@
 #
-# Copyright (c) 2021 Red Hat, Inc.
+# Copyright (c) 2021-2022 Red Hat, Inc.
 # This program and the accompanying materials are made
 # available under the terms of the Eclipse Public License 2.0
 # which is available at https://www.eclipse.org/legal/epl-2.0/
@@ -33,6 +33,7 @@ objects:
         labels:
           app: devfile-registry
       spec:
+        serviceAccountName: devfile-registry-service-account
         volumes:
           - name: devfile-registry-storage
             emptyDir: {}
@@ -187,7 +188,12 @@ objects:
           "alias": "${REGISTRY_HOST_ALIAS}"
         }
       }
-
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    labels:
+      app: devfile-registry
+    name: devfile-registry-service-account
 parameters:
 - name: DEVFILE_INDEX_IMAGE
   value: quay.io/devfile/devfile-index
