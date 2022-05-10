@@ -3,7 +3,7 @@ metadata:
   name: dotnetcore31
   displayName: .NET Core 3.1
   description: Stack with .NET Core 3.1
-  icon: https://developers.redhat.com/sites/default/files/styles/large/public/dotnet-logo3x3.jpg
+  icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
   language: dotnet
   projectType: dotnet
   tags:
