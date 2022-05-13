@@ -12,6 +12,7 @@ objects:
     backoffLimit: 5
     template:
       spec:
+        serviceAccountName: registry-acceptance-service-account
         restartPolicy: Never
         containers:
           - image: ${IMAGE}:${IMAGE_TAG}
@@ -20,6 +21,13 @@ objects:
             env:
               - name: REGISTRY
                 value: ${REGISTRY}
+
+- apiVersion: v1
+  kind: ServiceAccount
+  metadata:
+    labels:
+      run: redirector
+    name: registry-acceptance-service-account
 parameters:
 - name: IMAGE
   value: quay.io/devfile/devfile-registry-integration
