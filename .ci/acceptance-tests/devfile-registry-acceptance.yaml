@@ -28,12 +28,9 @@ objects:
               limits:
                 cpu: 100m
                 memory: 200Mi
-
 - apiVersion: v1
   kind: ServiceAccount
   metadata:
-    labels:
-      run: redirector
     name: registry-acceptance-service-account
 parameters:
 - name: IMAGE
