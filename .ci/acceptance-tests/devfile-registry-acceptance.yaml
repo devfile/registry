@@ -21,6 +21,13 @@ objects:
             env:
               - name: REGISTRY
                 value: ${REGISTRY}
+            resources:
+              requests:
+                cpu: 20m
+                memory: 10Mi
+              limits:
+                cpu: 100m
+                memory: 200Mi
 
 - apiVersion: v1
   kind: ServiceAccount
