@@ -1,0 +1,19 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: devfile-dotnet-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devfile-dotnet-deploy
+  template:
+    metadata:
+      labels:
+        app: devfile-dotnet-deploy
+    spec:
+      containers:
+        - name: main
+          image: "{{CONTAINER_IMAGE}}"
+          imagePullPolicy: Always
+          resources: {}
