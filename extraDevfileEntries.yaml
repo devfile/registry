@@ -55,3 +55,14 @@ samples:
     git:
       remotes:
         origin: https://github.com/devfile-samples/devfile-sample-go-basic.git
+  - name: dotnet60-basic
+    displayName: Basic .NET 6.0
+    description: A simple application using .NET 6.0
+    icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
+    tags: ["dotnet"]
+    projectType: dotnet
+    language: dotnet
+    provider: Red Hat
+    git:
+      remotes:
+        origin: https://github.com/devfile-samples/devfile-sample-dotnet60-basic.git
