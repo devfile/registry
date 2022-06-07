@@ -25,7 +25,7 @@ components:
       endpoints:
         - name: http
           targetPort: 3000
-      image: node:lts-slim
+      image: quay.io/devfile/node:lts-slim
       memoryLimit: 1024Mi
     name: runtime
 commands:

@@ -22,7 +22,7 @@ components:
       endpoints:
         - name: http
           targetPort: 3000
-      image: node:lts
+      image: quay.io/devfile/node:lts
       memoryLimit: 1024Mi
     name: runtime
 commands:

@@ -16,14 +16,14 @@ starterProjects:
 components:
   - name: py-web
     container:
-      image: quay.io/eclipse/che-python-3.7:nightly
+      image: quay.io/devfile/python:slim
       mountSources: true
       endpoints:
         - name: web
           targetPort: 8080
       env:
         - name: DEBUG_PORT
-          value: "5858"
+          value: '5858'
 commands:
   - id: pip-install-requirements
     exec:
