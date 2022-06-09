@@ -16,7 +16,7 @@ starterProjects:
 components:
   - name: py-web
     container:
-      image: quay.io/devfile/python:slim
+      image: ubi9/python-39:latest
       mountSources: true
       endpoints:
         - name: web
