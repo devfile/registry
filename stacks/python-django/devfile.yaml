@@ -16,7 +16,7 @@ starterProjects:
 components:
   - name: py-web
     container:
-      image: ubi9/python-39:latest
+      image: registry.access.redhat.com/ubi9/python-39:latest
       mountSources: true
       endpoints:
         - name: web

@@ -25,7 +25,7 @@ components:
       endpoints:
         - name: http
           targetPort: 5000
-      image: rhel8/nodejs-16:latest
+      image: registry.access.redhat.com/ubi8/nodejs-16:latest
       memoryLimit: 1024Mi
     name: runtime
 commands:
