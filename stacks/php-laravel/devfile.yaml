@@ -23,7 +23,7 @@ components:
       endpoints:
         - name: http
           targetPort: 8000
-      image: composer:2.1.11
+      image: quay.io/devfile/composer:2.1.11
       memoryLimit: 1024Mi
       mountSources: true
     name: runtime

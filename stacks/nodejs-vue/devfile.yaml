@@ -25,12 +25,12 @@ components:
       endpoints:
         - name: http
           targetPort: 3000
-      image: node:lts-slim
+      image: registry.access.redhat.com/ubi8/nodejs-16:latest
       memoryLimit: 1024Mi
     name: runtime
 commands:
   - exec:
-      commandLine: yarn install
+      commandLine: npm install
       component: runtime
       group:
         isDefault: true
@@ -38,7 +38,7 @@ commands:
       workingDir: ${PROJECT_SOURCE}
     id: install
   - exec:
-      commandLine: yarn dev
+      commandLine: npm run dev
       component: runtime
       group:
         isDefault: true
