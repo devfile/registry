@@ -20,14 +20,14 @@ components:
       memoryLimit: 512Mi
       mountSources: true
       endpoints:
-        - name: 'http-8080'
+        - name: http-maven
           targetPort: 8080
       volumeMounts:
         - name: m2
           path: /home/user/.m2
       env:
         - name: DEBUG_PORT
-          value: "5858"
+          value: '5858'
   - name: m2
     volume: {}
 commands:

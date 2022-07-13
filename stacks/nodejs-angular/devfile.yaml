@@ -1,6 +1,6 @@
 schemaVersion: 2.1.0
 metadata:
-  description: Stack with Angular 12
+  description: Stack with Angular 14
   displayName: Angular
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/angular.svg
   language: typescript
@@ -9,7 +9,7 @@ metadata:
   tags:
     - NodeJS
     - Angular
-  version: 1.0.1
+  version: 2.0.0
 starterProjects:
   - name: nodejs-angular-starter
     git:
@@ -20,7 +20,7 @@ starterProjects:
 components:
   - container:
       endpoints:
-        - name: http
+        - name: http-angular
           targetPort: 4200
       image: registry.access.redhat.com/ubi8/nodejs-16:latest
       memoryLimit: 1024Mi

@@ -1,9 +1,9 @@
 schemaVersion: 2.1.0
 metadata:
   name: python
-  version: 1.0.0
+  version: 2.0.0
   displayName: Python
-  description: Python Stack with Python 3.7
+  description: Python Stack with Python 3.9
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/python.svg
   tags: ['Python', 'pip']
   projectType: 'python'
@@ -19,7 +19,7 @@ components:
       image: registry.access.redhat.com/ubi9/python-39:latest
       mountSources: true
       endpoints:
-        - name: web
+        - name: http-python
           targetPort: 8080
       env:
         - name: DEBUG_PORT
@@ -43,7 +43,7 @@ commands:
         isDefault: true
   - id: debugpy
     exec:
-      commandLine: 'pip install --user debugpy && python -m debugpy --listen 0.0.0.0:${DEBUG_PORT} app.py'
+      commandLine: 'pip install debugpy && python -m debugpy --listen 0.0.0.0:${DEBUG_PORT} app.py'
       workingDir: ${PROJECT_SOURCE}
       component: py-web
       group:

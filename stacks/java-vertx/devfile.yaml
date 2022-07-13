@@ -91,7 +91,7 @@ components:
       endpoints:
         - exposure: public
           path: /
-          name: '8080-tcp'
+          name: http-vertx
           targetPort: 8080
           protocol: http
       image: quay.io/eclipse/che-java11-maven:next
@@ -102,7 +102,7 @@ components:
           path: /home/user/.m2
       env:
         - name: DEBUG_PORT
-          value: "5858"
+          value: '5858'
   - name: m2
     volume:
       size: 3Gi

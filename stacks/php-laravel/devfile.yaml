@@ -21,7 +21,7 @@ starterProjects:
 components:
   - container:
       endpoints:
-        - name: http
+        - name: http-laravel
           targetPort: 8000
       image: quay.io/devfile/composer:2.1.11
       memoryLimit: 1024Mi

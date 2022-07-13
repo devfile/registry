@@ -19,7 +19,7 @@ starterProjects:
 components:
   - container:
       endpoints:
-        - name: http
+        - name: http-go
           targetPort: 8080
       image: quay.io/devfile/golang:latest
       memoryLimit: 1024Mi

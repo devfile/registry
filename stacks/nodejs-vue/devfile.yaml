@@ -23,7 +23,7 @@ components:
         - name: CYPRESS_CACHE_FOLDER
           value: ${PROJECT_SOURCE}
       endpoints:
-        - name: http
+        - name: http-vue
           targetPort: 3000
       image: registry.access.redhat.com/ubi8/nodejs-16:latest
       memoryLimit: 1024Mi
