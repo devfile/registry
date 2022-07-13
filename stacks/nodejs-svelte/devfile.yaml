@@ -21,7 +21,7 @@ components:
   - container:
       endpoints:
         - name: http-svelte
-          targetPort: 5000
+          targetPort: 3000
       image: registry.access.redhat.com/ubi8/nodejs-16:latest
       memoryLimit: 1024Mi
     name: runtime
