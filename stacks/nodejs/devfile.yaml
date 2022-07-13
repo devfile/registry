@@ -1,9 +1,9 @@
 schemaVersion: 2.1.0
 metadata:
   name: nodejs
-  version: 1.0.1
+  version: 1.0.2
   displayName: Node.js Runtime
-  description: Stack with Node.js 14
+  description: Stack with Node.js 16
   icon: https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg
   tags: ['NodeJS', 'Express', 'ubi8']
   projectType: 'nodejs'

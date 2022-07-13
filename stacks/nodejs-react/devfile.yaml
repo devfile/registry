@@ -1,6 +1,6 @@
 schemaVersion: 2.1.0
 metadata:
-  description: Stack with React 17
+  description: Stack with React 18
   displayName: React
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/react.svg
   language: javascript
@@ -9,7 +9,7 @@ metadata:
   tags:
     - NodeJS
     - React
-  version: 1.0.1
+  version: 1.0.2
 starterProjects:
   - name: nodejs-react-starter
     git:

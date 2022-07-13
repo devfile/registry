@@ -1,9 +1,9 @@
 schemaVersion: 2.1.0
 metadata:
   name: python-django
-  version: 1.0.0
+  version: 1.0.1
   displayName: Django
-  description: Python3.7 with Django
+  description: Stack with Django
   icon: https://static.djangoproject.com/img/logos/django-logo-positive.svg
   tags: ['Python', 'pip', 'Django']
   projectType: 'django'
@@ -48,7 +48,7 @@ commands:
       component: py-web
   - id: debug
     exec:
-      commandLine: 'pip install --user debugpy && export DEBUG_MODE=True && python -m debugpy --listen 0.0.0.0:${DEBUG_PORT} manage.py runserver 0.0.0.0:8000 --noreload --nothreading'
+      commandLine: 'pip install debugpy && export DEBUG_MODE=True && python -m debugpy --listen 0.0.0.0:${DEBUG_PORT} manage.py runserver 0.0.0.0:8000 --noreload --nothreading'
       workingDir: ${PROJECT_SOURCE}
       component: py-web
       group:
