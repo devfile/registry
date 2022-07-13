@@ -19,11 +19,8 @@ starterProjects:
         origin: https://github.com/devfile-samples/devfile-stack-nodejs-svelte.git
 components:
   - container:
-      env:
-        - name: HOST
-          value: '0.0.0.0'
       endpoints:
-        - name: http
+        - name: http-svelte
           targetPort: 5000
       image: registry.access.redhat.com/ubi8/nodejs-16:latest
       memoryLimit: 1024Mi

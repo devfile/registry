@@ -1,7 +1,7 @@
 schemaVersion: 2.1.0
 metadata:
   name: python-django
-  version: 1.0.1
+  version: 2.0.0
   displayName: Django
   description: Stack with Django
   icon: https://static.djangoproject.com/img/logos/django-logo-positive.svg
@@ -19,7 +19,7 @@ components:
       image: registry.access.redhat.com/ubi9/python-39:latest
       mountSources: true
       endpoints:
-        - name: web
+        - name: http-django
           targetPort: 8000
       env:
         - name: DEBUG_PORT

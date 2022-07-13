@@ -45,12 +45,12 @@ components:
       endpoints:
         - exposure: public
           path: /
-          name: ep1
+          name: http-webgradle
           targetPort: 9080
           protocol: http
       env:
         - name: DEBUG_PORT
-          value: "5858"
+          value: '5858'
 commands:
   - id: run
     exec:

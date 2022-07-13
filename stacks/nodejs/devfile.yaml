@@ -1,7 +1,7 @@
 schemaVersion: 2.1.0
 metadata:
   name: nodejs
-  version: 1.0.2
+  version: 2.0.0
   displayName: Node.js Runtime
   description: Stack with Node.js 16
   icon: https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg
@@ -20,7 +20,7 @@ components:
       memoryLimit: 1024Mi
       mountSources: true
       endpoints:
-        - name: http-3000
+        - name: http-node
           targetPort: 3000
 commands:
   - id: install

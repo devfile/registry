@@ -9,7 +9,7 @@ metadata:
   tags:
     - NodeJS
     - React
-  version: 1.0.2
+  version: 2.0.0
 starterProjects:
   - name: nodejs-react-starter
     git:
@@ -20,7 +20,7 @@ starterProjects:
 components:
   - container:
       endpoints:
-        - name: http
+        - name: http-react
           targetPort: 3000
       image: registry.access.redhat.com/ubi8/nodejs-16:latest
       memoryLimit: 1024Mi
@@ -35,7 +35,7 @@ commands:
       workingDir: ${PROJECT_SOURCE}
     id: install
   - exec:
-      commandLine: npm run start
+      commandLine: npm run dev
       component: runtime
       group:
         isDefault: true
