@@ -1,0 +1,7 @@
+schemaVersion: 2.2.0
+metadata:
+  name: empty
+  version: 1.0.0
+  displayName: Empty Devfile
+  description: Stack with minimal Devfile that only contains metadata fields and the schema version
+  icon: https://raw.githubusercontent.com/devfile/devfile.github.io/master/images/devfileLogo.svg
