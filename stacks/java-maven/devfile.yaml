@@ -18,7 +18,7 @@ starterProjects:
 components:
   - name: tools
     container:
-      image: quay.io/eclipse/che-java11-maven:next
+      image: registry.access.redhat.com/ubi8/openjdk-11:latest
       memoryLimit: 512Mi
       mountSources: true
       endpoints:
