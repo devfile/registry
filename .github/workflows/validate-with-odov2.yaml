@@ -12,7 +12,7 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-name: Validate Devfiles
+name: Validate Devfiles with odo v2
 
 on:
   push:
@@ -24,8 +24,8 @@ on:
 
 jobs:
 
-  test_minikube:
-    name: Test Minikube
+  test_with_minikube:
+    name: Test on Minikube
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -45,5 +45,5 @@ jobs:
         odo: "2.5.1"
     - name: Check that containers components are non terminating
       run: tests/check_non_terminating.sh
-    - name: Run odo happy path tests
-      run: tests/check_odo_happy_path.sh odo
+    - name: Validate the devfile stacks
+      run: tests/run-odov2-tests.sh odo

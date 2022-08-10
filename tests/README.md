@@ -1,18 +1,41 @@
 # Devfile Registry Testing
 
-## Prerequisites
+## With odo v3
+
+### Prerequisites
+
+- Minikube or CRC installed, and running.
+  - CRC should work with default settings.
+  - Minikube
+    - `minikube start --memory 8gb` is a good starting point.
+    - The `none` driver **cannot** be used. Any other driver (`docker`, `hyperkit`, etc) should suffice.
+- odo v2 or later.
+- Go 1.17 or later installed
+  - `$GOPATH/bin` should be in your `$PATH` or you will have to modify `run-odov3-tests.sh` to find `ginkgo` binary.
+- Ginkgo CLI installed (`go install github.com/onsi/ginkgo/v2/ginkgo@latest`)
+
+
+### Running the tests
+
+1) Ensure minikube is running and `minikube ip` reports a valid IP address
+2) From the root of this repository, run `tests/run-odov3-tests.sh`. 
+
+
+## With odo v2
+
+### Prerequisites
 
 - Minikube installed, and running.
   - `minikube start --memory 8gb` is a good starting point.
   - The `none` driver **cannot** be used. Any other driver (`docker`, `hyperkit`, etc) should suffice.
 - The ingress minikube addon **must** be installed with the `minikube addons enable ingress` command
-- odo v2 or later.
+- odo latest odo v2 (currently 2.5.1)
 
-## Running the tests
+### Running the tests
 
 1) Ensure minikube is running and `minikube ip` reports a valid ip address
 
-2) From the root of this repository, run `tests/check_odo_happy_path.sh`. 
+2) From the root of this repository, run `tests/run-odov2-test.sh`. 
   
     - The test script will validate each devfile stack under `stacks/` with odo, verifying that the stack can be used to build a starter project and that the application is properly built and exposed. 
        - The test script checks for an HTTP 200 status code to determine "properly exposed".
@@ -27,7 +50,7 @@
           ```
     - Each container component **must** be non-terminating. If the default `image` entrypoint is terminating an `args` (preferred) or `command` should be specified in the defile (e.g. `["tail", "-f", "/dev/null"]`).
 
-## Limitations
+### Limitations
 
 - If there are multiple starter projects, odo will only use the first starter project mentioned.
 - Only `odo create`,  `odo url create`, and `odo push` are tested right now. If your devfile stack exposes additional functionality (such as debug, via `odo debug`), we recommend either manually testing that functionality, or setting up your own test scripts in the stack's repository
