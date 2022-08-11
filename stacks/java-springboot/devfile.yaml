@@ -20,6 +20,7 @@ components:
   - name: tools
     container:
       image: registry.access.redhat.com/ubi8/openjdk-11:latest
+      command: ["tail", "-f", "/dev/null"]
       memoryLimit: 768Mi
       mountSources: true
       endpoints:
