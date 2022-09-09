@@ -31,6 +31,9 @@ components:
       endpoints:
         - name: http-quarkus
           targetPort: 8080
+        - exposure: none
+          name: debug
+          targetPort: 5858
       env:
         - name: DEBUG_PORT
           value: '5858'

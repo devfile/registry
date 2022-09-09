@@ -117,6 +117,9 @@ components:
       endpoints:
         - name: http-wildfly
           targetPort: 8080
+        - exposure: none
+          name: debug
+          targetPort: 5858
   - name: m2-repository
     volume:
       size: 3Gi

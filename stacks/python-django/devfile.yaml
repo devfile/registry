@@ -29,6 +29,9 @@ components:
       endpoints:
         - name: http-django
           targetPort: 8000
+        - exposure: none
+          name: debug
+          targetPort: 5858
       env:
         - name: DEBUG_PORT
           value: '5858'

@@ -96,6 +96,9 @@ components:
           name: http-vertx
           targetPort: 8080
           protocol: http
+        - exposure: none
+          name: debug
+          targetPort: 5858
       image: quay.io/eclipse/che-java11-maven:next
       memoryLimit: 512Mi
       mountSources: true

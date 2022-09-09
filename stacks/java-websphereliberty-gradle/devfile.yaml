@@ -56,6 +56,9 @@ components:
           name: http-webgradle
           targetPort: 9080
           protocol: http
+        - exposure: none
+          name: debug
+          targetPort: 5858
       env:
         - name: DEBUG_PORT
           value: '5858'

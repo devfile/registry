@@ -24,6 +24,9 @@ components:
       endpoints:
         - name: http-maven
           targetPort: 8080
+        - exposure: none
+          name: debug
+          targetPort: 5858
       volumeMounts:
         - name: m2
           path: /home/user/.m2
