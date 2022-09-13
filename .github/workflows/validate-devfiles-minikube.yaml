@@ -43,5 +43,7 @@ jobs:
       with:
         # Installs the latest release of odo
         odo: "2.5.1"
-    - name: Validate the devfile stacks
-      run: tests/test.sh odo
+    - name: odo happy path test
+      run: tests/check_odo_happy_path.sh odo
+    - name: check that containers are non terminating
+      run: tests/check_non_terminating.sh
