@@ -24,6 +24,7 @@ components:
   - name: py-web
     container:
       image: registry.access.redhat.com/ubi9/python-39:latest
+      args: ["tail", "-f", "/dev/null"]
       mountSources: true
       endpoints:
         - name: http-django
