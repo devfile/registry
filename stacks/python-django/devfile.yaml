@@ -1,7 +1,7 @@
 schemaVersion: 2.1.0
 metadata:
   name: python-django
-  version: 2.0.1
+  version: 2.1.0
   displayName: Django
   description:
     'Django is a high-level Python web framework that enables rapid development of secure and maintainable websites.

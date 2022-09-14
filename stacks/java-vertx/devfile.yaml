@@ -1,7 +1,7 @@
 schemaVersion: 2.1.0
 metadata:
   name: java-vertx
-  version: 1.1.1
+  version: 1.2.0
   displayName: Vert.x Java
   description: Upstream Vert.x using Java
   icon: https://raw.githubusercontent.com/vertx-web-site/vertx-logo/master/vertx-logo.svg
