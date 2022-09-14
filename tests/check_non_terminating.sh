@@ -77,7 +77,7 @@ isNonTerminating() {
     _int_command_args=("$3")
 
     namespace=default
-    timeout_in_sec=15
+    timeout_in_sec=60 # <== includes image pulling
 
     echo "  PARAMS: image --> $_int_image, command --> ${_int_command[*]}, args --> ${_int_command_args[*]}"
  
@@ -106,7 +106,7 @@ isNonTerminating() {
       kubectl describe pod -n ${namespace} test-terminating
       echo ""
       echo "  ↑↑↑↑↑↑↑↑↑ Pod description ↑↑↑↑↑↑↑↑"
-      2>/dev/null 1>/dev/null kubectl delete pod --force test-terminating -n default
+      2>/dev/null 1>/dev/null kubectl delete pod test-terminating -n default
       return 1
     fi
 }
