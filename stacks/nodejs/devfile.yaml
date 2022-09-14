@@ -23,6 +23,9 @@ components:
       args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
       mountSources: true
+      env:
+        - name: DEBUG_PORT
+          value: '5858'
       endpoints:
         - name: http-node
           targetPort: 3000
