@@ -1,14 +1,15 @@
 schemaVersion: 2.1.0
 metadata:
-  description: Stack with the latest Go version
-  displayName: Go Runtime
+  description: 'Go is an open source programming language that makes it easy to build simple, reliable, and efficient software.'
+  displayName: Go Web App
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/golang.svg
-  language: go
   name: go
-  projectType: go
+  projectType: Go
+  provider: Red Hat
+  language: Go
   tags:
     - Go
-  version: 1.0.0
+  version: 1.0.1
 starterProjects:
   - name: go-starter
     git:

@@ -1,15 +1,19 @@
 schemaVersion: 2.1.0
 metadata:
-  description: Stack with Next.js 12
+  description:
+    'Next.js gives you the best developer experience with all the features you need for production:
+    hybrid static & server rendering, TypeScript support, smart bundling, route pre-fetching, and more.
+    No config needed.'
   displayName: Next.js
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/next-js.svg
-  language: javascript
   name: nodejs-nextjs
-  projectType: nextjs
+  projectType: Next.js
+  provider: Red Hat
+  language: Typescript
   tags:
-    - NodeJS
-    - Nextjs
-  version: 1.0.1
+    - Node.js
+    - Next.js
+  version: 1.0.2
 starterProjects:
   - name: nodejs-nextjs-starter
     git:

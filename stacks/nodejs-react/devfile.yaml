@@ -1,15 +1,18 @@
 schemaVersion: 2.1.0
 metadata:
-  description: Stack with React 18
+  description:
+    'React is a free and open-source front-end JavaScript library for building user interfaces based on UI components.
+    It is maintained by Meta and a community of individual developers and companies.'
   displayName: React
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/react.svg
-  language: javascript
   name: nodejs-react
-  projectType: react
+  projectType: React
+  provider: Red Hat
+  language: Typescript
   tags:
-    - NodeJS
+    - Node.js
     - React
-  version: 2.0.0
+  version: 2.0.1
 starterProjects:
   - name: nodejs-react-starter
     git:
