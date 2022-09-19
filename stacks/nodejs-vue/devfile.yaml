@@ -1,13 +1,15 @@
 schemaVersion: 2.1.0
 metadata:
-  description: Stack with Vue 3
+  description: 'Vue is a JavaScript framework for building user interfaces.
+    It builds on top of standard HTML, CSS and JavaScript, and provides a declarative and component-based programming model that helps you efficiently develop user interfaces, be it simple or complex.'
   displayName: Vue
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/vue.svg
-  language: javascript
   name: nodejs-vue
-  projectType: vue
+  projectType: Vue
+  provider: Red Hat
+  language: Typescript
   tags:
-    - NodeJS
+    - Node.js
     - Vue
   version: 1.0.1
 starterProjects:

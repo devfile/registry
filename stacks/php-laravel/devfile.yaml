@@ -1,16 +1,20 @@
 schemaVersion: 2.1.0
 metadata:
-  description: Stack with Laravel 8
+  description: 'Laravel is an open-source PHP framework, which is robust and easy to understand.
+    It follows a model-view-controller design pattern.
+    Laravel reuses the existing components of different frameworks which helps in creating a web application.
+    The web application thus designed is more structured and pragmatic.'
   displayName: Laravel
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/laravel.svg
-  language: php
   name: php-laravel
-  projectType: laravel
+  projectType: Laravel
+  provider: Red Hat
+  language: PHP
   tags:
     - PHP
     - Composer
     - Laravel
-  version: 1.0.0
+  version: 1.0.1
 starterProjects:
   - name: php-laravel-starter
     git:
