@@ -76,42 +76,42 @@ isNonTerminating() {
     _int_command=("$2")
     _int_command_args=("$3")
 
-    namespace=default
     timeout_in_sec=60 # <== includes image pulling
 
     echo "  PARAMS: image --> $_int_image, command --> ${_int_command[*]}, args --> ${_int_command_args[*]}"
  
     if [ "${_int_command[*]}" == "null" ] && [ "${_int_command_args[*]}" == "null" ]; then
-        echo "  COMMAND: \"kubectl run test-terminating -n default --attach=false --restart=Never --image=$_int_image\""
-        2>/dev/null 1>/dev/null kubectl run test-terminating -n default --attach=false --restart=Never --image="$_int_image"
+        echo "  COMMAND: \"kubectl run test-terminating -n ${TEST_NAMESPACE} --attach=false --restart=Never --image=$_int_image\""
+        2>/dev/null 1>/dev/null kubectl run test-terminating -n "${TEST_NAMESPACE}" --attach=false --restart=Never --image="$_int_image"
     elif [ "${_int_command[*]}" == "null" ]; then
-        echo "  COMMAND: \"kubectl run test-terminating -n default --attach=false --restart=Never --image=$_int_image -- ${_int_command_args[*]}\""
-        2>/dev/null 1>/dev/null kubectl run test-terminating -n default --attach=false --restart=Never --image="$_int_image" -- ${_int_command_args[*]}
+        echo "  COMMAND: \"kubectl run test-terminating -n ${TEST_NAMESPACE} --attach=false --restart=Never --image=$_int_image -- ${_int_command_args[*]}\""
+        2>/dev/null 1>/dev/null kubectl run test-terminating -n "${TEST_NAMESPACE}" --attach=false --restart=Never --image="$_int_image" -- ${_int_command_args[*]}
     elif [ "${_int_command_args[*]}" == "null" ]; then
-        echo "  COMMAND: \"kubectl run test-terminating -n default --attach=false --restart=Never --image=$_int_image --command -- ${_int_command[*]}\""
-        2>/dev/null 1>/dev/null kubectl run test-terminating -n default --attach=false --restart=Never --image="$_int_image" --command=true -- ${_int_command[*]}
+        echo "  COMMAND: \"kubectl run test-terminating -n ${TEST_NAMESPACE} --attach=false --restart=Never --image=$_int_image --command -- ${_int_command[*]}\""
+        2>/dev/null 1>/dev/null kubectl run test-terminating -n "${TEST_NAMESPACE}" --attach=false --restart=Never --image="$_int_image" --command=true -- ${_int_command[*]}
     else
-        echo "  COMMAND: \"kubectl run test-terminating -n default --attach=false --restart=Never --image=$_int_image --command -- ${_int_command[*]} ${_int_command_args[*]}\""
-        2>/dev/null 1>/dev/null kubectl run test-terminating -n default --attach=false --restart=Never --image="$_int_image" --command=true -- ${_int_command[*]} ${_int_command_args[*]}
+        echo "  COMMAND: \"kubectl run test-terminating -n ${TEST_NAMESPACE} --attach=false --restart=Never --image=$_int_image --command -- ${_int_command[*]} ${_int_command_args[*]}\""
+        2>/dev/null 1>/dev/null kubectl run test-terminating -n "${TEST_NAMESPACE}" --attach=false --restart=Never --image="$_int_image" --command=true -- ${_int_command[*]} ${_int_command_args[*]}
     fi
     
-    if 2>/dev/null 1>/dev/null kubectl wait pods -n ${namespace} test-terminating --for condition=Ready --timeout=${timeout_in_sec}s; then
+    if 2>/dev/null 1>/dev/null kubectl wait pods -n "${TEST_NAMESPACE}" test-terminating --for condition=Ready --timeout=${timeout_in_sec}s; then
       echo "  SUCCESS: The container started successfully and didn't terminate"
-      2>/dev/null 1>/dev/null kubectl delete pod --force test-terminating -n default
+      2>/dev/null 1>/dev/null kubectl delete pod --force test-terminating -n "${TEST_NAMESPACE}"
       return 0
     else
       echo "  ERROR: Failed to reach \"Ready\" condition after $timeout_in_sec seconds"
       echo "  ↓↓↓↓↓↓↓↓↓ Pod description ↓↓↓↓↓↓↓↓"
       echo ""
-      kubectl describe pod -n ${namespace} test-terminating
+      kubectl describe pod -n "${TEST_NAMESPACE}" test-terminating
       echo ""
       echo "  ↑↑↑↑↑↑↑↑↑ Pod description ↑↑↑↑↑↑↑↑"
-      2>/dev/null 1>/dev/null kubectl delete pod test-terminating -n default
+      2>/dev/null 1>/dev/null kubectl delete pod test-terminating -n "${TEST_NAMESPACE}"
       return 1
     fi
 }
 
 YQ_PATH=yq
+TEST_NAMESPACE=${TEST_NAMESPACE:-default}
 
 find "$DEVFILES_DIR" -maxdepth 1 -type d ! -path "$DEVFILES_DIR" -print0 | while IFS= read -r -d '' devfile_dir; do
 
