@@ -23,6 +23,7 @@ components:
         - name: http-go
           targetPort: 8080
       image: quay.io/devfile/golang:latest
+      args: ["tail", "-f", "/dev/null"]
       memoryLimit: 1024Mi
       mountSources: true
     name: runtime

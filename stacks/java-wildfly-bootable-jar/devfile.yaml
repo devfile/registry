@@ -93,6 +93,7 @@ components:
   - name: wildfly
     container:
       image: registry.access.redhat.com/ubi8/openjdk-11
+      args: ["tail", "-f", "/dev/null"]
       memoryLimit: 1512Mi
       mountSources: true
       volumeMounts:

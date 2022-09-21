@@ -40,6 +40,7 @@ components:
   - name: dev
     container:
       image: icr.io/appcafe/websphere-liberty-devfile-stack:{{liberty-version}}-gradle
+      args: ["tail", "-f", "/dev/null"]
       memoryLimit: 1280Mi
       mountSources: true
       endpoints:

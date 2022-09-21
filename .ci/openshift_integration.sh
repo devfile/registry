@@ -62,4 +62,4 @@ $(realpath odo) registry delete DefaultDevfileRegistry -f
 $(realpath odo) registry add TestDevfileRegistry http://$REGISTRY_HOSTNAME
 
 # Run the devfile validation tests
-ENV=openshift REGISTRY=remote tests/test.sh $(realpath odo) $YQ_PATH
+ENV=openshift REGISTRY=remote tests/check_odo_happy_path.sh $(realpath odo) $YQ_PATH
