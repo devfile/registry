@@ -110,7 +110,7 @@ isNonTerminating() {
     fi
 }
 
-YQ_PATH=yq
+YQ_PATH=${YQ_PATH:-yq}
 TEST_NAMESPACE=${TEST_NAMESPACE:-default}
 
 find "$DEVFILES_DIR" -maxdepth 1 -type d ! -path "$DEVFILES_DIR" -print0 | while IFS= read -r -d '' devfile_dir; do
