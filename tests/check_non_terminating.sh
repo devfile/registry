@@ -96,7 +96,7 @@ isNonTerminating() {
     
     if kubectl wait pods -n "${TEST_NAMESPACE}" test-terminating --for condition=Ready --timeout=${timeout_in_sec}s >/dev/null 2>&1; then
       echo "  SUCCESS: The container started successfully and didn't terminate"
-      kubectl delete pod --force test-terminating -n "${TEST_NAMESPACE}" >/dev/null 2>&1
+      kubectl delete pod test-terminating -n "${TEST_NAMESPACE}" >/dev/null 2>&1
       return 0
     else
       echo "  ERROR: Failed to reach \"Ready\" condition after $timeout_in_sec seconds"
