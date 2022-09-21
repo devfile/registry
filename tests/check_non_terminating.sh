@@ -82,21 +82,21 @@ isNonTerminating() {
  
     if [ "${_int_command[*]}" == "null" ] && [ "${_int_command_args[*]}" == "null" ]; then
         echo "  COMMAND: \"kubectl run test-terminating -n ${TEST_NAMESPACE} --attach=false --restart=Never --image=$_int_image\""
-        2>/dev/null 1>/dev/null kubectl run test-terminating -n "${TEST_NAMESPACE}" --attach=false --restart=Never --image="$_int_image"
+        kubectl run test-terminating -n "${TEST_NAMESPACE}" --attach=false --restart=Never --image="$_int_image" >/dev/null 2>&1
     elif [ "${_int_command[*]}" == "null" ]; then
         echo "  COMMAND: \"kubectl run test-terminating -n ${TEST_NAMESPACE} --attach=false --restart=Never --image=$_int_image -- ${_int_command_args[*]}\""
-        2>/dev/null 1>/dev/null kubectl run test-terminating -n "${TEST_NAMESPACE}" --attach=false --restart=Never --image="$_int_image" -- ${_int_command_args[*]}
+        kubectl run test-terminating -n "${TEST_NAMESPACE}" --attach=false --restart=Never --image="$_int_image" -- ${_int_command_args[*]} >/dev/null 2>&1
     elif [ "${_int_command_args[*]}" == "null" ]; then
         echo "  COMMAND: \"kubectl run test-terminating -n ${TEST_NAMESPACE} --attach=false --restart=Never --image=$_int_image --command -- ${_int_command[*]}\""
-        2>/dev/null 1>/dev/null kubectl run test-terminating -n "${TEST_NAMESPACE}" --attach=false --restart=Never --image="$_int_image" --command=true -- ${_int_command[*]}
+        kubectl run test-terminating -n "${TEST_NAMESPACE}" --attach=false --restart=Never --image="$_int_image" --command=true -- ${_int_command[*]} >/dev/null 2>&1
     else
         echo "  COMMAND: \"kubectl run test-terminating -n ${TEST_NAMESPACE} --attach=false --restart=Never --image=$_int_image --command -- ${_int_command[*]} ${_int_command_args[*]}\""
-        2>/dev/null 1>/dev/null kubectl run test-terminating -n "${TEST_NAMESPACE}" --attach=false --restart=Never --image="$_int_image" --command=true -- ${_int_command[*]} ${_int_command_args[*]}
+        kubectl run test-terminating -n "${TEST_NAMESPACE}" --attach=false --restart=Never --image="$_int_image" --command=true -- ${_int_command[*]} ${_int_command_args[*]} >/dev/null 2>&1
     fi
     
-    if 2>/dev/null 1>/dev/null kubectl wait pods -n "${TEST_NAMESPACE}" test-terminating --for condition=Ready --timeout=${timeout_in_sec}s; then
+    if kubectl wait pods -n "${TEST_NAMESPACE}" test-terminating --for condition=Ready --timeout=${timeout_in_sec}s >/dev/null 2>&1; then
       echo "  SUCCESS: The container started successfully and didn't terminate"
-      2>/dev/null 1>/dev/null kubectl delete pod --force test-terminating -n "${TEST_NAMESPACE}"
+      kubectl delete pod --force test-terminating -n "${TEST_NAMESPACE}" >/dev/null 2>&1
       return 0
     else
       echo "  ERROR: Failed to reach \"Ready\" condition after $timeout_in_sec seconds"
@@ -105,7 +105,7 @@ isNonTerminating() {
       kubectl describe pod -n "${TEST_NAMESPACE}" test-terminating
       echo ""
       echo "  ↑↑↑↑↑↑↑↑↑ Pod description ↑↑↑↑↑↑↑↑"
-      2>/dev/null 1>/dev/null kubectl delete pod test-terminating -n "${TEST_NAMESPACE}"
+      kubectl delete pod test-terminating -n "${TEST_NAMESPACE}" >/dev/null 2>&1
       return 1
     fi
 }
