@@ -1,6 +1,6 @@
 schemaVersion: 2.1.0
 metadata:
-  name: python-flask
+  name: python
   version: 2.0.1
   displayName: Flask
   description:
@@ -23,7 +23,7 @@ components:
   - name: py-web
     container:
       image: registry.access.redhat.com/ubi9/python-39:latest
-      args: ["tail", "-f", "/dev/null"]
+      args: ['tail', '-f', '/dev/null']
       mountSources: true
       endpoints:
         - name: http-python
