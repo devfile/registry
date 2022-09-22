@@ -4,7 +4,7 @@ samples:
     displayName: Basic Node.js
     description: A simple Hello World Node.js application
     icon: https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg
-    tags: ["NodeJS", "Express"]
+    tags: ['NodeJS', 'Express']
     projectType: nodejs
     language: nodejs
     provider: Red Hat
@@ -15,7 +15,7 @@ samples:
     displayName: Basic Quarkus
     description: A simple Hello World Java application using Quarkus
     icon: https://design.jboss.org/quarkus/logo/final/SVG/quarkus_icon_rgb_default.svg
-    tags: ["Java", "Quarkus"]
+    tags: ['Java', 'Quarkus']
     projectType: quarkus
     language: java
     provider: Red Hat
@@ -26,7 +26,7 @@ samples:
     displayName: Basic Spring Boot
     description: A simple Hello World Java Spring Boot application using Maven
     icon: https://spring.io/images/projects/spring-edf462fec682b9d48cf628eaf9e19521.svg
-    tags: ["Java", "Spring"]
+    tags: ['Java', 'Spring']
     projectType: springboot
     language: java
     provider: Red Hat
@@ -36,8 +36,8 @@ samples:
   - name: python-basic
     displayName: Basic Python
     description: A simple Hello World application using Python
-    icon: https://www.python.org/static/community_logos/python-logo-generic.svg
-    tags: ["Python"]
+    icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/python.svg
+    tags: ['Python']
     projectType: python
     language: python
     provider: Red Hat
@@ -48,7 +48,7 @@ samples:
     displayName: Basic Go
     description: A simple Hello World application using Go
     icon: https://go.dev/blog/go-brand/Go-Logo/SVG/Go-Logo_Blue.svg
-    tags: ["Go"]
+    tags: ['Go']
     projectType: go
     language: go
     provider: Red Hat
@@ -59,7 +59,7 @@ samples:
     displayName: Basic .NET 6.0
     description: A simple application using .NET 6.0
     icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
-    tags: ["dotnet"]
+    tags: ['dotnet']
     projectType: dotnet
     language: dotnet
     provider: Red Hat
