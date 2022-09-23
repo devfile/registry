@@ -1,0 +1,89 @@
+#
+#   Copyright 2021-2022 Red Hat, Inc.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+
+name: Validate Devfiles with minikube
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: 0 5 * * *
+
+jobs:
+
+  check_non_terminating:
+    name: Check for non-terminating images
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Setup Minikube
+      uses: manusa/actions-setup-minikube@v2.7.0
+      with:
+        minikube version: 'latest'
+        kubernetes version: 'latest'
+        driver: 'docker'
+        github token: ${{ secrets.GITHUB_TOKEN }}
+        start args: '--addons=ingress'
+    - name: Check that containers components are non terminating
+      run: tests/check_non_terminating.sh
+
+
+  check_odov2:
+    name: Check devfile stacks with odo v2
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Setup Minikube
+      uses: manusa/actions-setup-minikube@v2.7.0
+      with:
+        minikube version: 'latest'
+        kubernetes version: 'latest'
+        driver: 'docker'
+        github token: ${{ secrets.GITHUB_TOKEN }}
+        start args: '--addons=ingress'
+    - name: Install CLI tools
+      uses: redhat-actions/openshift-tools-installer@v1
+      with:
+        odo: "2.5.1"
+    - name: Check the devfile stacks with odo v2
+      run: tests/run-odov2-tests.sh odo
+
+
+  check_odov3S:
+    name: Test on Minikube
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Setup Minikube
+      uses: manusa/actions-setup-minikube@v2.7.0
+      with:
+        minikube version: 'latest'
+        kubernetes version: 'latest'
+        driver: 'docker'
+        github token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Install Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: '1.19'
+
+    - name: "Install Ginkgo"
+      run: go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo
+    - name: Check the devfile stacks with odo v3
+      run: tests/run-odov3-tests.sh

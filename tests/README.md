@@ -11,14 +11,14 @@
     - The `none` driver **cannot** be used. Any other driver (`docker`, `hyperkit`, etc) should suffice.
 - odo v2 or later.
 - Go 1.17 or later installed
-  - `$GOPATH/bin` should be in your `$PATH` or you will have to modify `run-odov3-tests.sh` to find `ginkgo` binary.
+  - `$GOPATH/bin` should be in your `$PATH` or you will have to modify `check_with_odov3.sh` to find `ginkgo` binary.
 - Ginkgo CLI installed (`go install github.com/onsi/ginkgo/v2/ginkgo@latest`)
 
 
 ### Running the tests
 
 1) Ensure minikube is running and `minikube ip` reports a valid IP address
-2) From the root of this repository, run `tests/run-odov3-tests.sh`. 
+2) From the root of this repository, run `tests/check_with_odov3.sh`. 
 
 
 ## With odo v2
@@ -35,7 +35,7 @@
 
 1) Ensure minikube is running and `minikube ip` reports a valid ip address
 
-2) From the root of this repository, run `tests/run-odov2-test.sh`. 
+2) From the root of this repository, run `tests/check_with_odov2.sh`. 
   
     - The test script will validate each devfile stack under `stacks/` with odo, verifying that the stack can be used to build a starter project and that the application is properly built and exposed. 
        - The test script checks for an HTTP 200 status code to determine "properly exposed".
