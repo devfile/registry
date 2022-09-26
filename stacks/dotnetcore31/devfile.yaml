@@ -11,7 +11,7 @@ metadata:
   version: 1.0.1
 
 starterProjects:
-  - name: dotnet-example
+  - name: dotnetcore-example
     git:
       checkoutFrom:
         remote: origin
