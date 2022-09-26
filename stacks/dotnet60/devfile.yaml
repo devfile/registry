@@ -11,7 +11,7 @@ metadata:
   version: 1.0.0
 
 starterProjects:
-  - name: s2i-example
+  - name: dotnet-example
     git:
       checkoutFrom:
         remote: origin
