@@ -52,6 +52,8 @@ Updating an existing devfile stack is relatively straightforward:
 1) Find the stack under the `stacks/` folder that you wish to update.
 2) Make the necessary changes to the stack, such as: updating image tags, commands, starter projects, etc.
 3) Update the version of stack, following the [semantic versioning format](https://semver.org/).
+
+    - When updating a stack with a newer version of the devfile specification (e.g., 2.1.0 -> 2.2.0), the previous version of the stack **must** be kept for a minimum of one (1) year.
 4) Test your changes:
     
     - Minimally, testing with odo (`odo create`, `odo push`, etc) is recommended, however if your Devfile is used with other tools, it's recommended to test there as well.
