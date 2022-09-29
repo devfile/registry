@@ -76,7 +76,7 @@ isNonTerminating() {
     _int_command=("$2")
     _int_command_args=("$3")
 
-    timeout_in_sec=180 # <== includes image pulling
+    timeout_in_sec=240 # <== includes image pulling
 
     echo "  PARAMS: image --> $_int_image, command --> ${_int_command[*]}, args --> ${_int_command_args[*]}"
  
