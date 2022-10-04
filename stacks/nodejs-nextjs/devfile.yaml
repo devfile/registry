@@ -9,11 +9,11 @@ metadata:
   name: nodejs-nextjs
   projectType: Next.js
   provider: Red Hat
-  language: Typescript
+  language: TypeScript
   tags:
     - Node.js
     - Next.js
-  version: 1.0.2
+  version: 1.0.3
 starterProjects:
   - name: nodejs-nextjs-starter
     git:
@@ -27,7 +27,7 @@ components:
         - name: http-nextjs
           targetPort: 3000
       image: registry.access.redhat.com/ubi8/nodejs-16:latest
-      command: ["tail", "-f", "/dev/null"]
+      command: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
     name: runtime
 commands:

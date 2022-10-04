@@ -4,9 +4,11 @@ samples:
     displayName: Basic Node.js
     description: A simple Hello World Node.js application
     icon: https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg
-    tags: ['NodeJS', 'Express']
-    projectType: nodejs
-    language: nodejs
+    tags:
+      - Node.js
+      - Express
+    projectType: Node.js
+    language: JavaScript
     provider: Red Hat
     git:
       remotes:
@@ -15,9 +17,11 @@ samples:
     displayName: Basic Quarkus
     description: A simple Hello World Java application using Quarkus
     icon: https://design.jboss.org/quarkus/logo/final/SVG/quarkus_icon_rgb_default.svg
-    tags: ['Java', 'Quarkus']
-    projectType: quarkus
-    language: java
+    tags:
+      - Java
+      - Quarkus
+    projectType: Quarkus
+    language: Java
     provider: Red Hat
     git:
       remotes:
@@ -26,9 +30,11 @@ samples:
     displayName: Basic Spring Boot
     description: A simple Hello World Java Spring Boot application using Maven
     icon: https://spring.io/images/projects/spring-edf462fec682b9d48cf628eaf9e19521.svg
-    tags: ['Java', 'Spring']
-    projectType: springboot
-    language: java
+    tags:
+      - Java
+      - Spring Boot
+    projectType: Spring Boot
+    language: Java
     provider: Red Hat
     git:
       remotes:
@@ -37,9 +43,12 @@ samples:
     displayName: Basic Python
     description: A simple Hello World application using Python
     icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/python.svg
-    tags: ['Python']
-    projectType: python
-    language: python
+    tags:
+      - Python
+      - Pip
+      - Flask
+    projectType: Python
+    language: Python
     provider: Red Hat
     git:
       remotes:
@@ -48,9 +57,10 @@ samples:
     displayName: Basic Go
     description: A simple Hello World application using Go
     icon: https://go.dev/blog/go-brand/Go-Logo/SVG/Go-Logo_Blue.svg
-    tags: ['Go']
-    projectType: go
-    language: go
+    tags:
+      - Go
+    projectType: Go
+    language: Go
     provider: Red Hat
     git:
       remotes:
@@ -59,9 +69,10 @@ samples:
     displayName: Basic .NET 6.0
     description: A simple application using .NET 6.0
     icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
-    tags: ['dotnet']
-    projectType: dotnet
-    language: dotnet
+    tags:
+      - Dotnet
+    projectType: Dotnet
+    language: Dotnet
     provider: Red Hat
     git:
       remotes:

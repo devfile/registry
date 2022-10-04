@@ -1,14 +1,16 @@
 schemaVersion: 2.1.0
 metadata:
   name: java-springboot
-  version: 1.1.0
+  version: 1.1.1
   displayName: Spring Boot®
   description: Spring Boot® using Java
-  tags: ['Java', 'Spring']
+  tags:
+    - Java
+    - Spring Boot
   globalMemoryLimit: 2674Mi
   icon: https://spring.io/images/projects/spring-edf462fec682b9d48cf628eaf9e19521.svg
-  projectType: 'spring'
-  language: 'java'
+  projectType: Spring Boot
+  language: Java
 starterProjects:
   - name: springbootproject
     git:

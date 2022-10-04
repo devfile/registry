@@ -7,11 +7,11 @@ metadata:
   name: nodejs-svelte
   projectType: Svelte
   provider: Red Hat
-  language: Typescript
+  language: TypeScript
   tags:
     - Node.js
     - Svelte
-  version: 1.0.2
+  version: 1.0.3
 starterProjects:
   - name: nodejs-svelte-starter
     git:
@@ -25,7 +25,7 @@ components:
         - name: http-svelte
           targetPort: 3000
       image: registry.access.redhat.com/ubi8/nodejs-16:latest
-      args: ["tail", "-f", "/dev/null"]
+      args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
     name: runtime
 commands:

@@ -8,11 +8,11 @@ metadata:
   name: nodejs-nuxtjs
   projectType: Nuxt.js
   provider: Red Hat
-  language: Typescript
+  language: TypeScript
   tags:
     - Node.js
     - Nuxt.js
-  version: 1.0.2
+  version: 1.0.3
 starterProjects:
   - name: nodejs-nuxtjs-starter
     git:
@@ -26,7 +26,7 @@ components:
         - name: http-nuxtjs
           targetPort: 3000
       image: registry.access.redhat.com/ubi8/nodejs-16:latest
-      args: ["tail", "-f", "/dev/null"]
+      args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
     name: runtime
 commands:

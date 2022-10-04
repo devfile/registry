@@ -14,19 +14,26 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 schemaVersion: 2.1.0
 metadata:
   name: java-websphereliberty-gradle
-  version: 0.3.1
-  displayName: 'WebSphere Liberty Gradle'
+  version: 0.3.2
+  displayName: WebSphere Liberty Gradle
   description: Java application Gradle-built stack using the WebSphere Liberty runtime
   icon: https://raw.githubusercontent.com/OpenLiberty/logos/7fbb132949b9b2589e18c8d5665c1b107028a21d/logomark/svg/OL_logomark.svg
-  tags: ['Java', 'Gradle']
-  architectures: ['amd64', 'ppc64le', 's390x']
-  language: 'java'
-  projectType: 'websphereliberty'
-  alpha.build-dockerfile: 'https://github.com/OpenLiberty/devfile-stack/releases/download/websphere-liberty-gradle-0.3.1/Dockerfile'
-  alpha.deployment-manifest: 'https://github.com/OpenLiberty/devfile-stack/releases/download/websphere-liberty-gradle-0.3.1/app-deploy.yaml'
+  tags:
+    - Java
+    - Gradle
+    - WebSphere Liberty
+  architectures:
+    - amd64
+    - ppc64le
+    - s390x
+  language: Java
+  projectType: WebSphere Liberty
+  alpha.build-dockerfile: https://github.com/OpenLiberty/devfile-stack/releases/download/websphere-liberty-gradle-0.3.1/Dockerfile
+  alpha.deployment-manifest: https://github.com/OpenLiberty/devfile-stack/releases/download/websphere-liberty-gradle-0.3.1/app-deploy.yaml
 starterProjects:
   - name: rest
     git:
@@ -40,7 +47,7 @@ components:
   - name: dev
     container:
       image: icr.io/appcafe/websphere-liberty-devfile-stack:{{liberty-version}}-gradle
-      args: ["tail", "-f", "/dev/null"]
+      args: ['tail', '-f', '/dev/null']
       memoryLimit: 1280Mi
       mountSources: true
       endpoints:

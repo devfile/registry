@@ -1,14 +1,16 @@
 schemaVersion: 2.1.0
 metadata:
   name: java-wildfly
-  version: 1.0.5
+  version: 1.0.6
   website: https://wildfly.org
   displayName: WildFly Java
   description: Upstream WildFly
   icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark.svg
-  tags: ['Java', 'WildFly']
-  projectType: 'wildfly'
-  language: 'java'
+  tags:
+    - Java
+    - WildFly
+  projectType: WildFly
+  language: Java
 starterProjects:
   - name: microprofile-config
     description: WildFly Eclipse Microprofile Config Quickstart
