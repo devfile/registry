@@ -2,7 +2,7 @@ schemaVersion: 1.0.0
 samples:
   - name: nodejs-basic
     displayName: Basic Node.js
-    description: A simple Hello World Node.js application
+    description: A simple Hello World Node.js application with a Devfile
     icon: https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg
     tags: ['NodeJS', 'Express']
     projectType: nodejs
@@ -13,7 +13,7 @@ samples:
         origin: https://github.com/nodeshift-starters/devfile-sample.git
   - name: code-with-quarkus
     displayName: Basic Quarkus
-    description: A simple Hello World Java application using Quarkus
+    description: A simple Hello World Java application using Quarkus with a Devfile
     icon: https://design.jboss.org/quarkus/logo/final/SVG/quarkus_icon_rgb_default.svg
     tags: ['Java', 'Quarkus']
     projectType: quarkus
@@ -24,7 +24,7 @@ samples:
         origin: https://github.com/devfile-samples/devfile-sample-code-with-quarkus.git
   - name: java-springboot-basic
     displayName: Basic Spring Boot
-    description: A simple Hello World Java Spring Boot application using Maven
+    description: A simple Hello World Java Spring Boot application using Maven with a Devfile
     icon: https://spring.io/images/projects/spring-edf462fec682b9d48cf628eaf9e19521.svg
     tags: ['Java', 'Spring']
     projectType: springboot
@@ -35,7 +35,7 @@ samples:
         origin: https://github.com/devfile-samples/devfile-sample-java-springboot-basic.git
   - name: python-basic
     displayName: Basic Python
-    description: A simple Hello World application using Python
+    description: A simple Hello World application using Python with a Devfile
     icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/python.svg
     tags: ['Python']
     projectType: python
@@ -46,7 +46,7 @@ samples:
         origin: https://github.com/devfile-samples/devfile-sample-python-basic.git
   - name: go-basic
     displayName: Basic Go
-    description: A simple Hello World application using Go
+    description: A simple Hello World application using Go with a Devfile
     icon: https://go.dev/blog/go-brand/Go-Logo/SVG/Go-Logo_Blue.svg
     tags: ['Go']
     projectType: go
@@ -57,7 +57,7 @@ samples:
         origin: https://github.com/devfile-samples/devfile-sample-go-basic.git
   - name: dotnet60-basic
     displayName: Basic .NET 6.0
-    description: A simple application using .NET 6.0
+    description: A simple application using .NET 6.0 with a Devfile
     icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
     tags: ['dotnet']
     projectType: dotnet
