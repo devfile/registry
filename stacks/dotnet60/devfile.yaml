@@ -8,9 +8,9 @@ metadata:
   projectType: Dotnet
   tags:
     - Dotnet
-  version: 1.0.1
+  version: 1.0.2
 starterProjects:
-  - name: s2i-example
+  - name: dotnet-example
     git:
       checkoutFrom:
         remote: origin
