@@ -71,8 +71,9 @@ samples:
     icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
     tags:
       - Dotnet
-    projectType: Dotnet
-    language: Dotnet
+      - .NET
+    projectType: .NET
+    language: .NET
     provider: Red Hat
     git:
       remotes:
