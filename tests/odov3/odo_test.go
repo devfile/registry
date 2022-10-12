@@ -223,6 +223,14 @@ func waitForHttp(url string, expectedCode int) error {
 		GinkgoWriter.Printf("Unexpected return code %d. Trying again in %s\n", resp.StatusCode, delay)
 		time.Sleep(delay)
 	}
+
+	// try to retrieve logs to see what happened
+	logsStdout, logsStderr, logsErr := runOdo("logs")
+	if logsErr != nil {
+		GinkgoWriter.Printf("Unable to get odo logs: %s\n", logsErr)
+	}
+	GinkgoWriter.Printf("odo logs stdout: %s\n", logsStdout)
+	GinkgoWriter.Printf("odo logs stderr: %s\n", logsStderr)
 	return fmt.Errorf("%s did not return %d", url, expectedCode)
 }
 
@@ -231,7 +239,7 @@ func waitForHttp(url string, expectedCode int) error {
 func waitForPort(devError chan error) ([]ForwardedPort, error) {
 	args := []string{"describe", "component", "-o", "json"}
 
-	maxTries := 30
+	maxTries := 20
 	delay := 10 * time.Second
 
 	stdout := []byte{}
@@ -280,6 +288,15 @@ func waitForPort(devError chan error) ([]ForwardedPort, error) {
 	GinkgoWriter.Printf("Last error: %v", lastError)
 	PrintIfNotEmpty("Last stdout:", string(stdout))
 	PrintIfNotEmpty("Last stderr:", string(stderr))
+
+	// try to retrieve logs to see what happened
+	logsStdout, logsStderr, logsErr := runOdo("logs")
+	if logsErr != nil {
+		GinkgoWriter.Printf("Unable to get odo logs: %s\n", logsErr)
+	}
+	PrintIfNotEmpty("odo logs stdout:", string(logsStdout))
+	PrintIfNotEmpty("odo logs stderr:", string(logsStderr))
+
 	return nil, fmt.Errorf("No ports found")
 
 }
@@ -338,9 +355,6 @@ func runOdo(args ...string) ([]byte, []byte, error) {
 	}
 
 	err = cmd.Wait()
-
-	PrintIfNotEmpty("stdout:", string(dataStdout))
-	PrintIfNotEmpty("stderr:", string(dataStderr))
 
 	if err != nil {
 		return nil, nil, err
