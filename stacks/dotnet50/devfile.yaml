@@ -4,10 +4,11 @@ metadata:
   displayName: .NET 5.0
   description: Stack with .NET 5.0
   icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
-  language: Dotnet
-  projectType: Dotnet
+  language: .NET
+  projectType: .NET
   tags:
     - Dotnet
+    - .Net
   version: 1.0.3
 starterProjects:
   - name: dotnet-example

@@ -18,7 +18,7 @@
 schemaVersion: 2.1.0
 metadata:
   name: java-websphereliberty-gradle
-  version: 0.3.2
+  version: 0.3.1
   displayName: WebSphere Liberty Gradle
   description: Java application Gradle-built stack using the WebSphere Liberty runtime
   icon: https://raw.githubusercontent.com/WASdev/logos/main/liberty-was-500-purple.svg
