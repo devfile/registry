@@ -72,8 +72,8 @@ samples:
     tags:
       - Dotnet
       - .NET
-    projectType: .NET
-    language: .NET
+    projectType: dotnet
+    language: dotnet
     provider: Red Hat
     git:
       remotes:

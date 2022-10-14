@@ -73,7 +73,7 @@ jobs:
           cd /tmp/odo
           make install
       - name: 'Install Ginkgo'
-        run: go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@v2.1.4
+        run: go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo
       - name: Check odo version
         run: odo version
       - name: Check the devfile stacks with odo v3

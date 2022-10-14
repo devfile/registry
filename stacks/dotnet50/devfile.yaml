@@ -4,8 +4,8 @@ metadata:
   displayName: .NET 5.0
   description: Stack with .NET 5.0
   icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
-  language: .NET
-  projectType: .NET
+  language: dotnet
+  projectType: dotnet
   tags:
     - Dotnet
     - .Net

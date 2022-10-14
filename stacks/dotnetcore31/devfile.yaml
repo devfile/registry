@@ -4,8 +4,8 @@ metadata:
   displayName: .NET Core 3.1
   description: Stack with .NET Core 3.1
   icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
-  language: .NET
-  projectType: .NET
+  language: dotnet
+  projectType: dotnet
   tags:
     - Dotnet
     - .NET
