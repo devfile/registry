@@ -70,8 +70,7 @@ samples:
     description: A simple application using .NET 6.0
     icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
     tags:
-      - Dotnet
-      - .NET
+      - dotnet
     projectType: dotnet
     language: dotnet
     provider: Red Hat
