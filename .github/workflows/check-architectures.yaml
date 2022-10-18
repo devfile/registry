@@ -16,49 +16,53 @@ name: Check Architectures
 
 on:
   pull_request:
-    branches: [ main ]
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   check_architectures:
     name: Check Stack and Sample Architectures
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Install yq command
-      uses: redhat-actions/openshift-tools-installer@v1
-      with:
-        source: "github"
-        github_pat: ${{ secrets.GITHUB_TOKEN }}
-        # Installs the latest release of yq
-        yq: "latest"
-    - name: Get git diff
-      id: diff
-      uses: technote-space/get-diff-action@v4
-      with:
-        PATTERNS: |
-          +(stacks)/**/devfile.yaml
-          extraDevfileEntries.yaml
-    - name: Print the diff
-      run: echo git diff ${{ env.GIT_DIFF }}
-    - name: Save PR number
-      run: |
-        mkdir -p ./pr
-        echo ${{ github.event.number }} > ./pr/number
-    - name: Check stacks and samples output
-      continue-on-error: true
-      run: tests/check_architectures.sh "${{ env.GIT_DIFF }}" yq >> ./pr/output
-    - name: Find Comment in PR
-      uses: peter-evans/find-comment@v1
-      id: find
-      with:
-        issue-number: ${{ github.event.number }}
-        comment-author: 'github-actions[bot]'
-        body-includes: Please check if your stack/sample devfile has architectures mentioned.
-    - name: Save Comment ID
-      if: ${{ steps.find.outputs.comment-id != '' }}
-      run: echo ${{ steps.find.outputs.comment-id }} > ./pr/commentid
-    - uses: actions/upload-artifact@v2
-      with:
-        name: pr
-        path: pr/
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install yq command
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          source: 'github'
+          github_pat: ${{ secrets.GITHUB_TOKEN }}
+          # Installs the latest release of yq
+          yq: 'latest'
+      - name: Get git diff
+        id: diff
+        uses: technote-space/get-diff-action@v4
+        with:
+          PATTERNS: |
+            +(stacks)/**/devfile.yaml
+            extraDevfileEntries.yaml
+      - name: Print the diff
+        run: echo git diff ${{ env.GIT_DIFF }}
+      - name: Save PR number
+        run: |
+          mkdir -p ./pr
+          echo ${{ github.event.number }} > ./pr/number
+      - name: Check stacks and samples output
+        continue-on-error: true
+        run: tests/check_architectures.sh "${{ env.GIT_DIFF }}" yq >> ./pr/output
+      - name: Find Comment in PR
+        uses: peter-evans/find-comment@v1
+        id: find
+        with:
+          issue-number: ${{ github.event.number }}
+          comment-author: 'github-actions[bot]'
+          body-includes: Please check if your stack/sample devfile has architectures mentioned.
+      - name: Save Comment ID
+        if: ${{ steps.find.outputs.comment-id != '' }}
+        run: echo ${{ steps.find.outputs.comment-id }} > ./pr/commentid
+      - uses: actions/upload-artifact@v2
+        with:
+          name: pr
+          path: pr/

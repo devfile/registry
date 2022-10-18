@@ -44,7 +44,6 @@ The following are required to build the devfile index container image containing
 
 7) Open a pull request against this repository with a brief description of the change.
 
-
 ### Updating
 
 Updating an existing devfile stack is relatively straightforward:
@@ -55,7 +54,7 @@ Updating an existing devfile stack is relatively straightforward:
 
     - When updating a stack with a newer version of the devfile specification (e.g., 2.1.0 -> 2.2.0), the previous version of the stack **must** be kept for a minimum of one (1) year.
 4) Test your changes:
-    
+
     - Minimally, testing with odo (`odo create`, `odo push`, etc) is recommended, however if your Devfile is used with other tools, it's recommended to test there as well.
 5) Open a pull request against this repository with your changes.
 
@@ -71,19 +70,21 @@ The devfile samples used in this devfile registry are stored in the `extraDevfil
 
 2) Open `extraDevfileEntries.yaml` in an editor
 3) Add an entry to the file with the following required fields:
-```
-  - name: <sample-name>
-    displayName: <sample-display-name>
-    description: <sample-description>
-    icon: <link-to-sample-icon>
-    tags: ["comma", "separated", "list", "of", "tags"]
-    projectType: <sample-project-type>
-    language: <sample-language>
-    git:
-      remotes:
-        origin: <link-to-sample-git-repository>
-```
-4) Fill in the fields in the angle brackets based on your sample. Note that there must be only one git remote for the devfile sample. 
+
+    ```yaml
+    - name: <sample-name>
+        displayName: <sample-display-name>
+        description: <sample-description>
+        icon: <link-to-sample-icon>
+        tags: ["comma", "separated", "list", "of", "tags"]
+        projectType: <sample-project-type>
+        language: <sample-language>
+        git:
+        remotes:
+            origin: <link-to-sample-git-repository>
+    ```
+
+4) Fill in the fields in the angle brackets based on your sample. Note that there must be only one git remote for the devfile sample.
 5) Open a pull request against this repository with your changes.
 
 ### Updating
@@ -95,15 +96,17 @@ To update a sample:
 3) Make the necessary changes.
 4) Open a pull request against this repository with your changes.
 
-
 ## How to Test Changes
 
 ### Odo
+
 `odo create` and `odo push` to test devfile changes. See [Odo Doc](https://odo.dev/docs/using-odo/create-component) for more details.
 
 ### Che
+
 Opening the URL `https://workspaces.openshift.com/#<repository_url>` in your browser should start a workspace where `exec` commands run successfully. Type `task+<space>` in the IDE command palette to see the list of available commands.
 
 ### Console
-In developer view, create an application via `Import from Git`. Provide git repository Url and verify if the application can be built and ran successfully. 
-Note: Currently Console only works with devfile v2.2.0 samples with outer loop support. 
+
+In developer view, create an application via `Import from Git`. Provide git repository Url and verify if the application can be built and ran successfully.
+Note: Currently Console only works with devfile v2.2.0 samples with outer loop support.

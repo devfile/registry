@@ -1,7 +1,7 @@
 schemaVersion: 2.1.0
 metadata:
   description: 'Go is an open source programming language that makes it easy to build simple, reliable, and efficient software.'
-  displayName: Go Web App
+  displayName: Go Runtime
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/golang.svg
   name: go
   projectType: Go
@@ -9,9 +9,10 @@ metadata:
   language: Go
   tags:
     - Go
-  version: 1.0.1
+  version: 1.0.2
 starterProjects:
   - name: go-starter
+    description: A Go project with a simple HTTP server
     git:
       checkoutFrom:
         revision: main
@@ -23,7 +24,7 @@ components:
         - name: http-go
           targetPort: 8080
       image: quay.io/devfile/golang:latest
-      args: ["tail", "-f", "/dev/null"]
+      args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
       mountSources: true
     name: runtime

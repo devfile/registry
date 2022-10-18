@@ -14,24 +14,30 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 schemaVersion: 2.1.0
 metadata:
   name: java-openliberty
   version: 0.8.1
-  displayName: 'Open Liberty Maven'
+  displayName: Open Liberty Maven
   description: Java application Maven-built stack using the Open Liberty runtime
   icon: https://raw.githubusercontent.com/OpenLiberty/logos/7fbb132949b9b2589e18c8d5665c1b107028a21d/logomark/svg/OL_logomark.svg
-  tags: ['Java', 'Maven']
-  architectures: ['amd64', 'ppc64le', 's390x']
-  language: 'java'
-  projectType: 'openliberty'
-  alpha.build-dockerfile: 'https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-maven-0.8.1/Dockerfile'
-  alpha.deployment-manifest: 'https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-maven-0.8.1/app-deploy.yaml'
+  tags:
+    - Java
+    - Maven
+  architectures:
+    - amd64
+    - ppc64le
+    - s390x
+  language: Java
+  projectType: Open Liberty
+  alpha.build-dockerfile: https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-maven-0.8.1/Dockerfile
+  alpha.deployment-manifest: https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-maven-0.8.1/app-deploy.yaml
 starterProjects:
   - name: rest
     git:
       remotes:
-        origin: 'https://github.com/OpenLiberty/devfile-stack-starters.git'
+        origin: https://github.com/OpenLiberty/devfile-stack-starters.git
 variables:
   # Liberty runtime version. Minimum recommended: 21.0.0.9
   liberty-version: '22.0.0.1'
@@ -42,7 +48,7 @@ components:
     container:
       # In the original upstream of this devfile, the image used is openliberty/devfile-stack:<x.y.z>, which is built from the repository: https://github.com/OpenLiberty/devfile-stack
       image: icr.io/appcafe/open-liberty-devfile-stack:{{liberty-version}}
-      args: ["tail", "-f", "/dev/null"]
+      args: ['tail', '-f', '/dev/null']
       memoryLimit: 768Mi
       mountSources: true
       endpoints:

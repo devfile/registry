@@ -1,14 +1,21 @@
 schemaVersion: 2.1.0
 metadata:
   name: java-wildfly-bootable-jar
-  version: 1.0.5
+  version: 1.0.6
   website: https://docs.wildfly.org/bootablejar/
   displayName: WildFly Bootable Jar
   description: Java stack with WildFly in bootable Jar mode, OpenJDK 11 and Maven 3.5
   icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark.svg
-  tags: ['RHEL8', 'Java', 'OpenJDK', 'Maven', 'WildFly', 'Microprofile', 'WildFly Bootable']
-  projectType: 'WildFly'
-  language: 'java'
+  tags:
+    - RHEL8
+    - Java
+    - OpenJDK
+    - Maven
+    - WildFly
+    - Microprofile
+    - WildFly Bootable
+  projectType: WildFly
+  language: Java
 starterProjects:
   - name: microprofile-config
     description: WildFly Eclipse Microprofile Config Quickstart
@@ -93,7 +100,7 @@ components:
   - name: wildfly
     container:
       image: registry.access.redhat.com/ubi8/openjdk-11
-      args: ["tail", "-f", "/dev/null"]
+      args: ['tail', '-f', '/dev/null']
       memoryLimit: 1512Mi
       mountSources: true
       volumeMounts:

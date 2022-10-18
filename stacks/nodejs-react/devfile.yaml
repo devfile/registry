@@ -8,11 +8,11 @@ metadata:
   name: nodejs-react
   projectType: React
   provider: Red Hat
-  language: Typescript
+  language: TypeScript
   tags:
     - Node.js
     - React
-  version: 2.0.1
+  version: 2.0.2
 starterProjects:
   - name: nodejs-react-starter
     git:
@@ -26,7 +26,7 @@ components:
         - name: http-react
           targetPort: 3000
       image: registry.access.redhat.com/ubi8/nodejs-16:latest
-      args: ["tail", "-f", "/dev/null"]
+      args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
     name: runtime
 commands:

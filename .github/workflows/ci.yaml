@@ -16,23 +16,27 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
     name: Check registry build
     runs-on: ubuntu-latest
     steps:
-    - name: Check out code
-      uses: actions/checkout@v2
-      with:
-        path: registry-repo
-    - name: Setup Go environment
-      uses: actions/setup-go@v2
-      with:
-        go-version: 1.13
-    
-    - name: Check if devfile registry build is working
-      run: registry-repo/.ci/build.sh
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          path: registry-repo
+      - name: Setup Go environment
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.13
+
+      - name: Check if devfile registry build is working
+        run: registry-repo/.ci/build.sh

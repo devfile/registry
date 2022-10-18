@@ -17,11 +17,15 @@ name: Validate Devfile stacks
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
   schedule:
     - cron: 0 5 * * *
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
 
 env:
   MINIKUBE_VERSION: 'v1.27.0'
@@ -32,74 +36,73 @@ jobs:
     name: check for non-terminating images
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-    - name: Setup Minikube
-      uses: manusa/actions-setup-minikube@v2.7.0
-      with:
-        minikube version: ${{ env.MINIKUBE_VERSION }}
-        kubernetes version: ${{ env.KUBERNETES_VERSION }}
-        driver: 'docker'
-        github token: ${{ secrets.GITHUB_TOKEN }}
-        start args: '--addons=ingress'
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Minikube
+        uses: manusa/actions-setup-minikube@v2.7.0
+        with:
+          minikube version: ${{ env.MINIKUBE_VERSION }}
+          kubernetes version: ${{ env.KUBERNETES_VERSION }}
+          driver: 'docker'
+          github token: ${{ secrets.GITHUB_TOKEN }}
+          start args: '--addons=ingress'
 
-    - name: Check that containers components are non terminating
-      run: tests/check_non_terminating.sh
+      - name: Check that containers components are non terminating
+        run: tests/check_non_terminating.sh
 
   odov3:
     name: with odo v3
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-    - name: Setup Minikube
-      uses: manusa/actions-setup-minikube@v2.7.0
-      with:
-        minikube version: ${{ env.MINIKUBE_VERSION }}
-        kubernetes version: ${{ env.KUBERNETES_VERSION }}
-        driver: 'docker'
-        github token: ${{ secrets.GITHUB_TOKEN }}
-        start args: '--addons=ingress'
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Minikube
+        uses: manusa/actions-setup-minikube@v2.7.0
+        with:
+          minikube version: ${{ env.MINIKUBE_VERSION }}
+          kubernetes version: ${{ env.KUBERNETES_VERSION }}
+          driver: 'docker'
+          github token: ${{ secrets.GITHUB_TOKEN }}
+          start args: '--addons=ingress'
 
-    - name: Install Go
-      uses: actions/setup-go@v3
-      with:
-        go-version: '1.19'
-    - name: Install odo v3
-      # Uses odo from main branch.
-      # Once odo v3.0.0 is officialy released this should be updated to use redhat-actions/openshift-tools-installer@v1
-      run: |
-        git clone https://github.com/redhat-developer/odo /tmp/odo
-        cd /tmp/odo
-        make install
-    - name: "Install Ginkgo"
-      run: go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo
-    - name: Check odo version
-      run: odo version
-    - name: Check the devfile stacks with odo v3
-      run: tests/check_odov3.sh
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.19'
+      - name: Install odo v3
+        # Uses odo from main branch.
+        # Once odo v3.0.0 is officially released this should be updated to use redhat-actions/openshift-tools-installer@v1
+        run: |
+          git clone https://github.com/redhat-developer/odo /tmp/odo
+          cd /tmp/odo
+          make install
+      - name: 'Install Ginkgo'
+        run: go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@v2.1.4
+      - name: Check odo version
+        run: odo version
+      - name: Check the devfile stacks with odo v3
+        run: tests/check_odov3.sh
 
   odov2:
     name: with odo v2
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-    - name: Setup Minikube
-      uses: manusa/actions-setup-minikube@v2.7.0
-      with:
-        minikube version: ${{ env.MINIKUBE_VERSION }}
-        kubernetes version: ${{ env.KUBERNETES_VERSION }}
-        driver: 'docker'
-        github token: ${{ secrets.GITHUB_TOKEN }}
-        start args: '--addons=ingress'
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Minikube
+        uses: manusa/actions-setup-minikube@v2.7.0
+        with:
+          minikube version: ${{ env.MINIKUBE_VERSION }}
+          kubernetes version: ${{ env.KUBERNETES_VERSION }}
+          driver: 'docker'
+          github token: ${{ secrets.GITHUB_TOKEN }}
+          start args: '--addons=ingress'
 
-    - name: Install odo v2
-      uses: redhat-actions/openshift-tools-installer@v1
-      with:
-        odo: "2.5.1"
-    - name: Check odo version
-      run: odo version
-    - name: Check the devfile stacks with odo v2
-      run: tests/check_odov2.sh odo
-
+      - name: Install odo v2
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          odo: '2.5.1'
+      - name: Check odo version
+        run: odo version
+      - name: Check the devfile stacks with odo v2
+        run: tests/check_odov2.sh odo

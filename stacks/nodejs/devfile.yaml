@@ -1,13 +1,16 @@
 schemaVersion: 2.1.0
 metadata:
   name: nodejs
-  version: 2.0.0
+  version: 2.0.1
   displayName: Node.js Runtime
   description: Stack with Node.js 16
   icon: https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg
-  tags: ['NodeJS', 'Express', 'ubi8']
-  projectType: 'nodejs'
-  language: 'javascript'
+  tags:
+    - Node.js
+    - Express
+    - ubi8
+  projectType: Node.js
+  language: JavaScript
 starterProjects:
   - name: nodejs-starter
     git:
@@ -17,7 +20,7 @@ components:
   - name: runtime
     container:
       image: registry.access.redhat.com/ubi8/nodejs-16:latest
-      args: ["tail", "-f", "/dev/null"]
+      args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
       mountSources: true
       endpoints:

@@ -19,6 +19,8 @@ ginkgo run --procs 2 \
   --skip="stack: java-websphereliberty-gradle starter: rest" \
   --skip="stack: java-wildfly-bootable-jar" \
   --skip="stack: java-wildfly" \
+  --skip="stack: java-openliberty" \
+  --skip="stack: java-websphereliberty" \
   --slow-spec-threshold 120s \
   --timeout 2h \
   tests/odov3 -- -stacksDir "$(pwd)"/stacks

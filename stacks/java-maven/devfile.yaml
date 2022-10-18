@@ -1,12 +1,14 @@
 schemaVersion: 2.1.0
 metadata:
   name: java-maven
-  version: 1.1.0
+  version: 1.1.1
   displayName: Maven Java
   description: Upstream Maven and OpenJDK 11
-  tags: ['Java', 'Maven']
-  projectType: 'maven'
-  language: 'java'
+  tags:
+    - Java
+    - Maven
+  projectType: Maven
+  language: Java
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/java-maven.jpg
 starterProjects:
   - name: springbootproject
