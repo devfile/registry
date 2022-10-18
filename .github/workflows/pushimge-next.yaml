@@ -16,36 +16,39 @@ name: Next Dockerimage
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   repository_dispatch:
     types: [build]
 
-jobs:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
 
+jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout registry build tools
-      uses: actions/checkout@v2
-      with:
-        repository: devfile/registry-support
-        persist-credentials: false
-        path: registry-support
-    - name: Check out code
-      uses: actions/checkout@v2
-      with:
-        path: registry-repo
-    - name: Setup Go environment
-      uses: actions/setup-go@v2
-      with:
-        go-version: 1.13
-    - name: Login to Quay
-      uses: docker/login-action@v1 
-      with:
-        registry: quay.io
-        username: ${{ secrets.QUAY_USERNAME }}
-        password: ${{ secrets.QUAY_PASSWORD }}
-    - name: Build the devfile-index docker image
-      run: registry-repo/.ci/build.sh
-    - name: Push the devfile-index docker image
-      run: registry-support/build-tools/push.sh quay.io/devfile/devfile-index:next
+      - name: Checkout registry build tools
+        uses: actions/checkout@v2
+        with:
+          repository: devfile/registry-support
+          persist-credentials: false
+          path: registry-support
+      - name: Check out code
+        uses: actions/checkout@v2
+        with:
+          path: registry-repo
+      - name: Setup Go environment
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.13
+      - name: Login to Quay
+        uses: docker/login-action@v1
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_PASSWORD }}
+      - name: Build the devfile-index docker image
+        run: registry-repo/.ci/build.sh
+      - name: Push the devfile-index docker image
+        run: registry-support/build-tools/push.sh quay.io/devfile/devfile-index:next

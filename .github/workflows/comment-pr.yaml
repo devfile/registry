@@ -18,60 +18,64 @@ name: Comment on PR
 on:
   workflow_run:
     workflows:
-      - "Check Architectures"
+      - 'Check Architectures'
     types:
       - completed
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-    - name: Download PR artifact
-      uses: actions/github-script@v3.1.0
-      with:
-        script: |
-          var artifacts = await github.actions.listWorkflowRunArtifacts({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            run_id: ${{github.event.workflow_run.id }},
-          });
-          var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
-            return artifact.name == "pr"
-          })[0];
-          var download = await github.actions.downloadArtifact({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            artifact_id: matchArtifact.id,
-            archive_format: 'zip',
-          });
-          var fs = require('fs');
-          fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
-    - run: unzip pr.zip
-    - name: Comment on PR if there is output
-      uses: actions/github-script@v3
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
-        script: |
-          var fs = require('fs');
-          var test_output = String(fs.readFileSync('./output'));
-          var header = "Please check if your stack/sample devfile has architectures mentioned.\n"
-          if (test_output) {
-            test_output = header + test_output
-            if (fs.existsSync('./commentid')) { 
-              var comment_id = Number(fs.readFileSync('./commentid'));
-              await github.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: comment_id,
-                body: test_output
-              });
-            } else {
-              var issue_number = Number(fs.readFileSync('./number'));
-              await github.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: issue_number,
-                body: test_output
-              });
+      - name: Download PR artifact
+        uses: actions/github-script@v3.1.0
+        with:
+          script: |
+            var artifacts = await github.actions.listWorkflowRunArtifacts({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: ${{github.event.workflow_run.id }},
+            });
+            var matchArtifact = artifacts.data.artifacts.filter((artifact) => {
+              return artifact.name == "pr"
+            })[0];
+            var download = await github.actions.downloadArtifact({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              artifact_id: matchArtifact.id,
+              archive_format: 'zip',
+            });
+            var fs = require('fs');
+            fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
+      - run: unzip pr.zip
+      - name: Comment on PR if there is output
+        uses: actions/github-script@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            var fs = require('fs');
+            var test_output = String(fs.readFileSync('./output'));
+            var header = "Please check if your stack/sample devfile has architectures mentioned.\n"
+            if (test_output) {
+              test_output = header + test_output
+              if (fs.existsSync('./commentid')) { 
+                var comment_id = Number(fs.readFileSync('./commentid'));
+                await github.issues.updateComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  comment_id: comment_id,
+                  body: test_output
+                });
+              } else {
+                var issue_number = Number(fs.readFileSync('./number'));
+                await github.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue_number,
+                  body: test_output
+                });
+              }
             }
-          }
