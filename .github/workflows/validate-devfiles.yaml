@@ -81,10 +81,7 @@ jobs:
       - name: Check odo version
         run: odo version
       - name: Check the devfile stacks with odo v3
-        run: |
-          tests/check_odov3.sh \
-          --skip="stack: java-openliberty" \
-          --skip="stack: java-websphereliberty" \
+        run: tests/check_odov3.sh
 
   odov2:
     name: with odo v2

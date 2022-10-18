@@ -10,7 +10,7 @@ metadata:
     - .NET
   version: 1.0.2
 starterProjects:
-  - name: dotnet-example
+  - name: dotnet60-example
     git:
       checkoutFrom:
         remote: origin
