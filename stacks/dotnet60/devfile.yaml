@@ -4,10 +4,10 @@ metadata:
   displayName: .NET 6.0
   description: Stack with .NET 6.0
   icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
-  language: dotnet
-  projectType: dotnet
+  language: .NET
+  projectType: .NET
   tags:
-    - dotnet
+    - .NET
   version: 1.0.2
 starterProjects:
   - name: dotnet-example
