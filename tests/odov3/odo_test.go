@@ -164,10 +164,27 @@ var _ = Describe("test starter projects from devfile stacks", func() {
 				_, _, err := runOdo("init", "--devfile-path", stack.devfilePath, "--starter", starterProject.Name, "--name", starterProject.Name)
 				Expect(err).To(BeNil())
 
-				_, _, devProcess, err := runOdoDev()
+				devStdout, devStderr, devProcess, err := runOdoDev()
 				Expect(err).To(BeNil())
 
-				ports, err := waitForPort()
+				// if odo dev command failed send error to this chanel to interrupt waitForPort()
+				devError := make(chan error)
+				go func() {
+					dataStdout, err := io.ReadAll(devStdout)
+					Expect(err).To(BeNil())
+
+					dataStderr, err := io.ReadAll(devStderr)
+					Expect(err).To(BeNil())
+
+					err = devProcess.Wait()
+
+					PrintIfNotEmpty("'odo dev' stdout:", string(dataStdout))
+					PrintIfNotEmpty("'odo dev' stderr:", string(dataStderr))
+
+					devError <- err
+				}()
+
+				ports, err := waitForPort(devError)
 				Expect(err).To(BeNil())
 
 				for _, port := range ports {
@@ -211,7 +228,7 @@ func waitForHttp(url string, expectedCode int) error {
 
 // uses `odo describe component` to get the forwarded ports of the component
 // returns list of forwarded ports
-func waitForPort() ([]ForwardedPort, error) {
+func waitForPort(devError chan error) ([]ForwardedPort, error) {
 	args := []string{"describe", "component", "-o", "json"}
 
 	maxTries := 30
@@ -221,6 +238,15 @@ func waitForPort() ([]ForwardedPort, error) {
 	stderr := []byte{}
 	var lastError error
 	for i := 0; i < maxTries; i++ {
+
+		// check if odo dev command failed, if yes stop and return error
+		select {
+		case err := <-devError:
+			GinkgoWriter.Printf("'odo dev' failed with %q\n", err)
+			return nil, fmt.Errorf("'odo dev' failed with %q", err)
+		default:
+		}
+
 		GinkgoWriter.Println("Waiting for odo to setup port-forwarding. Try", i+1, "of", maxTries)
 
 		var component Component
@@ -229,8 +255,8 @@ func waitForPort() ([]ForwardedPort, error) {
 		stdout, stderr, err = runOdo(args...)
 		if err != nil {
 			GinkgoWriter.Println("odo command failed")
-			GinkgoWriter.Printf("stdout: %s\n", stdout)
-			GinkgoWriter.Printf("stderr: %s\n", stderr)
+			PrintIfNotEmpty("stdout:", string(stdout))
+			PrintIfNotEmpty("stderr:", string(stderr))
 			return nil, err
 		}
 
@@ -252,8 +278,8 @@ func waitForPort() ([]ForwardedPort, error) {
 
 	GinkgoWriter.Println("No ports found")
 	GinkgoWriter.Printf("Last error: %v", lastError)
-	GinkgoWriter.Printf("Last stdout: %s\n", stdout)
-	GinkgoWriter.Printf("Last stderr: %s\n", stderr)
+	PrintIfNotEmpty("Last stdout:", string(stdout))
+	PrintIfNotEmpty("Last stderr:", string(stderr))
 	return nil, fmt.Errorf("No ports found")
 
 }
@@ -301,20 +327,20 @@ func runOdo(args ...string) ([]byte, []byte, error) {
 		return nil, nil, err
 	}
 
-	dataStdout, err := ioutil.ReadAll(stdout)
+	dataStdout, err := io.ReadAll(stdout)
 	if err != nil {
 		return nil, nil, err
 	}
 
-	dataStderr, err := ioutil.ReadAll(stderr)
+	dataStderr, err := io.ReadAll(stderr)
 	if err != nil {
 		return nil, nil, err
 	}
 
 	err = cmd.Wait()
 
-	GinkgoWriter.Println("stdout:", string(dataStdout))
-	GinkgoWriter.Println("stderr:", string(dataStderr))
+	PrintIfNotEmpty("stdout:", string(dataStdout))
+	PrintIfNotEmpty("stderr:", string(dataStderr))
 
 	if err != nil {
 		return nil, nil, err
@@ -346,4 +372,12 @@ func copyFile(src string, dst string) error {
 		return err
 	}
 	return nil
+}
+
+// write to GinkgoWeiter if str is not empty.
+// format will be "decription str"
+func PrintIfNotEmpty(description string, str string) {
+	if str != "" {
+		GinkgoWriter.Printf("%s %s\n", description, str)
+	}
 }
