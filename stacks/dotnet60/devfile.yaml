@@ -5,7 +5,7 @@ metadata:
   description: Stack with .NET 6.0
   icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
   language: .NET
-  projectType: .NET
+  projectType: dotnet
   tags:
     - .NET
   version: 1.0.2
@@ -22,7 +22,7 @@ components:
   - name: dotnet
     container:
       image: registry.access.redhat.com/ubi8/dotnet-60:6.0
-      args: ['tail', '-f', '/dev/null']
+      args: ["tail", "-f", "/dev/null"]
       mountSources: true
       env:
         - name: CONFIGURATION

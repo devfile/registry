@@ -9,13 +9,13 @@ metadata:
     - Spring Boot
   globalMemoryLimit: 2674Mi
   icon: https://spring.io/images/projects/spring-edf462fec682b9d48cf628eaf9e19521.svg
-  projectType: Spring Boot
+  projectType: springboot
   language: Java
 starterProjects:
   - name: springbootproject
     git:
       remotes:
-        origin: 'https://github.com/odo-devfiles/springboot-ex.git'
+        origin: "https://github.com/odo-devfiles/springboot-ex.git"
 components:
   - name: tools
     container:
@@ -30,7 +30,7 @@ components:
           path: /home/user/.m2
       env:
         - name: DEBUG_PORT
-          value: '5858'
+          value: "5858"
   - name: m2
     volume:
       size: 3Gi
@@ -39,7 +39,7 @@ commands:
     exec:
       component: tools
       workingDir: ${PROJECT_SOURCE}
-      commandLine: 'mvn clean -Dmaven.repo.local=/home/user/.m2/repository package -Dmaven.test.skip=true'
+      commandLine: "mvn clean -Dmaven.repo.local=/home/user/.m2/repository package -Dmaven.test.skip=true"
       group:
         kind: build
         isDefault: true
@@ -47,7 +47,7 @@ commands:
     exec:
       component: tools
       workingDir: ${PROJECT_SOURCE}
-      commandLine: 'mvn -Dmaven.repo.local=/home/user/.m2/repository spring-boot:run'
+      commandLine: "mvn -Dmaven.repo.local=/home/user/.m2/repository spring-boot:run"
       group:
         kind: run
         isDefault: true
@@ -55,7 +55,7 @@ commands:
     exec:
       component: tools
       workingDir: ${PROJECT_SOURCE}
-      commandLine: 'java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=${DEBUG_PORT},suspend=n -jar target/*.jar'
+      commandLine: "java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=${DEBUG_PORT},suspend=n -jar target/*.jar"
       group:
         kind: debug
         isDefault: true
