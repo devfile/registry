@@ -35,5 +35,18 @@ type Stack struct {
 	starterProjects []v1alpha2.StarterProject
 }
 
+type StackInfo struct {
+	Name        string    `yaml:"name,omitempty"`
+	DisplayName string    `yaml:"displayName,omitempty"`
+	Description string    `yaml:"description,omitempty"`
+	Icon        string    `yaml:"icon,omitempty"`
+	Versions    []Version `yaml:"versions,omitempty"`
+}
+
+type Version struct {
+	Version string `yaml:"version,omitempty"`
+	Default bool   `yaml:"default,omitempty"`
+}
+
 type RunningMode string
 type RunningModes map[RunningMode]bool

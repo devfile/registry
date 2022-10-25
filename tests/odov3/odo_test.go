@@ -22,6 +22,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
 	"io"
@@ -40,6 +41,7 @@ import (
 	"github.com/devfile/library/pkg/devfile/parser/data/v2/common"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
+	"gopkg.in/yaml.v3"
 )
 
 var stacksDir string
@@ -52,6 +54,26 @@ func init() {
 
 // all stacks to be tested
 var stacks []Stack
+
+func createStack(fileName string, path string) (Stack, error) {
+	stack := Stack{id: fileName, devfilePath: path}
+
+	parserArgs := parser.ParserArgs{
+		Path: stack.devfilePath,
+	}
+
+	devfile, _, err := devfile.ParseDevfileAndValidate(parserArgs)
+	if err != nil {
+		return Stack{}, err
+	}
+
+	stack.starterProjects, err = devfile.Data.GetStarterProjects(common.DevfileOptions{})
+	if err != nil {
+		return Stack{}, err
+	}
+
+	return stack, err
+}
 
 func TestOdo(t *testing.T) {
 	RegisterFailHandler(Fail)
@@ -70,20 +92,29 @@ func TestOdo(t *testing.T) {
 
 	for _, file := range files {
 		if file.IsDir() {
-			stack := Stack{id: file.Name(), devfilePath: stacksDir + "/" + file.Name() + "/devfile.yaml"}
+			stackYaml := filepath.Join(stacksDir, file.Name(), "stack.yaml")
+			if _, err := os.Stat(stackYaml); errors.Is(err, os.ErrNotExist) {
+				// not a multi version stack
+				path := filepath.Join(stacksDir, file.Name(), "devfile.yaml")
+				stack, err := createStack(file.Name(), path)
+				g.Expect(err).To(BeNil())
+				stacks = append(stacks, stack)
+			} else {
+				// multi version stack
+				buf, err := ioutil.ReadFile(stackYaml)
+				g.Expect(err).To(BeNil())
 
-			parserArgs := parser.ParserArgs{
-				Path: stack.devfilePath,
+				stackInfo := StackInfo{}
+				err = yaml.Unmarshal(buf, &stackInfo)
+				g.Expect(err).To(BeNil())
+
+				for _, version := range stackInfo.Versions {
+					path := filepath.Join(stacksDir, file.Name(), version.Version, "devfile.yaml")
+					stack, err := createStack(file.Name(), path)
+					g.Expect(err).To(BeNil())
+					stacks = append(stacks, stack)
+				}
 			}
-
-			devfile, _, err := devfile.ParseDevfileAndValidate(parserArgs)
-			g.Expect(err).To(BeNil())
-
-			stack.starterProjects, err = devfile.Data.GetStarterProjects(common.DevfileOptions{})
-			g.Expect(err).To(BeNil())
-
-			stacks = append(stacks, stack)
-
 		}
 	}
 
@@ -275,9 +306,36 @@ func waitForPort(devError chan error) ([]ForwardedPort, error) {
 			continue
 		}
 
-		if len(component.DevForwardedPorts) > 0 {
+		// get list ports that we should wait for
+		// this ignores ports that have exposure set to "none" or "internal"
+		ports := []int{}
+		for _, component := range component.DevfileData.Devfile.Components {
+			if component.Container != nil {
+				for _, endpoint := range component.Container.Endpoints {
+					if endpoint.Exposure == "none" || endpoint.Exposure == "internal" {
+						continue
+					}
+					ports = append(ports, endpoint.TargetPort)
+				}
+			}
+		}
+
+		GinkgoWriter.Printf("Checking if following %v ports have port-forwarding setup.\n", ports)
+
+		if len(component.DevForwardedPorts) >= len(ports) {
 			GinkgoWriter.Println("Found ports", component.DevForwardedPorts)
-			return component.DevForwardedPorts, nil
+
+			out := []ForwardedPort{}
+			// return only ports that we were waiting for
+			for _, forwardedPort := range component.DevForwardedPorts {
+				for _, port := range ports {
+					if forwardedPort.ContainerPort == port {
+						out = append(out, forwardedPort)
+					}
+				}
+			}
+
+			return out, nil
 		}
 		delay += 10 * time.Second
 		time.Sleep(delay)

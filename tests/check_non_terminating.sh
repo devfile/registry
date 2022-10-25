@@ -113,9 +113,13 @@ isNonTerminating() {
 YQ_PATH=${YQ_PATH:-yq}
 TEST_NAMESPACE=${TEST_NAMESPACE:-default}
 
-find "$DEVFILES_DIR" -maxdepth 1 -type d ! -path "$DEVFILES_DIR" -print0 | while IFS= read -r -d '' devfile_dir; do
+find "$DEVFILES_DIR" -maxdepth 2 -type d ! -path "$DEVFILES_DIR" -print0 | while IFS= read -r -d '' devfile_dir; do
 
     devfile_path=$devfile_dir/devfile.yaml
+    if [ ! -f "$devfile_path" ]; then
+        # multi version stacks contain nested devfiles
+        continue
+    fi
 
     echo "======================="
     echo "Testing ${devfile_path}"

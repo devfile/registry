@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 set -x
 DEVFILES_DIR="$(pwd)/stacks/"
@@ -37,9 +37,11 @@ waitForHTTPStatus() {
 # parameters:
 # - name of a component and project 
 # - path to devfile.yaml
+# - namespace for the project
 test() {
     devfileName=$1
     devfilePath=$2
+    namespace=$3
 
     # remember if there was en error
     error=false
@@ -47,10 +49,10 @@ test() {
     tmpDir=$(mktemp -d)
     cd "$tmpDir" || return 1
 
-    $ODO_PATH project create "$devfileName" || error=true
+    $ODO_PATH project create "$namespace" || error=true
     if $error; then
         echo "ERROR project create failed"
-        FAILED_TESTS="$FAILED_TESTS $devfileName"
+        FAILED_TESTS="$FAILED_TESTS $namespace"
         return 1
     fi
     
@@ -64,26 +66,25 @@ test() {
 
     if $error; then
         echo "ERROR create failed"
-        $ODO_PATH project delete -f "$devfileName"
-        FAILED_TESTS="$FAILED_TESTS $devfileName"
+        $ODO_PATH project delete -f "$namespace"
+        FAILED_TESTS="$FAILED_TESTS $namespace"
         return 1
     fi
 
     if [ "$ENV" = "minikube" ]; then
-        # ToDo: Clean up, I'm not happy about having specific checks for the stacks with multiple ports
-        # But since we're testing against minikube, we need to specifically create the URL/ingress before pushing
-        # And if there's multiple ports in the devfile, a port must be specified.
-        if [ "$devfileName" = "java-wildfly" ] || [ "$devfileName" = "java-wildfly-bootable-jar" ]; then
-            $ODO_PATH url create --host "$(minikube ip).nip.io" --port 8080 || error=true
-            $ODO_PATH url create --host "$(minikube ip).nip.io" --port 16686 || error=true
+        exposedEndpoints=$("$YQ_PATH" e '.components[].container.endpoints[] | select (.exposure != "none" and .exposure != "internal").targetPort' "$devfilePath")
+        if [ "$exposedEndpoints" = "" ] || [ "$exposedEndpoints" = "null" ]; then
+            echo "WARN Devfile at path $devfilePath has no endpoints => no URL will be created."
         else
-            $ODO_PATH url create --host "$(minikube ip).nip.io" || error=true
-        fi
-        if $error; then
-            echo "ERROR url create failed"
-            $ODO_PATH project delete -f "$devfileName"
-            FAILED_TESTS="$FAILED_TESTS $devfileName"
-            return 1
+            for ep in $exposedEndpoints; do
+                "$ODO_PATH" url create --host "$(minikube ip).nip.io" --port "$ep" || error=true
+            done
+            if $error; then
+                echo "ERROR url create failed"
+                $ODO_PATH project delete -f "$namespace"
+                FAILED_TESTS="$FAILED_TESTS $namespace"
+                return 1
+            fi
         fi
     fi
 
@@ -91,8 +92,8 @@ test() {
     if $error; then
         echo "ERROR push failed"
         $ODO_PATH delete -f -a || error=true
-        $ODO_PATH project delete -f "$devfileName"
-        FAILED_TESTS="$FAILED_TESTS $devfileName"
+        $ODO_PATH project delete -f "$namespace"
+        FAILED_TESTS="$FAILED_TESTS $namespace"
         return 1
     fi
 
@@ -105,8 +106,8 @@ test() {
         waitForHTTPStatus "$url" "$statusCode"
         if [ $? -ne 0 ]; then
             echo "ERROR unable to get working url"
-            $ODO_PATH project delete -f "$devfileName"
-            FAILED_TESTS="$FAILED_TESTS $devfileName"
+            $ODO_PATH project delete -f "$namespace"
+            FAILED_TESTS="$FAILED_TESTS $namespace"
             error=true
             return 1
         fi
@@ -114,12 +115,12 @@ test() {
 
     # kill -9 $CPID
     $ODO_PATH delete -f -a || error=true
-    $ODO_PATH project delete -f "$devfileName"
+    $ODO_PATH project delete -f "$namespace"
 
     if $error; then
         echo "FAIL"
         # record failed test
-        FAILED_TESTS="$FAILED_TESTS $devfileName"
+        FAILED_TESTS="$FAILED_TESTS $namespace"
         return 1
     fi
 
@@ -150,13 +151,29 @@ if [ "$REGISTRY" != "local" ] && [ "$REGISTRY" != "remote" ]; then
   exit 1
 fi
 
-for devfile_dir in $(find $DEVFILES_DIR -maxdepth 1 -type d ! -path $DEVFILES_DIR); do
-    devfile_name="$(basename $devfile_dir)"
+for devfile_dir in $(find $DEVFILES_DIR -maxdepth 2 -type d ! -path $DEVFILES_DIR); do
     devfile_path=$devfile_dir/devfile.yaml
+    if [ ! -f "$devfile_path" ]; then
+        # multi version stacks contain nested devfiles
+        continue
+    fi
+
+    # skip devfiles that use 2.2
+    devfile_schema_version=$($YQ_PATH eval '.schemaVersion' $devfile_path)
+    if [[ $devfile_schema_version == "2.2."* ]]; then
+        continue
+    fi
+
+    devfile_name=$($YQ_PATH eval '.metadata.name' $devfile_path)
+    devfile_version=$($YQ_PATH eval '.metadata.version' $devfile_path)
+
+    # deploying a multi version stack requires unique namespaces
+    namespace=$devfile_name-${devfile_version//.}
+
     # Skipping the java-wildfly-bootable-jar stack right now since it's broken.
     # ToDo: Uncomment once fixed.
     if [ $devfile_name != "java-wildfly-bootable-jar" ]; then
-      test "$devfile_name" "$devfile_path"
+        test "$devfile_name" "$devfile_path" "$namespace"
     fi
 done
 
