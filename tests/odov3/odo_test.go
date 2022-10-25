@@ -275,9 +275,36 @@ func waitForPort(devError chan error) ([]ForwardedPort, error) {
 			continue
 		}
 
-		if len(component.DevForwardedPorts) > 0 {
+		// get list ports that we should wait for
+		// this ignores ports that have exposure set to "none" or "internal"
+		ports := []int{}
+		for _, component := range component.DevfileData.Devfile.Components {
+			if component.Container != nil {
+				for _, endpoint := range component.Container.Endpoints {
+					if endpoint.Exposure == "none" || endpoint.Exposure == "internal" {
+						continue
+					}
+					ports = append(ports, endpoint.TargetPort)
+				}
+			}
+		}
+
+		GinkgoWriter.Printf("Checking if following %v ports have port-forwarding setup.\n", ports)
+
+		if len(component.DevForwardedPorts) >= len(ports) {
 			GinkgoWriter.Println("Found ports", component.DevForwardedPorts)
-			return component.DevForwardedPorts, nil
+
+			out := []ForwardedPort{}
+			// return only ports that we were waiting for
+			for _, forwardedPort := range component.DevForwardedPorts {
+				for _, port := range ports {
+					if forwardedPort.ContainerPort == port {
+						out = append(out, forwardedPort)
+					}
+				}
+			}
+
+			return out, nil
 		}
 		delay += 10 * time.Second
 		time.Sleep(delay)
