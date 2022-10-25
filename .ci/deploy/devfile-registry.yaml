@@ -241,14 +241,6 @@ parameters:
   value: "1"
   displayName: Devfile registry replicas
   description: The number of replicas for the hosted devfile registry service
-- name: ENABLE_TELEMETRY
-  value: "false"
-  displayName: Devfile registry telemetry enablement
-  description: Option to opt in or opt out devfile registry telemetry
-- name: REGISTRY_NAME
-  value: devfile-community-registry
-  displayName: Devfile registry name
-  description: The registry name that is used as identifier for devfile telemetry
 - name: REGISTRY_HOST_ALIAS
   value: https://registry.stage.devfile.io
   displayName: Devfile registry hostname alias
@@ -257,7 +249,4 @@ parameters:
   value: S2rfQJo8xA9nyLhdY2CnTrWqlUgHqmwq
   displayName: Public write key for segment.io
   description: The public write key to send viewer analytics to segment.io
-- name: TELEMETRY_KEY
-  value: 6HBMiy5UxBtsbxXx7O4n0t0u4dt8IAR3
-  displayName: The registry's public write key for segment.io
-  description: The public write key to send registry analytics to segment.io
+
