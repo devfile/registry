@@ -15,4 +15,15 @@
 
 ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# Build devfile-index
 docker build --no-cache -t devfile-index -f $ABSOLUTE_PATH/Dockerfile $ABSOLUTE_PATH/..
+
+# Clone devfile-web for building registry-viewer
+if [ -d $ABSOLUTE_PATH/devfile-web ]
+then
+    rm -rf $ABSOLUTE_PATH/devfile-web
+fi
+git clone https://github.com/devfile/devfile-web.git $ABSOLUTE_PATH/devfile-web
+
+# Build registry-viewer
+cd $ABSOLUTE_PATH/devfile-web && bash $ABSOLUTE_PATH/devfile-web/scripts/build_viewer.sh && cd -
