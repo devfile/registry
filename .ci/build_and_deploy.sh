@@ -15,19 +15,31 @@
 set -ex
 ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 GIT_REV="$(git rev-parse --short=7 HEAD)"
-IMAGE="${IMAGE:-quay.io/app-sre/devfile-index}"
-IMAGE_TAG="${IMAGE_TAG:-${GIT_REV}}"
+INDEX_IMAGE="${INDEX_IMAGE:-quay.io/app-sre/devfile-index}"
+INDEX_IMAGE_TAG="${INDEX_IMAGE_TAG:-${GIT_REV}}"
+VIEWER_IMAGE="${VIEWER_IMAGE:-quay.io/app-sre/registry-viewer}"
+VIEWER_IMAGE_TAG="${VIEWER_IMAGE_TAG:-${GIT_REV}}"
 
 # Run the build script
 $ABSOLUTE_PATH/build.sh
 
-# Push the iamge to quay.io
+# Push the image to quay.io
 if [[ -n "$QUAY_USER" && -n "$QUAY_TOKEN" ]]; then
     DOCKER_CONF="$PWD/.docker"
     mkdir -p "$DOCKER_CONF"
-    docker tag devfile-index "${IMAGE}:${IMAGE_TAG}"
-    docker tag devfile-index "${IMAGE}:next"
+
+    # login into quay.io
     docker --config="$DOCKER_CONF" login -u="$QUAY_USER" -p="$QUAY_TOKEN" quay.io
-    docker --config="$DOCKER_CONF" push "${IMAGE}:${IMAGE_TAG}"
-    docker --config="$DOCKER_CONF" push "${IMAGE}:next"
+
+    # devfile-index
+    docker tag devfile-index "${INDEX_IMAGE}:${INDEX_IMAGE_TAG}"
+    docker tag devfile-index "${INDEX_IMAGE}:next"
+    docker --config="$DOCKER_CONF" push "${INDEX_IMAGE}:${INDEX_IMAGE_TAG}"
+    docker --config="$DOCKER_CONF" push "${INDEX_IMAGE}:next"
+
+    # registry-viewer
+    docker tag registry-viewer "${VIEWER_IMAGE}:${VIEWER_IMAGE_TAG}"
+    docker tag registry-viewer "${VIEWER_IMAGE}:next"
+    docker --config="$DOCKER_CONF" push "${VIEWER_IMAGE}:${VIEWER_IMAGE_TAG}"
+    docker --config="$DOCKER_CONF" push "${VIEWER_IMAGE}:next"
 fi
