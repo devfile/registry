@@ -49,14 +49,8 @@ objects:
               items:
                 - key: registry-config.yml
                   path: config.yml
-          - name: viewer-config
-            configMap:
-              name: devfile-registry
-              items:
-                - key: devfile-registry-hosts.json
-                  path: devfile-registry-hosts.json
         containers:
-        - image: ${DEVFILE_INDEX_IMAGE}:${IMAGE_TAG}
+        - image: ${DEVFILE_INDEX_IMAGE}:${DEVFILE_INDEX_IMAGE_TAG}
           imagePullPolicy: "${DEVFILE_INDEX_PULL_POLICY}"
           name: devfile-registry
           ports:
@@ -84,14 +78,6 @@ objects:
             initialDelaySeconds: 15
             periodSeconds: 10
             timeoutSeconds: 3
-          startupProbe:
-            httpGet:
-              path: /viewer
-              port: 8080
-              scheme: HTTP
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 10
           resources:
             requests:
               cpu: 100m
@@ -100,20 +86,55 @@ objects:
               cpu: 250m
               memory: ${DEVFILE_INDEX_MEMORY_LIMIT}
           env:
-            - name: DEVFILE_VIEWER_ROOT
-              value: "/viewer"
             - name: ENABLE_TELEMETRY
               value: ${ENABLE_TELEMETRY}
             - name: REGISTRY_NAME
               value: ${REGISTRY_NAME}
-            - name: ANALYTICS_WRITE_KEY
-              value: ${ANALYTICS_WRITE_KEY}
             - name: TELEMETRY_KEY
               value: ${TELEMETRY_KEY}
-          volumeMounts:
-          - name: viewer-config
-            mountPath: "/app/config"
-            readOnly: false
+        - image: ${REGISTRY_VIEWER_IMAGE}:${REGISTRY_VIEWER_IMAGE_TAG}
+          imagePullPolicy: "${REGISTRY_VIEWER_PULL_POLICY}"
+          name: devfile-registry-viewer
+          ports:
+          - containerPort: 3000
+          livenessProbe:
+            httpGet:
+              path: /viewer
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /viewer
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: ${REGISTRY_VIEWER_MEMORY_LIMIT}
+          env:
+            - name: NEXT_PUBLIC_BASE_PATH
+              value: "/viewer"
+            - name: SITE_URL
+              value: "${REGISTRY_HOST_ALIAS}/viewer"
+            - name: NEXT_PUBLIC_DEVFILE_REGISTRIES
+              value: |
+                [
+                  {
+                    "name": "Community",
+                    "link": "${REGISTRY_HOST_ALIAS}"
+                  }
+                ]
+            - name: ANALYTICS_WRITE_KEY
+              value: ${ANALYTICS_WRITE_KEY}
         - image: ${OCI_REGISTRY_IMAGE}:${OCI_REGISTRY_IMAGE_TAG}
           imagePullPolicy: "${OCI_REGISTRY_PULL_POLICY}"
           name: oci-registry
@@ -223,10 +244,14 @@ parameters:
   value: next
   displayName: Devfile registry version
   description: Devfile registry version which defaults to next
-- name: IMAGE_TAG
+- name: REGISTRY_VIEWER_IMAGE
+  value: quay.io/devfile/registry-viewer
+  displayName: Devfile registry viewer image
+  description: Devfile registry viewer docker image. Defaults to quay.io/devfile/registry-viewer
+- name: REGISTRY_VIEWER_IMAGE_TAG
   value: next
-  displayName: Devfile registry version
-  description: Devfile registry version which defaults to next
+  displayName: Devfile registry viewer version
+  description: Devfile registry viewer version which defaults to next
 - name: DEVFILE_INDEX_MEMORY_LIMIT
   value: 256Mi
   displayName: Memory Limit
@@ -234,6 +259,14 @@ parameters:
 - name: DEVFILE_INDEX_PULL_POLICY
   value: Always
   displayName: Devfile registry image pull policy
+  description: Always pull by default. Can be IfNotPresent
+- name: REGISTRY_VIEWER_MEMORY_LIMIT
+  value: 256Mi
+  displayName: Memory Limit
+  description: Maximum amount of memory the registry viewer container can use. Defaults 256Mi
+- name: REGISTRY_VIEWER_PULL_POLICY
+  value: Always
+  displayName: Devfile registry viewer image pull policy
   description: Always pull by default. Can be IfNotPresent
 - name: OCI_REGISTRY_IMAGE
   value: quay.io/devfile/oci-registry
@@ -249,7 +282,7 @@ parameters:
   description: Maximum amount of memory the OCI registry container can use. Defaults 256Mi
 - name: OCI_REGISTRY_PULL_POLICY
   value: Always
-  displayName: Devfile registry image pull policy
+  displayName: OCI registry image pull policy
   description: Always pull by default. Can be IfNotPresent
 - name: REPLICAS
   value: "1"
