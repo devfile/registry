@@ -1,10 +1,10 @@
 schemaVersion: 2.1.0
 metadata:
   description:
-    'Angular is a development platform, built on TypeScript. As a platform, Angular includes:
+    "Angular is a development platform, built on TypeScript. As a platform, Angular includes:
     A component-based framework for building scalable web applications
     A collection of well-integrated libraries that cover a wide variety of features, including routing, forms management, client-server communication, and more
-    A suite of developer tools to help you develop, build, test, and update your code'
+    A suite of developer tools to help you develop, build, test, and update your code"
   displayName: Angular
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/angular.svg
   name: nodejs-angular
@@ -12,7 +12,7 @@ metadata:
   provider: Red Hat
   language: TypeScript
   tags:
-    - NodeJS
+    - Node.js
     - Angular
   version: 2.0.2
 starterProjects:
@@ -28,7 +28,7 @@ components:
         - name: http-angular
           targetPort: 4200
       image: registry.access.redhat.com/ubi8/nodejs-16:latest
-      args: ['tail', '-f', '/dev/null']
+      args: ["tail", "-f", "/dev/null"]
       memoryLimit: 1024Mi
     name: runtime
 commands:
