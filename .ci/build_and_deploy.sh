@@ -23,6 +23,16 @@ VIEWER_IMAGE_TAG="${VIEWER_IMAGE_TAG:-${GIT_REV}}"
 # Run the build script
 $ABSOLUTE_PATH/build.sh
 
+# Clone devfile-web for building registry-viewer
+if [ -d $ABSOLUTE_PATH/devfile-web ]
+then
+    rm -rf $ABSOLUTE_PATH/devfile-web
+fi
+git clone https://github.com/devfile/devfile-web.git $ABSOLUTE_PATH/devfile-web
+
+# Build registry-viewer
+bash $ABSOLUTE_PATH/devfile-web/scripts/build_viewer.sh
+
 # Push the image to quay.io
 if [[ -n "$QUAY_USER" && -n "$QUAY_TOKEN" ]]; then
     DOCKER_CONF="$PWD/.docker"
