@@ -1,7 +1,7 @@
 schemaVersion: 2.1.0
 metadata:
   name: java-quarkus
-  version: 1.2.1
+  version: 1.3.0
   website: https://quarkus.io
   displayName: Quarkus Java
   description: Quarkus with Java
@@ -31,6 +31,9 @@ components:
       endpoints:
         - name: http-quarkus
           targetPort: 8080
+        - exposure: none
+          name: debug
+          targetPort: 5858
       env:
         - name: DEBUG_PORT
           value: '5858'

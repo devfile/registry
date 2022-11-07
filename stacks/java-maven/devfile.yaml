@@ -1,7 +1,7 @@
 schemaVersion: 2.1.0
 metadata:
   name: java-maven
-  version: 1.1.1
+  version: 1.2.0
   displayName: Maven Java
   description: Upstream Maven and OpenJDK 11
   tags:
@@ -24,6 +24,9 @@ components:
       endpoints:
         - name: http-maven
           targetPort: 8080
+        - exposure: none
+          name: debug
+          targetPort: 5858
       volumeMounts:
         - name: m2
           path: /home/user/.m2
