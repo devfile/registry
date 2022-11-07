@@ -70,20 +70,19 @@ test() {
     fi
 
     if [ "$ENV" = "minikube" ]; then
-        # ToDo: Clean up, I'm not happy about having specific checks for the stacks with multiple ports
-        # But since we're testing against minikube, we need to specifically create the URL/ingress before pushing
-        # And if there's multiple ports in the devfile, a port must be specified.
-        if [ "$devfileName" = "java-wildfly" ] || [ "$devfileName" = "java-wildfly-bootable-jar" ]; then
-            $ODO_PATH url create --host "$(minikube ip).nip.io" --port 8080 || error=true
-            $ODO_PATH url create --host "$(minikube ip).nip.io" --port 16686 || error=true
+        exposedEndpoints=$("$YQ_PATH" e '.components[].container.endpoints[] | select (.exposure != "none" and .exposure != "internal").targetPort' "$devfilePath")
+        if [ "$exposedEndpoints" = "" ] || [ "$exposedEndpoints" = "null" ]; then
+          echo "WARN Devfile at path $devfilePath has no endpoints => no URL will be created."
         else
-            $ODO_PATH url create --host "$(minikube ip).nip.io" || error=true
-        fi
-        if $error; then
-            echo "ERROR url create failed"
-            $ODO_PATH project delete -f "$devfileName"
-            FAILED_TESTS="$FAILED_TESTS $devfileName"
-            return 1
+          for ep in $exposedEndpoints; do
+            "$ODO_PATH" url create --host "$(minikube ip).nip.io" --port "$ep" || error=true
+          done
+          if $error; then
+              echo "ERROR url create failed"
+              $ODO_PATH project delete -f "$devfileName"
+              FAILED_TESTS="$FAILED_TESTS $devfileName"
+              return 1
+          fi
         fi
     fi
 

@@ -13,7 +13,7 @@ metadata:
     - Python
     - Pip
     - Flask
-  version: 2.0.2
+  version: 2.1.0
 starterProjects:
   - name: flask-example
     description:
@@ -31,6 +31,9 @@ components:
       endpoints:
         - name: http-python
           targetPort: 8080
+        - exposure: none
+          name: debug
+          targetPort: 5858
       env:
         - name: DEBUG_PORT
           value: '5858'

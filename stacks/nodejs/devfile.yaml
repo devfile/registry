@@ -1,7 +1,7 @@
 schemaVersion: 2.1.0
 metadata:
   name: nodejs
-  version: 2.0.1
+  version: 2.1.0
   displayName: Node.js Runtime
   description: Stack with Node.js 16
   icon: https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg
@@ -26,6 +26,9 @@ components:
       endpoints:
         - name: http-node
           targetPort: 3000
+        - exposure: none
+          name: debug
+          targetPort: 5858
 commands:
   - id: install
     exec:

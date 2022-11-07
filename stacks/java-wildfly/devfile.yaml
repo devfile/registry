@@ -1,7 +1,7 @@
 schemaVersion: 2.1.0
 metadata:
   name: java-wildfly
-  version: 1.0.6
+  version: 1.1.0
   website: https://wildfly.org
   displayName: WildFly Java
   description: Upstream WildFly
@@ -117,6 +117,9 @@ components:
       endpoints:
         - name: http-wildfly
           targetPort: 8080
+        - exposure: none
+          name: debug
+          targetPort: 5858
   - name: m2-repository
     volume:
       size: 3Gi
