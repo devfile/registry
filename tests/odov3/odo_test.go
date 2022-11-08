@@ -47,7 +47,7 @@ var filesStr string
 func init() {
 	rand.Seed(time.Now().UnixNano())
 	flag.StringVar(&stacksDir, "stacksDir", "../../stacks", "The directory containing the stacks")
-	flag.StringVar(&filesStr, "files", "", "The files to test as a string separated by spaces")
+	flag.StringVar(&filesStr, "filesStr", "", "The files to test as a string separated by spaces")
 }
 
 // all stacks to be tested
@@ -61,7 +61,11 @@ func TestOdo(t *testing.T) {
 	// more at: https://onsi.github.io/ginkgo/#dynamically-generating-specs
 	g := NewGomegaWithT(t)
 
-	files := strings.Split(string(filesStr), " ")
+	files := make([]string, 0)
+
+	if filesStr != "" {
+		files = strings.Split(filesStr, " ")
+	}
 
 	for _, file := range files {
 		stack := Stack{id: file, devfilePath: stacksDir + "/" + file + "/devfile.yaml"}

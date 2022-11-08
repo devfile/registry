@@ -27,6 +27,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
   cancel-in-progress: true
 
+env:
+  TEST_ALL_STACKS: false
+
 jobs:
   validate:
     name: Validate stacks
@@ -44,6 +47,10 @@ jobs:
 
       - name: Install Ginkgo
         run: go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@v2.1.4
+
+      - name: Test all stacks if on a schedule
+        if: ${{ github.event_name == 'schedule' }}
+        run: echo "TEST_ALL_STACKS=true" >> $GITHUB_ENV
 
       - name: Validate stacks
         run: tests/validate_stacks.sh

@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/devfile/library/pkg/devfile"
-	_ "github.com/devfile/library/pkg/devfile"
 	"github.com/devfile/library/pkg/devfile/parser"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -28,7 +27,16 @@ var stacks []string
 func TestStacks(t *testing.T) {
 	RegisterFailHandler(Fail)
 
-	stacks = strings.Split(string(filesStr), " ")
+	// perform work that needs to be done before the Tree Construction Phase here
+	// note that we wrap `t` with a new Gomega instance to make assertions about the fixtures here.
+	// more at: https://onsi.github.io/ginkgo/#dynamically-generating-specs
+
+	if filesStr != "" {
+		stacks = strings.Split(filesStr, " ")
+	} else {
+		// initialize the stacks array to zero
+		stacks = make([]string, 0)
+	}
 
 	GinkgoWriter.Println("Total stacks found:", len(stacks))
 	GinkgoWriter.Println("Stacks to be tested:", stacks)

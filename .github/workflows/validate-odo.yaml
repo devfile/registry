@@ -30,6 +30,7 @@ concurrency:
 env:
   MINIKUBE_VERSION: "v1.27.0"
   KUBERNETES_VERSION: "v1.25.2"
+  TEST_ALL_STACKS: false
 
 jobs:
   odov3:
@@ -69,6 +70,10 @@ jobs:
       - name: Check odo version
         run: odo version
 
+      - name: Test all stacks if on a schedule
+        if: ${{ github.event_name == 'schedule' }}
+        run: echo "TEST_ALL_STACKS=true" >> $GITHUB_ENV
+
       - name: Check the devfile stacks with odo v3
         run: tests/check_odov3.sh
 
@@ -97,6 +102,10 @@ jobs:
 
       - name: Check odo version
         run: odo version
+
+      - name: Test all stacks if on a schedule
+        if: ${{ github.event_name == 'schedule' }}
+        run: echo "TEST_ALL_STACKS=true" >> $GITHUB_ENV
 
       - name: Check the devfile stacks with odo v2
         run: tests/check_odov2.sh odo

@@ -30,6 +30,7 @@ concurrency:
 env:
   MINIKUBE_VERSION: "v1.27.0"
   KUBERNETES_VERSION: "v1.25.2"
+  TEST_ALL_STACKS: false
 
 jobs:
   non-terminating:
@@ -49,6 +50,10 @@ jobs:
           driver: "docker"
           github token: ${{ secrets.GITHUB_TOKEN }}
           start args: "--addons=ingress"
+
+      - name: Test all stacks if on a schedule
+        if: ${{ github.event_name == 'schedule' }}
+        run: echo "TEST_ALL_STACKS=true" >> $GITHUB_ENV
 
       - name: Check that containers components are non terminating
         run: tests/check_non_terminating.sh
