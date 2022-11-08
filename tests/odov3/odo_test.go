@@ -1,6 +1,4 @@
 /*
-
-
 run 5 test in paralel:
 ginkgo run --procs 5
 
@@ -12,10 +10,6 @@ ginkgo run --focus "stack: java-vertx starter: vertx-http-example"  -- -stacksDi
 
 test all starter project in a specific stack:
 ginkgo run --focus "stack: java-vertx"  -- -stacksDir ../../stacks
-
-
-
-
 */
 
 package main
@@ -68,14 +62,16 @@ func TestOdo(t *testing.T) {
 	}
 
 	for _, file := range files {
-		stack := Stack{id: file, devfilePath: stacksDir + "/" + file + "/devfile.yaml"}
+		path := filepath.Join(stacksDir, file, "devfile.yaml")
 
 		parserArgs := parser.ParserArgs{
-			Path: stack.devfilePath,
+			Path: path,
 		}
 
 		devfile, _, err := devfile.ParseDevfileAndValidate(parserArgs)
 		g.Expect(err).To(BeNil())
+
+		stack := Stack{name: devfile.Data.GetMetadata().Name, version: devfile.Data.GetMetadata().Version, path: path}
 
 		stack.starterProjects, err = devfile.Data.GetStarterProjects(common.DevfileOptions{})
 		g.Expect(err).To(BeNil())
@@ -155,9 +151,9 @@ var _ = Describe("test starter projects from devfile stacks", func() {
 		for _, starterProject := range stack.starterProjects {
 			stack := stack
 			starterProject := starterProject
-			It(fmt.Sprintf("stack: %s starter: %s", stack.id, starterProject.Name), func() {
+			It(fmt.Sprintf("stack: %s version: %s starter: %s", stack.name, stack.version, starterProject.Name), func() {
 
-				_, _, err := runOdo("init", "--devfile-path", stack.devfilePath, "--starter", starterProject.Name, "--name", starterProject.Name)
+				_, _, err := runOdo("init", "--devfile-path", stack.path, "--starter", starterProject.Name, "--name", starterProject.Name)
 				Expect(err).To(BeNil())
 
 				devStdout, devStderr, devProcess, err := runOdoDev()

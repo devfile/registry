@@ -30,8 +30,9 @@ type ForwardedPort struct {
 }
 
 type Stack struct {
-	id              string
-	devfilePath     string
+	name            string
+	version         string
+	path            string
 	starterProjects []v1alpha2.StarterProject
 }
 
