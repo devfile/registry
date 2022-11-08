@@ -13,7 +13,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-name: Validate odo
+name: Validate stacks
 
 on:
   push:
@@ -28,11 +28,91 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  MINIKUBE_VERSION: "v1.27.0"
-  KUBERNETES_VERSION: "v1.25.2"
   TEST_ALL_STACKS: false
 
 jobs:
+  validate-stacks:
+    name: Validate stacks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: "1.19"
+
+      - name: Install Ginkgo
+        run: go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@v2.1.4
+
+      - name: Test all stacks if on a schedule
+        if: ${{ github.event_name == 'schedule' }}
+        run: echo "TEST_ALL_STACKS=true" >> $GITHUB_ENV
+
+      - name: Validate stacks
+        run: tests/validate_stacks.sh
+
+  non-terminating:
+    name: Check for non-terminating images
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Minikube
+        uses: manusa/actions-setup-minikube@v2.7.0
+        with:
+          minikube version: ${{ env.MINIKUBE_VERSION }}
+          kubernetes version: ${{ env.KUBERNETES_VERSION }}
+          driver: "docker"
+          github token: ${{ secrets.GITHUB_TOKEN }}
+          start args: "--addons=ingress"
+
+      - name: Test all stacks if on a schedule
+        if: ${{ github.event_name == 'schedule' }}
+        run: echo "TEST_ALL_STACKS=true" >> $GITHUB_ENV
+
+      - name: Check that containers components are non terminating
+        run: tests/check_non_terminating.sh
+
+  odov2:
+    name: with odo v2
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Minikube
+        uses: manusa/actions-setup-minikube@v2.7.0
+        with:
+          minikube version: ${{ env.MINIKUBE_VERSION }}
+          kubernetes version: ${{ env.KUBERNETES_VERSION }}
+          driver: "docker"
+          github token: ${{ secrets.GITHUB_TOKEN }}
+          start args: "--addons=ingress"
+
+      - name: Install odo v2
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          odo: "2.5.1"
+
+      - name: Check odo version
+        run: odo version
+
+      - name: Test all stacks if on a schedule
+        if: ${{ github.event_name == 'schedule' }}
+        run: echo "TEST_ALL_STACKS=true" >> $GITHUB_ENV
+
+      - name: Check the devfile stacks with odo v2
+        run: tests/check_odov2.sh odo
+
   odov3:
     name: with odo v3
     runs-on: ubuntu-latest
@@ -76,36 +156,3 @@ jobs:
 
       - name: Check the devfile stacks with odo v3
         run: tests/check_odov3.sh
-
-  odov2:
-    name: with odo v2
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Setup Minikube
-        uses: manusa/actions-setup-minikube@v2.7.0
-        with:
-          minikube version: ${{ env.MINIKUBE_VERSION }}
-          kubernetes version: ${{ env.KUBERNETES_VERSION }}
-          driver: "docker"
-          github token: ${{ secrets.GITHUB_TOKEN }}
-          start args: "--addons=ingress"
-
-      - name: Install odo v2
-        uses: redhat-actions/openshift-tools-installer@v1
-        with:
-          odo: "2.5.1"
-
-      - name: Check odo version
-        run: odo version
-
-      - name: Test all stacks if on a schedule
-        if: ${{ github.event_name == 'schedule' }}
-        run: echo "TEST_ALL_STACKS=true" >> $GITHUB_ENV
-
-      - name: Check the devfile stacks with odo v2
-        run: tests/check_odov2.sh odo
