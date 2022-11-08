@@ -25,7 +25,6 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"math/rand"
 	"net/http"
 	"os"
@@ -43,11 +42,12 @@ import (
 )
 
 var stacksDir string
+var filesStr string
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
 	flag.StringVar(&stacksDir, "stacksDir", "../../stacks", "The directory containing the stacks")
-
+	flag.StringVar(&filesStr, "files", "", "The files to test as a string separated by spaces")
 }
 
 // all stacks to be tested
@@ -61,12 +61,7 @@ func TestOdo(t *testing.T) {
 	// more at: https://onsi.github.io/ginkgo/#dynamically-generating-specs
 	g := NewGomegaWithT(t)
 
-	cmd := exec.Command("bash", "../get_changed_stacks.sh")
-
-	stdout, err := cmd.Output()
-	g.Expect(err).To(BeNil())
-
-	files := strings.Split(string(stdout), " ")
+	files := strings.Split(string(filesStr), " ")
 
 	for _, file := range files {
 		stack := Stack{id: file, devfilePath: stacksDir + "/" + file + "/devfile.yaml"}
@@ -205,6 +200,11 @@ func waitForHttp(url string, expectedCode int) error {
 		GinkgoWriter.Printf("Waiting for %s to return %d. Try %d of %d\n", url, expectedCode, i+1, maxTries)
 		client := &http.Client{}
 		req, err := http.NewRequest("GET", url, nil)
+		if err != nil {
+			GinkgoWriter.Printf("Unable to create %s. Trying again in %f\n", err, delay.Seconds())
+			time.Sleep(delay)
+			continue
+		}
 		req.Header.Set("Accept", "*/*")
 		resp, err := client.Do(req)
 		if err != nil {
@@ -400,12 +400,12 @@ func randomString(n int) string {
 
 // this is not the best way to copy files
 func copyFile(src string, dst string) error {
-	input, err := ioutil.ReadFile(src)
+	input, err := os.ReadFile(src)
 	if err != nil {
 		return err
 	}
 
-	err = ioutil.WriteFile(dst, input, 0644)
+	err = os.WriteFile(dst, input, 0644)
 	if err != nil {
 		return err
 	}

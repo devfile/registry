@@ -4,6 +4,9 @@ set -x
 DEVFILES_DIR="$(pwd)/stacks"
 FAILED_TESTS=""
 
+# The stacks to test as a string separated by spaces
+STACKS=$("$(pwd)/tests/get_changed_stacks.sh")
+
 getURLs() {
   urls=$($ODO_PATH url list | awk '{ print $3 }' | tail -n +3 | tr '\n' ' ')
   echo "$urls"
@@ -148,9 +151,7 @@ if [ "$REGISTRY" != "local" ] && [ "$REGISTRY" != "remote" ]; then
   exit 1
 fi
 
-stacks=$("$(pwd)/tests/get_changed_stacks.sh")
-
-for stack in $stacks; do
+for stack in $STACKS; do
   devfile_path="$DEVFILES_DIR/$stack/devfile.yaml"
   if [ ! -f "$devfile_path" ]; then
     echo "WARN: Devfile not found at path $devfile_path"

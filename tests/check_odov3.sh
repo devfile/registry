@@ -2,6 +2,8 @@
 
 set -x
 
+filesStr=$("$(pwd)/tests/get_changed_stacks.sh")
+
 ginkgo run --procs 2 \
   --skip="stack: java-openliberty-gradle starter: rest" \
   --skip="stack: java-vertx starter: vertx-cache-example-redhat" \
@@ -23,4 +25,4 @@ ginkgo run --procs 2 \
   --skip="stack: java-websphereliberty" \
   --slow-spec-threshold 120s \
   --timeout 2h \
-  tests/odov3 -- -stacksDir "$(pwd)"/stacks
+  tests/odov3 -- -stacksDir "$(pwd)"/stacks -filesStr "$filesStr"

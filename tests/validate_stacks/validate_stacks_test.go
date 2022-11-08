@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"math/rand"
-	"os/exec"
 	"strings"
 	"testing"
 	"time"
@@ -16,10 +15,12 @@ import (
 )
 
 var stacksDir string
+var filesStr string
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
 	flag.StringVar(&stacksDir, "stacksDir", "../../stacks", "The directory containing the stacks")
+	flag.StringVar(&filesStr, "filesStr", "", "The files to test as a string separated by spaces")
 }
 
 var stacks []string
@@ -27,17 +28,7 @@ var stacks []string
 func TestStacks(t *testing.T) {
 	RegisterFailHandler(Fail)
 
-	// perform work that needs to be done before the Tree Construction Phase here
-	// note that we wrap `t` with a new Gomega instance to make assertions about the fixtures here.
-	// more at: https://onsi.github.io/ginkgo/#dynamically-generating-specs
-	g := NewGomegaWithT(t)
-
-	cmd := exec.Command("bash", "../get_changed_stacks.sh")
-
-	stdout, err := cmd.Output()
-	g.Expect(err).To(BeNil())
-
-	stacks = strings.Split(string(stdout), " ")
+	stacks = strings.Split(string(filesStr), " ")
 
 	GinkgoWriter.Println("Total stacks found:", len(stacks))
 	GinkgoWriter.Println("Stacks to be tested:", stacks)
