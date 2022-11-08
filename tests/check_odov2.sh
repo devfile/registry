@@ -159,7 +159,7 @@ for stack in $stacks; do
   # Skipping the java-wildfly-bootable-jar stack right now since it's broken.
   # ToDo: Uncomment once fixed.
   if [ $stack != "java-wildfly-bootable-jar" ]; then
-    test "$devfile_name" "$devfile_path"
+    test "$stack" "$devfile_path"
   fi
 done
 
