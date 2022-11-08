@@ -148,7 +148,7 @@ if [ "$REGISTRY" != "local" ] && [ "$REGISTRY" != "remote" ]; then
   exit 1
 fi
 
-stacks=$(bash ./get_changed_stacks.sh)
+stacks=$("$(pwd)/tests/get_changed_stacks.sh")
 
 for stack in $stacks; do
   devfile_path="$DEVFILES_DIR/$stack/devfile.yaml"
