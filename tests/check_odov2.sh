@@ -1,7 +1,7 @@
 #!/bin/sh
 
 set -x
-DEVFILES_DIR="$(pwd)/stacks/"
+DEVFILES_DIR="$(pwd)/stacks"
 FAILED_TESTS=""
 
 getURLs() {
