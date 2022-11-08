@@ -61,30 +61,27 @@ func TestOdo(t *testing.T) {
 	// more at: https://onsi.github.io/ginkgo/#dynamically-generating-specs
 	g := NewGomegaWithT(t)
 
-	// make stacks path absolute, it is required because later we are using it from the random directory.
-	stacksDir, err := filepath.Abs(stacksDir)
+	cmd := exec.Command("bash", "../get_changed_stacks.sh")
+
+	stdout, err := cmd.Output()
 	g.Expect(err).To(BeNil())
 
-	files, err := ioutil.ReadDir(stacksDir)
-	g.Expect(err).To(BeNil())
+	files := strings.Split(string(stdout), " ")
 
 	for _, file := range files {
-		if file.IsDir() {
-			stack := Stack{id: file.Name(), devfilePath: stacksDir + "/" + file.Name() + "/devfile.yaml"}
+		stack := Stack{id: file, devfilePath: stacksDir + "/" + file + "/devfile.yaml"}
 
-			parserArgs := parser.ParserArgs{
-				Path: stack.devfilePath,
-			}
-
-			devfile, _, err := devfile.ParseDevfileAndValidate(parserArgs)
-			g.Expect(err).To(BeNil())
-
-			stack.starterProjects, err = devfile.Data.GetStarterProjects(common.DevfileOptions{})
-			g.Expect(err).To(BeNil())
-
-			stacks = append(stacks, stack)
-
+		parserArgs := parser.ParserArgs{
+			Path: stack.devfilePath,
 		}
+
+		devfile, _, err := devfile.ParseDevfileAndValidate(parserArgs)
+		g.Expect(err).To(BeNil())
+
+		stack.starterProjects, err = devfile.Data.GetStarterProjects(common.DevfileOptions{})
+		g.Expect(err).To(BeNil())
+
+		stacks = append(stacks, stack)
 	}
 
 	GinkgoWriter.Println("Total stacks found", len(stacks), "stacks")
