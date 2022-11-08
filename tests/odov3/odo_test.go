@@ -67,6 +67,8 @@ func createStack(fileName string, path string) (Stack, error) {
 		return Stack{}, err
 	}
 
+	stack.version = devfile.Data.GetMetadata().Version
+
 	stack.starterProjects, err = devfile.Data.GetStarterProjects(common.DevfileOptions{})
 	if err != nil {
 		return Stack{}, err
@@ -190,7 +192,7 @@ var _ = Describe("test starter projects from devfile stacks", func() {
 		for _, starterProject := range stack.starterProjects {
 			stack := stack
 			starterProject := starterProject
-			It(fmt.Sprintf("stack: %s starter: %s", stack.id, starterProject.Name), func() {
+			It(fmt.Sprintf("stack: %s version: %s starter: %s", stack.id, stack.version, starterProject.Name), func() {
 
 				_, _, err := runOdo("init", "--devfile-path", stack.devfilePath, "--starter", starterProject.Name, "--name", starterProject.Name)
 				Expect(err).To(BeNil())
