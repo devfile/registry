@@ -28,6 +28,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  MINIKUBE_VERSION: "v1.27.0"
+  KUBERNETES_VERSION: "v1.25.2"
   TEST_ALL_STACKS: false
 
 jobs:
