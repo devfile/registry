@@ -46,7 +46,7 @@ func TestStacks(t *testing.T) {
 
 var _ = Describe("validate stacks follow the schema", func() {
 	for _, stack := range stacks {
-		It("validates stack schema for "+stack, func() {
+		It(fmt.Sprintf("stack: %s", stack), func() {
 			parserArgs := parser.ParserArgs{
 				Path: stacksDir + "/" + stack,
 			}
