@@ -63,7 +63,7 @@ test() {
   fi
 
   # Get the starter project name
-  starter_project=$($YQ_PATH e '.starter_projects[0].name' $devfile_path)
+  starter_project=$($YQ_PATH e '.starterProjects[0].name' $devfile_path)
   if [ "$REGISTRY" = "local" ]; then
     $ODO_PATH create --devfile "$devfile_path" --starter $starter_project || error=true
   else
