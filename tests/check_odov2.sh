@@ -5,7 +5,7 @@ DEVFILES_DIR="$(pwd)/stacks"
 FAILED_TESTS=()
 
 # The stacks to test as a string separated by spaces
-STACKS=$("$(pwd)/tests/get_changed_stacks.sh")
+STACKS=$("$(pwd)/tests/get_stacks.sh")
 
 getURLs() {
   urls=$($ODO_PATH url list | awk '{ print $3 }' | tail -n +3 | tr '\n' ' ')

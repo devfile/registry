@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"math/rand"
+	"path/filepath"
 	"strings"
 	"testing"
 	"time"
@@ -14,16 +15,16 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var stacksDir string
-var filesStr string
+var stacksPath string
+var stackDirs string
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
-	flag.StringVar(&stacksDir, "stacksDir", "../../stacks", "The directory containing the stacks")
-	flag.StringVar(&filesStr, "filesStr", "", "The files to test as a string separated by spaces")
+	flag.StringVar(&stacksPath, "stacksPath", "../../stacks", "The directory containing the stacks")
+	flag.StringVar(&stackDirs, "stackDirs", "", "The stacks to test as a string separated by spaces")
 }
 
-var stacks []string
+var dirs []string
 
 func TestStacks(t *testing.T) {
 	RegisterFailHandler(Fail)
@@ -32,24 +33,25 @@ func TestStacks(t *testing.T) {
 	// note that we wrap `t` with a new Gomega instance to make assertions about the fixtures here.
 	// more at: https://onsi.github.io/ginkgo/#dynamically-generating-specs
 
-	if filesStr != "" {
-		stacks = strings.Split(filesStr, " ")
-	} else {
-		// initialize the stacks array to zero
-		stacks = make([]string, 0)
+	GinkgoWriter.Println("test", stackDirs)
+
+	if stackDirs != "" {
+		dirs = strings.Split(stackDirs, " ")
 	}
 
-	GinkgoWriter.Println("Total stacks found:", len(stacks))
-	GinkgoWriter.Println("Stacks to be tested:", stacks)
+	GinkgoWriter.Println("Total stacks found:", len(dirs))
+	GinkgoWriter.Println("Stacks to be tested:", dirs)
 
 	RunSpecs(t, "Devfile Test Suite")
 }
 
 var _ = Describe("validate stacks follow the schema", func() {
-	for _, stack := range stacks {
-		It(fmt.Sprintf("stack: %s", stack), func() {
+	for _, dir := range dirs {
+		It(fmt.Sprintf("stack: %s", dir), func() {
+			path := filepath.Join(stacksPath, dir, "devfile.yaml")
+
 			parserArgs := parser.ParserArgs{
-				Path: stacksDir + "/" + stack,
+				Path: path,
 			}
 
 			GinkgoWriter.Println(parserArgs)

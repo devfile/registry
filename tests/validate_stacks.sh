@@ -2,7 +2,7 @@
 
 set -x
 
-filesStr=$("$(pwd)/tests/get_changed_stacks.sh")
+stackDirs=$("$(pwd)/tests/get_stacks.sh")
 
 ginkgo run --procs 2 \
-  tests/validate_stacks -- -stacksDir "$(pwd)"/stacks -filesStr "$filesStr"
+  tests/validate_stacks -- -stacksPath "$(pwd)"/stacks -stackDirs "$stackDirs"

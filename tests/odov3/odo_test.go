@@ -3,13 +3,13 @@ run 5 test in paralel:
 ginkgo run --procs 5
 
 specifying flags:
-ginkgo run -v  -- -stacksDir <path>
+ginkgo run -v  -- -stacksPath <path>
 
 test only one stack with a specific stack id:
-ginkgo run --focus "stack: java-vertx starter: vertx-http-example"  -- -stacksDir ../../stacks
+ginkgo run --focus "stack: java-vertx starter: vertx-http-example"  -- -stacksPath ../../stacks
 
 test all starter project in a specific stack:
-ginkgo run --focus "stack: java-vertx"  -- -stacksDir ../../stacks
+ginkgo run --focus "stack: java-vertx"  -- -stacksPath ../../stacks
 */
 
 package main
@@ -35,13 +35,13 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var stacksDir string
-var filesStr string
+var stacksPath string
+var stackDirs string
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
-	flag.StringVar(&stacksDir, "stacksDir", "../../stacks", "The directory containing the stacks")
-	flag.StringVar(&filesStr, "filesStr", "", "The files to test as a string separated by spaces")
+	flag.StringVar(&stacksPath, "stacksPath", "../../stacks", "The directory containing the stacks")
+	flag.StringVar(&stackDirs, "stackDirs", "", "The stacks to test as a string separated by spaces")
 }
 
 // all stacks to be tested
@@ -55,14 +55,14 @@ func TestOdo(t *testing.T) {
 	// more at: https://onsi.github.io/ginkgo/#dynamically-generating-specs
 	g := NewGomegaWithT(t)
 
-	files := make([]string, 0)
+	var dirs []string
 
-	if filesStr != "" {
-		files = strings.Split(filesStr, " ")
+	if stackDirs != "" {
+		dirs = strings.Split(stackDirs, " ")
 	}
 
-	for _, file := range files {
-		path := filepath.Join(stacksDir, file, "devfile.yaml")
+	for _, dir := range dirs {
+		path := filepath.Join(stacksPath, dir, "devfile.yaml")
 
 		parserArgs := parser.ParserArgs{
 			Path: path,
@@ -71,10 +71,12 @@ func TestOdo(t *testing.T) {
 		devfile, _, err := devfile.ParseDevfileAndValidate(parserArgs)
 		g.Expect(err).To(BeNil())
 
-		stack := Stack{name: devfile.Data.GetMetadata().Name, version: devfile.Data.GetMetadata().Version, path: path}
-
-		stack.starterProjects, err = devfile.Data.GetStarterProjects(common.DevfileOptions{})
+		name := devfile.Data.GetMetadata().Name
+		version := devfile.Data.GetMetadata().Version
+		starterProjects, err := devfile.Data.GetStarterProjects(common.DevfileOptions{})
 		g.Expect(err).To(BeNil())
+
+		stack := Stack{name: name, version: version, path: path, starterProjects: starterProjects}
 
 		stacks = append(stacks, stack)
 	}
@@ -201,7 +203,7 @@ func waitForHttp(url string, expectedCode int) error {
 		client := &http.Client{}
 		req, err := http.NewRequest("GET", url, nil)
 		if err != nil {
-			GinkgoWriter.Printf("Unable to create %s. Trying again in %f\n", err, delay.Seconds())
+			GinkgoWriter.Printf("Unable to create HTTP Request %s. Trying again in %f\n", err, delay.Seconds())
 			time.Sleep(delay)
 			continue
 		}

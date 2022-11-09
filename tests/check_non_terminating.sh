@@ -5,7 +5,7 @@ set -o errexit
 DEVFILES_DIR="$(pwd)/stacks"
 
 # The stacks to test as a string separated by spaces
-STACKS=$("$(pwd)/tests/get_changed_stacks.sh")
+STACKS=$("$(pwd)/tests/get_stacks.sh")
 
 replaceVariables() {
   image=$1
