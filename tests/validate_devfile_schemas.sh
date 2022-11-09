@@ -5,4 +5,4 @@ set -x
 stackDirs=$("$(pwd)/tests/get_stacks.sh")
 
 ginkgo run --procs 2 \
-  tests/validate_stacks -- -stacksPath "$(pwd)"/stacks -stackDirs "$stackDirs"
+  tests/validate_devfile_schemas -- -stacksPath "$(pwd)"/stacks -stackDirs "$stackDirs"

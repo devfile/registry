@@ -184,13 +184,13 @@ for stack in $STACKS; do
   fi
 done
 
-# remember if there was an error so the script can exist with proper exit code at the end
-error=false
-
 # print out which tests failed
 if [ ! ${#FAILED_TESTS[@]} -eq 0 ]; then
-  error=true
-  echo "FAILED TESTS: " ${FAILED_TESTS[@]} | tr -d '\n'
+  echo "The following tests failed:"
+  for test in "${FAILED_TESTS[@]}"; do
+    echo "$test"
+  done
+
   exit 1
 fi
 

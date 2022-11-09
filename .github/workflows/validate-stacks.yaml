@@ -34,7 +34,7 @@ env:
 
 jobs:
   validate-devfile-schema:
-    name: Validate devfile schema
+    name: validate devfile schemas
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -55,10 +55,10 @@ jobs:
         run: echo "TEST_DELTA=true" >> $GITHUB_ENV
 
       - name: Validate stacks
-        run: tests/validate_stacks.sh
+        run: tests/validate_devfile_schemas.sh
 
   non-terminating:
-    name: Check for non-terminating images
+    name: check for non-terminating images
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
