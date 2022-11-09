@@ -29,6 +29,6 @@ RUN git clone https://github.com/devfile/registry-support.git /registry-support
 # Run the registry build tools
 RUN /registry-support/build-tools/build.sh /registry /build
 
-FROM quay.io/devfile/devfile-index-base:next
+FROM quay.io/devfile/devfile-index-base@sha256:6270b58f53a9805f0e8ebb340ea2e9b16a1b53bfb5f9a9a0ab0de79c152c9e76
 
 COPY --from=builder /build /registry
