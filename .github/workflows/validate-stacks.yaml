@@ -139,12 +139,9 @@ jobs:
           go-version: "1.19"
 
       - name: Install odo v3
-        # Uses odo from main branch.
-        # Once odo v3.0.0 is officially released this should be updated to use redhat-actions/openshift-tools-installer@v1
-        run: |
-          git clone https://github.com/redhat-developer/odo /tmp/odo
-          cd /tmp/odo
-          make install
+        uses: redhat-actions/openshift-tools-installer@v1
+        with:
+          odo: "3.2.0"
 
       - name: Install Ginkgo
         run: go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@v2.5.0
