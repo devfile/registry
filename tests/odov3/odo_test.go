@@ -1,21 +1,15 @@
 /*
-
-
 run 5 test in paralel:
 ginkgo run --procs 5
 
 specifying flags:
-ginkgo run -v  -- -stacksDir <path>
+ginkgo run -v  -- -stacksPath <path>
 
 test only one stack with a specific stack id:
-ginkgo run --focus "stack: java-vertx starter: vertx-http-example"  -- -stacksDir ../../stacks
+ginkgo run --focus "stack: java-vertx starter: vertx-http-example"  -- -stacksPath ../../stacks
 
 test all starter project in a specific stack:
-ginkgo run --focus "stack: java-vertx"  -- -stacksDir ../../stacks
-
-
-
-
+ginkgo run --focus "stack: java-vertx"  -- -stacksPath ../../stacks
 */
 
 package main
@@ -25,7 +19,6 @@ import (
 	"flag"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"math/rand"
 	"net/http"
 	"os"
@@ -42,12 +35,13 @@ import (
 	. "github.com/onsi/gomega"
 )
 
-var stacksDir string
+var stacksPath string
+var stackDirs string
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
-	flag.StringVar(&stacksDir, "stacksDir", "../../stacks", "The directory containing the stacks")
-
+	flag.StringVar(&stacksPath, "stacksPath", "../../stacks", "The path to the directory containing the stacks")
+	flag.StringVar(&stackDirs, "stackDirs", "", "The stacks to test as a string separated by spaces")
 }
 
 // all stacks to be tested
@@ -61,30 +55,30 @@ func TestOdo(t *testing.T) {
 	// more at: https://onsi.github.io/ginkgo/#dynamically-generating-specs
 	g := NewGomegaWithT(t)
 
-	// make stacks path absolute, it is required because later we are using it from the random directory.
-	stacksDir, err := filepath.Abs(stacksDir)
-	g.Expect(err).To(BeNil())
+	var dirs []string
 
-	files, err := ioutil.ReadDir(stacksDir)
-	g.Expect(err).To(BeNil())
+	if stackDirs != "" {
+		dirs = strings.Split(stackDirs, " ")
+	}
 
-	for _, file := range files {
-		if file.IsDir() {
-			stack := Stack{id: file.Name(), devfilePath: stacksDir + "/" + file.Name() + "/devfile.yaml"}
+	for _, dir := range dirs {
+		path := filepath.Join(stacksPath, dir, "devfile.yaml")
 
-			parserArgs := parser.ParserArgs{
-				Path: stack.devfilePath,
-			}
-
-			devfile, _, err := devfile.ParseDevfileAndValidate(parserArgs)
-			g.Expect(err).To(BeNil())
-
-			stack.starterProjects, err = devfile.Data.GetStarterProjects(common.DevfileOptions{})
-			g.Expect(err).To(BeNil())
-
-			stacks = append(stacks, stack)
-
+		parserArgs := parser.ParserArgs{
+			Path: path,
 		}
+
+		devfile, _, err := devfile.ParseDevfileAndValidate(parserArgs)
+		g.Expect(err).To(BeNil())
+
+		name := devfile.Data.GetMetadata().Name
+		version := devfile.Data.GetMetadata().Version
+		starterProjects, err := devfile.Data.GetStarterProjects(common.DevfileOptions{})
+		g.Expect(err).To(BeNil())
+
+		stack := Stack{name: name, version: version, path: path, starterProjects: starterProjects}
+
+		stacks = append(stacks, stack)
 	}
 
 	GinkgoWriter.Println("Total stacks found", len(stacks), "stacks")
@@ -159,9 +153,9 @@ var _ = Describe("test starter projects from devfile stacks", func() {
 		for _, starterProject := range stack.starterProjects {
 			stack := stack
 			starterProject := starterProject
-			It(fmt.Sprintf("stack: %s starter: %s", stack.id, starterProject.Name), func() {
+			It(fmt.Sprintf("stack: %s version: %s starter: %s", stack.name, stack.version, starterProject.Name), func() {
 
-				_, _, err := runOdo("init", "--devfile-path", stack.devfilePath, "--starter", starterProject.Name, "--name", starterProject.Name)
+				_, _, err := runOdo("init", "--devfile-path", stack.path, "--starter", starterProject.Name, "--name", starterProject.Name)
 				Expect(err).To(BeNil())
 
 				devStdout, devStderr, devProcess, err := runOdoDev()
@@ -208,6 +202,11 @@ func waitForHttp(url string, expectedCode int) error {
 		GinkgoWriter.Printf("Waiting for %s to return %d. Try %d of %d\n", url, expectedCode, i+1, maxTries)
 		client := &http.Client{}
 		req, err := http.NewRequest("GET", url, nil)
+		if err != nil {
+			GinkgoWriter.Printf("Unable to create HTTP Request %s. Trying again in %f\n", err, delay.Seconds())
+			time.Sleep(delay)
+			continue
+		}
 		req.Header.Set("Accept", "*/*")
 		resp, err := client.Do(req)
 		if err != nil {
@@ -403,12 +402,12 @@ func randomString(n int) string {
 
 // this is not the best way to copy files
 func copyFile(src string, dst string) error {
-	input, err := ioutil.ReadFile(src)
+	input, err := os.ReadFile(src)
 	if err != nil {
 		return err
 	}
 
-	err = ioutil.WriteFile(dst, input, 0644)
+	err = os.WriteFile(dst, input, 0644)
 	if err != nil {
 		return err
 	}
