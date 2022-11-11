@@ -6,7 +6,7 @@ The public registry is updated weekly, by 12pm EST Wednesdays, with any updated 
 
 ## Registry Status
 
-[![Validate Devfile stacks](https://github.com/devfile/registry/actions/workflows/validate-devfiles.yaml/badge.svg?event=schedule)](https://github.com/devfile/registry/actions/workflows/validate-devfiles.yaml)
+[![Validate Devfile stacks](https://github.com/devfile/registry/actions/workflows/validate-stacks.yaml/badge.svg?event=schedule)](https://github.com/devfile/registry/actions/workflows/validate-stacks.yaml)
 
 ## Registry Updates
 
