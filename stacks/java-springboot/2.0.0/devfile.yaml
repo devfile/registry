@@ -1,0 +1,92 @@
+schemaVersion: 2.2.0
+metadata:
+  name: java-springboot
+  version: 2.0.0
+  displayName: Spring Boot®
+  description: Spring Boot® using Java
+  tags:
+    - Java
+    - Spring Boot
+  globalMemoryLimit: 2674Mi
+  icon: https://spring.io/images/projects/spring-edf462fec682b9d48cf628eaf9e19521.svg
+  projectType: springboot
+  language: Java
+starterProjects:
+  - name: springbootproject
+    git:
+      remotes:
+        origin: "https://github.com/odo-devfiles/springboot-ex.git"
+components:
+  - name: tools
+    container:
+      image: registry.access.redhat.com/ubi8/openjdk-11:latest
+      command: ['tail', '-f', '/dev/null']
+      memoryLimit: 768Mi
+      mountSources: true
+      endpoints:
+        - name: http-springboot
+          targetPort: 8080
+        - exposure: none
+          name: debug
+          targetPort: 5858
+      volumeMounts:
+        - name: m2
+          path: /home/user/.m2
+      env:
+        - name: DEBUG_PORT
+          value: "5858"
+  - name: m2
+    volume:
+      size: 3Gi
+  - name: build
+    image:
+      imageName: java-springboot-image:latest
+      dockerfile:
+        uri: docker/Dockerfile
+        buildContext: .
+        rootRequired: false
+  - name: deploy
+    kubernetes:
+      uri: kubernetes/deploy.yaml
+      endpoints:
+        - name: http-8081
+          targetPort: 8081
+commands:
+  - id: build
+    exec:
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: 'mvn clean -Dmaven.repo.local=/home/user/.m2/repository package -Dmaven.test.skip=true'
+      group:
+        kind: build
+        isDefault: true
+  - id: run
+    exec:
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: 'mvn -Dmaven.repo.local=/home/user/.m2/repository spring-boot:run'
+      group:
+        kind: run
+        isDefault: true
+  - id: debug
+    exec:
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: 'java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=${DEBUG_PORT},suspend=n -jar target/*.jar'
+      group:
+        kind: debug
+        isDefault: true
+  - id: build-image
+    apply:
+      component: build
+  - id: deployk8s
+    apply:
+      component: deploy
+  - id: deploy
+    composite:
+      commands:
+        - build-image
+        - deployk8s
+      group:
+        kind: deploy
+        isDefault: true
