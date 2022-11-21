@@ -2,8 +2,6 @@
 
 set -x
 
-stackDirs=$("$(pwd)/tests/get_stacks.sh")
-
 ginkgo run --procs 2 \
   --skip="stack: java-openliberty-gradle version: 0.4.0 starter: rest" \
   --skip="stack: java-vertx version: 1.2.0 starter: vertx-cache-example-redhat" \
@@ -25,4 +23,4 @@ ginkgo run --procs 2 \
   --skip="stack: java-websphereliberty" \
   --slow-spec-threshold 120s \
   --timeout 2h \
-  tests/odov3 -- -stacksPath "$(pwd)"/stacks -stackDirs "$stackDirs"
+  tests/odov3 -- -stacksPath "$(pwd)"/stacks -stackDirs $("$(pwd)/tests/get_stacks.sh")
