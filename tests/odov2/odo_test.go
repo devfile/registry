@@ -200,12 +200,11 @@ var _ = Describe("test starter projects from devfile stacks", func() {
 				continue
 			}
 
-			It(fmt.Sprintf("stack: %s version: %s starterProject: %s", stack.name, stack.version, starterProject.Name), func() {
-
+			It(fmt.Sprintf("stack: %s version: %s starter: %s", stack.name, stack.version, starterProject.Name), func() {
 				if registry == "local" {
-					_, _, err = runOdo("create", "--devfile", stack.path, "--starter", starterProject.Name, "--name", starterProject.Name)
+					_, _, err = runOdo("create", "--devfile", stack.path, "--starter", starterProject.Name)
 				} else {
-					_, _, err = runOdo("create", stack.name, "--starter", starterProject.Name, "--name", starterProject.Name)
+					_, _, err = runOdo("create", stack.name, "--starter", starterProject.Name)
 				}
 				Expect(err).To(BeNil())
 
