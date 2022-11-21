@@ -272,7 +272,7 @@ func runOdo(args ...string) ([]byte, []byte, error) {
 
 // get urls from the output of `odo url list`
 func getUrls() ([]string, error) {
-	stdOut, _, err := runOdo("url", "list", "|", "awk", "'{print $3}'", "|", "tail", "-n", "+3", "|", "tr", "'\n'", "' '")
+	stdOut, _, err := runOdo("url", "list", "|", "awk", "'{print $3}'", "|", "tail", "-n", "+3", "|", "tr", "'\\n'", "' '")
 	if err != nil {
 		return nil, err
 	}
