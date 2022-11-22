@@ -50,7 +50,7 @@ objects:
                 - key: registry-config.yml
                   path: config.yml
         containers:
-        - image: ${DEVFILE_INDEX_IMAGE}:${DEVFILE_INDEX_IMAGE_TAG}
+        - image: ${DEVFILE_INDEX_IMAGE}:${IMAGE_TAG}
           imagePullPolicy: "${DEVFILE_INDEX_PULL_POLICY}"
           name: devfile-registry
           ports:
@@ -92,7 +92,7 @@ objects:
               value: ${REGISTRY_NAME}
             - name: TELEMETRY_KEY
               value: ${TELEMETRY_KEY}
-        - image: ${REGISTRY_VIEWER_IMAGE}:${REGISTRY_VIEWER_IMAGE_TAG}
+        - image: ${REGISTRY_VIEWER_IMAGE}:${IMAGE_TAG}
           imagePullPolicy: "${REGISTRY_VIEWER_PULL_POLICY}"
           name: devfile-registry-viewer
           ports:
@@ -240,18 +240,14 @@ parameters:
   value: quay.io/devfile/devfile-index
   displayName: Devfile registry index image
   description: Devfile registry index docker image. Defaults to quay.io/devfile/devfile-index
-- name: DEVFILE_INDEX_IMAGE_TAG
-  value: next
-  displayName: Devfile registry version
-  description: Devfile registry version which defaults to next
 - name: REGISTRY_VIEWER_IMAGE
   value: quay.io/devfile/registry-viewer
   displayName: Devfile registry viewer image
   description: Devfile registry viewer docker image. Defaults to quay.io/devfile/registry-viewer
-- name: REGISTRY_VIEWER_IMAGE_TAG
+- name: IMAGE_TAG
   value: next
-  displayName: Devfile registry viewer version
-  description: Devfile registry viewer version which defaults to next
+  displayName: Devfile registry version
+  description: Devfile registry version which defaults to next
 - name: DEVFILE_INDEX_MEMORY_LIMIT
   value: 256Mi
   displayName: Memory Limit

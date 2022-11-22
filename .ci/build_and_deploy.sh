@@ -16,9 +16,8 @@ set -ex
 ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 GIT_REV="$(git rev-parse --short=7 HEAD)"
 INDEX_IMAGE="${INDEX_IMAGE:-quay.io/app-sre/devfile-index}"
-INDEX_IMAGE_TAG="${INDEX_IMAGE_TAG:-${GIT_REV}}"
 VIEWER_IMAGE="${VIEWER_IMAGE:-quay.io/app-sre/registry-viewer}"
-VIEWER_IMAGE_TAG="${VIEWER_IMAGE_TAG:-${GIT_REV}}"
+IMAGE_TAG="${IMAGE_TAG:-${GIT_REV}}"
 
 # Run the build script
 $ABSOLUTE_PATH/build.sh
@@ -42,14 +41,14 @@ if [[ -n "$QUAY_USER" && -n "$QUAY_TOKEN" ]]; then
     docker --config="$DOCKER_CONF" login -u="$QUAY_USER" -p="$QUAY_TOKEN" quay.io
 
     # devfile-index
-    docker tag devfile-index "${INDEX_IMAGE}:${INDEX_IMAGE_TAG}"
+    docker tag devfile-index "${INDEX_IMAGE}:${IMAGE_TAG}"
     docker tag devfile-index "${INDEX_IMAGE}:next"
-    docker --config="$DOCKER_CONF" push "${INDEX_IMAGE}:${INDEX_IMAGE_TAG}"
+    docker --config="$DOCKER_CONF" push "${INDEX_IMAGE}:${IMAGE_TAG}"
     docker --config="$DOCKER_CONF" push "${INDEX_IMAGE}:next"
 
     # registry-viewer
-    docker tag registry-viewer "${VIEWER_IMAGE}:${VIEWER_IMAGE_TAG}"
+    docker tag registry-viewer "${VIEWER_IMAGE}:${IMAGE_TAG}"
     docker tag registry-viewer "${VIEWER_IMAGE}:next"
-    docker --config="$DOCKER_CONF" push "${VIEWER_IMAGE}:${VIEWER_IMAGE_TAG}"
+    docker --config="$DOCKER_CONF" push "${VIEWER_IMAGE}:${IMAGE_TAG}"
     docker --config="$DOCKER_CONF" push "${VIEWER_IMAGE}:next"
 fi
