@@ -414,8 +414,8 @@ func copyFile(src string, dst string) error {
 	return nil
 }
 
-// write to GinkgoWeiter if str is not empty.
-// format will be "decription str"
+// write to GinkgoWriter if str is not empty.
+// format will be "description str"
 func PrintIfNotEmpty(description string, str string) {
 	if str != "" {
 		GinkgoWriter.Printf("%s %s\n", description, str)

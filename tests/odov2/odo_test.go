@@ -210,7 +210,8 @@ var _ = Describe("test starter projects from devfile stacks", func() {
 
 				if env == "minikube" {
 					for _, port := range stack.ports {
-						_, _, err = runOdo("url", "create", "--host", "$(minikube ip).nip.io", strconv.Itoa(port))
+						GinkgoWriter.Printf("Creating url: $(minikube ip).nip.io:%s", strconv.Itoa(port))
+						_, _, err = runOdo("url", "create", "--host", "$(minikube ip).nip.io", "--port", strconv.Itoa(port))
 						Expect(err).To(BeNil())
 					}
 				}
@@ -280,7 +281,11 @@ func getUrls() ([]string, error) {
 		return nil, err
 	}
 
-	return strings.Split(strings.TrimSpace(string(stdOut)), " "), nil
+	urls := strings.Split(strings.TrimSpace(string(stdOut)), " ")
+
+	PrintIfNotEmpty("URLs found:", strings.Join(urls, " "))
+
+	return urls, nil
 }
 
 func waitForHttp(url string, expectedCode int) error {
@@ -367,4 +372,12 @@ func getSemverVersion(version string) (int, int, int, error) {
 	}
 
 	return major, minor, patch, nil
+}
+
+// write to GinkgoWriter if str is not empty.
+// format will be "description str"
+func PrintIfNotEmpty(description string, str string) {
+	if str != "" {
+		GinkgoWriter.Printf("%s %s\n", description, str)
+	}
 }
