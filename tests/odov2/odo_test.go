@@ -272,7 +272,10 @@ func runOdo(args ...string) ([]byte, []byte, error) {
 
 // get urls from the output of `odo url list`
 func getUrls() ([]string, error) {
-	stdOut, _, err := runOdo("bash", "-c", "url", "list", "|", "awk", "'{ print $3 }'", "|", "tail", "-n", "+3", "|", "tr", "'\\n'", "' '")
+	// Cannot use the runOdo function because we need to prepend "bash -c" to the command
+	args := []string{"-c", "odo", "url", "list", "|", "awk", "'{ print $3 }'", "|", "tail", "-n", "+3", "|", "tr", "'\\n'", "' '"}
+	GinkgoWriter.Println("Executing: odo", strings.Join(append([]string{"bash"}, args...), " "))
+	stdOut, err := exec.Command("bash", args...).Output()
 	if err != nil {
 		return nil, err
 	}
