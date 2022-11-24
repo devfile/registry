@@ -126,14 +126,11 @@ objects:
             - name: SITE_URL
               value: "${REGISTRY_HOST_ALIAS}/viewer"
             - name: NEXT_PUBLIC_DEVFILE_REGISTRIES
-              value: |
-                [
-                  {
-                    "name": "Community",
-                    "link": "${REGISTRY_HOST_ALIAS}"
-                  }
-                ]
-            - name: ANALYTICS_WRITE_KEY
+              valueFrom:
+                configMapKeyRef:
+                  name: devfile-registry
+                  key: devfile-registry-hosts.json
+            - name: NEXT_PUBLIC_ANALYTICS_WRITE_KEY
               value: ${ANALYTICS_WRITE_KEY}
         - image: ${OCI_REGISTRY_IMAGE}:${OCI_REGISTRY_IMAGE_TAG}
           imagePullPolicy: "${OCI_REGISTRY_PULL_POLICY}"
@@ -223,12 +220,13 @@ objects:
             path: /metrics
 
     devfile-registry-hosts.json: |
-      {
-        "Community": {
-          "url": "http://localhost:8080",
+      [
+        {
+          "name": "Community",
+          "link": "http://localhost:8080",
           "alias": "${REGISTRY_HOST_ALIAS}"
         }
-      }
+      ]
 - apiVersion: v1
   kind: ServiceAccount
   metadata:
