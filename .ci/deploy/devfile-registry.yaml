@@ -131,8 +131,6 @@ objects:
           env:
             - name: NEXT_PUBLIC_BASE_PATH
               value: "/viewer"
-            - name: SITE_URL
-              value: "${REGISTRY_HOST_ALIAS}/viewer"
             - name: NEXT_PUBLIC_DEVFILE_REGISTRIES
               valueFrom:
                 configMapKeyRef:
