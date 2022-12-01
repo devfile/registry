@@ -1,6 +1,6 @@
 schemaVersion: 2.1.0
 metadata:
-  description: 'Go is an open source programming language that makes it easy to build simple, reliable, and efficient software.'
+  description: "Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."
   displayName: Go Runtime
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/golang.svg
   name: go
@@ -23,8 +23,8 @@ components:
       endpoints:
         - name: http-go
           targetPort: 8080
-      image: quay.io/devfile/golang:latest
-      args: ['tail', '-f', '/dev/null']
+      image: registry.access.redhat.com/ubi9/go-toolset:latest
+      args: ["tail", "-f", "/dev/null"]
       memoryLimit: 1024Mi
       mountSources: true
     name: runtime
