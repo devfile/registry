@@ -229,8 +229,8 @@ objects:
       [
         {
           "name": "Community",
-          "link": "http://localhost:8080",
-          "alias": "${REGISTRY_HOST_ALIAS}"
+          "url": "http://localhost:8080",
+          "fqdn": "${REGISTRY_HOST_ALIAS}"
         }
       ]
 - apiVersion: v1
