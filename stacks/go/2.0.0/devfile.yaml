@@ -57,7 +57,12 @@ commands:
         kind: deploy
         isDefault: true
   - exec:
-      commandLine: GOCACHE=${PROJECT_SOURCE}/.cache go build main.go
+      env:
+        - name: GOPATH
+          value: ${PROJECT_SOURCE}/.go
+        - name: GOCACHE
+          value: ${PROJECT_SOURCE}/.cache
+      commandLine: go build main.go
       component: runtime
       group:
         isDefault: true
