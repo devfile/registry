@@ -40,6 +40,8 @@ objects:
           app: devfile-registry
       spec:
         serviceAccountName: devfile-registry-service-account
+        securityContext:
+          runAsUser: 82
         volumes:
           - name: devfile-registry-storage
             emptyDir: {}
@@ -61,6 +63,13 @@ objects:
           name: devfile-registry
           ports:
           - containerPort: 8080
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            capabilities:
+              drop: ["ALL"]
+            seccompProfile:
+              type: "RuntimeDefault"
           livenessProbe:
             httpGet:
               path: /health
@@ -110,6 +119,13 @@ objects:
         - image: ${OCI_REGISTRY_IMAGE}:${OCI_REGISTRY_IMAGE_TAG}
           imagePullPolicy: "${OCI_REGISTRY_PULL_POLICY}"
           name: oci-registry
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            capabilities:
+              drop: ["ALL"]
+            seccompProfile:
+              type: "RuntimeDefault"
           livenessProbe:
             httpGet:
               path: /v2
