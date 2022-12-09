@@ -40,8 +40,6 @@ objects:
           app: devfile-registry
       spec:
         serviceAccountName: devfile-registry-service-account
-        securityContext:
-          runAsUser: 82
         volumes:
           - name: devfile-registry-storage
             emptyDir: {}
