@@ -16,7 +16,7 @@
 
 #!/usr/bin/env bash
 # exit immediately when a command fails
-set -e
+#set -e
 # only exit with zero if all commands of the pipeline exit successfully
 set -o pipefail
 # error on unset variables
@@ -51,7 +51,11 @@ oc process -f .ci/deploy/route.yaml | oc apply -f -
 
 # Wait for the registry to become ready
 oc wait deploy/devfile-registry --for=condition=Available --timeout=600s
-
+if [[ $? -ne 0 ]]; then
+    oc get deploy devfile-registry -o yaml
+    oc describe deploy devfile-registry
+    exit 0
+fi
 # Get the route URL for the registry
 REGISTRY_HOSTNAME=$(oc get route devfile-registry -o jsonpath="{.spec.host}")
 
