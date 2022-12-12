@@ -1,9 +1,10 @@
 schemaVersion: 2.1.0
 metadata:
-  description: 'Laravel is an open-source PHP framework, which is robust and easy to understand.
+  description:
+    "Laravel is an open-source PHP framework, which is robust and easy to understand.
     It follows a model-view-controller design pattern.
     Laravel reuses the existing components of different frameworks which helps in creating a web application.
-    The web application thus designed is more structured and pragmatic.'
+    The web application thus designed is more structured and pragmatic."
   displayName: Laravel
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/laravel.svg
   name: php-laravel
@@ -27,7 +28,7 @@ components:
       endpoints:
         - name: http-laravel
           targetPort: 8000
-      image: quay.io/devfile/composer:2.1.11
+      image: quay.io/devfile/composer:latest
       args: ["tail", "-f", "/dev/null"]
       memoryLimit: 1024Mi
       mountSources: true
