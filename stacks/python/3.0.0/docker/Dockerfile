@@ -1,4 +1,4 @@
-FROM quay.io/devfile/python:slim
+FROM registry.access.redhat.com/ubi9/python-39:latest
 
 # By default, listen on port 8081
 EXPOSE 8081/tcp
