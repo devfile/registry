@@ -43,7 +43,7 @@ curl -sL https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift
 export GLOBALODOCONFIG=$(pwd)/preferences.yaml
 
 # Install the devfile registry
-oc process -f .ci/deploy/devfile-registry.yaml -p DEVFILE_INDEX_IMAGE=$IMG -p IMAGE_TAG=$TAG -p REPLICAS=3 | \
+oc process -f .ci/deploy/devfile-registry.yaml -p DEVFILE_INDEX_IMAGE=$IMG -p IMAGE_TAG=$TAG -p REPLICAS=3 -p ANALYTICS_WRITE_KEY= | \
   oc apply -f -
 
 # Deploy the routes for the registry
