@@ -6,7 +6,7 @@ metadata:
   description: Spring Boot® using Java
   tags:
     - Java
-    - Spring Boot
+    - Spring
   globalMemoryLimit: 2674Mi
   icon: https://spring.io/images/projects/spring-edf462fec682b9d48cf628eaf9e19521.svg
   projectType: springboot
