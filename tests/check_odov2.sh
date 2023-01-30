@@ -7,6 +7,28 @@ FAILED_TESTS=()
 # The stacks to test as a string separated by spaces
 STACKS=$("$(pwd)/tests/get_stacks.sh")
 
+replaceVariables() {
+  image=$1
+  VAR_KEYS=(liberty-version)
+  VAR_VALUES=(22.0.0.1)
+
+  for i in "${!VAR_KEYS[@]}"; do
+    key='{{'
+    key+=${VAR_KEYS[i]}
+    key+='}}'
+    value=${VAR_VALUES[i]}
+    image=${image/${key}/${value}}
+  done
+  echo "$image"
+}
+
+getFirstContainerComponentImage() {
+  devfilePath=$1
+  image_original=$($YQ_PATH eval '[ .components[] | select(has("container")) ] | .[0].container.image' "$devfilePath" -r)
+  image_processed=$(replaceVariables "${image_original}")
+  echo "${image_processed}"
+}
+
 getURLs() {
   urls=$($ODO_PATH url list | awk '{ print $3 }' | tail -n +3 | tr '\n' ' ')
   echo "$urls"
@@ -78,6 +100,11 @@ test() {
   fi
 
   if [ "$ENV" = "minikube" ]; then
+    # workaround: cri-dockerd v0.2.6+ fixes a timeout issue where large images are not being pulled
+    # this can be removed when actions-setup-minikube updates cri-dockerd
+    image=$(getFirstContainerComponentImage "$devfile_path")
+    minikube ssh docker pull $image >/dev/null 2>&1
+
     exposed_endpoints=$("$YQ_PATH" e '.components[].container.endpoints[] | select (.exposure != "none" and .exposure != "internal").targetPort' "$devfile_path")
     if [ "$exposed_endpoints" = "" ] || [ "$exposed_endpoints" = "null" ]; then
       echo "WARN Devfile at path $devfile_path has no endpoints => no URL will be created."

@@ -81,6 +81,13 @@ isNonTerminating() {
 
   timeout_in_sec=240 # <== includes image pulling
 
+  # workaround: cri-dockerd v0.2.6+ fixes a timeout issue where large images are not being pulled
+  # this can be removed when actions-setup-minikube updates cri-dockerd
+  if [ "$ENV" = "minikube" ]; then
+    echo "  COMMAND: minikube ssh docker pull $_int_image"
+    minikube ssh docker pull $_int_image >/dev/null 2>&1
+  fi
+
   echo "  PARAMS: image --> $_int_image, command --> ${_int_command[*]}, args --> ${_int_command_args[*]}"
 
   if [ "${_int_command[*]}" == "null" ] && [ "${_int_command_args[*]}" == "null" ]; then
@@ -115,6 +122,15 @@ isNonTerminating() {
 
 YQ_PATH=${YQ_PATH:-yq}
 TEST_NAMESPACE=${TEST_NAMESPACE:-default}
+
+if [ -z "${ENV:-}" ]; then
+  ENV=minikube
+fi
+
+if [ "$ENV" != "minikube" ] && [ "$ENV" != "openshift" ]; then
+  echo "ERROR:: Allowed values for ENV are either \"minikube\" (default) or \"openshift\"."
+  exit 1
+fi
 
 for stack in $STACKS; do
   devfile_path="$DEVFILES_DIR/$stack/devfile.yaml"
