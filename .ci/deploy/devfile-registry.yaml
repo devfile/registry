@@ -54,7 +54,7 @@ objects:
               name: devfile-registry
               items:
                 - key: .env.registry-viewer
-                  path: .env.local
+                  path: .env.production
         containers:
         - image: ${DEVFILE_INDEX_IMAGE}:${IMAGE_TAG}
           imagePullPolicy: "${DEVFILE_INDEX_PULL_POLICY}"
@@ -141,10 +141,16 @@ objects:
             limits:
               cpu: 250m
               memory: ${REGISTRY_VIEWER_MEMORY_LIMIT}
+          env:
+            - name: ANALYTICS_WRITE_KEY 
+              value: ${ANALYTICS_WRITE_KEY}
+            - name: DEVFILE_REGISTRIES 
+              value: |- 
+                [{"name":"Community","url":"http://localhost:8080","fqdn":"${REGISTRY_HOST_ALIAS}"}]
           volumeMounts:
             - name: viewer-env-file
-              mountPath: /app/apps/registry-viewer/.env.local
-              subPath: .env.local
+              mountPath: /app/.env.production
+              subPath: .env.production
               readOnly: true
         - image: ${OCI_REGISTRY_IMAGE}:${OCI_REGISTRY_IMAGE_TAG}
           imagePullPolicy: "${OCI_REGISTRY_PULL_POLICY}"
