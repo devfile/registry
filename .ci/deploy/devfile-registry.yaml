@@ -1,5 +1,5 @@
 #
-#   Copyright 2021-2022 Red Hat, Inc.
+#   Copyright 2021-2023 Red Hat, Inc.
 #
 #   Licensed under the Apache License, Version 2.0 (the "License");
 #   you may not use this file except in compliance with the License.
@@ -84,6 +84,14 @@ objects:
             initialDelaySeconds: 15
             periodSeconds: 10
             timeoutSeconds: 3
+          startupProbe:
+            httpGet:
+              path: /viewer
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 10
           resources:
             requests:
               cpu: 100m
@@ -110,30 +118,6 @@ objects:
               drop: ["ALL"]
             seccompProfile:
               type: "RuntimeDefault"
-          livenessProbe:
-            httpGet:
-              path: /viewer
-              port: 3000
-              scheme: HTTP
-            initialDelaySeconds: 15
-            periodSeconds: 10
-            timeoutSeconds: 3
-          readinessProbe:
-            httpGet:
-              path: /viewer
-              port: 3000
-              scheme: HTTP
-            initialDelaySeconds: 15
-            periodSeconds: 10
-            timeoutSeconds: 3
-          startupProbe:
-            httpGet:
-              path: /viewer
-              port: 3000
-              scheme: HTTP
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            timeoutSeconds: 10
           resources:
             requests:
               cpu: 100m
