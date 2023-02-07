@@ -8,7 +8,7 @@ metadata:
     - Java
     - Spring
   globalMemoryLimit: 2674Mi
-  icon: https://spring.io/images/projects/spring-edf462fec682b9d48cf628eaf9e19521.svg
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/spring.svg
   projectType: springboot
   language: Java
 starterProjects:

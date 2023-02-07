@@ -1,7 +1,7 @@
 name: java-springboot
 description: Spring Boot using Java
 displayName: Spring Boot
-icon: https://spring.io/images/projects/spring-edf462fec682b9d48cf628eaf9e19521.svg
+icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/spring.svg
 versions:
   - version: 1.2.0
     default: true # should have one and only one default version
