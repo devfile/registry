@@ -28,7 +28,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  MINIKUBE_VERSION: "v1.27.0"
+  MINIKUBE_VERSION: "v1.29.0"
   KUBERNETES_VERSION: "v1.25.2"
   TEST_DELTA: false
 
@@ -67,7 +67,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Minikube
-        uses: manusa/actions-setup-minikube@v2.7.0
+        uses: manusa/actions-setup-minikube@v2.7.2
         with:
           minikube version: ${{ env.MINIKUBE_VERSION }}
           kubernetes version: ${{ env.KUBERNETES_VERSION }}
@@ -92,7 +92,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Minikube
-        uses: manusa/actions-setup-minikube@v2.7.0
+        uses: manusa/actions-setup-minikube@v2.7.2
         with:
           minikube version: ${{ env.MINIKUBE_VERSION }}
           kubernetes version: ${{ env.KUBERNETES_VERSION }}
@@ -125,7 +125,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Minikube
-        uses: manusa/actions-setup-minikube@v2.7.0
+        uses: manusa/actions-setup-minikube@v2.7.2
         with:
           minikube version: ${{ env.MINIKUBE_VERSION }}
           kubernetes version: ${{ env.KUBERNETES_VERSION }}
