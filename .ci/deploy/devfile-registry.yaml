@@ -126,7 +126,7 @@ objects:
               cpu: 250m
               memory: ${REGISTRY_VIEWER_MEMORY_LIMIT}
           env:
-            - name: ANALYTICS_WRITE_KEY 
+            - name: NEXT_PUBLIC_ANALYTICS_WRITE_KEY 
               value: ${ANALYTICS_WRITE_KEY}
             - name: DEVFILE_REGISTRIES 
               value: |- 
@@ -224,7 +224,7 @@ objects:
             path: /metrics
 
     .env.registry-viewer: |
-      ANALYTICS_WRITE_KEY=${ANALYTICS_WRITE_KEY}
+      NEXT_PUBLIC_ANALYTICS_WRITE_KEY=${ANALYTICS_WRITE_KEY}
       DEVFILE_REGISTRIES=[{"name":"Community","url":"http://localhost:8080","fqdn":"${REGISTRY_HOST_ALIAS}"}]
 
 - apiVersion: v1
