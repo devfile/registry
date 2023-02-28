@@ -1,15 +1,15 @@
 schemaVersion: 2.1.0
 metadata:
-  description: Node.js 16 application with Nuxt.js
-  displayName: Nuxt.js
-  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/nuxt-js.svg
   name: nodejs-nuxtjs
-  projectType: Nuxt.js
-  provider: Red Hat
-  language: TypeScript
+  displayName: Nuxt.js
+  description: Node.js 16 application with Nuxt.js
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/nuxt-js.svg
   tags:
     - Node.js
     - Nuxt.js
+  projectType: Nuxt.js
+  language: TypeScript
+  provider: Red Hat
   version: 1.0.3
 starterProjects:
   - name: nodejs-nuxtjs-starter

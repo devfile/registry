@@ -18,8 +18,7 @@
 schemaVersion: 2.1.0
 metadata:
   name: java-websphereliberty
-  version: 0.9.0
-  displayName: 'WebSphere Liberty Maven'
+  displayName: WebSphere Liberty Maven
   description: Java application using Maven and the WebSphere Liberty runtime 22.0.0.1
   icon: https://raw.githubusercontent.com/WASdev/logos/main/liberty-was-500-purple.svg
   tags:
@@ -32,6 +31,7 @@ metadata:
     - s390x
   language: Java
   projectType: WebSphere Liberty
+  version: 0.9.0
   alpha.build-dockerfile: https://github.com/OpenLiberty/devfile-stack/releases/download/websphere-liberty-maven-0.8.1/Dockerfile
   alpha.deployment-manifest: https://github.com/OpenLiberty/devfile-stack/releases/download/websphere-liberty-maven-0.8.1/app-deploy.yaml
 starterProjects:

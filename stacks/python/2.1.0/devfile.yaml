@@ -4,13 +4,13 @@ metadata:
   displayName: Python
   description: Python 3.9.x application with flask microframework and Pip
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/python.svg
-  projectType: Python
-  provider: Red Hat
-  language: Python
   tags:
     - Python
     - Pip
     - Flask
+  projectType: Python
+  language: Python
+  provider: Red Hat
   version: 2.1.0
 starterProjects:
   - name: flask-example

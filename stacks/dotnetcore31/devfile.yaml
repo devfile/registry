@@ -4,10 +4,10 @@ metadata:
   displayName: .NET Core 3.1
   description: MVC .NET Core 3.1 starter application
   icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
-  language: .NET
-  projectType: dotnet
   tags:
     - .NET
+  projectType: dotnet
+  language: .NET
   version: 1.0.3
 starterProjects:
   - name: dotnetcore-example

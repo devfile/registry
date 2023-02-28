@@ -1,16 +1,16 @@
 schemaVersion: 2.1.0
 metadata:
-  description: PHP application with Lavarel 9.x
-  displayName: Laravel
-  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/laravel.svg
   name: php-laravel
-  projectType: Laravel
-  provider: Red Hat
-  language: PHP
+  displayName: Laravel
+  description: PHP application with Lavarel 9.x
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/laravel.svg
   tags:
     - PHP
     - Composer
     - Laravel
+  projectType: Laravel
+  language: PHP
+  provider: Red Hat
   version: 1.0.1
 starterProjects:
   - name: php-laravel-starter

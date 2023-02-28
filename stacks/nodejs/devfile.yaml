@@ -1,7 +1,6 @@
 schemaVersion: 2.1.0
 metadata:
   name: nodejs
-  version: 2.1.1
   displayName: Node.js Runtime
   description: Node.js 16 starter application with Express 4.18.x
   icon: https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg
@@ -11,6 +10,7 @@ metadata:
     - ubi8
   projectType: Node.js
   language: JavaScript
+  version: 2.1.1
 starterProjects:
   - name: nodejs-starter
     git:

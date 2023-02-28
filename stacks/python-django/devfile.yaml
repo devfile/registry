@@ -1,17 +1,17 @@
 schemaVersion: 2.1.0
 metadata:
   name: python-django
-  version: 2.1.0
   displayName: Django
   description: Python 3.9.x application with Django 3.1 and Pip
   icon: https://static.djangoproject.com/img/logos/django-logo-positive.svg
-  projectType: Django
-  provider: Red Hat
-  language: Python
   tags:
     - Django
     - Python
     - Pip
+  projectType: Django
+  language: Python
+  provider: Red Hat
+  version: 2.1.0
 starterProjects:
   - name: django-example
     git:

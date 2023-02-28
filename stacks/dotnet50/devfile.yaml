@@ -4,10 +4,10 @@ metadata:
   displayName: .NET 5.0
   description: MVC .NET 5.0 starter application
   icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
-  language: .NET
-  projectType: dotnet
   tags:
     - .NET
+  projectType: dotnet
+  language: .NET
   version: 1.0.3
 starterProjects:
   - name: dotnet50-example
