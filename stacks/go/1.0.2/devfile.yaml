@@ -1,6 +1,6 @@
 schemaVersion: 2.1.0
 metadata:
-  description: "Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."
+  description: Go 1.16 starter project with a simple HTTP server
   displayName: Go Runtime
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/golang.svg
   name: go

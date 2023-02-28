@@ -20,7 +20,7 @@ metadata:
   name: java-websphereliberty-gradle
   version: 0.4.0
   displayName: 'WebSphere Liberty Gradle'
-  description: Java application Gradle-built stack using the WebSphere Liberty runtime
+  description: Java application using Gradle and the WebSphere Liberty runtime 22.0.0.1
   icon: https://raw.githubusercontent.com/WASdev/logos/main/liberty-was-500-purple.svg
   tags:
     - Java
