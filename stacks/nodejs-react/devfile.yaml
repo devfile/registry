@@ -2,7 +2,8 @@ schemaVersion: 2.1.0
 metadata:
   name: nodejs-react
   displayName: React
-  description: Node.js 16 application with React 18.x.x
+  description: "React (version 18.2.x) is a free and open-source front-end JavaScript library for building user interfaces based on UI components.
+    It is maintained by Meta and a community of individual developers and companies."
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/react.svg
   tags:
     - Node.js

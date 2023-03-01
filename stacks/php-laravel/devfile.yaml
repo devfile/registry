@@ -2,7 +2,10 @@ schemaVersion: 2.1.0
 metadata:
   name: php-laravel
   displayName: Laravel
-  description: PHP application with Lavarel 9.x
+  description: "Laravel (version 9.x) is an open-source PHP framework, which is robust and easy to understand.
+    It follows a model-view-controller design pattern.
+    Laravel reuses the existing components of different frameworks which helps in creating a web application.
+    The web application thus designed is more structured and pragmatic."
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/laravel.svg
   tags:
     - PHP

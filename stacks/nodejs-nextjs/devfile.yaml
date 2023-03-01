@@ -2,7 +2,9 @@ schemaVersion: 2.1.0
 metadata:
   name: nodejs-nextjs
   displayName: Next.js
-  description: Node.js 16 application with latest Next.js
+  description: "Next.js (version 13.0.x) gives you the best developer experience with all the features you need for production:
+    hybrid static & server rendering, TypeScript support, smart bundling, route pre-fetching, and more.
+    No config needed."
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/next-js.svg
   tags:
     - Node.js

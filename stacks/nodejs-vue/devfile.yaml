@@ -2,7 +2,8 @@ schemaVersion: 2.1.0
 metadata:
   name: nodejs-vue
   displayName: Vue
-  description: Node.js 16 application with Vue 3
+  description: "Vue (version 3.x.x) is a JavaScript framework for building user interfaces.
+    It builds on top of standard HTML, CSS and JavaScript, and provides a declarative and component-based programming model that helps you efficiently develop user interfaces, be it simple or complex"
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/vue.svg
   tags:
     - Node.js

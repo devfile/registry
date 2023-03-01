@@ -2,7 +2,8 @@ schemaVersion: 2.1.0
 metadata:
   name: nodejs-nuxtjs
   displayName: Nuxt.js
-  description: Node.js 16 application with Nuxt.js
+  description: "Nuxt.js (version 2.15.x) is the backbone of your Vue.js project, giving structure to build your project with confidence while keeping flexibility.
+    Its goal is to help Vue developers take advantage of top-notch technologies, fast, easy and in an organized way."
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/nuxt-js.svg
   tags:
     - Node.js
