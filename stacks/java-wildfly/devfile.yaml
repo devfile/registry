@@ -2,7 +2,7 @@ schemaVersion: 2.1.0
 metadata:
   name: java-wildfly
   displayName: WildFly Java
-  description: Java application using WildFly 26.1.0
+  description: Java application based on Java 11, using WildFly 26.1.0
   icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark.svg
   tags:
     - Java
