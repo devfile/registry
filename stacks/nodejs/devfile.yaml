@@ -2,7 +2,7 @@ schemaVersion: 2.1.0
 metadata:
   name: nodejs
   displayName: Node.js Runtime
-  description: Node.js 16 application with Express 4.17.x
+  description: Node.js 16 application
   icon: https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg
   tags:
     - Node.js

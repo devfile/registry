@@ -19,7 +19,7 @@ schemaVersion: 2.1.0
 metadata:
   name: java-websphereliberty-gradle
   displayName: WebSphere Liberty Gradle
-  description: Java application based on OpenJ 9 Java 11 and Gradle, using the WebSphere Liberty runtime 22.0.0.1
+  description: Java application based on Java 11 and Gradle, using the WebSphere Liberty runtime 22.0.0.1
   icon: https://raw.githubusercontent.com/WASdev/logos/main/liberty-was-500-purple.svg
   tags:
     - Java

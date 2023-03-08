@@ -19,7 +19,7 @@ schemaVersion: 2.1.0
 metadata:
   name: java-websphereliberty
   displayName: WebSphere Liberty Maven
-  description: Java application based OpenJ 9 Java 11 and Maven 4.0, using the WebSphere Liberty runtime 22.0.0.1
+  description: Java application based Java 11 and Maven 3.8, using the WebSphere Liberty runtime 22.0.0.1
   icon: https://raw.githubusercontent.com/WASdev/logos/main/liberty-was-500-purple.svg
   tags:
     - Java

@@ -2,7 +2,7 @@ schemaVersion: 2.1.0
 metadata:
   name: go
   displayName: Go Runtime
-  description: Go (version 1.16) is an open source programming language that makes it easy to build simple, reliable, and efficient software.
+  description: Go (version 1.18.x) is an open source programming language that makes it easy to build simple, reliable, and efficient software.
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/golang.svg
   tags:
     - Go
