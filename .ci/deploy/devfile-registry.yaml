@@ -109,8 +109,6 @@ objects:
         - image: ${REGISTRY_VIEWER_IMAGE}:${IMAGE_TAG}
           imagePullPolicy: "${REGISTRY_VIEWER_PULL_POLICY}"
           name: devfile-registry-viewer
-          ports:
-          - containerPort: 3000
           securityContext:
             allowPrivilegeEscalation: false
             runAsNonRoot: true
