@@ -91,7 +91,7 @@ objects:
               scheme: HTTP
             initialDelaySeconds: 30
             periodSeconds: 10
-            timeoutSeconds: 10
+            timeoutSeconds: 20
           resources:
             requests:
               cpu: 100m
@@ -123,7 +123,7 @@ objects:
               scheme: HTTP
             initialDelaySeconds: 15
             periodSeconds: 10
-            timeoutSeconds: 3
+            timeoutSeconds: 20
           readinessProbe:
             httpGet:
               path: /viewer
@@ -131,7 +131,7 @@ objects:
               scheme: HTTP
             initialDelaySeconds: 15
             periodSeconds: 10
-            timeoutSeconds: 3
+            timeoutSeconds: 20
           resources:
             requests:
               cpu: 100m
