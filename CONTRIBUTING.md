@@ -17,7 +17,7 @@ The following are required to build the devfile index container image containing
 
 1) Verify your Devfile stack functions with odo.
   
-    - Core odo v3 functions such as `odo create --devfile <devfile.yaml>`, `odo push`, `odo url create` should work with the devfile.
+    - Core odo v2 functions such as `odo create --devfile <devfile.yaml>`, `odo push`, `odo url create` should work with the devfile.
     - Core odo v3 functions such as `odo init`, `odo dev`, `odo deploy` should work with the devfile. 
     - PR tests on this repository will verify this functionality as well.
 
