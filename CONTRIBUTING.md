@@ -17,7 +17,8 @@ The following are required to build the devfile index container image containing
 
 1) Verify your Devfile stack functions with odo.
   
-    - Core odo functions such as `odo create --devfile <devfile.yaml>`, `odo push`, `odo url create` should work with the devfile.
+    - Core odo v3 functions such as `odo create --devfile <devfile.yaml>`, `odo push`, `odo url create` should work with the devfile.
+    - Core odo v3 functions such as `odo init`, `odo dev`, `odo deploy` should work with the devfile. 
     - PR tests on this repository will verify this functionality as well.
 
 2) Verify your Devfile stack functions with Che.
@@ -55,7 +56,7 @@ Updating an existing devfile stack is relatively straightforward:
     - When updating a stack with a newer version of the devfile specification (e.g., 2.1.0 -> 2.2.0), the previous version of the stack **must** be kept for a minimum of one (1) year.
 4) Test your changes:
 
-    - Minimally, testing with odo (`odo create`, `odo push`, etc) is recommended, however if your Devfile is used with other tools, it's recommended to test there as well.
+    - Minimally, testing with odo v2 (`odo create`, `odo push`, etc) and odo v3 (`odo init`, `odo dev`, etc) is recommended, however if your Devfile is used with other tools, it's recommended to test there as well.
 5) Open a pull request against this repository with your changes.
 
 ## Samples
@@ -100,7 +101,9 @@ To update a sample:
 
 ### Odo
 
-`odo create` and `odo push` to test devfile changes. See [Odo Doc](https://odo.dev/docs/using-odo/create-component) for more details.
+odo v2: `odo create` and `odo push` to test devfile changes. See [odo v2 Doc](https://odo.dev/docs/2.5.0/using-odo/create-component) for more details.
+
+odo V3: `odo init` and `odo dev` to test devfile changes. See [odo v3 Doc](https://odo.dev/docs/command-reference/init) for more details.
 
 ### Che
 
