@@ -1,0 +1,10 @@
+name: nodejs-nuxtjs
+description:
+  'Nuxt is the backbone of your Vue.js project, giving structure to build your project with confidence while keeping flexibility.
+    Its goal is to help Vue developers take advantage of top-notch technologies, fast, easy and in an organized way.'
+displayName: Nuxt.js
+icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/nuxt-js.svg
+versions:
+  - version: 1.0.3
+    default: true # should have one and only one default version
+  - version: 1.1.0

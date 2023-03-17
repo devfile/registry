@@ -1,0 +1,50 @@
+schemaVersion: 2.1.0
+metadata:
+  description:
+    'Next.js gives you the best developer experience with all the features you need for production:
+    hybrid static & server rendering, TypeScript support, smart bundling, route pre-fetching, and more.
+    No config needed.'
+  displayName: Next.js
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/next-js.svg
+  name: nodejs-nextjs
+  projectType: Next.js
+  provider: Red Hat
+  language: TypeScript
+  tags:
+    - Node.js
+    - Next.js
+  version: 1.1.0
+starterProjects:
+  - name: nodejs-nextjs-starter
+    git:
+      checkoutFrom:
+        revision: main
+      remotes:
+        origin: https://github.com/devfile-samples/devfile-stack-nodejs-nextjs.git
+components:
+  - container:
+      endpoints:
+        - name: http-nextjs
+          targetPort: 3000
+      image: registry.access.redhat.com/ubi8/nodejs-18:1-32
+      command: ['tail', '-f', '/dev/null']
+      memoryLimit: 1024Mi
+    name: runtime
+commands:
+  - exec:
+      commandLine: npm install
+      component: runtime
+      group:
+        isDefault: true
+        kind: build
+      workingDir: ${PROJECT_SOURCE}
+    id: install
+  - exec:
+      commandLine: npm run dev
+      component: runtime
+      group:
+        isDefault: true
+        kind: run
+      hotReloadCapable: true
+      workingDir: ${PROJECT_SOURCE}
+    id: run
