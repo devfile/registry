@@ -36,7 +36,7 @@ components:
       endpoints:
         - name: http-go
           targetPort: 8080
-      image: registry.access.redhat.com/ubi9/go-toolset:latest
+      image: registry.access.redhat.com/ubi9/go-toolset:1.18.9-14
       args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
       mountSources: true
