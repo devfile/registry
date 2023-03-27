@@ -91,7 +91,7 @@ objects:
               scheme: HTTP
             initialDelaySeconds: 30
             periodSeconds: 10
-            timeoutSeconds: 10
+            timeoutSeconds: 20
           resources:
             requests:
               cpu: 100m
@@ -109,8 +109,6 @@ objects:
         - image: ${REGISTRY_VIEWER_IMAGE}:${IMAGE_TAG}
           imagePullPolicy: "${REGISTRY_VIEWER_PULL_POLICY}"
           name: devfile-registry-viewer
-          ports:
-          - containerPort: 3000
           securityContext:
             allowPrivilegeEscalation: false
             runAsNonRoot: true
@@ -118,6 +116,22 @@ objects:
               drop: ["ALL"]
             seccompProfile:
               type: "RuntimeDefault"
+          livenessProbe:
+            httpGet:
+              path: /viewer
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: /viewer
+              port: 3000
+              scheme: HTTP
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 20
           resources:
             requests:
               cpu: 100m
