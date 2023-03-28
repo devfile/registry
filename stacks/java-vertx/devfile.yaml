@@ -1,15 +1,15 @@
 schemaVersion: 2.1.0
 metadata:
   name: java-vertx
-  version: 1.2.0
   displayName: Vert.x Java
-  description: Upstream Vert.x using Java
+  description: Java application using Vert.x and OpenJDK 11
   icon: https://raw.githubusercontent.com/vertx-web-site/vertx-logo/master/vertx-logo.svg
   tags:
     - Java
     - Vert.x
   projectType: Vert.x
   language: Java
+  version: 1.2.0
 starterProjects:
   - name: vertx-http-example
     git:

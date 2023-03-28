@@ -1,20 +1,19 @@
 schemaVersion: 2.1.0
 metadata:
   name: python-django
-  version: 2.1.0
   displayName: Django
-  description:
-    'Django is a high-level Python web framework that enables rapid development of secure and maintainable websites.
+  description: "Django is a high-level Python web framework that enables rapid development of secure and maintainable websites.
     Built by experienced developers, Django takes care of much of the hassle of web development, so you can focus on writing your app without needing to reinvent the wheel.
-    It is free and open source, has a thriving and active community, great documentation, and many options for free and paid-for support.'
+    It is free and open source, has a thriving and active community, great documentation, and many options for free and paid-for support."
   icon: https://static.djangoproject.com/img/logos/django-logo-positive.svg
-  projectType: Django
-  provider: Red Hat
-  language: Python
   tags:
     - Django
     - Python
     - Pip
+  projectType: Django
+  language: Python
+  provider: Red Hat
+  version: 2.1.0
 starterProjects:
   - name: django-example
     git:
