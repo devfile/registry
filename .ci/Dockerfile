@@ -14,9 +14,8 @@
 #   limitations under the License.
 FROM registry.access.redhat.com/ubi8/go-toolset:1.18 AS builder
 
-# Install dependencies
-
-RUN apk add --no-cache git bash curl zip
+# Run as root
+USER root
 
 # Install yq
 RUN curl -sL -O https://github.com/mikefarah/yq/releases/download/v4.9.5/yq_linux_amd64 -o /usr/local/bin/yq && mv ./yq_linux_amd64 /usr/local/bin/yq && chmod +x /usr/local/bin/yq
