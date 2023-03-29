@@ -14,7 +14,7 @@
 #   limitations under the License.
 FROM registry.access.redhat.com/ubi8/go-toolset:1.18 AS builder
 
-# Run as root
+# Set user as root
 USER root
 
 # Install yq
@@ -27,6 +27,9 @@ RUN git clone https://github.com/devfile/registry-support.git /registry-support
 
 # Run the registry build tools
 RUN /registry-support/build-tools/build.sh /registry /build
+
+# Set user as non-root
+USER 1001
 
 FROM quay.io/devfile/devfile-index-base:next
 
