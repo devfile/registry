@@ -1,14 +1,14 @@
 schemaVersion: 2.2.0
 metadata:
-  description: 'Go is an open source programming language that makes it easy to build simple, reliable, and efficient software.'
-  displayName: Go Runtime
-  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/golang.svg
   name: go
-  projectType: Go
-  provider: Red Hat
-  language: Go
+  displayName: Go Runtime
+  description: Go (version 1.18.x) is an open source programming language that makes it easy to build simple, reliable, and efficient software.
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/golang.svg
   tags:
     - Go
+  projectType: Go
+  language: Go
+  provider: Red Hat
   version: 2.0.0
 starterProjects:
   - name: go-starter
@@ -36,7 +36,7 @@ components:
       endpoints:
         - name: http-go
           targetPort: 8080
-      image: registry.access.redhat.com/ubi9/go-toolset:latest
+      image: registry.access.redhat.com/ubi9/go-toolset:1.18.9-14
       args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
       mountSources: true

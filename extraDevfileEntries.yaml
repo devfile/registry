@@ -2,7 +2,7 @@ schemaVersion: 1.0.0
 samples:
   - name: nodejs-basic
     displayName: Basic Node.js
-    description: A simple Hello World Node.js application
+    description: Node.js 16 application using Express 4.18.x
     icon: https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg
     tags:
       - Node.js
@@ -15,7 +15,7 @@ samples:
         origin: https://github.com/nodeshift-starters/devfile-sample.git
   - name: code-with-quarkus
     displayName: Basic Quarkus
-    description: A simple Hello World Java application using Quarkus
+    description: Java Quarkus application using Maven 4.0 and OpenJDK 11
     icon: https://design.jboss.org/quarkus/logo/final/SVG/quarkus_icon_rgb_default.svg
     tags:
       - Java
@@ -28,7 +28,7 @@ samples:
         origin: https://github.com/devfile-samples/devfile-sample-code-with-quarkus.git
   - name: java-springboot-basic
     displayName: Basic Spring Boot
-    description: A simple Hello World Java Spring Boot application using Maven
+    description: Java Spring Boot application using Maven 4.0 and OpenJDK 11
     icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/spring.svg
     tags:
       - Java
@@ -41,7 +41,7 @@ samples:
         origin: https://github.com/devfile-samples/devfile-sample-java-springboot-basic.git
   - name: python-basic
     displayName: Basic Python
-    description: A simple Hello World application using Python
+    description: Python 3.9.x application with Flask
     icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/python.svg
     tags:
       - Python
@@ -55,7 +55,7 @@ samples:
         origin: https://github.com/devfile-samples/devfile-sample-python-basic.git
   - name: go-basic
     displayName: Basic Go
-    description: A simple Hello World application using Go
+    description: Go 1.16 application
     icon: https://go.dev/blog/go-brand/Go-Logo/SVG/Go-Logo_Blue.svg
     tags:
       - Go
@@ -67,7 +67,7 @@ samples:
         origin: https://github.com/devfile-samples/devfile-sample-go-basic.git
   - name: dotnet-basic
     displayName: Basic .NET
-    description: A simple application using .NET 6.0
+    description: MVC .NET 6.0 application
     icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
     tags:
       - .NET

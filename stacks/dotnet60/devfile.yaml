@@ -2,12 +2,12 @@ schemaVersion: 2.1.0
 metadata:
   name: dotnet60
   displayName: .NET 6.0
-  description: Stack with .NET 6.0
+  description: .NET 6.0 application
   icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
-  language: .NET
-  projectType: dotnet
   tags:
     - .NET
+  projectType: dotnet
+  language: .NET
   version: 1.0.2
 starterProjects:
   - name: dotnet60-example

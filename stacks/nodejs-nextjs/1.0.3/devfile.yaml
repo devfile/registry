@@ -1,18 +1,17 @@
 schemaVersion: 2.1.0
 metadata:
-  description:
-    'Next.js gives you the best developer experience with all the features you need for production:
-    hybrid static & server rendering, TypeScript support, smart bundling, route pre-fetching, and more.
-    No config needed.'
-  displayName: Next.js
-  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/next-js.svg
   name: nodejs-nextjs
-  projectType: Next.js
-  provider: Red Hat
-  language: TypeScript
+  displayName: Next.js
+  description: "Next.js gives you the best developer experience with all the features you need for production:
+    hybrid static & server rendering, TypeScript support, smart bundling, route pre-fetching, and more.
+    No config needed."
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/next-js.svg
   tags:
     - Node.js
     - Next.js
+  projectType: Next.js
+  language: TypeScript
+  provider: Red Hat
   version: 1.0.3
 starterProjects:
   - name: nodejs-nextjs-starter

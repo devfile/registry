@@ -1,17 +1,16 @@
 schemaVersion: 2.1.0
 metadata:
-  description:
-    'Nuxt is the backbone of your Vue.js project, giving structure to build your project with confidence while keeping flexibility.
-    Its goal is to help Vue developers take advantage of top-notch technologies, fast, easy and in an organized way.'
-  displayName: Nuxt.js
-  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/nuxt-js.svg
   name: nodejs-nuxtjs
-  projectType: Nuxt.js
-  provider: Red Hat
-  language: TypeScript
+  displayName: Nuxt.js
+  description: "Nuxt.js is the backbone of your Vue.js project, giving structure to build your project with confidence while keeping flexibility.
+    Its goal is to help Vue developers take advantage of top-notch technologies, fast, easy and in an organized way."
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/nuxt-js.svg
   tags:
     - Node.js
     - Nuxt.js
+  projectType: Nuxt.js
+  language: TypeScript
+  provider: Red Hat
   version: 1.0.3
 starterProjects:
   - name: nodejs-nuxtjs-starter

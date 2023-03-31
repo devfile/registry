@@ -1,5 +1,5 @@
 name: nodejs
-description: 'Node.js stack'
+description: 'Node.js application'
 displayName: Node.js Runtime
 icon: https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg
 versions:

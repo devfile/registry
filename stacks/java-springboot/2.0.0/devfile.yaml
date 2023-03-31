@@ -1,16 +1,16 @@
 schemaVersion: 2.2.0
 metadata:
   name: java-springboot
-  version: 2.0.0
   displayName: Spring Boot®
-  description: Spring Boot® using Java
+  description: Java application using Spring Boot® and OpenJDK 11
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/spring.svg
   tags:
     - Java
     - Spring
-  globalMemoryLimit: 2674Mi
-  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/spring.svg
   projectType: springboot
   language: Java
+  version: 2.0.0
+  globalMemoryLimit: 2674Mi
 starterProjects:
   - name: springbootproject
     git:
