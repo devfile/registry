@@ -1,0 +1,48 @@
+schemaVersion: 2.1.0
+metadata:
+  name: nodejs-nuxtjs
+  displayName: Nuxt.js
+  description: "Nuxt.js is the backbone of your Vue.js project, giving structure to build your project with confidence while keeping flexibility.
+    Its goal is to help Vue developers take advantage of top-notch technologies, fast, easy and in an organized way."
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/nuxt-js.svg
+  tags:
+    - Node.js
+    - Nuxt.js
+  projectType: Nuxt.js
+  language: TypeScript
+  provider: Red Hat
+  version: 1.1.0
+starterProjects:
+  - name: nodejs-nuxtjs-starter
+    git:
+      checkoutFrom:
+        revision: main
+      remotes:
+        origin: https://github.com/devfile-samples/devfile-stack-nodejs-nuxtjs.git
+components:
+  - container:
+      endpoints:
+        - name: http-nuxtjs
+          targetPort: 3000
+      image: registry.access.redhat.com/ubi8/nodejs-18:1-32
+      args: ['tail', '-f', '/dev/null']
+      memoryLimit: 1024Mi
+    name: runtime
+commands:
+  - exec:
+      commandLine: npm install
+      component: runtime
+      group:
+        isDefault: true
+        kind: build
+      workingDir: ${PROJECT_SOURCE}
+    id: install
+  - exec:
+      commandLine: npm run dev
+      component: runtime
+      group:
+        isDefault: true
+        kind: run
+      hotReloadCapable: true
+      workingDir: ${PROJECT_SOURCE}
+    id: run
