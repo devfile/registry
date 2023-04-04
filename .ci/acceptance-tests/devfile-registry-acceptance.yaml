@@ -21,6 +21,8 @@ objects:
             env:
               - name: REGISTRY
                 value: ${REGISTRY}
+              - name: PROBE_TIMEOUT
+                value: ${PROBE_TIMEOUT}
             resources:
               requests:
                 cpu: 20m
@@ -41,6 +43,11 @@ parameters:
 - name: REGISTRY
   value: "https://registry.stage.devfile.io"
   required: true
+- name: PROBE_TIMEOUT
+  value: "600"
+  description: |- 
+    The maximum time in seconds the test suite will wait 
+    for the target deployment to be in ready state.
 - name: JOB_NAME
   generate: expression
   from: "[a-z0-9]{5}"
