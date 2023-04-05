@@ -1,6 +1,6 @@
 #!/bin/bash
 
-diff=$(git diff origin/main HEAD --stat)
+diff=$(git diff origin/main HEAD --name-only)
 
 changed_stacks=()
 
