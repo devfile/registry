@@ -1,0 +1,29 @@
+schemaVersion: 2.2.0
+metadata:
+  name: udi
+  displayName: Universal Developer Image
+  description: Universal Developer Image provides various programming languages tools and runtimes for instant coding
+  icon: https://landscape.cncf.io/logos/devfile.svg
+  tags:
+    - Java
+    - Maven
+    - Scala
+    - PHP
+    - .NET
+    - Node.js
+    - Go
+    - Python
+    - Pip
+    - ubi8
+  projectType: universal
+  language: Polyglot
+  version: 1.0.0
+components:
+  - name: tools
+    container:
+      image: quay.io/devfile/universal-developer-image:ubi8-latest
+      memoryLimit: 6G
+      memoryRequest: 512Mi
+      cpuRequest: 1000m
+      cpuLimit: 4000m
+      mountSources: true
