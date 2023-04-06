@@ -1,0 +1,7 @@
+name: java-maven
+description: 'Java application based on Maven and OpenJDK'
+displayName: Maven Java
+icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/java-maven.jpg
+versions:
+  - version: 1.2.0
+    default: true # should have one and only one default version
