@@ -1,0 +1,15 @@
+name: Add labeled PRs to Project
+on:
+  pull_request:
+    types:
+      - labeled
+jobs:
+  add-pr-to-project:
+    name: Add pull request to project
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/add-to-project@v0.5.0
+        with:
+          project-url: ${{ secrets.PR_REVIEW_NEEDED_PROJECT_URL }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          labeled: needs-review
