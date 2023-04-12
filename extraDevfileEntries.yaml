@@ -15,7 +15,7 @@ samples:
         origin: https://github.com/nodeshift-starters/devfile-sample.git
   - name: code-with-quarkus
     displayName: Basic Quarkus
-    description: Java Quarkus application using Maven 4.0 and OpenJDK 11
+    description: Java Quarkus application using Maven 4.0 and OpenJDK 17
     icon: https://design.jboss.org/quarkus/logo/final/SVG/quarkus_icon_rgb_default.svg
     tags:
       - Java
