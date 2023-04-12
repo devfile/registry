@@ -28,7 +28,7 @@ samples:
         origin: https://github.com/devfile-samples/devfile-sample-code-with-quarkus.git
   - name: java-springboot-basic
     displayName: Basic Spring Boot
-    description: Java Spring Boot application using Maven 4.0 and OpenJDK 11
+    description: Java Spring Boot application using Maven 4.0 and OpenJDK 17
     icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/spring.svg
     tags:
       - Java
