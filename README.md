@@ -28,7 +28,7 @@ If you are a stack owner and need to request an urgent refresh of <https://regis
 
 ### Build
 
-To build this devfile registry into a container image run `.ci/build.sh`. A container image will be built using the [devfile registry build tools](https://github.com/devfile/registry-support/tree/master/build-tools).
+To build this devfile registry into a container image run `bash .ci/build.sh`. A container image will be built using the [devfile registry build tools](https://github.com/devfile/registry-support/tree/master/build-tools).
 
 From there, push the container image to a container registry of your choice and deploy using one of the methods outlined [here](https://github.com/devfile/registry-support#deploy).
 
