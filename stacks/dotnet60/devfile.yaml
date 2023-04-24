@@ -6,6 +6,7 @@ metadata:
   icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
   tags:
     - .NET
+    - .NET 6.0
   projectType: dotnet
   language: .NET
   version: 1.0.2
