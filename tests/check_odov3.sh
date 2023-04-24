@@ -2,7 +2,7 @@
 
 set -x
 
-stackDirs=$("$(pwd)/tests/get_stacks.sh")
+stackDirs=$("bash $(pwd)/tests/get_stacks.sh")
 
 ginkgo run --procs 2 \
   --skip="stack: java-openliberty-gradle version: 0.4.0 starter: rest" \

@@ -5,7 +5,7 @@ DEVFILES_DIR="$(pwd)/stacks"
 FAILED_TESTS=()
 
 # The stacks to test as a string separated by spaces
-STACKS=$("$(pwd)/tests/get_stacks.sh")
+STACKS=$("bash $(pwd)/tests/get_stacks.sh")
 
 replaceVariables() {
   image=$1
