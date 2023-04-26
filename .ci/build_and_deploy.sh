@@ -20,7 +20,7 @@ VIEWER_IMAGE="${VIEWER_IMAGE:-quay.io/app-sre/registry-viewer}"
 IMAGE_TAG="${IMAGE_TAG:-${GIT_REV}}"
 
 # Run the build script
-$ABSOLUTE_PATH/build.sh
+bash $ABSOLUTE_PATH/build.sh
 
 # Clone devfile-web for building registry-viewer
 if [ -d $ABSOLUTE_PATH/devfile-web ]

@@ -10,7 +10,7 @@
 
 ### Running the tests
 
-1) From the root of this repository, run `tests/check_non_terminating.sh`.  
+1) From the root of this repository, run `bash tests/check_non_terminating.sh`.
     - The test script will validate each devfile stack under `stacks/`, verifying that the components of type container are terminating. 
        - The test script retrieves the `image`, `command` and `args` of a container component and uses them to run a pod and wait until it reaches the `Running` state:
           ```bash
@@ -37,7 +37,7 @@
 ### Running the tests
 
 1) Ensure minikube is running and `minikube ip` reports a valid IP address
-2) From the root of this repository, run `tests/check_odov3.sh`.
+2) From the root of this repository, run `bash tests/check_odov3.sh`.
     - The test script will validate that every devfile under `stacks` directory works with all the starter projects defined in a given stack.
 
 ### Limitations
@@ -58,7 +58,7 @@
 
 1) Ensure minikube is running and `minikube ip` reports a valid ip address
 
-2) From the root of this repository, run `tests/check_odov2.sh`. 
+2) From the root of this repository, run `bash tests/check_odov2.sh`.
   
     - The test script will validate each devfile stack under `stacks/` with odo, verifying that the stack can be used to build a starter project and that the application is properly built and exposed.
        - The test script checks for an HTTP 200 status code to determine "properly exposed".

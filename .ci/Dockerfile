@@ -26,7 +26,7 @@ COPY . /registry
 RUN git clone https://github.com/devfile/registry-support.git /registry-support
 
 # Run the registry build tools
-RUN /registry-support/build-tools/build.sh /registry /build
+RUN bash /registry-support/build-tools/build.sh /registry /build
 
 # Set user as non-root
 USER 1001

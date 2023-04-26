@@ -51,7 +51,7 @@ jobs:
           echo ${{ github.event.number }} > ./pr/number
       - name: Check stacks and samples output
         continue-on-error: true
-        run: tests/check_architectures.sh "${{ env.GIT_DIFF }}" yq >> ./pr/output
+        run: bash tests/check_architectures.sh "${{ env.GIT_DIFF }}" yq >> ./pr/output
       - name: Find Comment in PR
         uses: peter-evans/find-comment@v1
         id: find
