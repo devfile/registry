@@ -1,4 +1,11 @@
 # See the OWNERS docs: https://go.k8s.io/owners
 
 reviewers:
+- elsony
+- johnmcollier
+- kim-tsao
+- maysunfaisal
+- michael-valdron
 - mike-hoang
+- thepetk
+- yangcao77
