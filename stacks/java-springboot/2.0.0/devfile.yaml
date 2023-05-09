@@ -9,7 +9,7 @@ metadata:
     - Spring
   projectType: springboot
   language: Java
-  version: 2.0.0
+  version: 2.0.1
   globalMemoryLimit: 2674Mi
 starterProjects:
   - name: springbootproject
@@ -19,7 +19,7 @@ starterProjects:
 components:
   - name: tools
     container:
-      image: registry.access.redhat.com/ubi8/openjdk-11:latest
+      image: registry.access.redhat.com/ubi8/openjdk-11:1.15
       command: ['tail', '-f', '/dev/null']
       memoryLimit: 768Mi
       mountSources: true
