@@ -9,7 +9,7 @@ metadata:
     - Quarkus
   projectType: Quarkus
   language: Java
-  version: 1.3.0
+  version: 1.3.1
   website: https://quarkus.io
 starterProjects:
   - name: community
@@ -21,7 +21,7 @@ starterProjects:
 components:
   - name: tools
     container:
-      image: registry.access.redhat.com/ubi8/openjdk-17
+      image: registry.access.redhat.com/ubi8/openjdk-17:1.15
       args: ['tail', '-f', '/dev/null']
       memoryLimit: 512Mi ## default app nowhere needs this but leaving room for expansion.
       mountSources: true
