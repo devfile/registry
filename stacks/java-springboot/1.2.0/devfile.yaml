@@ -9,7 +9,7 @@ metadata:
     - Spring
   projectType: springboot
   language: Java
-  version: 1.2.1
+  version: 1.2.0
   globalMemoryLimit: 2674Mi
 starterProjects:
   - name: springbootproject
