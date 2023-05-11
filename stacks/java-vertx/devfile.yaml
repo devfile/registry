@@ -99,7 +99,7 @@ components:
         - exposure: none
           name: debug
           targetPort: 5858
-      image: quay.io/eclipse/che-java11-maven:next
+      image: quay.io/eclipse/che-java11-maven:7.37.2
       memoryLimit: 512Mi
       mountSources: true
       volumeMounts:
