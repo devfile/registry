@@ -2,5 +2,16 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base"
+  ],
+  "regexManagers": [
+    {
+      "fileMatch": [
+        "devfile.*y[a]?ml$"
+      ],
+      "matchStrings": [
+        "image: <depName>:<currentValue>"
+      ],
+      "datasourceTemplate": "docker"
+    }
   ]
 }
