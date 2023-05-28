@@ -3,6 +3,7 @@
   "extends": [
     "config:base"
   ],
+  "enabledManagers": ["docker"],
   "regexManagers": [
     {
       "fileMatch": [
