@@ -1,31 +1,32 @@
-schemaVersion: 2.1.0
+schemaVersion: 2.2.0
 metadata:
-  name: nodejs-nuxtjs
-  displayName: Nuxt.js
-  description: "Nuxt.js is the backbone of your Vue.js project, giving structure to build your project with confidence while keeping flexibility.
-    Its goal is to help Vue developers take advantage of top-notch technologies, fast, easy and in an organized way."
-  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/nuxt-js.svg
+  name: nodejs-nextjs
+  displayName: Next.js
+  description: "Next.js gives you the best developer experience with all the features you need for production:
+    hybrid static & server rendering, TypeScript support, smart bundling, route pre-fetching, and more.
+    No config needed."
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/next-js.svg
   tags:
     - Node.js
-    - Nuxt.js
-  projectType: Nuxt.js
+    - Next.js
+  projectType: Next.js
   language: TypeScript
   provider: Red Hat
-  version: 1.1.0
+  version: 1.2.0
 starterProjects:
-  - name: nodejs-nuxtjs-starter
+  - name: nodejs-nextjs-starter
     git:
       checkoutFrom:
         revision: main
       remotes:
-        origin: https://github.com/devfile-samples/devfile-stack-nodejs-nuxtjs.git
+        origin: https://github.com/devfile-samples/devfile-stack-nodejs-nextjs.git
 components:
   - container:
       endpoints:
-        - name: http-nuxtjs
+        - name: http-nextjs
           targetPort: 3000
       image: registry.access.redhat.com/ubi8/nodejs-18:1-47.1684740189
-      args: ['tail', '-f', '/dev/null']
+      command: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
     name: runtime
 commands:

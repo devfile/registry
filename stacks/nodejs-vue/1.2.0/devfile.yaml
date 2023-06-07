@@ -1,28 +1,31 @@
-schemaVersion: 2.1.0
+schemaVersion: 2.2.0
 metadata:
-  name: nodejs-nuxtjs
-  displayName: Nuxt.js
-  description: "Nuxt.js is the backbone of your Vue.js project, giving structure to build your project with confidence while keeping flexibility.
-    Its goal is to help Vue developers take advantage of top-notch technologies, fast, easy and in an organized way."
-  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/nuxt-js.svg
+  name: nodejs-vue
+  displayName: Vue
+  description: "Vue 3 is a JavaScript framework for building user interfaces.
+    It builds on top of standard HTML, CSS and JavaScript, and provides a declarative and component-based programming model that helps you efficiently develop user interfaces, be it simple or complex"
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/vue.svg
   tags:
     - Node.js
-    - Nuxt.js
-  projectType: Nuxt.js
+    - Vue
+  projectType: Vue
   language: TypeScript
   provider: Red Hat
-  version: 1.1.0
+  version: 1.2.0
 starterProjects:
-  - name: nodejs-nuxtjs-starter
+  - name: nodejs-vue-starter
     git:
       checkoutFrom:
         revision: main
       remotes:
-        origin: https://github.com/devfile-samples/devfile-stack-nodejs-nuxtjs.git
+        origin: https://github.com/devfile-samples/devfile-stack-nodejs-vue.git
 components:
   - container:
+      env:
+        - name: CYPRESS_CACHE_FOLDER
+          value: ${PROJECT_SOURCE}
       endpoints:
-        - name: http-nuxtjs
+        - name: http-vue
           targetPort: 3000
       image: registry.access.redhat.com/ubi8/nodejs-18:1-47.1684740189
       args: ['tail', '-f', '/dev/null']
@@ -45,4 +48,4 @@ commands:
         kind: run
       hotReloadCapable: true
       workingDir: ${PROJECT_SOURCE}
-    id: run
+    id: build

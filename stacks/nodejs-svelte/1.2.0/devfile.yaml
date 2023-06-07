@@ -1,4 +1,4 @@
-schemaVersion: 2.1.0
+schemaVersion: 2.2.0
 metadata:
   name: nodejs-svelte
   displayName: Svelte
@@ -11,7 +11,7 @@ metadata:
   projectType: Svelte
   language: TypeScript
   provider: Red Hat
-  version: 1.0.3
+  version: 1.2.0
 starterProjects:
   - name: nodejs-svelte-starter
     git:
@@ -24,7 +24,7 @@ components:
       endpoints:
         - name: http-svelte
           targetPort: 3000
-      image: registry.access.redhat.com/ubi8/nodejs-16:1-105.1684740145
+      image: registry.access.redhat.com/ubi8/nodejs-18:1-47.1684740189
       args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
     name: runtime
