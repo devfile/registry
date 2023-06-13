@@ -27,7 +27,7 @@ components:
       endpoints:
         - name: http-laravel
           targetPort: 8000
-      image: quay.io/devfile/composer:2.4
+      image: quay.io/devfile/composer:2.5.8
       args: ["tail", "-f", "/dev/null"]
       memoryLimit: 1024Mi
       mountSources: true

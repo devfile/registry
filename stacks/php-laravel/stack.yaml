@@ -1,0 +1,11 @@
+name: php-laravel
+description: "Laravel is an open-source PHP framework, which is robust and easy to understand.
+  It follows a model-view-controller design pattern.
+  Laravel reuses the existing components of different frameworks which helps in creating a web application.
+  The web application thus designed is more structured and pragmatic."
+displayName: Laravel
+icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/laravel.svg
+versions:
+  - version: 1.0.1
+    default: true
+  - version: 2.0.0
