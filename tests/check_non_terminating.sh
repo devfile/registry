@@ -107,6 +107,13 @@ isNonTerminating() {
   if kubectl wait pods -n "${TEST_NAMESPACE}" test-terminating --for condition=Ready --timeout=${timeout_in_sec}s >/dev/null 2>&1; then
     echo "  SUCCESS: The container started successfully and didn't terminate"
     kubectl delete pod test-terminating -n "${TEST_NAMESPACE}" >/dev/null 2>&1
+
+    # remove image to save space
+    if [ "$ENV" = "minikube" ]; then
+      echo "  COMMAND: \"minikube ssh docker image rm $_int_image\""
+      minikube ssh docker image rm $_int_image >/dev/null 2>&1
+    fi
+
     return 0
   else
     echo "  ERROR: Failed to reach \"Ready\" condition after $timeout_in_sec seconds"
