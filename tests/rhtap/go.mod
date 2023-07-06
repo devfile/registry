@@ -5,7 +5,9 @@ go 1.18
 require (
 	github.com/onsi/ginkgo/v2 v2.9.2
 	github.com/onsi/gomega v1.27.6
+	github.com/redhat-appstudio/application-api v0.0.0-20230509152222-ef5c4dcebc94
 	github.com/redhat-appstudio/e2e-tests v0.0.0-20230628083559-110126807738
+	gopkg.in/yaml.v2 v2.4.0
 )
 
 replace (
@@ -127,7 +129,6 @@ require (
 	github.com/prometheus/common v0.42.0 // indirect
 	github.com/prometheus/procfs v0.9.0 // indirect
 	github.com/prometheus/statsd_exporter v0.23.0 // indirect
-	github.com/redhat-appstudio/application-api v0.0.0-20230509152222-ef5c4dcebc94 // indirect
 	github.com/redhat-appstudio/build-service v0.0.0-20230113121706-a9f10055dbc4 // indirect
 	github.com/redhat-appstudio/image-controller v0.0.0-20230606065013-5c7c65e0db05 // indirect
 	github.com/redhat-appstudio/integration-service v0.0.0-20230427084439-306b4611389b // indirect
@@ -170,7 +171,6 @@ require (
 	google.golang.org/grpc v1.54.0 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	k8s.io/api v0.27.0 // indirect
 	k8s.io/apiextensions-apiserver v0.27.0 // indirect

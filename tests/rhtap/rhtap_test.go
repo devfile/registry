@@ -14,12 +14,12 @@ import (
 	"github.com/redhat-appstudio/e2e-tests/pkg/utils"
 )
 
-var stacksPath string
+var samplesFile string
 var namespace string
 
 func init() {
 	rand.Seed(time.Now().UnixNano())
-	flag.StringVar(&stacksPath, "stacksPath", "../../extraDevfileEntries.yaml", "Parent stack file")
+	flag.StringVar(&samplesFile, "samplesFile", "../../extraDevfileEntries.yaml", "Parent stack file")
 	flag.StringVar(&namespace, "namespace", "", "Namespace where create and build stack samples")
 }
 
@@ -30,19 +30,19 @@ func TestRhtap(t *testing.T) {
 
 }
 
-var _ = Describe("RHTAP parent stacks checks", Ordered, Label("nightly"), func() {
+var _ = Describe("RHTAP sample checks", Ordered, Label("nightly"), func() {
 	var fw *testHub.ControllerHub
 	var testNamespace string
 	component := &appservice.Component{}
 	cdq := &appservice.ComponentDetectionQuery{}
 
-	stacks, err := LoadTestGeneratorConfig(stacksPath)
+	entries, err := LoadExtraDevfileEntries(samplesFile)
 	Expect(err).NotTo(HaveOccurred())
 
-	for _, stack := range stacks.Samples {
-		stack := stack
+	for _, sampleEntry := range entries.Samples {
+		sampleEntry := sampleEntry
 
-		Describe(stack.Name, func() {
+		Describe(sampleEntry.Name, func() {
 			BeforeAll(func() {
 				kubeClient, err := e2eKube.NewAdminKubernetesClient()
 				Expect(err).NotTo(HaveOccurred())
@@ -68,7 +68,7 @@ var _ = Describe("RHTAP parent stacks checks", Ordered, Label("nightly"), func()
 			// Create an application in a specific namespace
 			It("creates an application", func() {
 				GinkgoWriter.Printf("Parallel process %d\n", GinkgoParallelProcess())
-				createdApplication, err := fw.HasController.CreateApplication(stack.Name, testNamespace)
+				createdApplication, err := fw.HasController.CreateApplication(sampleEntry.Name, testNamespace)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(createdApplication.Namespace).To(Equal(testNamespace))
 			})
@@ -76,7 +76,7 @@ var _ = Describe("RHTAP parent stacks checks", Ordered, Label("nightly"), func()
 			// Check the application health and check if a devfile was generated in the status
 			It("checks if application is healthy", func() {
 				Eventually(func() string {
-					application, err := fw.HasController.GetApplication(stack.Name, testNamespace)
+					application, err := fw.HasController.GetApplication(sampleEntry.Name, testNamespace)
 					Expect(err).NotTo(HaveOccurred())
 
 					return application.Status.Devfile
@@ -84,13 +84,13 @@ var _ = Describe("RHTAP parent stacks checks", Ordered, Label("nightly"), func()
 			})
 
 			It("creates componentdetectionquery", func() {
-				cdq, err = fw.HasController.CreateComponentDetectionQuery(stack.Name, testNamespace, stack.Git.Remotes.Origin, "", "", "", false)
+				cdq, err = fw.HasController.CreateComponentDetectionQuery(sampleEntry.Name, testNamespace, sampleEntry.Git.Remotes.Origin, "", "", "", false)
 				Expect(err).NotTo(HaveOccurred())
 			})
 
 			It("creates component", func() {
 				for _, compDetected := range cdq.Status.ComponentDetected {
-					component, err = fw.HasController.CreateComponent(compDetected.ComponentStub, testNamespace, "", "", stack.Name, true, map[string]string{})
+					component, err = fw.HasController.CreateComponent(compDetected.ComponentStub, testNamespace, "", "", sampleEntry.Name, true, map[string]string{})
 					Expect(err).NotTo(HaveOccurred())
 				}
 			})

@@ -15,7 +15,7 @@ type Git struct {
 	Remotes Remotes `yaml:"remotes"`
 }
 
-type Samples struct {
+type SampleEntry struct {
 	Name        string `yaml:"name"`
 	DisplayName string `yaml:"displayName"`
 	Language    string `yaml:"language"`
@@ -23,13 +23,13 @@ type Samples struct {
 	Git         Git    `yaml:"git"`
 }
 
-type Stacks struct {
-	SchemaVersion string    `yaml:"schemaVersion"`
-	Samples       []Samples `yaml:"samples"`
+type ExtraDevfileEntries struct {
+	SchemaVersion string        `yaml:"schemaVersion"`
+	Samples       []SampleEntry `yaml:"samples"`
 }
 
-func LoadTestGeneratorConfig(configPath string) (Stacks, error) {
-	s := Stacks{}
+func LoadExtraDevfileEntries(configPath string) (ExtraDevfileEntries, error) {
+	s := ExtraDevfileEntries{}
 	// Open config file
 	file, err := os.Open(filepath.Clean(configPath))
 	if err != nil {
