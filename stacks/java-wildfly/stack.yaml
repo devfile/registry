@@ -1,4 +1,4 @@
-name: ava-wildfly
+name: java-wildfly
 description: 'JakartaEE  application using WildFly'
 displayName: WildFly
 icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark.svg
