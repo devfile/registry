@@ -1,0 +1,52 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: numberguess
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: numberguess
+  template:
+    metadata:
+      labels:
+        app: numberguess
+    spec:
+      containers:
+        - name: my-numberguess
+          image: numberguess:latest
+          ports:
+            - name: http
+              containerPort: 8081
+              protocol: TCP
+          resources:
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: numberguess-svc
+spec:
+  ports:
+    - name: http-8081
+      port: 8081
+      protocol: TCP
+      targetPort: 8081
+  selector:
+    app: numberguess
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: numberguess-route
+spec:
+  to:
+    kind: Service
+    name: numberguess-svc
+    weight: 100
+  port:
+    targetPort: http-8081
+  wildcardPolicy: None
+
