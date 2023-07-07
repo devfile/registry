@@ -1,0 +1,207 @@
+schemaVersion: 2.2.0
+metadata:
+  name: wildfly-numberguess
+  version: 2.0.0
+  website: https://wildfly.org
+  displayName: WildFly Numberguess
+  description: Upstream WildFly Numberguess Quickstart
+  icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark.svg
+  tags: ['Java', 'WildFly']
+  projectType: 'wildfly'
+  language: 'java'
+starterProjects:
+  - name: numberguess
+    description: WildFly Numberguess Quickstart
+    git:
+      checkoutFrom:
+        remote: wildfly-devfile-examples
+        revision: qs
+      remotes:
+        wildfly-devfile-examples: https://github.com/wildfly-extras/wildfly-devfile-examples.git
+components:
+  - name: tools
+    container:
+      image: quay.io/devfile/universal-developer-image:ubi8-latest
+      memoryLimit: 1512Mi
+      mountSources: true
+      env:
+        - name: OPENSHIFT_IMAGE_REGISTRY
+          value: "image-registry.openshift-image-registry.svc:5000"
+        - name: IMAGE
+          value: numberguess
+  - name: wildfly
+    container:
+      image: quay.io/wildfly/wildfly-s2i:latest-jdk17
+      #This command is there to avoid crashloop
+      command: ['sleep', 'infinity']
+      memoryLimit: 1512Mi
+      mountSources: true
+      volumeMounts:
+        - name: m2-repository
+          path: /home/jboss/.m2/repository
+      env:
+        - name: GC_METASPACE_SIZE
+          value: '96'
+        - name: JAVA_OPTS
+          value: '-Djava.security.egd=file:/dev/urandom'
+        - name: MVN_ARGS_APPEND
+          value: '-s /home/jboss/.m2/settings.xml -Dmaven.repo.local=/home/jboss/.m2/repository -Dcom.redhat.xpaas.repo.jbossorg'
+        - name: DEBUG_PORT
+          value: "5005"
+        - name: NODE_NAME
+          value: numberguess
+      endpoints:
+        - name: debug
+          exposure: internal
+          protocol: tcp
+          targetPort: 5005
+        - name: 'http'
+          protocol: http
+          targetPort: 8080
+          exposure: public
+        - name: 'management'
+          targetPort: 9990
+          protocol: http
+          exposure: internal
+        - name: 'transaction'
+          protocol: tcp
+          targetPort: 4172
+          exposure: internal
+  - name: image-build
+    image:
+      imageName: numberguess:latest
+      dockerfile:
+        uri: Containerfile
+        buildContext: .
+        rootRequired: false
+  - name: kubernetes-deploy
+    attributes:
+      deployment/replicas: 1
+      deployment/cpuLimit: '100m'
+      deployment/cpuRequest: 10m
+      deployment/memoryLimit: 300Mi
+      deployment/memoryRequest: 180Mi
+      deployment/container-port: 8081
+    kubernetes:
+      uri: deploy.yaml
+      endpoints:
+        - name: http-8081
+          targetPort: 8081
+          path: /
+  - name: m2-repository
+    volume:
+      size: 3Gi
+commands:
+  - id: debug
+    exec:
+      label: "Package and start the application in debug mode."
+      component: wildfly
+      commandLine: mvn ${MVN_ARGS_APPEND} -Pprovisioned-server -Dwildfly.javaOpts="-Djboss.node.name=${NODE_NAME} -agentlib:jdwp=transport=dt_socket,address=0.0.0.0:${DEBUG_PORT},server=y,suspend=n" clean package org.wildfly.plugins:wildfly-maven-plugin:dev
+      workingDir: ${PROJECT_SOURCE}
+      hotReloadCapable: true
+      group:
+        kind: debug
+        isDefault: true
+  - id: package
+    exec:
+      label: "Build the application."
+      component: wildfly
+      commandLine: mvn ${MVN_ARGS_APPEND} -Pprovisioned-server clean package
+      workingDir: ${PROJECT_SOURCE}
+      hotReloadCapable: true
+      group:
+        kind: build
+        isDefault: true
+  - id: run
+    exec:
+      label: "Build and run the application in dev mode."
+      component: wildfly
+      commandLine: mvn ${MVN_ARGS_APPEND} -Popenshift -Dwildfly.javaOpts="-Djboss.node.name=${NODE_NAME}" -Dmaven.test.skip=true clean package org.wildfly.plugins:wildfly-maven-plugin:dev
+      workingDir: ${PROJECT_SOURCE}
+      hotReloadCapable: true
+      group:
+        kind: run
+        isDefault: true
+  - id: build-image
+    apply:
+      component: image-build
+  - id: deployk8s
+    apply:
+      component: kubernetes-deploy
+  - id: deploy
+    composite:
+      commands:
+        - build-image
+        - deployk8s
+      group:
+        kind: deploy
+        isDefault: true
+  - id: openshift-build
+    exec:
+      label: "Che outer-loop 1 - Build the application for OpenShift."
+      component: wildfly
+      commandLine: mvn ${MVN_ARGS_APPEND} -Popenshift -Dmaven.test.skip=true clean package
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: build
+        isDefault: false
+  - id: openshift-registry-login
+    exec:
+      label: "Che outer-loop 2-Login into OpenShift registry."
+      component: tools
+      commandLine: podman login --tls-verify=false -u kubeadmin -p $(oc whoami -t) ${OPENSHIFT_IMAGE_REGISTRY} && oc login --token=$(oc whoami -t)
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: build
+        isDefault: false
+  - id: build-runtime-image
+    exec:
+      label: "Che outer-loop 3-Build Runtime Image for Openshift."
+      component: tools
+      commandLine: "export OPENSHIFT_NS=$(oc project -q) && podman build -f Containerfile -t ${OPENSHIFT_IMAGE_REGISTRY}/${OPENSHIFT_NS}/${IMAGE} ."
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: build
+        isDefault: false
+  - id: push-image
+    exec:
+      label: "Che outer-loop 4-Push Image into OpenShift registry."
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: "export OPENSHIFT_NS=$(oc project -q) && podman tag ${OPENSHIFT_IMAGE_REGISTRY}/${OPENSHIFT_NS}/${IMAGE} ${OPENSHIFT_IMAGE_REGISTRY}/${OPENSHIFT_NS}/${IMAGE}:latest && podman push --tls-verify=false ${OPENSHIFT_IMAGE_REGISTRY}/${OPENSHIFT_NS}/${IMAGE}:latest"
+      group:
+        kind: build
+        isDefault: false
+  - id: deploy-image
+    exec:
+      label: "Che outer-loop 5-Deploy Image into OpenShift."
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: "helm repo add wildfly https://docs.wildfly.org/wildfly-charts/ && oc set image-lookup ${IMAGE} && helm install ${IMAGE} -f charts/helm.yaml --set build.enabled=false --set image.name=${IMAGE} wildfly/wildfly"
+      group:
+        kind: run
+        isDefault: false
+  - id: undeploy-image
+    exec:
+      label: "Che outer-loop 6-Undeploy Image from OpenShift."
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: "helm uninstall ${IMAGE}"
+      group:
+        kind: run
+        isDefault: false
+# Doesn't work until https://github.com/eclipse/che/issues/21859 is fixed.
+  - id: outer-loop
+    composite:
+      label: "20-Build and deploy the application on OpenShift."
+      commands:
+        - openshift-build
+        - openshift-registry-login
+        - build-runtime-image
+        - push-image
+        - deploy-image
+      group:
+        kind: deploy
+        isDefault: false
+      parallel: false
+
