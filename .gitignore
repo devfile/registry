@@ -4,3 +4,4 @@ registry-support/
 devfile-web/
 vendor/
 .odo
+samples/.cache
