@@ -1,9 +1,17 @@
 #!/bin/bash
 
 base_path=$(dirname $0)/..
+# default samples file path
 samples_file=${base_path}/extraDevfileEntries.yaml
 # Cached remote samples directory
 samples_dir=${base_path}/samples/.cache
+parents_file=${base_path}/parents.yaml
+
+# Read samples file as first argument
+# if unset use default samples file path
+if [ ! -z "${1}" ]; then
+    samples_file=${1}
+fi
 
 # Clones remote samples into cache directory
 clone_samples() {
@@ -14,11 +22,22 @@ clone_samples() {
         rm -rf ${samples_dir}
     fi
 
-    for ((idx=0;idx<${samples_len};idx++)); do
-        name=$(yq eval .samples.${idx}.name ${samples_file})
-        remote_url=$(yq eval .samples.${idx}.git.remotes.origin ${samples_file})
+    for ((s_idx=0;s_idx<${samples_len};s_idx++)); do
+        name=$(yq eval .samples.${s_idx}.name ${samples_file})
+        versions=($(yq eval .samples.${s_idx}.versions.[].version ${samples_file}))
 
-        git clone --depth=1 ${remote_url} ${samples_dir}/${name}
+        # Iterate through sample versions if sample has multi version support
+        if [ ${#versions[@]} -ne 0 ]; then
+            for ((v_idx=0;v_idx<${#versions[@]};v_idx++)); do
+                remote_url=$(yq eval .samples.${s_idx}.versions.${v_idx}.git.remotes.origin ${samples_file})
+
+                git clone --depth=1 ${remote_url} ${samples_dir}/${name}/${versions[$v_idx]}
+            done
+        else
+            remote_url=$(yq eval .samples.${s_idx}.git.remotes.origin ${samples_file})
+
+            git clone --depth=1 ${remote_url} ${samples_dir}/${name}
+        fi
     done
 }
 
@@ -26,23 +45,36 @@ clone_samples() {
 build_parents() {
     samples_len=$(yq eval '.samples | length' ${samples_file})
 
-    if [ -f parents.yaml ]; then
-        rm parents.yaml
+    if [ -f ${parents_file} ]; then
+        rm ${parents_file}
     fi
 
-    for ((idx=0;idx<${samples_len};idx++)); do
-        name=$(yq eval .samples.${idx}.name ${samples_file})
-        devfile=${samples_dir}/${name}/devfile.yaml
-        parent=$(yq eval .parent.id ${devfile})
-        
-        if [ "${parent}" != "null" ]; then
-            if [ -f parents.yaml ] && [ "$(yq eval .parents.${parent}.children parents.yaml)" != "null" ]; then
-                next_idx=$(yq eval ".parents.${parent}.children | length" parents.yaml)
-                yq eval ".parents.${parent}.children[${next_idx}] = \"${name}\"" -i parents.yaml
-            elif [ -f parents.yaml ]; then
-                yq eval ".parents.${parent}.children[0] = \"${name}\"" -i parents.yaml
-            else
-                yq eval -n ".parents.${parent}.children[0] = \"${name}\"" > parents.yaml
+    for ((s_idx=0;s_idx<${samples_len};s_idx++)); do
+        name=$(yq eval .samples.${s_idx}.name ${samples_file})
+        versions=($(yq eval .samples.${s_idx}.versions.[].version ${samples_file}))
+
+        # Iterate through sample versions if sample has multi version support
+        if [ ${#versions[@]} -ne 0 ]; then
+            for ((v_idx=0;v_idx<${#versions[@]};v_idx++)); do
+                devfile=${samples_dir}/${name}/${versions[$v_idx]}/devfile.yaml
+                parent=$(yq eval .parent.id ${devfile})
+                parent_version=$(yq eval .parent.version ${devfile})
+                
+                # TODO: multi version build control logic
+            done
+        else
+            devfile=${samples_dir}/${name}/devfile.yaml
+            parent=$(yq eval .parent.id ${devfile})
+
+            if [ "${parent}" != "null" ]; then
+                if [ -f ${parents_file} ] && [ "$(yq eval .parents.${parent}.children ${parents_file})" != "null" ]; then
+                    next_idx=$(yq eval ".parents.${parent}.children | length" ${parents_file})
+                    yq eval ".parents.${parent}.children[${next_idx}] = \"${name}\"" -i ${parents_file}
+                elif [ -f ${parents_file} ]; then
+                    yq eval ".parents.${parent}.children[0] = \"${name}\"" -i ${parents_file}
+                else
+                    yq eval -n ".parents.${parent}.children[0] = \"${name}\"" > ${parents_file}
+                fi
             fi
         fi
     done
@@ -50,4 +82,4 @@ build_parents() {
 
 clone_samples
 
-build_parents
+# build_parents
