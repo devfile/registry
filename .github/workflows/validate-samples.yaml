@@ -1,0 +1,61 @@
+#
+#   Copyright 2023 Red Hat, Inc.
+#
+#   Licensed under the Apache License, Version 2.0 (the "License");
+#   you may not use this file except in compliance with the License.
+#   You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+#   Unless required by applicable law or agreed to in writing, software
+#   distributed under the License is distributed on an "AS IS" BASIS,
+#   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#   See the License for the specific language governing permissions and
+#   limitations under the License.
+
+name: Validate child samples
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: 0 5 * * *
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  MINIKUBE_VERSION: "v1.29.0"
+  KUBERNETES_VERSION: "v1.25.2"
+  TEST_DELTA: false
+
+jobs:
+  validate-devfile-schema:
+    name: validate devfile schemas
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: "1.19"
+
+      - name: Install Ginkgo
+        run: go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@v2.5.0
+
+      - name: Test delta if on a pull request
+        if: ${{ github.event_name == 'pull_request' }}
+        run: echo "TEST_DELTA=true" >> $GITHUB_ENV
+
+      - name: Build parents file and get child samples
+        run: echo "STACKS=$(bash tests/build_parents_file.sh)" >> $GITHUB_ENV
+
+      - name: Validate samples
+        run: STACKS_DIR=$(pwd)/samples/.cache bash tests/validate_devfile_schemas.sh
