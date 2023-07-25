@@ -5,3 +5,4 @@ devfile-web/
 vendor/
 .odo
 samples/.cache
+parents.yaml
