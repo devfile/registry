@@ -2,7 +2,8 @@
 
 set -x
 
-stackDirs=$(bash "$(pwd)/tests/get_stacks.sh")
+stacksDir=${STACKS_DIR:-"$(pwd)/stacks"}
+stackDirs=${STACKS:-"$(bash "$(pwd)/tests/get_stacks.sh")"}
 
 ginkgo run --procs 2 \
-  tests/validate_devfile_schemas -- -stacksPath "$(pwd)"/stacks -stackDirs "$stackDirs"
+  tests/validate_devfile_schemas -- -stacksPath ${stacksDir} -stackDirs "$stackDirs"
