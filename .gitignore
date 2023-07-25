@@ -3,3 +3,4 @@ registry-support/
 .idea/
 devfile-web/
 samples/.cache
+parents.yaml
