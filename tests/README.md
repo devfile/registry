@@ -1,5 +1,29 @@
 # Devfile Registry Testing
 
+## Dependency check
+
+### Prerequisites
+
+- Ensure `yq 4.3x` is installed
+
+### Running the build script
+
+- This script performs three actions
+  - Clones samples from provided `extraDevfileEntries.yaml` under `samples/.cache`
+  - Creates a `parents.yaml` which contains the dependency tree for parent stacks
+  - Outputs the child sample paths of parent stacks, `TEST_DELTA=true` will result in only outputting child samples which have changed parent stacks
+- The build script takes one optional argument and works off of the current working directory
+  - `bash tests/build_parents_file.sh`, default samples file is `extraDevfileEntries.yaml`
+  - `bash tests/build_parents_file.sh <path_to_extraDevfileEntries>`
+
+### Use with testing
+
+- One can test the child samples using the [validate_devfile_schemas]() test suite by performing the following:
+```sh
+export STACKS=$(bash tests/build_parents_file.sh)
+STACKS_DIR=samples/.cache bash tests/validate_devfile_schemas.sh
+```
+
 ## Validating non-terminating images
 
 ### Prerequisites
