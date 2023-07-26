@@ -58,4 +58,5 @@ jobs:
         run: echo "STACKS=$(bash tests/build_parents_file.sh)" >> $GITHUB_ENV
 
       - name: Validate samples
+        if: ${{ env.STACKS != '' }}
         run: STACKS_DIR=$(pwd)/samples/.cache bash tests/validate_devfile_schemas.sh
