@@ -4,7 +4,7 @@
 
 ### Prerequisites
 
-- Ensure `yq 4.3x` is installed
+- Ensure [yq 4.x](https://github.com/mikefarah/yq/#install) is installed
 
 ### Running the build script
 
