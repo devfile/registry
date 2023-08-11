@@ -51,7 +51,7 @@ var _ = Describe("RHTAP sample checks", Ordered, Label("nightly"), func() {
 
 				// If not namespace specified creates one
 				if testNamespace == "" {
-					ns, err := fw.CommonController.CreateTestNamespace(utils.GetGeneratedNamespace("stack-"))
+					ns, err := fw.CommonController.CreateTestNamespace(utils.GetGeneratedNamespace("stack"))
 					Expect(err).NotTo(HaveOccurred())
 					testNamespace = ns.Name
 				} else {
