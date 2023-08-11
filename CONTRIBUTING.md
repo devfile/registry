@@ -88,6 +88,45 @@ The devfile samples used in this devfile registry are stored in the `extraDevfil
 4) Fill in the fields in the angle brackets based on your sample. Note that there must be only one git remote for the devfile sample.
 5) Open a pull request against this repository with your changes.
 
+### Adding a new version
+
+In case you want to add another version to a new devfile sample you can update the existing sample inside the `extraDevfileEntries.yaml` file:
+
+1) Verify your Sample functions with Che.
+  
+    - Opening the URL `https://workspaces.openshift.com/#<repository_url>` in your browser should start a workspace where `exec` commands run successfully. Type `task+<space>` in the IDE command palette to see the list of available commands.
+
+2) Open `extraDevfileEntries.yaml` in an editor
+3) A sample with multiple versions should be:
+
+    ```yaml
+    - name: <sample-name>
+        displayName: <sample-display-name>
+        description: <sample-description>
+        icon: <link-to-sample-icon>
+        tags: ["comma", "separated", "list", "of", "tags"]
+        projectType: <sample-project-type>
+        language: <sample-language>
+        versions:
+        - version: <version1>
+            schemaVersion: <devfile-schemaVersion>
+            git:
+            checkoutFrom:
+                revision: <sample-git-repo-commit-id-or-branch>
+            remotes:
+                origin: <link-to-sample-git-repository>
+        - version: <version1>
+            schemaVersion: <devfile-schemaVersion>
+            git:
+            checkoutFrom:
+                revision: <sample-git-repo-commit-id-or-branch>
+            remotes:
+                origin: <link-to-sample-git-repository>
+    ```
+
+4) Fill in the fields in the angle brackets based on your sample. Note that there must be only one git remote for the devfile sample.
+5) Open a pull request against this repository with your changes.
+
 ### Updating
 
 To update a sample:
