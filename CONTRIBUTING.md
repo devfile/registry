@@ -121,6 +121,8 @@ In case you want to add another version to a new devfile sample you can update t
             checkoutFrom:
                 revision: <sample-git-repo-commit-id-or-branch>
             remotes:
+                # Note that it is also possible to use different repos
+                # for each version of a sample.
                 origin: <link-to-sample-git-repository>
     ```
 
