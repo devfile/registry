@@ -38,7 +38,7 @@ jobs:
           yq: 'latest'
       - name: Get git diff
         id: diff
-        uses: technote-space/get-diff-action@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6.4.1
+        uses: technote-space/get-diff-action@f27caffdd0fb9b13f4fc191c016bb4e0632844af # v6.4.1
         with:
           PATTERNS: |
             +(stacks)/**/devfile.yaml
