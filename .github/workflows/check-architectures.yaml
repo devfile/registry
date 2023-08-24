@@ -38,7 +38,7 @@ jobs:
           yq: 'latest'
       - name: Get git diff
         id: diff
-        uses: technote-space/get-diff-action@v4
+        uses: technote-space/get-diff-action@d7906e4ad0b1822421a7e6a35d5ca353c962f410 # v6.4.1
         with:
           PATTERNS: |
             +(stacks)/**/devfile.yaml
@@ -53,7 +53,7 @@ jobs:
         continue-on-error: true
         run: bash tests/check_architectures.sh "${{ env.GIT_DIFF }}" yq >> ./pr/output
       - name: Find Comment in PR
-        uses: peter-evans/find-comment@v1
+        uses: peter-evans/find-comment@a54c31d7fa095754bfef525c0c8e5e5674c4b4b1 # v2.4.0
         id: find
         with:
           issue-number: ${{ github.event.number }}
@@ -62,7 +62,7 @@ jobs:
       - name: Save Comment ID
         if: ${{ steps.find.outputs.comment-id != '' }}
         run: echo ${{ steps.find.outputs.comment-id }} > ./pr/commentid
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@0b7f8abb1508181956e8e162db84b466c27e18ce # v3.1.2
         with:
           name: pr
           path: pr/
