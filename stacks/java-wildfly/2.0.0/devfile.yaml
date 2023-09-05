@@ -81,12 +81,12 @@ components:
       deployment/cpuRequest: 10m
       deployment/memoryLimit: 300Mi
       deployment/memoryRequest: 180Mi
-      deployment/container-port: 8081
+      deployment/container-port: 8080
     kubernetes:
       uri: deploy.yaml
       endpoints:
-        - name: http-8081
-          targetPort: 8081
+        - name: http-8080
+          targetPort: 8080
           path: /
   - name: m2-repository
     volume:

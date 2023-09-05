@@ -17,7 +17,7 @@ spec:
           image: numberguess:latest
           ports:
             - name: http
-              containerPort: 8081
+              containerPort: 8080
               protocol: TCP
           resources:
             limits:
@@ -30,10 +30,10 @@ metadata:
   name: numberguess-svc
 spec:
   ports:
-    - name: http-8081
-      port: 8081
+    - name: http-8080
+      port: 8080
       protocol: TCP
-      targetPort: 8081
+      targetPort: 8080
   selector:
     app: numberguess
 ---
@@ -47,6 +47,6 @@ spec:
     name: numberguess-svc
     weight: 100
   port:
-    targetPort: http-8081
+    targetPort: http-8080
   wildcardPolicy: None
 
