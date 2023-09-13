@@ -63,7 +63,7 @@ Updating an existing devfile stack is relatively straightforward:
 
 ### Automatic Stack Image Update
 
-
+As images used inside the stacks need to be up-to-date and in order to avoid using the `latest` tag, the renovate bot runs periodically ensuring that all images used from stacks (for example, inside components) have the latest version. As a result, all images used inside a devfile of a stack need to have a fixed version (e.g `1.1.0`) instead of `latest`.
 
 ## Samples
 
