@@ -19,7 +19,7 @@ starterProjects:
 components:
   - name: runtime
     container:
-      image: registry.access.redhat.com/ubi8/nodejs-16:latest
+      image: registry.access.redhat.com/ubi8/nodejs-16:1-105.1684740145
       args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
       mountSources: true
