@@ -1,0 +1,35 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+      "config:base",
+      "helpers:pinGitHubActionDigests"
+    ],
+    "enabledManagers": ["regex", "github-actions"],
+    "regexManagers": [
+      {
+        "fileMatch": [
+          "devfile.*y[a]?ml$"
+        ],
+        "matchStrings": [
+          "image: (?<depName>\\S*):(?<currentValue>\\S*)"
+        ],
+        "datasourceTemplate": "docker",
+        "depNameTemplate": "{{{depName}}}"
+      }
+    ],
+    "packageRules": [
+        {
+          "matchManagers": ["github-actions"],
+          "groupName": "github actions",
+          "groupSlug": "github-actions",
+          "commitMessageTopic": "{{depName}}"
+        }
+    ],
+    "ignorePaths": [
+      "**/docker/**",
+      ".ci/**",
+      "tests/**"
+    ],
+    "prHourlyLimit": 20,
+    "prConcurrentLimit": 5
+  }
