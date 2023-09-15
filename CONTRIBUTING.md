@@ -36,7 +36,7 @@ The following are required to build the devfile index container image containing
   
     - Make sure the name matches the devfile stack's name and be in the format `<language>-<framework>`. E.g. `java-quarkus`, `python-django`, etc.
 
-5) In case one of your components has an image, use a fixed version tag (e.g `<image>:1.1.0`) instead of `latest`. Our renovate bot will take care of the updates to your image's tag.
+5) In case one of your components has a reference to an image, use a fixed version tag (e.g `<image>:1.1.0`) instead of `latest`. Our renovate bot will take care of the updates to the image tags.
 
 6) Add the devfile.yaml and any other necessary files for the stack under the stack folder.
 
