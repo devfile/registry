@@ -14,7 +14,7 @@ The following are required to build the devfile index container image containing
 ## Instructions
 
 1. Open an issue in the [devfile/api](https://github.com/devfile/api) repo to track adding a new stack or sample
-2. Avoid using container images (check for references in the Devfile and Dockerfile) from registries (like DockerHub) that impose rate limiting.
+2. Avoid using container images (check for references in the Devfile and Dockerfile) from registries (like DockerHub) that impose rate limiting.  To workaround this, you can mirror the images to quay.io by using a similar approach to what the Devfile team has: https://github.com/devfile-samples/image-mirror/
 
 ### Stacks
 
