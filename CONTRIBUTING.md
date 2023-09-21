@@ -69,8 +69,16 @@ The devfile samples used in this devfile registry are stored in the `extraDevfil
   
     - Opening the URL `https://workspaces.openshift.com/#<repository_url>` in your browser should start a workspace where `exec` commands run successfully. Type `task+<space>` in the IDE command palette to see the list of available commands.
 
-2) Open `extraDevfileEntries.yaml` in an editor
-3) Add an entry to the file with the following required fields:
+2) Verifying your Sample functions with OpenShift Console
+
+    - Use the Developer perspective and import the Devfile Sample using Import from Git.
+
+3) Verifying your Sample functions with RHTAP
+
+    - Create an application by importing the sample from Git.
+
+4) Open `extraDevfileEntries.yaml` in an editor
+5) Add an entry to the file with the following required fields:
 
     ```yaml
     - name: <sample-name>
@@ -85,8 +93,8 @@ The devfile samples used in this devfile registry are stored in the `extraDevfil
             origin: <link-to-sample-git-repository>
     ```
 
-4) Fill in the fields in the angle brackets based on your sample. Note that there must be only one git remote for the devfile sample.
-5) Open a pull request against this repository with your changes.
+6) Fill in the fields in the angle brackets based on your sample. Note that there must be only one git remote for the devfile sample.
+7) Open a pull request against this repository with your changes.
 
 ### Adding a new version
 
@@ -96,8 +104,16 @@ In case you want to add another version to a new devfile sample you can update t
   
     - Opening the URL `https://workspaces.openshift.com/#<repository_url>` in your browser should start a workspace where `exec` commands run successfully. Type `task+<space>` in the IDE command palette to see the list of available commands.
 
-2) Open `extraDevfileEntries.yaml` in an editor
-3) A sample with multiple versions should be:
+2) Verifying your Sample functions with OpenShift Console
+
+    - Use the Developer perspective and import the Devfile Sample using Import from Git.
+
+3) Verifying your Sample functions with RHTAP
+
+    - Create an application by importing the sample from Git.
+
+4) Open `extraDevfileEntries.yaml` in an editor
+5) A sample with multiple versions should be:
 
     ```yaml
     - name: <sample-name>
@@ -126,8 +142,8 @@ In case you want to add another version to a new devfile sample you can update t
                 origin: <link-to-sample-git-repository>
     ```
 
-4) Fill in the fields in the angle brackets based on your sample. Note that there must be only one git remote for the devfile sample.
-5) Open a pull request against this repository with your changes.
+6) Fill in the fields in the angle brackets based on your sample. Note that there must be only one git remote for the devfile sample.
+7) Open a pull request against this repository with your changes.
 
 ### Updating
 
