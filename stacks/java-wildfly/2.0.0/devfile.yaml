@@ -3,10 +3,10 @@ metadata:
   name: wildfly-numberguess
   version: 2.0.0
   website: https://wildfly.org
-  displayName: WildFly Numberguess
-  description: Upstream WildFly Numberguess Quickstart
+  displayName: WildFly Numberguess Quickstart
+  description: WildFly JakartaEE 10 application
   icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark.svg
-  tags: ['Java', 'WildFly']
+  tags: ["Community", "Java", "WildFly", "OpenJDK", "Maven", "JakartaEE"]
   projectType: 'wildfly'
   language: 'java'
 starterProjects:

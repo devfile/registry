@@ -15,4 +15,9 @@
 
 ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-docker build --no-cache -t devfile-index -f $ABSOLUTE_PATH/Dockerfile $ABSOLUTE_PATH/..
+if [ $# -eq 1 ] && [ $1 == "offline" ]
+then
+    docker build --no-cache -t devfile-index -f $ABSOLUTE_PATH/Dockerfile.offline $ABSOLUTE_PATH/..
+else
+    docker build --no-cache -t devfile-index -f $ABSOLUTE_PATH/Dockerfile $ABSOLUTE_PATH/..
+fi
