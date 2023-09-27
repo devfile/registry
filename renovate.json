@@ -28,7 +28,11 @@
     "ignorePaths": [
       "**/docker/**",
       ".ci/**",
-      "tests/**"
+      "tests/**",
+      "stacks/java-openliberty/**",
+      "stacks/java-openliberty-gradle/**",
+      "stacks/java-websphereliberty/**",
+      "stacks/java-websphereliberty-gradle/**"
     ],
     "prHourlyLimit": 20,
     "prConcurrentLimit": 5
