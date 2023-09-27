@@ -41,14 +41,16 @@ The following are required to build the devfile index container image containing
 
     - Make sure the name matches the devfile stack's name and be in the format `<language>-<framework>`. E.g. `java-quarkus`, `python-django`, etc.
 
-5) Add the devfile.yaml and any other necessary files for the stack under the stack folder.
+5) In case one of your components has a reference to an image, use a fixed version tag (e.g `<image>:1.1.0`) instead of `latest`. Our renovate bot will take care of the updates to the image tags.
 
-6) Run the `.ci/build.sh` to build the registry into a container image.
+6) Add the devfile.yaml and any other necessary files for the stack under the stack folder.
 
+7) Run the `.ci/build.sh` to build the registry into a container image.
+  
     - This will also validate the devfiles in this repository, making sure they conform to a minimum standard.
     - This step will also be run in the PR build for the repository.
 
-7) Open a pull request against this repository with a brief description of the change.
+8) Open a pull request against this repository with a brief description of the change.
 
 #### Updating
 
@@ -64,7 +66,11 @@ Updating an existing devfile stack is relatively straightforward:
     - Minimally, testing with odo v2 (`odo create`, `odo push`, etc) and odo v3 (`odo init`, `odo dev`, etc) is recommended, however if your Devfile is used with other tools, it's recommended to test there as well.
 5) Open a pull request against this repository with your changes.
 
-### Samples
+### Automatic Stack Image Update
+
+As images used inside the stacks need to be up-to-date and in order to avoid using the `latest` tag, the renovate bot runs periodically ensuring that all images used from stacks (for example, inside components) have the latest version. As a result, all images used inside a devfile of a stack need to have a fixed version (e.g `1.1.0`) instead of `latest`.
+
+## Samples
 
 #### Contributing
 
