@@ -32,7 +32,8 @@
       "stacks/java-openliberty/**",
       "stacks/java-openliberty-gradle/**",
       "stacks/java-websphereliberty/**",
-      "stacks/java-websphereliberty-gradle/**"
+      "stacks/java-websphereliberty-gradle/**",
+      "stacks/nodejs/**"
     ],
     "prHourlyLimit": 20,
     "prConcurrentLimit": 5
