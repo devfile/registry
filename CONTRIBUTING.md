@@ -4,6 +4,8 @@ This document outlines the requirements for contributing a devfile stack or samp
 
 The [devfile registry structure](https://github.com/devfile/api/blob/main/docs/proposals/registry/registry-structure.md#repository-structure) design doc provides some useful background information on the structure of resources in a devfile registry (and its Git repository).
 
+When onboarding a new stack or sample, the  `Stack Provider` should read and agree to follow their roles and responsibilities outlined in the [Lifecycle](LIFECYCLE.md) doc
+
 ## Prerequisites
 
 The following are required to build the devfile index container image containing your stack or sample:
@@ -46,7 +48,7 @@ The following are required to build the devfile index container image containing
 6) Add the devfile.yaml and any other necessary files for the stack under the stack folder.
 
 7) Run the `.ci/build.sh` to build the registry into a container image.
-  
+
     - This will also validate the devfiles in this repository, making sure they conform to a minimum standard.
     - This step will also be run in the PR build for the repository.
 
