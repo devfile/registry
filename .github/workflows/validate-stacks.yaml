@@ -141,7 +141,7 @@ jobs:
       - name: Install odo v3
         uses: redhat-actions/openshift-tools-installer@2de9a80cf012ad0601021515481d433b91ef8fd5 # v1
         with:
-          odo: "3.2.0"
+          odo: "3.15.0"
 
       - name: Install Ginkgo
         run: go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@v2.5.0
