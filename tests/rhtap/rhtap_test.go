@@ -58,7 +58,7 @@ var _ = Describe("RHTAP sample checks", Ordered, Label("nightly"), func() {
 
 			AfterAll(func() {
 				if !CurrentSpecReport().Failed() {
-					Expect(fw.HasController.DeleteAllApplicationsInASpecificNamespace(namespace, 30*time.Second)).To(Succeed())
+					Expect(fw.HasController.DeleteAllApplicationsInASpecificNamespace(namespace, 180*time.Second)).To(Succeed())
 				}
 			})
 
@@ -98,7 +98,6 @@ var _ = Describe("RHTAP sample checks", Ordered, Label("nightly"), func() {
 				Expect(err).ShouldNot(HaveOccurred(), "failed to get component: %v", err)
 
 				Expect(fw.HasController.WaitForComponentPipelineToBeFinished(component, "", 2)).To(Succeed())
-				Expect(err).ShouldNot(HaveOccurred(), "failed to get component: %v", err)
 			})
 		})
 	}
