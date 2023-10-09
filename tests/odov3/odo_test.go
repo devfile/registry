@@ -150,46 +150,108 @@ var _ = Describe("test starter projects from devfile stacks", func() {
 	})
 
 	for _, stack := range stacks {
-		for _, starterProject := range stack.starterProjects {
-			stack := stack
-			starterProject := starterProject
-			It(fmt.Sprintf("stack: %s version: %s starter: %s", stack.name, stack.version, starterProject.Name), func() {
+		stack := stack
 
-				_, _, err := runOdo("init", "--devfile-path", stack.path, "--starter", starterProject.Name, "--name", starterProject.Name)
+		if len(stack.starterProjects) == 0 {
+			It(fmt.Sprintf("stack: %s version: %s no_starter", stack.name, stack.version), func() {
+				// No starter projects defined in Devfile => let's start a Dev Session with --no-commands
+				// (i.e., without implicitly executing any build and/or run commands), since there won't be any source code.
+				// So here, we just want to make sure that odo dev starts properly (to cover cases for example where the dev container does not end up running).
+				cmpName := fmt.Sprintf("cmp-%s-%s", stack.name, randomString(3))
+				_, _, err := runOdo("init", "--devfile-path", stack.path, "--name", cmpName)
 				Expect(err).To(BeNil())
 
-				devStdout, devStderr, devProcess, err := runOdoDev()
+				devStdout, devStderr, devProcess, err := runOdoDev("--no-commands")
 				Expect(err).To(BeNil())
 
-				// if odo dev command failed send error to this chanel to interrupt waitForPort()
-				devError := make(chan error)
-				go func() {
-					dataStdout, err := io.ReadAll(devStdout)
-					Expect(err).To(BeNil())
-
-					dataStderr, err := io.ReadAll(devStderr)
-					Expect(err).To(BeNil())
-
-					err = devProcess.Wait()
-
-					PrintIfNotEmpty("'odo dev' stdout:", string(dataStdout))
-					PrintIfNotEmpty("'odo dev' stderr:", string(dataStderr))
-
-					devError <- err
+				var stopped bool
+				defer func() {
+					if !stopped {
+						_ = devProcess.Process.Kill()
+						_ = devProcess.Wait()
+					}
+					_, _, _ = runOdo("delete", "component", "--force")
 				}()
 
-				ports, err := waitForPort(devError)
-				Expect(err).To(BeNil())
+				var stdoutContentRead []string
+				Eventually(func(g Gomega) string {
+					tmpBuffer := make([]byte, 4096)
+					_, rErr := devStdout.Read(tmpBuffer)
+					if rErr != io.EOF {
+						g.Expect(rErr).ShouldNot(HaveOccurred())
+					}
+					stdoutReadSoFar := string(tmpBuffer)
+					fmt.Fprintln(GinkgoWriter, stdoutReadSoFar)
 
-				for _, port := range ports {
-					err := waitForHttp(fmt.Sprintf("http://%s:%d", port.LocalAddress, port.LocalPort), 200)
-					Expect(err).To(BeNil())
-				}
-				devProcess.Process.Kill()
+					stdoutContentRead = append(stdoutContentRead, stdoutReadSoFar)
+					return strings.Join(stdoutContentRead, "\n")
+				}).WithTimeout(3*time.Minute).WithPolling(10*time.Second).Should(
+					SatisfyAll(
+						ContainSubstring("Keyboard Commands:"),
+						// The matcher below is to prevent flakiness (case for example of a Pod with a terminating command,
+						// where the pod could still run briefly but stop afterward); odo would try to sync files when it detects
+						// the pod is running but not succeed to do so because the pod ended up being restarted.
+						Not(ContainSubstring("failed to sync to component with name %s", cmpName)),
+					),
+					func() string {
+						// Stopping the dev process to be able to read its stderr output without blocking
+						// (devStderr is a pipe, and we can read only as long as something is writing to it).
+						_ = devProcess.Process.Kill()
+						_ = devProcess.Wait()
+						stopped = true
 
-				runOdo("delete", "component", "--force")
+						dataStderr, _ := io.ReadAll(devStderr)
+
+						return fmt.Sprintf(`Dev Session not started properly. See logs below:
+*** STDOUT ****
+%s
+
+**** STDERR ****
+%s
+`, strings.Join(stdoutContentRead, "\n"), string(dataStderr))
+					})
 			})
 
+		} else {
+			for _, starterProject := range stack.starterProjects {
+				starterProject := starterProject
+				It(fmt.Sprintf("stack: %s version: %s starter: %s", stack.name, stack.version, starterProject.Name), func() {
+
+					_, _, err := runOdo("init", "--devfile-path", stack.path, "--starter", starterProject.Name, "--name", starterProject.Name)
+					Expect(err).To(BeNil())
+
+					devStdout, devStderr, devProcess, err := runOdoDev()
+					Expect(err).To(BeNil())
+
+					// if odo dev command failed send error to this chanel to interrupt waitForPort()
+					devError := make(chan error)
+					go func() {
+						dataStdout, err := io.ReadAll(devStdout)
+						Expect(err).To(BeNil())
+
+						dataStderr, err := io.ReadAll(devStderr)
+						Expect(err).To(BeNil())
+
+						err = devProcess.Wait()
+
+						PrintIfNotEmpty("'odo dev' stdout:", string(dataStdout))
+						PrintIfNotEmpty("'odo dev' stderr:", string(dataStderr))
+
+						devError <- err
+					}()
+
+					ports, err := waitForPort(devError)
+					Expect(err).To(BeNil())
+
+					for _, port := range ports {
+						err := waitForHttp(fmt.Sprintf("http://%s:%d", port.LocalAddress, port.LocalPort), 200)
+						Expect(err).To(BeNil())
+					}
+					devProcess.Process.Kill()
+
+					runOdo("delete", "component", "--force")
+				})
+			}
 		}
 	}
 
@@ -330,9 +392,11 @@ func waitForPort(devError chan error) ([]ForwardedPort, error) {
 // run `odo dev` on the background
 // returned cmd can be used to kill the process
 // returns stdout pipe, stderr pipe, cmd
-func runOdoDev() (io.ReadCloser, io.ReadCloser, *exec.Cmd, error) {
-	GinkgoWriter.Println("Executing: odo dev")
-	cmd := exec.Command("odo", "dev")
+func runOdoDev(additionalArgs ...string) (io.ReadCloser, io.ReadCloser, *exec.Cmd, error) {
+	args := []string{"dev", "--random-ports"}
+	args = append(args, additionalArgs...)
+	GinkgoWriter.Println("Executing odo " + strings.Join(args, " "))
+	cmd := exec.Command("odo", args...)
 
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
