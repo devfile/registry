@@ -33,10 +33,10 @@ components:
         - name: ASPNETCORE_ENVIRONMENT
           value: Development
         - name: ASPNETCORE_URLS
-          value: http://*:8080
+          value: http://*:8082
       endpoints:
         - name: http-dotnet60
-          targetPort: 8080
+          targetPort: 8082
 commands:
   - id: build
     exec:
