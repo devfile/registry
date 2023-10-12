@@ -39,6 +39,7 @@ var _ = Describe("RHTAP sample checks", Ordered, Label("nightly"), func() {
 	Expect(err).NotTo(HaveOccurred())
 
 	for _, sampleEntry := range entries.Samples {
+		testNamespace := namespace
 		sampleEntry := sampleEntry
 
 		Describe(sampleEntry.Name, func() {
@@ -49,31 +50,31 @@ var _ = Describe("RHTAP sample checks", Ordered, Label("nightly"), func() {
 				Expect(err).NotTo(HaveOccurred())
 
 				// If not namespace specified creates one
-				if namespace == "" {
+				if testNamespace == "" {
 					ns, err := fw.CommonController.CreateTestNamespace(utils.GetGeneratedNamespace("stack"))
 					Expect(err).NotTo(HaveOccurred())
-					namespace = ns.Name
+					testNamespace = ns.Name
 				}
 			})
 
 			AfterAll(func() {
 				if !CurrentSpecReport().Failed() {
-					Expect(fw.HasController.DeleteAllApplicationsInASpecificNamespace(namespace, 180*time.Second)).To(Succeed())
+					Expect(fw.CommonController.DeleteNamespace(testNamespace)).NotTo(HaveOccurred())
 				}
 			})
 
 			// Create an application in a specific namespace
 			It("creates an application", func() {
 				GinkgoWriter.Printf("Parallel process %d\n", GinkgoParallelProcess())
-				createdApplication, err := fw.HasController.CreateApplication(sampleEntry.Name, namespace)
+				createdApplication, err := fw.HasController.CreateApplication(sampleEntry.Name, testNamespace)
 				Expect(err).NotTo(HaveOccurred())
-				Expect(createdApplication.Namespace).To(Equal(namespace))
+				Expect(createdApplication.Namespace).To(Equal(testNamespace))
 			})
 
 			// Check the application health and check if a devfile was generated in the status
 			It("checks if application is healthy", func() {
 				Eventually(func() string {
-					application, err := fw.HasController.GetApplication(sampleEntry.Name, namespace)
+					application, err := fw.HasController.GetApplication(sampleEntry.Name, testNamespace)
 					Expect(err).NotTo(HaveOccurred())
 
 					return application.Status.Devfile
@@ -81,20 +82,20 @@ var _ = Describe("RHTAP sample checks", Ordered, Label("nightly"), func() {
 			})
 
 			It("creates componentdetectionquery", func() {
-				cdq, err = fw.HasController.CreateComponentDetectionQuery(sampleEntry.Name, namespace, sampleEntry.Git.Remotes.Origin, "", "", "", false)
+				cdq, err = fw.HasController.CreateComponentDetectionQuery(sampleEntry.Name, testNamespace, sampleEntry.Git.Remotes.Origin, "", "", "", false)
 				Expect(err).NotTo(HaveOccurred())
 			})
 
 			It("creates component", func() {
 				for _, compDetected := range cdq.Status.ComponentDetected {
-					component, err = fw.HasController.CreateComponent(compDetected.ComponentStub, namespace, "", "", sampleEntry.Name, true, map[string]string{})
+					component, err = fw.HasController.CreateComponent(compDetected.ComponentStub, testNamespace, "", "", sampleEntry.Name, true, map[string]string{})
 					Expect(err).NotTo(HaveOccurred())
 				}
 			})
 
 			// Start to watch the pipeline until is finished
 			It("waits component pipeline to be finished", func() {
-				component, err = fw.HasController.GetComponent(component.Name, namespace)
+				component, err = fw.HasController.GetComponent(component.Name, testNamespace)
 				Expect(err).ShouldNot(HaveOccurred(), "failed to get component: %v", err)
 
 				Expect(fw.HasController.WaitForComponentPipelineToBeFinished(component, "", 2)).To(Succeed())
