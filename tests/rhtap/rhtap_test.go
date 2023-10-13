@@ -65,7 +65,6 @@ var _ = Describe("RHTAP sample checks", Ordered, Label("nightly"), func() {
 					if err := fw.HasController.DeleteAllApplicationsInASpecificNamespace(testNamespace, 60*time.Second); err != nil {
 						GinkgoWriter.Printf("error deleting all componentns in namespace:\n%s", err)
 					}
-					Expect(fw.CommonController.DeleteNamespace(testNamespace)).NotTo(HaveOccurred())
 				}
 			})
 
