@@ -33,6 +33,7 @@ type Stack struct {
 	name            string
 	version         string
 	path            string
+	base            string
 	starterProjects []v1alpha2.StarterProject
 }
 
