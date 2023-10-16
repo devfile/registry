@@ -62,8 +62,8 @@ func TestOdo(t *testing.T) {
 	}
 
 	for _, dir := range dirs {
-		path := filepath.Join(stacksPath, dir, "devfile.yaml")
-
+		base := filepath.Join(stacksPath, dir)
+		path := filepath.Join(base, "devfile.yaml")
 		parserArgs := parser.ParserArgs{
 			Path: path,
 		}
@@ -76,7 +76,7 @@ func TestOdo(t *testing.T) {
 		starterProjects, err := devfile.Data.GetStarterProjects(common.DevfileOptions{})
 		g.Expect(err).To(BeNil())
 
-		stack := Stack{name: name, version: version, path: path, starterProjects: starterProjects}
+		stack := Stack{name: name, version: version, path: path, starterProjects: starterProjects, base: base}
 
 		stacks = append(stacks, stack)
 	}
@@ -161,6 +161,10 @@ var _ = Describe("test starter projects from devfile stacks", func() {
 				_, _, err := runOdo("init", "--devfile-path", stack.path, "--name", cmpName)
 				Expect(err).To(BeNil())
 
+				// Copy all additional resources found inside the stack directory.
+				err = copyDir(stack.base, filepath.Join(tmpDir, "app"))
+				Expect(err).To(BeNil())
+
 				devStdout, devStderr, devProcess, err := runOdoDev("--no-commands")
 				Expect(err).To(BeNil())
 
@@ -218,6 +222,10 @@ var _ = Describe("test starter projects from devfile stacks", func() {
 				It(fmt.Sprintf("stack: %s version: %s starter: %s", stack.name, stack.version, starterProject.Name), func() {
 
 					_, _, err := runOdo("init", "--devfile-path", stack.path, "--starter", starterProject.Name, "--name", starterProject.Name)
+					Expect(err).To(BeNil())
+
+					// Copy all additional resources found inside the stack directory.
+					err = copyDir(stack.base, filepath.Join(tmpDir, "app"))
 					Expect(err).To(BeNil())
 
 					devStdout, devStderr, devProcess, err := runOdoDev()
@@ -451,7 +459,6 @@ func runOdo(args ...string) ([]byte, []byte, error) {
 	}
 
 	return dataStdout, dataStderr, nil
-
 }
 
 const letters = "abcdefghijklmnopqrstuvwxyz"
@@ -464,8 +471,51 @@ func randomString(n int) string {
 	return string(b)
 }
 
+// copyDir: Copies all items inside given stack's directory to the given destination.
+// If the item exists it skips it.
+func copyDir(src string, dst string) error {
+	entries, err := os.ReadDir(src)
+	if err != nil {
+		return err
+	}
+	for _, entry := range entries {
+		sourceEntryPath := filepath.Join(src, entry.Name())
+		destEntryPath := filepath.Join(dst, entry.Name())
+		sourceEntryInfo, err := os.Stat(sourceEntryPath)
+		if err != nil {
+			return err
+		}
+		_, err = os.Stat(destEntryPath)
+		// check if destination exists
+		if err == nil {
+			// if it exists continue
+			continue
+		} else if !os.IsNotExist(err) {
+			// for every other err return it
+			return err
+		}
+
+		// if entry is a directory, create a dir in destination and go one level down.
+		if sourceEntryInfo.IsDir() {
+			os.Mkdir(destEntryPath, 0755)
+			err = copyDir(sourceEntryPath, destEntryPath)
+			if err != nil {
+				return err
+			}
+			continue
+		}
+		// if is not a dir copy file
+		err = copyFile(sourceEntryPath, destEntryPath)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
 // this is not the best way to copy files
 func copyFile(src string, dst string) error {
+	GinkgoWriter.Printf("Copying file %s to %s\n", src, dst)
 	input, err := os.ReadFile(src)
 	if err != nil {
 		return err
