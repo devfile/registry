@@ -23,7 +23,7 @@ components:
     container:
       image: registry.access.redhat.com/ubi8/openjdk-17:1.16-1
       args: ['tail', '-f', '/dev/null']
-      memoryLimit: 512Mi ## default app nowhere needs this but leaving room for expansion.
+      memoryLimit: 1024Mi ## default app nowhere needs this but leaving room for expansion.
       mountSources: true
       volumeMounts:
         - name: m2
