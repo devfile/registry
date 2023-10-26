@@ -5,6 +5,8 @@
       "helpers:pinGitHubActionDigests",
       ":gitSignOff"
     ],
+    "timezone": "America/Toronto",
+    "schedule": ["on the 2nd and 4th day instance on thursday after 9pm"],
     "enabledManagers": ["regex", "github-actions"],
     "regexManagers": [
       {
