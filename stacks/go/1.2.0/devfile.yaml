@@ -6,7 +6,6 @@ metadata:
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/golang.svg
   tags:
     - Go
-    - Deprecated
   projectType: Go
   language: Go
   provider: Red Hat
