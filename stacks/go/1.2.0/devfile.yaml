@@ -24,8 +24,14 @@ components:
       endpoints:
         - name: http-go
           targetPort: 8080
+        - exposure: none
+          name: debug
+          targetPort: 5858
       image: registry.access.redhat.com/ubi9/go-toolset:1.19.13-4.1697647145
       args: ["tail", "-f", "/dev/null"]
+      env:
+        - name: DEBUG_PORT
+          value: '5858'
       memoryLimit: 1024Mi
       mountSources: true
     name: runtime
@@ -51,3 +57,21 @@ commands:
         kind: run
       workingDir: ${PROJECT_SOURCE}
     id: run
+
+  - exec:
+      commandLine: |
+        GOPATH=${PROJECT_SOURCE}/.go \
+        GOCACHE=${PROJECT_SOURCE}/.cache \
+        dlv \
+          --listen=127.0.0.1:${DEBUG_PORT} \
+          --only-same-user=false \
+          --headless=true \
+          --api-version=2 \
+          --accept-multiclient \
+          debug --continue main.go
+      component: runtime
+      group:
+        isDefault: true
+        kind: debug
+      workingDir: ${PROJECT_SOURCE}
+    id: debug
