@@ -7,6 +7,7 @@ The public registry is updated weekly, by 12pm EST Wednesdays, with any updated 
 ## Registry Status
 
 [![Validate Devfile stacks](https://github.com/devfile/registry/actions/workflows/validate-stacks.yaml/badge.svg?event=schedule)](https://github.com/devfile/registry/actions/workflows/validate-stacks.yaml)
+[![Renovate][1]][2]
 
 ## Registry Updates
 
@@ -46,3 +47,6 @@ the [Telemetry Data Collection Notice](TELEMETRY.md)
 For issues relating to a specific devfile stack in this repository, please reach out to the devfile stack maintainer to determine where to open an issue.
 
 For issues relating to the hosted devfile registry service (<https://registry.devfile.io>), or devfile registries in general, please use the [devfile/api](https://github.com/devfile/api/) issue tracker for opening issues. Apply the `area/registry` label to registry issues for better visibility.
+
+[1]: https://img.shields.io/badge/renovate-enabled-brightgreen?logo=renovate
+[2]: https://renovatebot.com
