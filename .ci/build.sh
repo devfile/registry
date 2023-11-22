@@ -14,10 +14,11 @@
 #   limitations under the License.
 
 ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+CONTAINER_ENGINE=${CONTAINER_ENGINE:-docker}
 
 if [ $# -eq 1 ] && [ $1 == "offline" ]
 then
-    docker build --no-cache -t devfile-index -f $ABSOLUTE_PATH/Dockerfile.offline $ABSOLUTE_PATH/..
+    ${CONTAINER_ENGINE} build --no-cache -t devfile-index -f $ABSOLUTE_PATH/Dockerfile.offline $ABSOLUTE_PATH/..
 else
-    docker build --no-cache -t devfile-index -f $ABSOLUTE_PATH/Dockerfile $ABSOLUTE_PATH/..
+    ${CONTAINER_ENGINE} build --no-cache -t devfile-index -f $ABSOLUTE_PATH/Dockerfile $ABSOLUTE_PATH/..
 fi
