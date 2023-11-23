@@ -37,11 +37,6 @@ then
 fi
 git clone https://github.com/devfile/devfile-web.git $ABSOLUTE_PATH/devfile-web
 
-# devfile-web scripts require the USE_PODMAN env variable in order to work
-# cd $ABSOLUTE_PATH/devfile-web
-# export USE_PODMAN=${USE_PODMAN}
-# cd ..
-
 # Build registry-viewer
 bash $ABSOLUTE_PATH/devfile-web/scripts/build_viewer.sh
 
