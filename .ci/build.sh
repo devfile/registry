@@ -12,13 +12,19 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
+shopt -s expand_aliases
 
 ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-CONTAINER_ENGINE=${CONTAINER_ENGINE:-docker}
+USE_PODMAN=${USE_PODMAN:-false}
+
+if [[ ${USE_PODMAN} == true ]]; then
+    alias docker=podman
+    echo "using podman as container engine"
+fi
 
 if [ $# -eq 1 ] && [ $1 == "offline" ]
 then
-    ${CONTAINER_ENGINE} build --no-cache -t devfile-index -f $ABSOLUTE_PATH/Dockerfile.offline $ABSOLUTE_PATH/..
+    docker build --no-cache -t devfile-index -f $ABSOLUTE_PATH/Dockerfile.offline $ABSOLUTE_PATH/..
 else
-    ${CONTAINER_ENGINE} build --no-cache -t devfile-index -f $ABSOLUTE_PATH/Dockerfile $ABSOLUTE_PATH/..
+    docker build --no-cache -t devfile-index -f $ABSOLUTE_PATH/Dockerfile $ABSOLUTE_PATH/..
 fi

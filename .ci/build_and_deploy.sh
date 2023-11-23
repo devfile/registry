@@ -12,19 +12,18 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
+shopt -s expand_aliases
 set -ex
 ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 GIT_REV="$(git rev-parse --short=7 HEAD)"
 INDEX_IMAGE="${INDEX_IMAGE:-quay.io/app-sre/devfile-index}"
 VIEWER_IMAGE="${VIEWER_IMAGE:-quay.io/app-sre/registry-viewer}"
 IMAGE_TAG="${IMAGE_TAG:-${GIT_REV}}"
-CONTAINER_ENGINE=${CONTAINER_ENGINE:-docker}
-# Use of this env variable is required for the devfile-web build script
 USE_PODMAN=${USE_PODMAN:-false}
 
 # Ensure container engine is set properly for devfile-web scripts
-if [[ ${CONTAINER_ENGINE} == "podman" ]]; then
-    USE_PODMAN=true
+if [[ ${USE_PODMAN} == true ]]; then
+    alias docker=podman
     echo "using podman as container engine"
 fi
 
@@ -39,9 +38,9 @@ fi
 git clone https://github.com/devfile/devfile-web.git $ABSOLUTE_PATH/devfile-web
 
 # devfile-web scripts require the USE_PODMAN env variable in order to work
-cd $ABSOLUTE_PATH/devfile-web
-export USE_PODMAN=${USE_PODMAN}
-cd ..
+# cd $ABSOLUTE_PATH/devfile-web
+# export USE_PODMAN=${USE_PODMAN}
+# cd ..
 
 # Build registry-viewer
 bash $ABSOLUTE_PATH/devfile-web/scripts/build_viewer.sh
@@ -52,17 +51,17 @@ if [[ -n "$QUAY_USER" && -n "$QUAY_TOKEN" ]]; then
     mkdir -p "$DOCKER_CONF"
 
     # login into quay.io
-    ${CONTAINER_ENGINE} --config="$DOCKER_CONF" login -u="$QUAY_USER" -p="$QUAY_TOKEN" quay.io
+    docker --config="$DOCKER_CONF" login -u="$QUAY_USER" -p="$QUAY_TOKEN" quay.io
 
     # devfile-index
-    ${CONTAINER_ENGINE} tag devfile-index "${INDEX_IMAGE}:${IMAGE_TAG}"
-    ${CONTAINER_ENGINE} tag devfile-index "${INDEX_IMAGE}:next"
-    ${CONTAINER_ENGINE} --config="$DOCKER_CONF" push "${INDEX_IMAGE}:${IMAGE_TAG}"
-    ${CONTAINER_ENGINE} --config="$DOCKER_CONF" push "${INDEX_IMAGE}:next"
+    docker tag devfile-index "${INDEX_IMAGE}:${IMAGE_TAG}"
+    docker tag devfile-index "${INDEX_IMAGE}:next"
+    docker --config="$DOCKER_CONF" push "${INDEX_IMAGE}:${IMAGE_TAG}"
+    docker --config="$DOCKER_CONF" push "${INDEX_IMAGE}:next"
 
     # registry-viewer
-    ${CONTAINER_ENGINE} tag registry-viewer "${VIEWER_IMAGE}:${IMAGE_TAG}"
-    ${CONTAINER_ENGINE} tag registry-viewer "${VIEWER_IMAGE}:next"
-    ${CONTAINER_ENGINE} --config="$DOCKER_CONF" push "${VIEWER_IMAGE}:${IMAGE_TAG}"
-    ${CONTAINER_ENGINE} --config="$DOCKER_CONF" push "${VIEWER_IMAGE}:next"
+    docker tag registry-viewer "${VIEWER_IMAGE}:${IMAGE_TAG}"
+    docker tag registry-viewer "${VIEWER_IMAGE}:next"
+    docker --config="$DOCKER_CONF" push "${VIEWER_IMAGE}:${IMAGE_TAG}"
+    docker --config="$DOCKER_CONF" push "${VIEWER_IMAGE}:next"
 fi
