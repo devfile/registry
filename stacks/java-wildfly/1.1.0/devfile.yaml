@@ -125,7 +125,7 @@ components:
       size: 3Gi
   - name: jaeger
     container:
-      image: quay.io/jaegertracing/all-in-one:1.50
+      image: quay.io/jaegertracing/all-in-one:1.51
       memoryLimit: 128Mi
       endpoints:
         - name: tracing-ui-wild
