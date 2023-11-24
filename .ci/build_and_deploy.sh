@@ -12,12 +12,20 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
+shopt -s expand_aliases
 set -ex
 ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 GIT_REV="$(git rev-parse --short=7 HEAD)"
 INDEX_IMAGE="${INDEX_IMAGE:-quay.io/app-sre/devfile-index}"
 VIEWER_IMAGE="${VIEWER_IMAGE:-quay.io/app-sre/registry-viewer}"
 IMAGE_TAG="${IMAGE_TAG:-${GIT_REV}}"
+USE_PODMAN=${USE_PODMAN:-false}
+
+# Ensure container engine is set properly for devfile-web scripts
+if [[ ${USE_PODMAN} == true ]]; then
+    alias docker=podman
+    echo "using podman as container engine"
+fi
 
 # Run the build script
 bash $ABSOLUTE_PATH/build.sh

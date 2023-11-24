@@ -12,8 +12,15 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
+shopt -s expand_aliases
 
 ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+USE_PODMAN=${USE_PODMAN:-false}
+
+if [[ ${USE_PODMAN} == true ]]; then
+    alias docker=podman
+    echo "using podman as container engine"
+fi
 
 if [ $# -eq 1 ] && [ $1 == "offline" ]
 then
