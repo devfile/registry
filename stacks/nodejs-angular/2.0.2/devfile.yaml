@@ -26,7 +26,7 @@ components:
       endpoints:
         - name: http-angular
           targetPort: 4200
-      image: registry.access.redhat.com/ubi8/nodejs-16:1-129.1698060573
+      image: registry.access.redhat.com/ubi8/nodejs-16:1-139
       args: ["tail", "-f", "/dev/null"]
       memoryLimit: 1024Mi
     name: runtime
