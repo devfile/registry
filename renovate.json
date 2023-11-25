@@ -24,7 +24,9 @@
           "matchManagers": ["github-actions"],
           "groupName": "github actions",
           "groupSlug": "github-actions",
-          "commitMessageTopic": "{{depName}}"
+          "commitMessageTopic": "{{depName}}",
+          "automerge": false,
+          "platformAutomerge": false
         },
         {
           "description": "Disable grouping patch and digest updates",
