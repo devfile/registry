@@ -29,7 +29,7 @@ components:
       mountSources: true
       endpoints:
         - name: http-python
-          targetPort: 8080
+          targetPort: 8081
         - exposure: none
           name: debug
           targetPort: 5858
