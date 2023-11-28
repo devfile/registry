@@ -1,53 +1,64 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": [
-      "github>platform-engineering-org/.github",
-      ":gitSignOff"
-    ],
-    "timezone": "America/Toronto",
-    "schedule": ["on the 2nd and 4th day instance on thursday after 9pm"],
-    "enabledManagers": ["regex", "github-actions"],
-    "regexManagers": [
-      {
-        "fileMatch": [
-          "devfile.*y[a]?ml$"
-        ],
-        "matchStrings": [
-          "image: (?<depName>\\S*):(?<currentValue>\\S*)"
-        ],
-        "datasourceTemplate": "docker",
-        "depNameTemplate": "{{{depName}}}"
-      }
-    ],
-    "packageRules": [
-        {
-          "matchManagers": ["github-actions"],
-          "groupName": "github actions",
-          "groupSlug": "github-actions",
-          "commitMessageTopic": "{{depName}}",
-          "automerge": false,
-          "platformAutomerge": false
-        },
-        {
-          "description": "Disable grouping patch and digest updates",
-          "matchUpdateTypes": ["patch", "digest"],
-          "groupName": null
-        }
-    ],
-    "ignorePaths": [
-      "**/docker/**",
-      ".ci/**",
-      "tests/**",
-      "stacks/java-openliberty/**",
-      "stacks/java-openliberty-gradle/**",
-      "stacks/java-websphereliberty/**",
-      "stacks/java-websphereliberty-gradle/**",
-      "stacks/nodejs/**",
-      "stacks/go/1.0.2/**",
-      "stacks/go/1.1.0/**",
-      "stacks/go/2.0.0/**",
-      "stacks/go/2.1.0/**"
-    ],
-    "prHourlyLimit": 20,
-    "prConcurrentLimit": 5
-  }
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>platform-engineering-org/.github",
+    ":gitSignOff"
+  ],
+  "timezone": "America/Toronto",
+  "schedule": [
+    "on the 2nd and 4th day instance on thursday after 9pm"
+  ],
+  "enabledManagers": [
+    "custom.regex",
+    "github-actions"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "devfile.*y[a]?ml$"
+      ],
+      "matchStrings": [
+        "image: (?<depName>\\S*):(?<currentValue>\\S*)"
+      ],
+      "datasourceTemplate": "docker",
+      "depNameTemplate": "{{{depName}}}"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchManagers": [
+        "github-actions"
+      ],
+      "groupName": "github actions",
+      "groupSlug": "github-actions",
+      "commitMessageTopic": "{{depName}}",
+      "automerge": false,
+      "platformAutomerge": false
+    },
+    {
+      "description": "Disable grouping patch and digest updates",
+      "matchUpdateTypes": [
+        "patch",
+        "digest"
+      ],
+      "groupName": null
+    }
+  ],
+  "ignorePaths": [
+    "**/docker/**",
+    ".ci/**",
+    "tests/**",
+    "stacks/java-openliberty/**",
+    "stacks/java-openliberty-gradle/**",
+    "stacks/java-websphereliberty/**",
+    "stacks/java-websphereliberty-gradle/**",
+    "stacks/nodejs/**",
+    "stacks/go/1.0.2/**",
+    "stacks/go/1.1.0/**",
+    "stacks/go/2.0.0/**",
+    "stacks/go/2.1.0/**"
+  ],
+  "prHourlyLimit": 20,
+  "prConcurrentLimit": 5
+}
