@@ -1,0 +1,161 @@
+#
+# Copyright Red Hat
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: devfile-registry
+  name: devfile-registry
+spec:
+  replicas: {{replicas}}
+  selector:
+    matchLabels:
+      app: devfile-registry
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+  template:
+    metadata:
+      labels:
+        app: devfile-registry
+    spec:
+      serviceAccountName: devfile-registry-service-account
+      volumes:
+        - name: devfile-registry-storage
+          emptyDir: {}
+        - name: config
+          configMap:
+            name: devfile-registry
+            items:
+              - key: registry-config.yml
+                path: config.yml
+        - name: viewer-env-file
+          configMap:
+            name: devfile-registry
+            items:
+              - key: .env.registry-viewer
+                path: .env.production
+      containers:
+      - image: "{{indexImageName}}:{{indexImageTag}}"
+        imagePullPolicy: "{{indexPullPolicy}}"
+        name: devfile-registry
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 3
+        startupProbe:
+          httpGet:
+            path: /viewer
+            port: 3000
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 20
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 250m
+            memory: "{{indexMemoryLimit}}"
+        env:
+          - name: REGISTRY_NAME
+            value: "{{registryName}}"
+          - name: TELEMETRY_KEY
+            value: "{{telemetryKey}}"
+      - image: "{{viewerImageName}}:{{viewerImageTag}}"
+        imagePullPolicy: "{{viewerPullPolicy}}"
+        name: devfile-registry-viewer
+        livenessProbe:
+          httpGet:
+            path: /viewer
+            port: 3000
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 20
+        readinessProbe:
+          httpGet:
+            path: /viewer
+            port: 3000
+            scheme: HTTP
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 20
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 250m
+            memory: "{{viewerMemoryLimit}}"
+        env:
+          - name: NEXT_PUBLIC_ANALYTICS_WRITE_KEY 
+            value: "{{analyticsWriteKey}}"
+          - name: DEVFILE_REGISTRIES 
+            value: |- 
+              [{"name":"Community","url":"http://localhost:8080","fqdn":"{{hostAlias}}"}]
+        volumeMounts:
+          - name: viewer-env-file
+            mountPath: /app/.env.production
+            subPath: .env.production
+            readOnly: true
+      - image: "{{ociImageName}}:{{ociImageTag}}"
+        imagePullPolicy: "{{ociPullPolicy}}"
+        name: oci-registry
+        livenessProbe:
+          httpGet:
+            path: /v2
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /v2
+            port: 5000
+          initialDelaySeconds: 3
+          periodSeconds: 10
+          timeoutSeconds: 3
+        resources:
+          requests:
+            cpu: 1m
+            memory: 5Mi
+          limits:
+            cpu: 100m
+            memory: "{{ociMemoryLimit}}"
+        volumeMounts:
+        - name: devfile-registry-storage
+          mountPath: "/var/lib/registry"
+        - name: config
+          mountPath: "/etc/docker/registry"
+          readOnly: true
