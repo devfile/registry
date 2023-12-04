@@ -31,7 +31,28 @@ If you are a stack owner and need to request an urgent refresh of <https://regis
 
 To build this devfile registry into a container image run `bash .ci/build.sh`. A container image will be built using the [devfile registry build tools](https://github.com/devfile/registry-support/tree/master/build-tools). By default these scripts will use `docker`, if you want to use `podman` you should first run `export USE_PODMAN=true` before executing the build script.
 
-From there, push the container image to a container registry of your choice and deploy using one of the methods outlined [here](https://github.com/devfile/registry-support#deploy).
+From there, push the container image to a container registry of your choice and deploy using a [devfile adopted devtool](https://devfile.io/docs/2.2.0/developing-with-devfiles#tools-that-provide-devfile-support) or one of the methods outlined [here](https://github.com/devfile/registry-support#deploy).
+
+## Devfile Deployments
+
+### Prerequisites
+
+- Docker 17.06 or later
+- Git
+- Kubernetes or Red Hat OpenShift
+- odo v3.15.0+
+
+### Deploying
+
+The following can be used to deploy a devfile registry locally:
+
+odo V3: `odo deploy`
+
+### Removing Deployments
+
+Deployments made locally can be deleted using:
+
+odo V3: `odo delete component --name community-devfile-registry`
 
 ## Contributing
 
