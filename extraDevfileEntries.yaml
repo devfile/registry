@@ -10,9 +10,14 @@ samples:
     projectType: Node.js
     language: JavaScript
     provider: Red Hat
-    git:
-      remotes:
-        origin: https://github.com/nodeshift-starters/devfile-sample.git
+    versions:
+      - version: 3.0.0
+        default: true
+        schemaVersion: 2.2.0
+        git:
+          revision: main
+          remotes:
+            origin: https://github.com/nodeshift-starters/devfile-sample.git
   - name: code-with-quarkus
     displayName: Basic Quarkus
     description: Java Quarkus application using Maven 4.0 and OpenJDK 17
@@ -23,9 +28,14 @@ samples:
     projectType: Quarkus
     language: Java
     provider: Red Hat
-    git:
-      remotes:
-        origin: https://github.com/devfile-samples/devfile-sample-code-with-quarkus.git
+    versions:
+      - version: 1.2.1
+        default: true
+        schemaVersion: 2.2.0
+        git:
+          revision: main
+          remotes:
+            origin: https://github.com/devfile-samples/devfile-sample-code-with-quarkus.git
   - name: java-springboot-basic
     displayName: Basic Spring Boot
     description: Java Spring Boot application using Maven 4.0 and OpenJDK 17
@@ -36,9 +46,20 @@ samples:
     projectType: springboot
     language: Java
     provider: Red Hat
-    git:
-      remotes:
-        origin: https://github.com/devfile-samples/devfile-sample-java-springboot-basic.git
+    versions:
+      - version: 1.2.1
+        default: true
+        schemaVersion: 2.2.0
+        git:
+          revision: main
+          remotes:
+            origin: https://github.com/devfile-samples/devfile-sample-java-springboot-basic.git
+      - version: 2.0.0
+        schemaVersion: 2.2.0
+        git:
+          revision: v2.0.0
+          remotes:
+            origin: https://github.com/devfile-samples/devfile-sample-java-springboot-basic.git
   - name: python-basic
     displayName: Basic Python
     description: Python 3.9.x application with Flask
@@ -50,9 +71,20 @@ samples:
     projectType: Python
     language: Python
     provider: Red Hat
-    git:
-      remotes:
-        origin: https://github.com/devfile-samples/devfile-sample-python-basic.git
+    versions:
+      - version: 1.0.1
+        default: true
+        schemaVersion: 2.2.0
+        git:
+          revision: main
+          remotes:
+            origin: https://github.com/devfile-samples/devfile-sample-python-basic.git
+      - version: 2.0.0
+        schemaVersion: 2.2.0
+        git:
+          revision: v2.0.0
+          remotes:
+            origin: https://github.com/devfile-samples/devfile-sample-python-basic.git
   - name: go-basic
     displayName: Basic Go
     description: Go 1.16 application
@@ -62,9 +94,20 @@ samples:
     projectType: Go
     language: Go
     provider: Red Hat
-    git:
-      remotes:
-        origin: https://github.com/devfile-samples/devfile-sample-go-basic.git
+    versions:
+      - version: 1.1.0
+        default: true
+        schemaVersion: 2.2.0
+        git:
+          revision: main
+          remotes:
+            origin: https://github.com/devfile-samples/devfile-sample-go-basic.git
+      - version: 2.0.0
+        schemaVersion: 2.2.0
+        git:
+          revision: v2.0.0
+          remotes:
+            origin: https://github.com/devfile-samples/devfile-sample-go-basic.git
   - name: dotnet-basic
     displayName: Basic .NET
     description: MVC .NET 6.0 application
@@ -74,6 +117,11 @@ samples:
     projectType: dotnet
     language: .NET
     provider: Red Hat
-    git:
-      remotes:
-        origin: https://github.com/devfile-samples/devfile-sample-dotnet60-basic.git
+    versions:
+      - version: 1.1.1
+        default: true
+        schemaVersion: 2.2.0
+        git:
+          revision: main
+          remotes:
+            origin: https://github.com/devfile-samples/devfile-sample-dotnet60-basic.git
