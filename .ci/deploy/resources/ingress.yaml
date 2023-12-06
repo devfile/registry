@@ -19,6 +19,8 @@ metadata:
   name: devfile-registry
   labels:
     name: devfile-registry
+  annotations:
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
   - host: "{{hostName}}"
