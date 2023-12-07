@@ -15,12 +15,17 @@ type Git struct {
 	Remotes Remotes `yaml:"remotes"`
 }
 
+type Version struct {
+	Default bool `yaml:"default"`
+	Git     Git  `yaml:"git"`
+}
+
 type SampleEntry struct {
-	Name        string `yaml:"name"`
-	DisplayName string `yaml:"displayName"`
-	Language    string `yaml:"language"`
-	ProjectType string `yaml:"projectType"`
-	Git         Git    `yaml:"git"`
+	Name        string    `yaml:"name"`
+	DisplayName string    `yaml:"displayName"`
+	Language    string    `yaml:"language"`
+	ProjectType string    `yaml:"projectType"`
+	Versions    []Version `yaml:"versions"`
 }
 
 type ExtraDevfileEntries struct {
