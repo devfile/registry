@@ -29,6 +29,9 @@ set -x
 # Disable telemtry for odo
 export ODO_DISABLE_TELEMETRY=true
 
+# Disable image pushing for odo by default
+export ODO_PUSH_IMAGES=${ODO_PUSH_IMAGES:-'false'}
+
 # Split the registry image and image tag from the REGISTRY_IMAGE env variable
 IMG="$(echo $REGISTRY_IMAGE | cut -d':' -f1)"
 TAG="$(echo $REGISTRY_IMAGE | cut -d':' -f2)"
