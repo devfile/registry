@@ -52,4 +52,4 @@ jobs:
       - name: Check odo version
         run: odo version      
       - name: Check if devfile registry odo v3 build & deploy is working          
-        run: bash .ci/odov3_deploy.sh
+        run: bash .ci/odov3_build_and_deploy.sh
