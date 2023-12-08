@@ -44,9 +44,15 @@ From there, push the container image to a container registry of your choice and 
 
 ### Deploying
 
-The following can be used to deploy a devfile registry locally:
+The following can be used to build and deploy a devfile registry locally:
 
 odo V3: `odo deploy`
+
+Prevent odo v3 deployment built images from being pushed by running:
+
+```sh
+ODO_PUSH_IMAGES=false odo deploy --var indexPullPolicy=Never
+```
 
 ### Removing Deployments
 
