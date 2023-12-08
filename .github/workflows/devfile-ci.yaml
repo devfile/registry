@@ -33,6 +33,7 @@ jobs:
       PULL_POLICY: 'Never' # Use local built image with registry changes
       PODMAN_CMD: "" # Forces odo to use docker
       ODO_DISABLE_TELEMETRY: true
+      ODO_PUSH_IMAGES: false
     steps:
       - name: Check out code
         uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
@@ -49,17 +50,6 @@ jobs:
           github token: ${{ secrets.GITHUB_TOKEN }}
           start args: '--addons ingress --memory 4096 --cpus 2'
       - name: Check odo version
-        run: odo version
-      - name: Check if devfile registry odo v3 build is working
-        run: | 
-          # Split image name and tag
-          export IMG="$(echo $REGISTRY_IMAGE | cut -d':' -f1)" 
-          export TAG="$(echo $REGISTRY_IMAGE | cut -d':' -f2)"
-          
-          # Share docker env with minikube
-          eval $(minikube docker-env) 
-          
-          # Build index image with odo v3
-          odo build-images --var indexImageName=$IMG --var indexImageTag=$TAG
-      - name: Check if devfile registry odo v3 deploy is working          
+        run: odo version      
+      - name: Check if devfile registry odo v3 build & deploy is working          
         run: bash .ci/odov3_deploy.sh

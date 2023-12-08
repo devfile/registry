@@ -73,9 +73,6 @@ commands:
   - id: build-index
     apply:
       component: index-image-builder
-      group:
-        kind: build
-        isDefault: true
 # Apply Deployment spec
   - id: apply-deployment
     apply:
@@ -100,10 +97,11 @@ commands:
   - id: apply-route
     apply:
       component: devfile-registry-route
-# Deploy Devfile Registry to Kubernetes
-  - id: deploy-registry-k8s
+# Build & deploy Devfile Registry to Kubernetes
+  - id: build-deploy-registry-k8s
     composite:
       commands:
+        - build-index
         - apply-deployment
         - apply-service
         - apply-configmap
@@ -112,10 +110,11 @@ commands:
       group:
         isDefault: true
         kind: deploy
-# Deploy Devfile Registry to Red Hat OpenShift
-  - id: deploy-registry-openshift
+# Build & deploy Devfile Registry to Red Hat OpenShift
+  - id: build-deploy-registry-openshift
     composite:
       commands:
+        - build-index
         - apply-deployment
         - apply-service
         - apply-configmap

@@ -16,6 +16,9 @@
 # limitations under the License.
 #
 
+# Share docker env with minikube
+eval $(minikube docker-env)
+
 # only exit with zero if all commands of the pipeline exit successfully
 set -o pipefail
 # error on unset variables
