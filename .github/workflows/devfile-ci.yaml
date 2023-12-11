@@ -25,7 +25,7 @@ concurrency:
 
 jobs:
   odov3-build-deploy:
-    name: Test devfile registry odo V3 build & deploy
+    name: Check devfile registry odo V3 build & deploy
     runs-on: ubuntu-latest
     env:
       ODOV3_VERSION: "3.15.0"
