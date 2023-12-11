@@ -34,7 +34,6 @@ spec:
       labels:
         app: devfile-registry
     spec:
-      serviceAccountName: devfile-registry-service-account
       volumes:
         - name: devfile-registry-storage
           emptyDir: {}

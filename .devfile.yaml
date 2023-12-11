@@ -56,10 +56,6 @@ components:
   - name: devfile-registry-configmap
     kubernetes:
       uri: .ci/deploy/resources/configmap.yaml
-# Devfile Registry ServiceAccount resource
-  - name: devfile-registry-service-account
-    kubernetes:
-      uri: .ci/deploy/resources/service_account.yaml
 # Devfile Registry Ingress (k8s) resource
   - name: devfile-registry-ingress
     kubernetes:
@@ -85,10 +81,6 @@ commands:
   - id: apply-configmap
     apply:
       component: devfile-registry-configmap
-# Apply ServiceAccount spec
-  - id: apply-service-account
-    apply:
-      component: devfile-registry-service-account
 # Apply Ingress spec
   - id: apply-ingress
     apply:
@@ -105,7 +97,6 @@ commands:
         - apply-deployment
         - apply-service
         - apply-configmap
-        - apply-service-account
         - apply-ingress
       group:
         isDefault: true
@@ -118,7 +109,6 @@ commands:
         - apply-deployment
         - apply-service
         - apply-configmap
-        - apply-service-account
         - apply-route
       group:
         kind: deploy
