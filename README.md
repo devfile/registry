@@ -46,11 +46,20 @@ From there, push the container image to a container registry of your choice and 
 
 The following can be used to build and deploy a devfile registry locally:
 
-odo V3: `odo deploy`
+odo V3: 
+
+```sh
+odo deploy --var indexImageName=quay.io/<user>/devfile-index --var indexImageTag=<tag>
+```
+
+`odo deploy` needs these overrides to not push to the default `quay.io/devfile/devfile-index:next`.
 
 Prevent odo v3 deployment built images from being pushed by running:
 
 ```sh
+# Set docker to target minikube's image registry
+eval $(minikube docker-env)
+
 ODO_PUSH_IMAGES=false odo deploy --var indexPullPolicy=Never
 ```
 
