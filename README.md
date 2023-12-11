@@ -67,7 +67,7 @@ ODO_PUSH_IMAGES=false odo deploy --var indexPullPolicy=Never
 
 Deployments made locally can be deleted using:
 
-odo V3: `odo delete component --name community-devfile-registry`
+odo V3: `odo delete component --name devfile-registry-community`
 
 ## Contributing
 
