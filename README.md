@@ -54,3 +54,7 @@ For issues relating to the hosted devfile registry service (<https://registry.de
 ## Code of Conduct
 
 Please reference our [Code of Conduct](CODE_OF_CONDUCT.md) for more information.
+
+## Governance
+
+Please reference [GOVERNANCE.md](GOVERNANCE.md) for more information.
