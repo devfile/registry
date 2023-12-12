@@ -50,3 +50,7 @@ For issues relating to the hosted devfile registry service (<https://registry.de
 
 [1]: https://img.shields.io/badge/renovate-enabled-brightgreen?logo=renovate
 [2]: https://renovatebot.com
+
+## Code of Conduct
+
+Please reference our [Code of Conduct](CODE_OF_CONDUCT.md) for more information.
