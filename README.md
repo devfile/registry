@@ -44,15 +44,28 @@ From there, push the container image to a container registry of your choice and 
 
 ### Deploying
 
-The following can be used to build and deploy a devfile registry locally:
+#### odo V3
 
-odo V3: 
+The following can build and deploy a devfile registry using odo v3:
 
 ```sh
 odo deploy --var indexImageName=quay.io/<user>/devfile-index --var indexImageTag=<tag>
 ```
 
-`odo deploy` needs these overrides to not push to the default `quay.io/devfile/devfile-index:next`.
+**Important**: `odo deploy` needs these overrides to not push to the default `quay.io/devfile/devfile-index:next`.
+
+The deployment host name can be set by overriding `hostName` and `hostAlias`:
+
+```sh
+odo deploy --var hostName=devfile-registry.<cluster_hostname> \
+    --var hostAlias=devfile-registry.<cluster_hostname> \
+    --var indexImageName=quay.io/<user>/devfile-index \
+    --var indexImageTag=<tag>
+```
+
+**Notes**: 
+- `hostName` is required for Kubernetes ingresses, OpenShift routes are optional and defaults to `<deployment_namespace>.<cluster_hostname>`.
+- `hostAlias` sets the leading host name under static links in registry viewer entries, defaults to our staging deployment `registry.stage.devfile.io`.
 
 Prevent odo v3 deployment built images from being pushed by running:
 
@@ -60,14 +73,21 @@ Prevent odo v3 deployment built images from being pushed by running:
 # Set docker to target minikube's image registry
 eval $(minikube docker-env)
 
-ODO_PUSH_IMAGES=false odo deploy --var indexPullPolicy=Never
+ODO_PUSH_IMAGES=false odo deploy \
+    --var hostName=devfile-registry.<cluster_hostname> \
+    --var hostAlias=devfile-registry.<cluster_hostname> \
+    --var indexPullPolicy=Never
 ```
 
 ### Removing Deployments
 
-Deployments made locally can be deleted using:
+#### odo V3
 
-odo V3: `odo delete component --name devfile-registry-community`
+Deployments made with odo v3 can be deleted using:
+
+```sh
+odo delete component --name devfile-registry-community
+```
 
 ## Contributing
 
