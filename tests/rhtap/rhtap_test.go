@@ -87,8 +87,14 @@ var _ = Describe("RHTAP sample checks", Ordered, Label("nightly"), func() {
 			})
 
 			It("creates componentdetectionquery", func() {
-				cdq, err = fw.HasController.CreateComponentDetectionQuery(sampleEntry.Name, testNamespace, sampleEntry.Git.Remotes.Origin, "", "", "", false)
-				Expect(err).NotTo(HaveOccurred())
+				for _, sampleEntryVersion := range sampleEntry.Versions {
+					if sampleEntryVersion.Default {
+						sampleEntryGit := sampleEntryVersion.Git.Remotes.Origin
+						cdq, err = fw.HasController.CreateComponentDetectionQuery(sampleEntry.Name, testNamespace, sampleEntryGit, "", "", "", false)
+						Expect(err).NotTo(HaveOccurred())
+						break
+					}
+				}
 			})
 
 			It("creates component", func() {
