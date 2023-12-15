@@ -1,0 +1,11 @@
+# CLOMonitor metadata file
+# This file must be located at the root of the repository
+
+# Checks exemptions
+exemptions:
+  - check: roadmap # Check identifier (see https://github.com/cncf/clomonitor/blob/main/docs/checks.md#exemptions)
+    reason: "Due to a slowdown in regards to the Devfile project there is no planned deliverables or changes that would be useful to display in the roadmap file." # Justification of this exemption (mandatory, it will be displayed on the UI)
+  - check: github_discussions
+    reason: "The structure of the Devfile project has all of our Github discussions taking place in our devfile/api repository."
+  - check: trademark_disclaimer
+    reason: "Our website is dynamic and as per the CLO Monitor documentation we are marking this as exempt."
