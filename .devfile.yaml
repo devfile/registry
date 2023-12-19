@@ -1,0 +1,151 @@
+#
+# Copyright Red Hat
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+schemaVersion: 2.2.0
+metadata:
+  name: devfile-registry-community
+  displayName: Community Devfile Registry
+  website: https://devfile.io
+  provider: Red Hat
+  supportUrl: https://kubernetes.slack.com/archives/C02SX9E5B55
+  architectures:
+    - amd64
+  tags:
+    - devfile
+    - registry
+    - http
+    - oci
+    - rest
+  icon: https://landscape.cncf.io/logos/devfile.svg
+  version: 0.0.1
+  description: Workspace for the public community devfile registry content
+components:
+# Index Image Builder
+  - name: index-image-builder
+    image:
+      imageName: "{{indexImageName}}:{{indexImageTag}}"
+      dockerfile: 
+        uri: .ci/Dockerfile
+        buildContext: .
+# TODO: create index generator container image and command to debug registry content changes
+# Alternatively could be removed once https://github.com/redhat-developer/odo/issues/7162 is resolved
+  - name: index-generator
+    container:
+      image: registry.access.redhat.com/ubi8/go-toolset:1.18
+# Devfile Registry Deployment resource
+  - name: devfile-registry-deployment
+    kubernetes:
+      uri: .ci/deploy/resources/deployment.yaml
+# Devfile Registry Service resource
+  - name: devfile-registry-service
+    kubernetes:
+      uri: .ci/deploy/resources/service.yaml
+# Devfile Registry ConfigMap resource
+  - name: devfile-registry-configmap
+    kubernetes:
+      uri: .ci/deploy/resources/configmap.yaml
+# Devfile Registry Ingress (k8s) resource
+  - name: devfile-registry-ingress
+    kubernetes:
+      uri: .ci/deploy/resources/ingress.yaml
+# Devfile Registry Route (Red Hat OpenShift) resource
+  - name: devfile-registry-route
+    openshift:
+      uri: .ci/deploy/resources/route.yaml
+commands:
+# Build devfile-index container image
+  - id: build-index
+    apply:
+      component: index-image-builder
+# Apply Deployment spec
+  - id: apply-deployment
+    apply:
+      component: devfile-registry-deployment
+# Apply Service spec
+  - id: apply-service
+    apply:
+      component: devfile-registry-service
+# Apply ConfigMap spec
+  - id: apply-configmap
+    apply:
+      component: devfile-registry-configmap
+# Apply Ingress spec
+  - id: apply-ingress
+    apply:
+      component: devfile-registry-ingress
+# Apply Route spec
+  - id: apply-route
+    apply:
+      component: devfile-registry-route
+# Build & deploy Devfile Registry to Kubernetes
+  - id: build-deploy-registry-k8s
+    composite:
+      commands:
+        - build-index
+        - apply-deployment
+        - apply-service
+        - apply-configmap
+        - apply-ingress
+      group:
+        isDefault: true
+        kind: deploy
+# Build & deploy Devfile Registry to Red Hat OpenShift
+  - id: build-deploy-registry-openshift
+    composite:
+      commands:
+        - build-index
+        - apply-deployment
+        - apply-service
+        - apply-configmap
+        - apply-route
+      group:
+        kind: deploy
+variables:
+# The number of replicas for the hosted devfile registry service
+  replicas: "1"
+# Devfile registry index docker image. Defaults to quay.io/devfile/devfile-index
+  indexImageName: quay.io/devfile/devfile-index
+# Devfile registry version which defaults to next
+  indexImageTag: next
+# Always pull index image by default. Can be IfNotPresent
+  indexPullPolicy: Always
+# Maximum amount of memory the devfile registry index container can use. Defaults 256Mi
+  indexMemoryLimit: 256Mi
+# Devfile registry viewer docker image. Defaults to quay.io/devfile/registry-viewer
+  viewerImageName: quay.io/devfile/registry-viewer
+# Devfile registry viewer version which defaults to next
+  viewerImageTag: next
+# Always pull registry viewer image by default. Can be IfNotPresent
+  viewerPullPolicy: Always
+# Maximum amount of memory the registry viewer container can use. Defaults 256Mi
+  viewerMemoryLimit: 256Mi
+# OCI registry index docker image. Defaults to quay.io/devfile/devfile-index
+  ociImageName: quay.io/devfile/oci-registry
+# OCI registry version which defaults to next
+  ociImageTag: next
+# Always pull oci registry image by default. Can be IfNotPresent
+  ociPullPolicy: Always
+# Maximum amount of memory the OCI registry container can use. Defaults 256Mi
+  ociMemoryLimit: 256Mi
+# The registry name that is used as identifier for devfile telemetry
+  registryName: ""
+# The public write key to send registry analytics to segment.io
+  telemetryKey: ""
+# The public write key to send viewer analytics to segment.io
+  analyticsWriteKey: ""
+# The hostname alias to pass in to the devfile registry viewer's config
+  hostAlias: https://registry.stage.devfile.io
+# Hostname for the devfile registry service. Defaults to cluster's router.
+  hostName: ""

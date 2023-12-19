@@ -1,0 +1,55 @@
+#
+# Copyright Red Hat
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+name: Devfile
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  odov3-build-deploy:
+    name: Check devfile registry odo V3 build & deploy
+    runs-on: ubuntu-latest
+    env:
+      ODOV3_VERSION: "3.15.0"
+      REGISTRY_IMAGE: localhost/devfile-index:${{ github.sha }}
+      PULL_POLICY: 'Never' # Use local built image with registry changes
+      PODMAN_CMD: "" # Forces odo to use docker
+      ODO_DISABLE_TELEMETRY: true
+      ODO_PUSH_IMAGES: false
+    steps:
+      - name: Check out code
+        uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3.6.0
+      - name: Install odo v3
+        uses: redhat-actions/openshift-tools-installer@2de9a80cf012ad0601021515481d433b91ef8fd5 # v1
+        with:
+          odo: ${{ env.ODOV3_VERSION }}
+      - name: Setup Minikube
+        uses: manusa/actions-setup-minikube@3856c6fa039819f1c8e7e248b1fc5a8564e354c9 # v2.9.0
+        with:
+          minikube version: 'v1.31.2'
+          kubernetes version: 'v1.26.3'
+          driver: 'docker'
+          github token: ${{ secrets.GITHUB_TOKEN }}
+          start args: '--addons ingress --memory 4096 --cpus 2'
+      - name: Check odo version
+        run: odo version      
+      - name: Check if devfile registry odo v3 build & deploy is working          
+        run: bash .ci/odov3_build_and_deploy.sh
