@@ -13,6 +13,7 @@ ginkgo run --procs 2 \
   --skip="stack: java-vertx version: 1.2.0 starter: vertx-crud-example-redhat" \
   --skip="stack: java-vertx version: 1.2.0 starter: vertx-crud-example" \
   --skip="stack: java-vertx version: 1.2.0 starter: vertx-http-example-redhat" \
+  --skip="stack: java-vertx version: 1.2.0 starter: vertx-secured-http-example" \
   --skip="stack: java-vertx version: 1.2.0 starter: vertx-istio-circuit-breaker-booster" \
   --skip="stack: java-vertx version: 1.2.0 starter: vertx-istio-distributed-tracing-booster" \
   --skip="stack: java-vertx version: 1.2.0 starter: vertx-istio-routing-booster" \
