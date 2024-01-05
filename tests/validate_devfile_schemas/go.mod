@@ -1,9 +1,9 @@
 module github.com/devfile/registry/tests/validate_devfiles
 
-go 1.18
+go 1.19
 
 require (
-	github.com/devfile/library v1.3.0
+	github.com/devfile/library/v2 v2.2.2-0.20231206202302-705f00dd96f5
 	github.com/onsi/ginkgo/v2 v2.13.0
 	github.com/onsi/gomega v1.29.0
 )
@@ -18,9 +18,10 @@ require (
 	github.com/cloudflare/circl v1.2.0 // indirect
 	github.com/containerd/containerd v1.6.9 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/devfile/api/v2 v2.2.0 // indirect
+	github.com/devfile/api/v2 v2.2.1 // indirect
 	github.com/devfile/registry-support/index/generator v0.0.0-20221107203002-f16affcff745 // indirect
 	github.com/devfile/registry-support/registry-library v0.0.0-20221107203002-f16affcff745 // indirect
+	github.com/distribution/distribution/v3 v3.0.0-20220526142353-ffbd94cbe269 // indirect
 	github.com/docker/cli v20.10.21+incompatible // indirect
 	github.com/docker/distribution v2.8.1+incompatible // indirect
 	github.com/docker/docker v20.10.21+incompatible // indirect
@@ -78,7 +79,7 @@ require (
 	github.com/openshift/api v0.0.0-20200930075302-db52bc4ef99f // indirect
 	github.com/peterbourgon/diskv v2.0.1+incompatible // indirect
 	github.com/pkg/errors v0.9.1 // indirect
-	github.com/prometheus/client_golang v1.13.1 // indirect
+	github.com/prometheus/client_golang v1.14.0 // indirect
 	github.com/prometheus/client_model v0.3.0 // indirect
 	github.com/prometheus/common v0.37.0 // indirect
 	github.com/prometheus/procfs v0.8.0 // indirect
@@ -98,7 +99,7 @@ require (
 	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/term v0.13.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
-	golang.org/x/time v0.2.0 // indirect
+	golang.org/x/time v0.3.0 // indirect
 	golang.org/x/tools v0.12.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/genproto v0.0.0-20221107162902-2d387536bcdd // indirect
@@ -108,16 +109,16 @@ require (
 	gopkg.in/warnings.v0 v0.1.2 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	k8s.io/api v0.25.3 // indirect
-	k8s.io/apiextensions-apiserver v0.25.3 // indirect
-	k8s.io/apimachinery v0.25.3 // indirect
-	k8s.io/client-go v0.25.3 // indirect
+	k8s.io/api v0.26.10 // indirect
+	k8s.io/apiextensions-apiserver v0.26.10 // indirect
+	k8s.io/apimachinery v0.26.10 // indirect
+	k8s.io/client-go v0.26.10 // indirect
 	k8s.io/klog v1.0.0 // indirect
 	k8s.io/klog/v2 v2.80.1 // indirect
 	k8s.io/kube-openapi v0.0.0-20221106113015-f73e7dbcfe29 // indirect
-	k8s.io/utils v0.0.0-20221107191617-1a15be271d1d // indirect
+	k8s.io/utils v0.0.0-20221128185143-99ec85e7a448 // indirect
 	oras.land/oras-go v1.2.1 // indirect
-	sigs.k8s.io/controller-runtime v0.13.1 // indirect
+	sigs.k8s.io/controller-runtime v0.14.7 // indirect
 	sigs.k8s.io/json v0.0.0-20220713155537-f223a00ba0e2 // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.2.3 // indirect
 	sigs.k8s.io/yaml v1.3.0 // indirect
