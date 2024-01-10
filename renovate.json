@@ -43,5 +43,5 @@
     "stacks/go/2.1.0/**"
   ],
   "prHourlyLimit": 20,
-  "prConcurrentLimit": 5
+  "prConcurrentLimit": 10
 }
