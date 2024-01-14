@@ -31,9 +31,6 @@
   "ignorePaths": [
     "**/docker/**",
     ".devfile.yaml",
-    ".devfile.yml",
-    "devfile.yaml",
-    "devfile.yml",
     ".ci/**",
     "tests/**",
     "stacks/java-openliberty/**",
