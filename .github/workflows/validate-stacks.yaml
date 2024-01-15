@@ -67,7 +67,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Minikube
-        uses: manusa/actions-setup-minikube@3856c6fa039819f1c8e7e248b1fc5a8564e354c9 # v2.9.0
+        uses: manusa/actions-setup-minikube@e2f60d2f9e42413a916781a805284e79ccabaf54 # v2.10.0
         with:
           minikube version: ${{ env.MINIKUBE_VERSION }}
           kubernetes version: ${{ env.KUBERNETES_VERSION }}
@@ -92,7 +92,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Minikube
-        uses: manusa/actions-setup-minikube@3856c6fa039819f1c8e7e248b1fc5a8564e354c9 # v2.9.0
+        uses: manusa/actions-setup-minikube@e2f60d2f9e42413a916781a805284e79ccabaf54 # v2.10.0
         with:
           minikube version: ${{ env.MINIKUBE_VERSION }}
           kubernetes version: ${{ env.KUBERNETES_VERSION }}
@@ -125,7 +125,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Minikube
-        uses: manusa/actions-setup-minikube@3856c6fa039819f1c8e7e248b1fc5a8564e354c9 # v2.9.0
+        uses: manusa/actions-setup-minikube@e2f60d2f9e42413a916781a805284e79ccabaf54 # v2.10.0
         with:
           minikube version: ${{ env.MINIKUBE_VERSION }}
           kubernetes version: ${{ env.KUBERNETES_VERSION }}
