@@ -155,3 +155,43 @@ jobs:
 
       - name: Check the devfile stacks with odo v3
         run: bash tests/check_odov3.sh
+
+  slack_notification:
+    name: with odo v3
+    runs-on: ubuntu-latest
+    needs: [validate-devfile-schema, non-terminating, odov2, odov3]
+    steps:
+      - name: Send slack notification
+        if: ${{ always() && contains(needs.*.result, 'failure') }}
+        uses: slackapi/slack-github-action@e28cf165c92ffef168d23c5c9000cffc8a25e117 # v1.24.0
+        with:
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          payload: |
+            {
+              "text": "GitHub Action failed",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "*Status:* :red_circle: failure\n*Severity:* medium\n*Title:* Registry's validate stacks nightly run\n*Description:* run failed for HEAD_REF ${{ github.head_ref }}"
+                  }
+                },
+                {
+                  "type": "actions",
+                  "elements": [
+                    {
+                      "type": "button",
+                      "text": {
+                        "type": "plain_text",
+                        "text": ":github: Failed action"
+                      },
+                      "url": "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+                    }
+                  ]
+                }
+              ]
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_NOTIFICATIONS_TOKEN }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
