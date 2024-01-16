@@ -159,10 +159,10 @@ jobs:
   slack_notification:
     name: send slack notification
     runs-on: ubuntu-latest
+    if: ${{ always() && contains(join(needs.*.result, ','), 'failure') &&  github.event_name == 'schedule' }}
     needs: [validate-devfile-schema, non-terminating, odov2, odov3]
     steps:
       - name: Send slack notification
-        if: ${{ always() && contains(needs.*.result, 'failure') &&  github.event_name == 'schedule' }}
         uses: slackapi/slack-github-action@e28cf165c92ffef168d23c5c9000cffc8a25e117 # v1.24.0
         with:
           channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
@@ -174,7 +174,7 @@ jobs:
                   "type": "section",
                   "text": {
                     "type": "mrkdwn",
-                    "text": "*Status:* :red_circle: failure\n*Severity:* medium\n*Title:* Registry's validate stacks nightly run\n*Description:* run failed for HEAD_REF ${{ github.head_ref }}"
+                    "text": "*Status:* :red_circle: failure\n*Severity:* medium\n*Title:* Registry's validate stacks nightly run\n*Description:* run failed for HEAD_REF ${{ github.ref }}"
                   }
                 },
                 {
