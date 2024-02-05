@@ -3,7 +3,7 @@ metadata:
   name: udi
   displayName: Universal Developer Image
   description: Universal Developer Image provides various programming languages tools and runtimes for instant coding
-  icon: https://landscape.cncf.io/logos/devfile.svg
+  icon: https://raw.githubusercontent.com/devfile/devfile-web/main/apps/landing-page/public/pwa-192x192.png
   tags:
     - Java
     - Maven
