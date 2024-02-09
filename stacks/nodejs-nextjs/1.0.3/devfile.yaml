@@ -25,7 +25,7 @@ components:
       endpoints:
         - name: http-nextjs
           targetPort: 3000
-      image: registry.access.redhat.com/ubi8/nodejs-16:1-139
+      image: registry.access.redhat.com/ubi8/nodejs-16:1-145
       command: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
     name: runtime
