@@ -14,7 +14,7 @@ Devfiles are intended to be used by developers to build their applications with 
 The following sections describe the steps that can happen in the lifecycle of a devfile.
 
 ## [Onboarding](https://github.com/redhat-developer/devfile-registry/blob/main/CONTRIBUTING.md)
-When a `Stack Provider` is ready to share their devfile to the public/product registry, they must follow the steps in the contributing guide to ensure there’s basic information that identifies the version, owner, description, etc of the stack and ensure the stack meets minimal testing requirements against the supported clients.
+When a `Stack Provider` is ready to share their devfile to the public/product registry, they must follow the steps in the [contributing guide](CONTRIBUTING.md) to ensure there’s basic information that identifies the version, owner, description, etc of the stack and ensure the stack meets minimal testing requirements against the supported clients.
 
 | Role             | Responsibilities                                                                                                                                                                                                                                                                                                           |
 |:-----------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
