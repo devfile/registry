@@ -4,7 +4,7 @@ This document outlines the requirements for contributing a devfile stack or samp
 
 The [devfile registry structure](https://github.com/devfile/api/blob/main/docs/proposals/registry/registry-structure.md#repository-structure) design doc provides some useful background information on the structure of resources in a devfile registry (and its Git repository).
 
-When onboarding a new stack or sample, the  `Stack Provider` should read and agree to follow their roles and responsibilities outlined in the [Lifecycle](LIFECYCLE.md) doc
+When onboarding a new stack or sample, the  `Stack Provider` should read and agree to follow their roles and responsibilities outlined in the [Lifecycle](LIFECYCLE.md) doc.
 
 ## Prerequisites
 
