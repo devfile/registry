@@ -27,7 +27,7 @@ During the course of its lifecycle, a stack or sample may need to be updated by 
 
 * Changing the devfile content itself where components, commands, resources are modified
 * Using a more secure container image(s)
-* Implementing a new devfilespec version of the existing devfile e.g. two devfiles exist for the same runtime supporting both inner and outer loop scenarios.
+* Implementing a new devfile spec version of the existing devfile e.g. two devfiles exist for the same runtime supporting both inner and outer loop scenarios.
 * Implementing a variation of an existing devfile using a different runtime version e.g. Devfile support for both  NodeJS v16 and v18
 
 
