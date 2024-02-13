@@ -1,0 +1,10 @@
+name: java-vertx
+description: 'Java application using Vert.x and OpenJDK 11'
+displayName: Vert.x Java
+icon: https://raw.githubusercontent.com/vertx-web-site/vertx-logo/master/vertx-logo.svg
+versions:
+  - version: 1.2.0
+  # 1.3.0: runtime image is ubi8/openjdk-11
+  - version: 1.3.0
+    default: true
+ 
