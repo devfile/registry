@@ -1,6 +1,6 @@
 # Lifecycle Maintenance of Devfile Registry Stacks
 
-The purpose of this document is to clarify the roles and responsibilities for maintaining the Devfile stacks and/or samples present in both the [Devfile Community registry](https://github.com/devfile/registry) and [Red Hat product registry](https://github.com/redhat-developer/devfile-registry).
+The purpose of this document is to clarify the roles and responsibilities for maintaining the devfile stacks and samples present in the [devfile Community registry](https://github.com/devfile/registry).
 Devfiles are intended to be used by developers to build their applications with tooling clients that support the devfile spec. As a result, it’s important that stack providers avoid introducing breaking changes or allowing security vulnerabilities to go unremediated which would result in a degradation of our end users applications.  In short, we need to ensure our devfiles are trusted enough to be used. In order to achieve this, there is a level of shared responsibility in all of the roles defined below.
 
 
