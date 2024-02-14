@@ -1,0 +1,218 @@
+schemaVersion: 2.1.0
+metadata:
+  name: java-wildfly-bootable-jar
+  displayName: WildFly Bootable Jar
+  description: Java application using WildFly in bootable Jar mode, OpenJDK 11 and Maven 3.6
+  icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark.svg
+  tags:
+    - RHEL8
+    - Java
+    - OpenJDK
+    - Maven
+    - WildFly
+    - Microprofile
+    - WildFly Bootable
+  projectType: WildFly
+  language: Java
+  version: 1.2.0
+  website: https://docs.wildfly.org/bootablejar/
+starterProjects:
+  - name: microprofile-config
+    description: WildFly Eclipse Microprofile Config Quickstart
+    git:
+      checkoutFrom:
+        remote: wildfly-quickstart
+        revision: 26.1.0.Final
+      remotes:
+        wildfly-quickstart: https://github.com/wildfly/quickstart.git
+    subDir: microprofile-config
+  - name: microprofile-fault-tolerance
+    description: WildFly Eclipse Microprofile Fault Tolerance Quickstart
+    git:
+      checkoutFrom:
+        remote: wildfly-quickstart
+        revision: 26.1.0.Final
+      remotes:
+        wildfly-quickstart: https://github.com/wildfly/quickstart.git
+    subDir: microprofile-fault-tolerance
+  - name: microprofile-health
+    description: WildFly Eclipse Microprofile Health Quickstart
+    git:
+      checkoutFrom:
+        remote: wildfly-quickstart
+        revision: 26.1.0.Final
+      remotes:
+        wildfly-quickstart: https://github.com/wildfly/quickstart.git
+    subDir: microprofile-health
+  - name: microprofile-jwt
+    description: WildFly Eclipse Microprofile JWT Quickstart
+    git:
+      checkoutFrom:
+        remote: wildfly-quickstart
+        revision: 26.1.0.Final
+      remotes:
+        wildfly-quickstart: https://github.com/wildfly/quickstart.git
+    subDir: microprofile-jwt
+  - name: microprofile-metrics
+    description: WildFly Eclipse Microprofile Metrics Quickstart
+    git:
+      checkoutFrom:
+        remote: wildfly-quickstart
+        revision: 26.1.0.Final
+      remotes:
+        wildfly-quickstart: https://github.com/wildfly/quickstart.git
+    subDir: microprofile-metrics
+  - name: microprofile-openapi
+    description: WildFly Eclipse Microprofile OpenAPI Quickstart
+    git:
+      checkoutFrom:
+        remote: wildfly-quickstart
+        revision: 26.1.0.Final
+      remotes:
+        wildfly-quickstart: https://github.com/wildfly/quickstart.git
+    subDir: microprofile-openapi
+  - name: microprofile-opentracing
+    description: WildFly Eclipse Microprofile OpenTracing Quickstart
+    git:
+      checkoutFrom:
+        remote: wildfly-quickstart
+        revision: 26.1.0.Final
+      remotes:
+        wildfly-quickstart: https://github.com/wildfly/quickstart.git
+    subDir: microprofile-opentracing
+  - name: microprofile-rest-client
+    description: WildFly Eclipse Microprofile REST Client Quickstart
+    git:
+      checkoutFrom:
+        remote: wildfly-quickstart
+        revision: 26.1.0.Final
+      remotes:
+        wildfly-quickstart: https://github.com/wildfly/quickstart.git
+    subDir: microprofile-rest-client
+components:
+  - name: wildfly
+    container:
+      image: registry.access.redhat.com/ubi8/openjdk-11
+      args: ['tail', '-f', '/dev/null']
+      memoryLimit: 1512Mi
+      mountSources: true
+      volumeMounts:
+        - name: m2-repository
+          path: /home/jboss/.m2/repository
+      env:
+        # Enabling Jaeger tracing
+        - name: WILDFLY_TRACING_ENABLED
+          value: 'true'
+        # Define the Jaeger service name
+        - name: JAEGER_SERVICE_NAME
+          value: 'microprofile-opentracing'
+        # Configure Jaeger traces
+        - name: JAEGER_REPORTER_LOG_SPANS
+          value: 'true'
+        - name: JAEGER_SAMPLER_TYPE
+          value: 'const'
+        - name: JAEGER_SAMPLER_PARAM
+          value: '1'
+        - name: GC_METASPACE_SIZE
+          value: '96'
+        - name: GC_MAX_METASPACE_SIZE
+          value: '256'
+        - name: JAVA_OPTS
+          value: '-Djava.security.egd=file:/dev/urandom'
+        - name: MVN_ARGS_APPEND
+          value: '-Pbootable-jar-openshift -Djkube.skip=true -s /home/jboss/.m2/settings.xml -Dmaven.repo.local=/home/jboss/.m2/repository -Dcom.redhat.xpaas.repo.jbossorg'
+        - name: DEBUG_PORT
+          value: '5858'
+      endpoints:
+        - name: http-wildjar
+          targetPort: 8080
+        - exposure: none
+          name: debug
+          targetPort: 5858
+  - name: jaeger
+    container:
+      image: quay.io/jaegertracing/all-in-one:1.52
+      memoryLimit: 128Mi
+      endpoints:
+        - name: tracing-ui-jar
+          targetPort: 16686
+  - name: m2-repository
+    volume:
+      size: 3Gi
+commands:
+  - id: build
+    exec:
+      component: wildfly
+      commandLine: mvn ${MVN_ARGS_APPEND} clean package
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: build
+        isDefault: false
+  - id: run
+    exec:
+      component: wildfly
+      commandLine: mvn ${MVN_ARGS_APPEND} org.wildfly.plugins:wildfly-jar-maven-plugin:run
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: run
+        isDefault: false
+  - id: debug
+    exec:
+      component: wildfly
+      commandLine: mvn ${MVN_ARGS_APPEND} -Dwildfly.bootable.jvmArguments="-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:${DEBUG_PORT},server=y,suspend=n" org.wildfly.plugins:wildfly-jar-maven-plugin:run
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: debug
+        isDefault: false
+  - id: dev-build
+    exec:
+      component: wildfly
+      commandLine: mvn ${MVN_ARGS_APPEND} -Dmaven.test.skip=true -Ddev package
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: build
+        isDefault: false
+  - id: dev-run
+    exec:
+      component: wildfly
+      commandLine: mvn ${MVN_ARGS_APPEND} org.wildfly.plugins:wildfly-jar-maven-plugin:dev
+      workingDir: ${PROJECT_SOURCE}
+      hotReloadCapable: true
+      group:
+        kind: run
+        isDefault: false
+  - id: dev-debug
+    exec:
+      component: wildfly
+      commandLine: mvn ${MVN_ARGS_APPEND} -Dwildfly.bootable.jvmArguments="-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:${DEBUG_PORT},server=y,suspend=n" org.wildfly.plugins:wildfly-jar-maven-plugin:dev
+      workingDir: ${PROJECT_SOURCE}
+      hotReloadCapable: true
+      group:
+        kind: debug
+        isDefault: false
+  - id: watch-build
+    exec:
+      component: wildfly
+      commandLine: echo 'It's watcher mode so we are doing nothing to build.''
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: build
+        isDefault: true
+  - id: watch-run
+    exec:
+      component: wildfly
+      commandLine: mvn ${MVN_ARGS_APPEND} org.wildfly.plugins:wildfly-jar-maven-plugin:dev-watch -e -DskipTests
+      workingDir: ${PROJECT_SOURCE}
+      hotReloadCapable: true
+      group:
+        kind: run
+        isDefault: true
+  - id: watch-debug
+    exec:
+      component: wildfly
+      commandLine: mvn ${MVN_ARGS_APPEND} -Dwildfly.bootable.jvmArguments="-agentlib:jdwp=transport=dt_socket,address=0.0.0.0:${DEBUG_PORT},server=y,suspend=n" org.wildfly.plugins:wildfly-jar-maven-plugin:dev-watch -e
+      workingDir: ${PROJECT_SOURCE}
+      hotReloadCapable: true
+      group:
+        kind: debug
+        isDefault: true
