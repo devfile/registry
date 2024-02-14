@@ -1,0 +1,10 @@
+name: java-wildfly-bootable-jar
+description: 'Java application using WildFly in bootable Jar mode, OpenJDK 11 and Maven 3.6'
+displayName: WildFly Bootable Jar
+icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark.svg
+versions:
+  - version: 1.1.0
+  # 1.2.0: the order of components has been changed - wildfly component is the first one
+  - version: 1.2.0
+    default: true
+ 
