@@ -43,7 +43,6 @@ During the course of its lifecycle, a stack or sample may need to be updated by 
 When a stack or sample is no longer maintained due to inactivity, lack of timely updates, dependency on end-of-life (EOL) base images, etc it will be marked deprecated. The `Devfile Team` will reach out to the `Stack Provider` and get agreement before proceeding, but if there is no response within a 3-month timeframe, the  `Devfile Team` will take action and mark the devfile deprecated.
 
 * Deprecated devfiles will remain in the community registry for 1 year before it’s removed.
-* Deprecated devfiles will remain in the product registry indefinitely.
 
 
 | Role              | Responsibilities                                                                                                                                                                            |
