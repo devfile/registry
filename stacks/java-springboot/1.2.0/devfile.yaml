@@ -19,7 +19,7 @@ starterProjects:
 components:
   - name: tools
     container:
-      image: registry.access.redhat.com/ubi8/openjdk-11:1.18-2
+      image: registry.access.redhat.com/ubi8/openjdk-11:1.18-2.1705602259
       command: ["tail", "-f", "/dev/null"]
       memoryLimit: 768Mi
       mountSources: true
