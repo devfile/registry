@@ -55,3 +55,5 @@ When a stack or sample is no longer maintained due to inactivity, lack of timely
 ### Ownership Transfers
 
 When a stack provider is no longer able to maintain their stacks, an ownership transfer should take place. The stack provider is responsible to find their replacement. As it is described in the deprecation rules, if a stack is inactive for a long time - because of a failed ownership transfer - it will be marked deprecated.
+
+In case someone is interested in adopting a stack which is currently deprecated, they should open an issue [here](https://github.com/devfile/api/issues/new/choose).
