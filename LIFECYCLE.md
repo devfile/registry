@@ -8,7 +8,7 @@ Devfiles are intended to be used by developers to build their applications with 
 |:------------------------|:----------------------------------------------------------------------------------------------------------------------------------------|
 | `Devfile Team`          | The team that is responsible for onboarding vendor devfiles for the community registry.                              |
 | `Stack/Sample Provider` | The person or team that is responsible for developing the devfile stack or sample that is available for sharing on our devfile registry. |
-| `Tooling Clients`       | These are the tools that support building devfile-based applications                                                                    |
+| `Tooling Clients`       | These are the tools that use devfiles                                                                    |
 | `End Users`             | Application developers that consume devfiles for the purpose of building their own custom applications                                  |
 
 The following sections describe the steps that can happen in the lifecycle of a devfile.
