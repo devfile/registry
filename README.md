@@ -33,6 +33,8 @@ To build this devfile registry into a container image run `bash .ci/build.sh`. A
 
 From there, push the container image to a container registry of your choice and deploy using a [devfile adopted devtool](https://devfile.io/docs/2.2.0/developing-with-devfiles#tools-that-provide-devfile-support) or one of the methods outlined [here](https://github.com/devfile/registry-support#deploy).
 
+If you are trying to run `bash .ci/build_and_deploy.sh` and are experiencing errors while on a Mac with an apple silicon chip, you should first run `export PLATFORM_EV=linux/arm64` to properly set the container config. By default the containers will be built for `linux/amd64`.
+
 ## Devfile Deployments
 
 ### Prerequisites
