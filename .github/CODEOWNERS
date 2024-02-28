@@ -1,0 +1,11 @@
+# Devfile owned stacks
+/stacks/nodejs-angular/ @devfile/devfile-services-team
+/stacks/python-django/ @devfile/devfile-services-team
+/stacks/go/ @devfile/devfile-services-team
+/stacks/php-laravel/ @devfile/devfile-services-team
+/stacks/nodejs-nextjs/ @devfile/devfile-services-team
+/stacks/nodejs-nuxtjs/ @devfile/devfile-services-team
+/stacks/python/ @devfile/devfile-services-team
+/stacks/nodejs-react/ @devfile/devfile-services-team
+/stacks/nodejs-svelte/ @devfile/devfile-services-team
+/stacks/nodejs-vue/ @devfile/devfile-services-team
