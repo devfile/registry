@@ -1,5 +1,5 @@
 name: go
-description: 'Go is an open source programming language that makes it easy to build simple, reliable, and efficient software.'
+description: 'Go is an open source programming language that makes it easy to build simple, reliable, and efficient go.'
 displayName: Go Runtime
 icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/golang.svg
 versions:
