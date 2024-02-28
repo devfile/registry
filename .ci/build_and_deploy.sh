@@ -20,6 +20,8 @@ INDEX_IMAGE="${INDEX_IMAGE:-quay.io/app-sre/devfile-index}"
 VIEWER_IMAGE="${VIEWER_IMAGE:-quay.io/app-sre/registry-viewer}"
 IMAGE_TAG="${IMAGE_TAG:-${GIT_REV}}"
 USE_PODMAN=${USE_PODMAN:-false}
+# PLATFORM_EV is required by the devfile-web/scripts/build_viewer.sh script
+PLATFORM_EV=${PLATFORM_EV:-"linux/amd64"}
 
 # Ensure container engine is set properly for devfile-web scripts
 if [[ ${USE_PODMAN} == true ]]; then
@@ -37,6 +39,8 @@ then
 fi
 git clone https://github.com/devfile/devfile-web.git $ABSOLUTE_PATH/devfile-web
 
+# export PLATFORM_EV so build_viewer.sh does not fail for MacOS users
+export PLATFORM_EV
 # Build registry-viewer
 bash $ABSOLUTE_PATH/devfile-web/scripts/build_viewer.sh
 
