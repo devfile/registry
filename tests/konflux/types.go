@@ -1,4 +1,4 @@
-package rhtap
+package konflux
 
 import (
 	"os"

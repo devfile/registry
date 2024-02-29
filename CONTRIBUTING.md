@@ -82,7 +82,7 @@ The devfile samples used in this devfile registry are stored in the `extraDevfil
 
     - Use the Developer perspective and import the Devfile Sample using Import from Git.
 
-2) Verifying your Sample functions with RHTAP
+2) Verifying your Sample functions with Konflux
 
     - Create an application by importing the sample from Git.
 
@@ -113,7 +113,7 @@ In case you want to add another version to a new devfile sample you can update t
 
     - Use the Developer perspective and import the Devfile Sample using Import from Git.
 
-2) Verifying your Sample functions with RHTAP
+2) Verifying your Sample functions with Konflux
 
     - Create an application by importing the sample from Git.
 

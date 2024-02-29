@@ -1,4 +1,4 @@
-module github.com/devfile/registry/tests/rhtap
+module github.com/devfile/registry/tests/konflux
 
 go 1.19
 
