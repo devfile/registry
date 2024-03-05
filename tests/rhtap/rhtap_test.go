@@ -9,7 +9,7 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	appservice "github.com/redhat-appstudio/application-api/api/v1alpha1"
-	e2eKube "github.com/redhat-appstudio/e2e-tests/pkg/apis/kubernetes"
+	e2eKube "github.com/redhat-appstudio/e2e-tests/pkg/clients/kubernetes"
 	testHub "github.com/redhat-appstudio/e2e-tests/pkg/framework"
 	"github.com/redhat-appstudio/e2e-tests/pkg/utils"
 )
