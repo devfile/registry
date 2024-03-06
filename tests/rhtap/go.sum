@@ -1234,8 +1234,8 @@ github.com/prometheus/statsd_exporter v0.22.7/go.mod h1:N/TevpjkIh9ccs6nuzY3jQn9
 github.com/prometheus/statsd_exporter v0.23.1 h1:TiNAE1XevlZZrpSbmf51l/Ryl2Eek9rYh//KlvcNvKw=
 github.com/prometheus/statsd_exporter v0.23.1/go.mod h1:FFmnBRWf+HxX+PR+2fnc0ciBIONVAPJ6k4lqIbdqVxo=
 github.com/prometheus/tsdb v0.7.1/go.mod h1:qhTCs0VvXwvX/y3TZrWD7rabWM+ijKTux40TwIPHuXU=
-github.com/redhat-appstudio/application-api v0.0.0-20230704143842-035c661f115f h1:XeHZfA9nZQjLBfjwWo2EvL8TiF3vUZLj7AlY19yTUoM=
-github.com/redhat-appstudio/application-api v0.0.0-20230704143842-035c661f115f/go.mod h1:LpcTNLCDMf1CUNTw2bgTiz8M49sUsN2F9T7bOSKcJEo=
+github.com/redhat-appstudio/application-api v0.0.0-20231026192857-89515ad2504f h1:PoKf7gCV/g5blkzVlODkqeynmfIACcR7NqWF8eqnuec=
+github.com/redhat-appstudio/application-api v0.0.0-20231026192857-89515ad2504f/go.mod h1:YvckuKHe82eWloGk0/BpSw4YYG2owrGZAanztbOj3pQ=
 github.com/redhat-appstudio/build-service v0.0.0-20230727072250-19c7a8b5c63d h1:bk/mBxEb1mSRQ/xuCuNQfxm4Riz/KNJ1AI8pekrNsmo=
 github.com/redhat-appstudio/build-service v0.0.0-20230727072250-19c7a8b5c63d/go.mod h1:zpT61sPazrKuE2GrFaoxVfyWO1x5vjmSntJtaMYAE2U=
 github.com/redhat-appstudio/e2e-tests v0.0.0-20231213084514-e292e691a34e h1:hLHWk+KhAFY/6qH1PIJsrK40eKTsjLzAjD1OgnNCpDw=

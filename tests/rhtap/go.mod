@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/onsi/ginkgo/v2 v2.15.0
 	github.com/onsi/gomega v1.31.1
-	github.com/redhat-appstudio/application-api v0.0.0-20230704143842-035c661f115f
+	github.com/redhat-appstudio/application-api v0.0.0-20231026192857-89515ad2504f
 	github.com/redhat-appstudio/e2e-tests v0.0.0-20231213084514-e292e691a34e
 	gopkg.in/yaml.v2 v2.4.0
 )
