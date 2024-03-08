@@ -23,7 +23,9 @@ RUN curl -sL -O https://github.com/mikefarah/yq/releases/download/v4.9.5/yq_linu
 COPY . /registry
 
 # Download the registry build tools
-RUN git clone https://github.com/devfile/registry-support.git /registry-support
+# Freeze index/generator version at v1.1.0 until Go 1.19 is supported, 
+# see https://github.com/devfile/api/issues/1473
+RUN git clone https://github.com/devfile/registry-support.git -b v1.1.0 /registry-support
 
 # Run the registry build tools
 RUN bash /registry-support/build-tools/build.sh /registry /build
