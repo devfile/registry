@@ -11,7 +11,6 @@ import (
 	appservice "github.com/redhat-appstudio/application-api/api/v1alpha1"
 	"github.com/redhat-appstudio/e2e-tests/pkg/clients/has"
 	e2eKube "github.com/redhat-appstudio/e2e-tests/pkg/clients/kubernetes"
-	"github.com/redhat-appstudio/e2e-tests/pkg/framework"
 	testHub "github.com/redhat-appstudio/e2e-tests/pkg/framework"
 	"github.com/redhat-appstudio/e2e-tests/pkg/utils"
 )
@@ -47,7 +46,6 @@ var _ = Describe("RHTAP sample checks", Ordered, Label("nightly"), func() {
 		sampleEntry := sampleEntry
 
 		Describe(sampleEntry.Name, func() {
-			var kubeadminClient *framework.ControllerHub
 
 			BeforeAll(func() {
 				kubeClient, err := e2eKube.NewAdminKubernetesClient()
@@ -116,7 +114,7 @@ var _ = Describe("RHTAP sample checks", Ordered, Label("nightly"), func() {
 				Expect(err).ShouldNot(HaveOccurred(), "failed to get component: %v", err)
 
 				Expect(fw.HasController.WaitForComponentPipelineToBeFinished(component, "",
-					kubeadminClient.TektonController, &has.RetryOptions{Retries: pipelineCompletionRetries, Always: true})).To(Succeed())
+					fw.TektonController, &has.RetryOptions{Retries: pipelineCompletionRetries, Always: true})).To(Succeed())
 			})
 		})
 	}
