@@ -14,9 +14,10 @@ replace (
 	github.com/antlr/antlr4 => github.com/antlr/antlr4 v0.0.0-20211106181442-e4c1a74c66bd
 	github.com/apcera/gssapi => github.com/openshift/gssapi v0.0.0-20161010215902-5fb4217df13b
 	github.com/chai2010/gettext-go => github.com/chai2010/gettext-go v0.0.0-20160711120539-c6fed771bfd5
+	github.com/docker/docker => github.com/docker/docker v23.0.7+incompatible
 	github.com/redhat-appstudio/managed-gitops/backend-shared => github.com/redhat-appstudio/managed-gitops/backend-shared v0.0.0-20220506042230-3a79f373a001
+	github.com/tektoncd/cli => github.com/tektoncd/cli v0.31.0
 	k8s.io/client-go => k8s.io/client-go v0.28.3
-	sigs.k8s.io/controller-runtime => sigs.k8s.io/controller-runtime v0.13.0
 )
 
 require (
