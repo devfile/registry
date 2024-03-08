@@ -67,12 +67,12 @@ components:
   - name: kubernetes-deploy
     kubernetes:
       endpoints:
-        - name: http-8081
+        - name: http-8080
           path: /
-          targetPort: 8081
+          targetPort: 8080
       uri: deploy.yaml
     attributes:
-        deployment/container-port: 8081
+        deployment/container-port: 8080
         deployment/cpuLimit: 100m
         deployment/cpuRequest: 10m
         deployment/memoryLimit: 300Mi
