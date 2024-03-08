@@ -31,6 +31,8 @@ RUN bash /registry-support/build-tools/build.sh /registry /build
 # Set user as non-root
 USER 1001
 
-FROM quay.io/devfile/devfile-index-base:next
+# Freeze at devfile/registry-support commit ffc3a09 until Go 1.19 is supported, 
+# see https://github.com/devfile/api/issues/1473
+FROM quay.io/devfile/devfile-index-base:ffc3a09964b840b3d421dcf5d8d2afbf69322f64
 
 COPY --from=builder /build /registry
