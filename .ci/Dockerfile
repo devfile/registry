@@ -23,9 +23,7 @@ RUN curl -sL -O https://github.com/mikefarah/yq/releases/download/v4.9.5/yq_linu
 COPY . /registry
 
 # Download the registry build tools
-# Freeze index/generator version at v1.1.0 until Go 1.19 is supported, 
-# see https://github.com/devfile/api/issues/1473
-RUN git clone https://github.com/devfile/registry-support.git -b v1.1.0 /registry-support
+RUN git clone https://github.com/devfile/registry-support.git /registry-support
 
 # Run the registry build tools
 RUN bash /registry-support/build-tools/build.sh /registry /build
@@ -33,8 +31,6 @@ RUN bash /registry-support/build-tools/build.sh /registry /build
 # Set user as non-root
 USER 1001
 
-# Freeze at devfile/registry-support commit ffc3a09 until Go 1.19 is supported, 
-# see https://github.com/devfile/api/issues/1473
-FROM quay.io/devfile/devfile-index-base:ffc3a09964b840b3d421dcf5d8d2afbf69322f64
+FROM quay.io/devfile/devfile-index-base:next
 
 COPY --from=builder /build /registry
