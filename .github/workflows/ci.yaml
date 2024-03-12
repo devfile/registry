@@ -36,7 +36,7 @@ jobs:
       - name: Setup Go environment
         uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5.0.0
         with:
-          go-version: 1.18
+          go-version: 1.19
 
       - name: Check if devfile registry build is working
         run: bash registry-repo/.ci/build.sh
