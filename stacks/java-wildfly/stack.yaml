@@ -5,5 +5,6 @@ icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark.svg
 versions:
   - version: 1.1.0
   - version: 2.0.0
+  - version: 2.0.1
     default: true
  

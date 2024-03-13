@@ -1,0 +1,164 @@
+schemaVersion: 2.2.0
+metadata:
+  name: wildfly-start
+  version: 2.0.1
+  website: https://wildfly.org
+  displayName: WildFly Getting Started
+  description: Upstream WildFly Getting Started
+  icon: https://design.jboss.org/wildfly/logo/final/wildfly_logomark.svg
+  tags: ['Java', 'WildFly']
+  projectType: 'wildfly'
+  language: 'java'
+variables:
+  imageRegistry: 'quay.io'
+  imageName: 'getting-started'
+  imageVersion: 'latest'
+  applicationName: 'start'
+  nodeName: 'getting-started'
+starterProjects:
+  - name: getting-started
+    description: WildFly Getting Started
+    git:
+      checkoutFrom:
+        remote: wildfly-devfile-examples
+        revision: getting-started
+      remotes:
+        wildfly-devfile-examples: https://github.com/wildfly-extras/wildfly-devfile-examples.git
+components:
+  - name: tools
+    container:
+      image:  quay.io/devfile/universal-developer-image:ubi8-latest
+      memoryLimit: 1512Mi
+      mountSources: true
+      volumeMounts:
+        - name: m2
+          path: /home/user/.m2
+      env:
+        - name: JAVA_OPTS
+          value: '-Djava.security.egd=file:/dev/urandom -Djboss.host.name=localhost'
+        - name: DEBUG_PORT
+          value: '5005'
+        - name: NODE_NAME
+          value: '{{nodeName}}'
+        - name: IMAGE_REGISTRY
+          value: '{{imageRegistry}}'
+        - name: IMAGE
+          value: '{{imageName}}'
+      endpoints:
+        - name: debug
+          exposure: internal
+          protocol: tcp
+          targetPort: 5005
+        - name: 'http'
+          protocol: http
+          targetPort: 8080
+          exposure: public
+        - name: 'management'
+          targetPort: 9990
+          protocol: http
+          exposure: internal
+  - name: image-build
+    image:
+      dockerfile:
+        buildContext: .
+        rootRequired: false
+        uri: Containerfile
+      imageName: '{{imageName}}:{{imageVersion}}'
+  - name: kubernetes-deploy
+    kubernetes:
+      endpoints:
+        - name: http-8080
+          path: /
+          targetPort: 8080
+      uri: deploy.yaml
+    attributes:
+        deployment/container-port: 8080
+        deployment/cpuLimit: 100m
+        deployment/cpuRequest: 10m
+        deployment/memoryLimit: 300Mi
+        deployment/memoryRequest: 180Mi
+        deployment/replicas: 1
+  - name: m2
+    volume:
+      size: 3Gi
+commands:
+  - id: package
+    exec:
+      label: "InnerLoop 01 - Build the application."
+      component: tools
+      commandLine: mvn clean verify
+      workingDir: ${PROJECT_SOURCE}
+      hotReloadCapable: true
+      group:
+        kind: build
+        isDefault: true
+  - id: run
+    exec:
+      label: "InnerLoop 02 - Run the application in dev mode."
+      component: tools
+      commandLine: mvn -Dwildfly.javaOpts="-Djboss.host.name=${NODE_NAME}" -Dmaven.test.skip=true clean package org.wildfly.plugins:wildfly-maven-plugin:dev
+      workingDir: ${PROJECT_SOURCE}
+      hotReloadCapable: true
+      group:
+        kind: run
+        isDefault: true
+  - id: debug
+    exec:
+      label: "InnerLoop 03 - Debug the application in dev mode."
+      component: tools
+      commandLine: mvn -Dwildfly.javaOpts="-Djboss.host.name=${NODE_NAME} -agentlib:jdwp=transport=dt_socket,address=*:5005,server=y,suspend=n" -Dmaven.test.skip=true clean package org.wildfly.plugins:wildfly-maven-plugin:dev
+      workingDir: ${PROJECT_SOURCE}
+      hotReloadCapable: true
+      group:
+        kind: debug
+        isDefault: true
+  - id: build-runtime-image
+    exec:
+      label: "OuterLoop 01 - Build Runtime Image."
+      component: tools
+      commandLine: "podman build -f Containerfile -t ${IMAGE_REGISTRY}/${IMAGE_REGISTRY_NAMESPACE}/${IMAGE} ."
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: build
+        isDefault: false
+  - id: push-image
+    exec:
+      label: "OuterLoop 02 - Push Image into image registry."
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: "podman tag ${IMAGE_REGISTRY}/${IMAGE_REGISTRY_NAMESPACE}/${IMAGE} ${IMAGE_REGISTRY}/${IMAGE_REGISTRY_NAMESPACE}/${IMAGE}:latest && podman login  ${IMAGE_REGISTRY} -u ${IMAGE_REGISTRY_LOGIN} -p ${IMAGE_REGISTRY_PASSWORD} && podman push --tls-verify=false ${IMAGE_REGISTRY}/${IMAGE_REGISTRY_NAMESPACE}/${IMAGE}:latest"
+      group:
+        kind: build
+        isDefault: false
+  - id: deploy-image
+    exec:
+      label: "OuterLoop 03 - Deploy Image into the cloud."
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: "helm repo add wildfly https://docs.wildfly.org/wildfly-charts/ && helm install ${IMAGE} -f .charts/helm.yaml --set build.enabled=false --set image.name=${IMAGE_REGISTRY}/${IMAGE_REGISTRY_NAMESPACE}/${IMAGE} wildfly/wildfly"
+      group:
+        kind: run
+        isDefault: false
+  - id: undeploy-image
+    exec:
+      label: "OuterLoop 04 - Undeploy Image from the cloud."
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: "helm uninstall ${IMAGE}"
+      group:
+        kind: run
+        isDefault: false
+  - id: build-image
+    apply:
+      component: image-build
+  - id: deployk8s
+    apply:
+      component: kubernetes-deploy
+  - id: deploy
+    composite:
+      commands:
+        - build-image
+        - deployk8s
+      group:
+        kind: deploy
+        isDefault: true

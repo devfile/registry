@@ -1,0 +1,70 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: '{{applicationName}}'
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: '{{applicationName}}'
+  template:
+    metadata:
+      labels:
+        app: '{{applicationName}}'
+    spec:
+      containers:
+        - name: '{{applicationName}}'
+          image: '{{imageName}}:{{imageVersion}}'
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              memory: "1024Mi"
+              cpu: "500m"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: '{{applicationName}}-svc'
+spec:
+  ports:
+    - name: http-8080
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: '{{applicationName}}'
+#apiVersion: networking.k8s.io/v1
+#kind: Ingress
+#metadata:
+#  name: '{{applicationName}}-ingress'
+#  labels: {}
+#  annotations: {}
+#spec:
+#  rules:
+#    - host: tests.info
+#      http:
+#       paths:
+#          - path: /
+#            pathType: Prefix
+#            backend:
+#              service:
+#                name: '{{applicationName}}-svc'
+#                port:
+#                  number: 8080
+#---
+#kind: Route
+#apiVersion: route.openshift.io/v1
+#metadata:
+#  name: '{{applicationName}}-route'
+#spec:
+#  to:
+#    kind: Service
+#    name: '{{applicationName}}-svc'
+#    weight: 100
+#  port:
+#    targetPort: http-8080
+#  wildcardPolicy: None
+#---
