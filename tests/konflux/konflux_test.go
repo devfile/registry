@@ -1,4 +1,4 @@
-package rhtap
+package konflux
 
 import (
 	"flag"
@@ -26,14 +26,14 @@ func init() {
 	flag.StringVar(&namespace, "namespace", "", "Namespace where create and build stack samples")
 }
 
-func TestRhtap(t *testing.T) {
+func TestKonflux(t *testing.T) {
 	RegisterFailHandler(Fail)
 
-	RunSpecs(t, "rhtap suite")
+	RunSpecs(t, "konflux suite")
 
 }
 
-var _ = Describe("RHTAP sample checks", Ordered, Label("nightly"), func() {
+var _ = Describe("Konflux sample checks", Ordered, Label("nightly"), func() {
 	var fw *testHub.ControllerHub
 	component := &appservice.Component{}
 	cdq := &appservice.ComponentDetectionQuery{}
