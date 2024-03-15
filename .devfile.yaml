@@ -43,7 +43,7 @@ components:
 # Alternatively could be removed once https://github.com/redhat-developer/odo/issues/7162 is resolved
   - name: index-generator
     container:
-      image: registry.access.redhat.com/ubi8/go-toolset:1.19
+      image: registry.access.redhat.com/ubi8/go-toolset:1.20.12-2
 # Devfile Registry Deployment resource
   - name: devfile-registry-deployment
     kubernetes:
