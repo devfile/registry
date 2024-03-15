@@ -39,7 +39,7 @@ components:
         - exposure: none
           name: debug
           targetPort: 5858
-      image: registry.access.redhat.com/ubi9/go-toolset:1.20.12-3
+      image: registry.access.redhat.com/ubi9/go-toolset:1.19.13-4.1697647145
       args: ['tail', '-f', '/dev/null']
       env:
         - name: DEBUG_PORT
