@@ -24,7 +24,7 @@ starterProjects:
 components:
   - name: py
     container:
-      image: registry.access.redhat.com/ubi9/python-39:1-165
+      image: registry.access.redhat.com/ubi9/python-39:1-172
       args: ['tail', '-f', '/dev/null']
       mountSources: true
       endpoints:
