@@ -9,6 +9,7 @@ metadata:
   tags:
     - Node.js
     - Next.js
+    - Deprecated
   projectType: Next.js
   language: TypeScript
   provider: Red Hat

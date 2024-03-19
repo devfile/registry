@@ -7,6 +7,6 @@ displayName: Next.js
 icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/next-js.svg
 versions:
   - version: 1.0.3
-    default: true # should have one and only one default version
   - version: 1.1.0
+    default: true # should have one and only one default version
   - version: 1.2.0

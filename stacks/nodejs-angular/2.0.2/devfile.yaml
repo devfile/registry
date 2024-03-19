@@ -10,6 +10,7 @@ metadata:
   tags:
     - Node.js
     - Angular
+    - Deprecated
   projectType: Angular
   language: TypeScript
   provider: Red Hat
