@@ -51,7 +51,7 @@
     "stacks/nodejs-nuxtjs/1.0.3/**",
     "stacks/nodejs-react/2.0.2/**",
     "stacks/nodejs-svelte/1.0.3/**",
-    "stacks/nodejs-vue/1.0.3/**"
+    "stacks/nodejs-vue/1.0.2/**"
   ],
   "prHourlyLimit": 20,
   "prConcurrentLimit": 10
