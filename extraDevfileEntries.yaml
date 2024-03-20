@@ -3,7 +3,7 @@ samples:
   - name: nodejs-basic
     displayName: Basic Node.js
     description: Node.js 16 application using Express 4.18.x
-    icon: https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg
+    icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/node-js.svg
     tags:
       - Node.js
       - Express
