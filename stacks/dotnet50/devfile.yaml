@@ -1,4 +1,4 @@
-schemaVersion: 2.1.0
+schemaVersion: 2.2.0
 metadata:
   name: dotnet50
   displayName: .NET 5.0
@@ -9,7 +9,7 @@ metadata:
     - .NET 5.0
   projectType: dotnet
   language: .NET
-  version: 1.0.3
+  version: 1.0.4
 starterProjects:
   - name: dotnet50-example
     git:
@@ -35,7 +35,8 @@ components:
         - name: ASPNETCORE_URLS
           value: http://*:8080
       endpoints:
-        - name: http-dotnet50
+        - name: https-dotnet50
+          protocol: https
           targetPort: 8080
 commands:
   - id: build
