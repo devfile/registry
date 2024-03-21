@@ -3,7 +3,7 @@ metadata:
   name: nodejs
   displayName: Node.js Runtime
   description: Node.js 18 application
-  icon: https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/node-js.svg
   tags:
     - Node.js
     - Express

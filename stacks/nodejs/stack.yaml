@@ -1,7 +1,7 @@
 name: nodejs
 description: 'Node.js application'
 displayName: Node.js Runtime
-icon: https://nodejs.org/static/images/logos/nodejs-new-pantone-black.svg
+icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/node-js.svg
 versions:
   - version: 2.1.1
     default: true # should have one and only one default version
