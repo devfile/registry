@@ -1,4 +1,4 @@
-schemaVersion: 2.1.0
+schemaVersion: 2.2.0
 metadata:
   name: java-quarkus
   displayName: Quarkus Java
@@ -9,15 +9,12 @@ metadata:
     - Quarkus
   projectType: Quarkus
   language: Java
-  version: 1.3.0
+  version: 1.3.1
   website: https://quarkus.io
 starterProjects:
-  - name: community
+  - name: quarkus-openshift
     zip:
       location: https://code.quarkus.io/d?e=io.quarkus%3Aquarkus-resteasy&e=io.quarkus%3Aquarkus-micrometer&e=io.quarkus%3Aquarkus-smallrye-health&e=io.quarkus%3Aquarkus-openshift&cn=devfile
-  - name: redhat-product
-    zip:
-      location: https://code.quarkus.redhat.com/d?e=io.quarkus%3Aquarkus-resteasy&e=io.quarkus%3Aquarkus-smallrye-health&e=io.quarkus%3Aquarkus-openshift
 components:
   - name: tools
     container:
@@ -29,6 +26,9 @@ components:
         - name: m2
           path: /home/user/.m2
       endpoints:
+        - name: https-quarkus
+          targetPort: 3000
+          protocol: https
         - name: http-quarkus
           targetPort: 8080
         - exposure: none
@@ -49,7 +49,7 @@ commands:
   - id: dev-run
     exec:
       component: tools
-      commandLine: 'mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager'
+      commandLine: 'mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0 -Dquarkus.http.port=3000 -Djava.util.logging.manager=org.jboss.logmanager.LogManager'
       hotReloadCapable: true
       group:
         kind: run
@@ -58,7 +58,7 @@ commands:
   - id: dev-debug
     exec:
       component: tools
-      commandLine: 'mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager -Ddebug=${DEBUG_PORT}'
+      commandLine: 'mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0 -Dquarkus.http.port=3000 -Djava.util.logging.manager=org.jboss.logmanager.LogManager -Ddebug=${DEBUG_PORT}'
       hotReloadCapable: true
       group:
         kind: debug
