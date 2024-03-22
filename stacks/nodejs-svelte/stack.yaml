@@ -6,6 +6,7 @@ displayName: Svelte
 icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/svelte.svg
 versions:
   - version: 1.0.3
-    default: true # should have one and only one default version
   - version: 1.1.0
   - version: 1.2.0
+  - version: 1.2.1
+    default: true # should have one and only one default version
