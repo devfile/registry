@@ -55,7 +55,7 @@ components:
       endpoints:
         - exposure: public
           path: /
-          name: http-websphere
+          name: https-websphere
           targetPort: 9080
           protocol: https
         - exposure: none
