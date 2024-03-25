@@ -8,6 +8,7 @@ metadata:
   tags:
     - Node.js
     - Vue
+    - Deprecated
   projectType: Vue
   language: TypeScript
   provider: Red Hat

@@ -8,6 +8,7 @@ metadata:
   tags:
     - Node.js
     - Svelte
+    - Deprecated
   projectType: Svelte
   language: TypeScript
   provider: Red Hat
