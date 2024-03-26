@@ -22,8 +22,9 @@ starterProjects:
 components:
   - container:
       endpoints:
-        - name: http-react
+        - name: https-react
           targetPort: 3000
+          protocol: https
       image: registry.access.redhat.com/ubi8/nodejs-18:1-94
       args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
