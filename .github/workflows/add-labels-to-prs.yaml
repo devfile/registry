@@ -1,0 +1,17 @@
+name: Add 'needs-review' label to PRs
+on:
+  schedule:
+  - cron:  '0 0 * * *'
+jobs:
+  add-labels-to-old-prs:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Add need-review label to pull requests
+      uses: crazymanish/pullrequest-attention-label-action@v1.0.1
+
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        ADD_LABEL: "needs-review"
+        AFTER_DAYS: 7
+        SKIP_LABELS: "approved,wip,do-not-merge/work-in-progress"
+        REMOVE_LABELS: "helpwanted,untriaged"
