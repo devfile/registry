@@ -8,6 +8,7 @@ metadata:
     - Node.js
     - Express
     - ubi8
+    - Deprecated
   projectType: Node.js
   language: JavaScript
   version: 2.1.1

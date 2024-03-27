@@ -8,6 +8,7 @@ metadata:
   tags:
     - Node.js
     - React
+    - Deprecated
   projectType: React
   language: TypeScript
   provider: Red Hat

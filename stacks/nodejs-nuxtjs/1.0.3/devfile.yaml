@@ -8,6 +8,7 @@ metadata:
   tags:
     - Node.js
     - Nuxt.js
+    - Deprecated
   projectType: Nuxt.js
   language: TypeScript
   provider: Red Hat
