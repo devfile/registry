@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/devfile/api/v2 v2.2.1
-	github.com/devfile/library/v2 v2.2.2-0.20240311165050-d3c277078874
+	github.com/devfile/library/v2 v2.2.2-0.20240315205431-44ca18d63cf4
 	github.com/onsi/ginkgo/v2 v2.13.0
 	github.com/onsi/gomega v1.29.0
 )
