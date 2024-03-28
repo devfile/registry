@@ -1,0 +1,8 @@
+name: java-quarkus
+description: Java application using Quarkus and OpenJDK 17
+displayName: Quarkus Java
+icon: https://design.jboss.org/quarkus/logo/final/SVG/quarkus_icon_rgb_default.svg
+versions:
+  - version: 1.3.0
+  - version: 1.4.0
+    default: true # should have one and only one default version
