@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-schemaVersion: 2.1.0
+schemaVersion: 2.2.2
 metadata:
   name: java-openliberty-gradle
   displayName: Open Liberty Gradle
@@ -54,7 +54,7 @@ components:
           path: /
           name: http-gradle
           targetPort: 9080
-          protocol: http
+          protocol: https
         - exposure: none
           name: debug
           targetPort: 5858
