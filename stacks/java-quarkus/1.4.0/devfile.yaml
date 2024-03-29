@@ -30,10 +30,8 @@ components:
           path: /home/user/.m2
       endpoints:
         - name: https-quarkus
-          targetPort: 3000
-          protocol: https
-        - name: http-quarkus
           targetPort: 8080
+          protocol: https
         - exposure: none
           name: debug
           targetPort: 5858
