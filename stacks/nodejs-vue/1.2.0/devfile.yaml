@@ -27,7 +27,7 @@ components:
       endpoints:
         - name: http-vue
           targetPort: 3000
-      image: registry.access.redhat.com/ubi8/nodejs-18:1-94
+      image: registry.access.redhat.com/ubi8/nodejs-18:1-94.1711445596
       args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
     name: runtime
