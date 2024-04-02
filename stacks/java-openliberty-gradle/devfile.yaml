@@ -30,7 +30,7 @@ metadata:
     - s390x
   projectType: Open Liberty
   language: Java
-  version: 0.4.0
+  version: 0.5.0
   alpha.build-dockerfile: https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-gradle-0.3.1/Dockerfile
   alpha.deployment-manifest: https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-gradle-0.3.1/app-deploy.yaml
 starterProjects:
@@ -52,7 +52,7 @@ components:
       endpoints:
         - exposure: public
           path: /
-          name: http-gradle
+          name: https-gradle
           targetPort: 9080
           protocol: https
         - exposure: none
