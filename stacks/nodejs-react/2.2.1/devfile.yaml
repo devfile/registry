@@ -11,7 +11,7 @@ metadata:
   projectType: React
   language: TypeScript
   provider: Red Hat
-  version: 2.2.0
+  version: 2.2.1
 starterProjects:
   - name: nodejs-react-starter
     git:
@@ -22,8 +22,9 @@ starterProjects:
 components:
   - container:
       endpoints:
-        - name: http-react
+        - name: https-react
           targetPort: 3000
+          protocol: https
       image: registry.access.redhat.com/ubi8/nodejs-18:1-94.1711445596
       args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
