@@ -31,7 +31,7 @@ metadata:
     - s390x
   language: Java
   projectType: WebSphere Liberty
-  version: 0.9.0
+  version: 0.10.0
   alpha.build-dockerfile: https://github.com/OpenLiberty/devfile-stack/releases/download/websphere-liberty-maven-0.8.1/Dockerfile
   alpha.deployment-manifest: https://github.com/OpenLiberty/devfile-stack/releases/download/websphere-liberty-maven-0.8.1/app-deploy.yaml
 starterProjects:
