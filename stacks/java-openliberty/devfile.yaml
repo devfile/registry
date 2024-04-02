@@ -30,7 +30,7 @@ metadata:
     - s390x
   projectType: Open Liberty
   language: Java
-  version: 0.9.0
+  version: 0.10.0
   alpha.build-dockerfile: https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-maven-0.8.1/Dockerfile
   alpha.deployment-manifest: https://github.com/OpenLiberty/devfile-stack/releases/download/open-liberty-maven-0.8.1/app-deploy.yaml
 starterProjects:
@@ -54,7 +54,7 @@ components:
       endpoints:
         - exposure: public
           path: /
-          name: http-openlib
+          name: https-openlib
           targetPort: 9080
           protocol: https
         - exposure: none
