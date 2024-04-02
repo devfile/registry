@@ -71,12 +71,13 @@ func TestOdo(t *testing.T) {
 		devfile, _, err := devfile.ParseDevfileAndValidate(parserArgs)
 		g.Expect(err).To(BeNil())
 
+		schemaVersion := devfile.Data.GetSchemaVersion()
 		name := devfile.Data.GetMetadata().Name
 		version := devfile.Data.GetMetadata().Version
 		starterProjects, err := devfile.Data.GetStarterProjects(common.DevfileOptions{})
 		g.Expect(err).To(BeNil())
 
-		stack := Stack{name: name, version: version, path: path, starterProjects: starterProjects, base: base}
+		stack := Stack{name: name, schemaVersion: schemaVersion, version: version, path: path, starterProjects: starterProjects, base: base}
 
 		stacks = append(stacks, stack)
 	}
@@ -151,6 +152,12 @@ var _ = Describe("test starter projects from devfile stacks", func() {
 
 	for _, stack := range stacks {
 		stack := stack
+
+		// TEMP: ignore testing schema versions 2.2.2 & 2.2.1 due to odo incompatibility
+		// related issue: https://github.com/devfile/api/issues/1494
+		if stack.schemaVersion == "2.2.1" || stack.schemaVersion == "2.2.2" {
+			continue
+		}
 
 		if len(stack.starterProjects) == 0 {
 			It(fmt.Sprintf("stack: %s version: %s no_starter", stack.name, stack.version), func() {
