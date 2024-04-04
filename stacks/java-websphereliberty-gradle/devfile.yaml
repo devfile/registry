@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-schemaVersion: 2.2.0
+schemaVersion: 2.2.2
 metadata:
   name: java-websphereliberty-gradle
   displayName: WebSphere Liberty Gradle
