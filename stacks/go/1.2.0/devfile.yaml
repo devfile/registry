@@ -1,4 +1,4 @@
-schemaVersion: 2.1.0
+schemaVersion: 2.2.0
 metadata:
   name: go
   displayName: Go Runtime
@@ -9,7 +9,7 @@ metadata:
   projectType: Go
   language: Go
   provider: Red Hat
-  version: 1.2.0
+  version: 1.2.1
 starterProjects:
   - name: go-starter
     description: A Go project with a simple HTTP server
