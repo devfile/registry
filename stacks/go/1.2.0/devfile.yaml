@@ -23,6 +23,7 @@ components:
       endpoints:
         - name: http-go
           targetPort: 8080
+          protocol: https
         - exposure: none
           name: debug
           targetPort: 5858
@@ -31,16 +32,17 @@ components:
       env:
         - name: DEBUG_PORT
           value: '5858'
+        - name: HOME
+          value: /home/user
+        - name: GOPATH
+          value: /home/user/.go
+        - name: GOCACHE
+          value: /home/user/.cache
       memoryLimit: 1024Mi
       mountSources: true
     name: runtime
 commands:
   - exec:
-      env:
-        - name: GOPATH
-          value: ${PROJECT_SOURCE}/.go
-        - name: GOCACHE
-          value: ${PROJECT_SOURCE}/.cache
       commandLine: go build main.go
       component: runtime
       group:
@@ -56,11 +58,8 @@ commands:
         kind: run
       workingDir: ${PROJECT_SOURCE}
     id: run
-
   - exec:
       commandLine: |
-        GOPATH=${PROJECT_SOURCE}/.go \
-        GOCACHE=${PROJECT_SOURCE}/.cache \
         dlv \
           --listen=127.0.0.1:${DEBUG_PORT} \
           --only-same-user=false \
