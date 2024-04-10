@@ -21,7 +21,7 @@ starterProjects:
 components:
   - container:
       endpoints:
-        - name: http-go
+        - name: https-go
           targetPort: 8080
           protocol: https
         - exposure: none
