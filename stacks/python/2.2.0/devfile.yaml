@@ -1,4 +1,4 @@
-schemaVersion: 2.1.0
+schemaVersion: 2.2.2
 metadata:
   name: python
   displayName: Python
@@ -12,7 +12,7 @@ metadata:
   projectType: Python
   language: Python
   provider: Red Hat
-  version: 2.1.0
+  version: 2.2.0
 starterProjects:
   - name: flask-example
     description:
@@ -28,8 +28,9 @@ components:
       args: ['tail', '-f', '/dev/null']
       mountSources: true
       endpoints:
-        - name: http-python
+        - name: https-python
           targetPort: 8080
+          protocol: https
         - exposure: none
           name: debug
           targetPort: 5858

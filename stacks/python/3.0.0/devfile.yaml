@@ -1,4 +1,4 @@
-schemaVersion: 2.2.2
+schemaVersion: 2.2.0
 metadata:
   name: python
   displayName: Python
@@ -28,9 +28,8 @@ components:
       args: ['tail', '-f', '/dev/null']
       mountSources: true
       endpoints:
-        - name: https-python
+        - name: http-python
           targetPort: 8080
-          protocol: https
         - exposure: none
           name: debug
           targetPort: 5858
@@ -48,9 +47,8 @@ components:
     kubernetes:
       uri: kubernetes/deploy.yaml
       endpoints:
-      - name: https-8081
+      - name: http-8081
         targetPort: 8081
-        protocol: https
 commands:
   - id: pip-install-requirements
     exec:

@@ -1,4 +1,4 @@
-schemaVersion: 2.1.0
+schemaVersion: 2.2.2
 metadata:
   name: python
   displayName: Python
@@ -12,7 +12,7 @@ metadata:
   projectType: Python
   language: Python
   provider: Red Hat
-  version: 2.1.0
+  version: 3.1.0
 starterProjects:
   - name: flask-example
     description:
@@ -28,14 +28,29 @@ components:
       args: ['tail', '-f', '/dev/null']
       mountSources: true
       endpoints:
-        - name: http-python
+        - name: https-python
           targetPort: 8080
+          protocol: https
         - exposure: none
           name: debug
           targetPort: 5858
       env:
         - name: DEBUG_PORT
           value: '5858'
+  - name: build
+    image:
+      imageName: python-image:latest
+      dockerfile:
+        uri: docker/Dockerfile
+        buildContext: .
+        rootRequired: false
+  - name: deploy
+    kubernetes:
+      uri: kubernetes/deploy.yaml
+      endpoints:
+      - name: https-8081
+        targetPort: 8081
+        protocol: https
 commands:
   - id: pip-install-requirements
     exec:
@@ -60,3 +75,17 @@ commands:
       component: py
       group:
         kind: debug
+  - id: build-image
+    apply:
+      component: build
+  - id: deployk8s
+    apply:
+      component: deploy
+  - id: deploy
+    composite:
+      commands:
+        - build-image
+        - deployk8s
+      group:
+        kind: deploy
+        isDefault: true
