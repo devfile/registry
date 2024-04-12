@@ -93,7 +93,7 @@ jobs:
           fetch-depth: 0
       
       - name: Free Disk Space
-        uses: jlumbroso/free-disk-space@main
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be #v1.3.1
         with:
           tool-cache: false
           android: true
@@ -138,7 +138,7 @@ jobs:
           fetch-depth: 0
 
       - name: Free Disk Space
-        uses: jlumbroso/free-disk-space@main
+        uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be #v1.3.1
         with:
           tool-cache: false
           android: true
