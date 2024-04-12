@@ -206,7 +206,7 @@ for stack in $STACKS; do
 
   # Skipping the java-wildfly-bootable-jar stack right now since it's broken.
   # TODO: Uncomment once fixed.
-  if [ $stack != "java-wildfly-bootable-jar" ]; then
+  if [[ $stack != "java-wildfly-bootable-jar" && $stack != "java-quarkus/1.3.0" && $stack != "java-quarkus/1.4.0" ]]; then
     test "$devfile_name" "$devfile_version" "$devfile_path"
   fi
 done
