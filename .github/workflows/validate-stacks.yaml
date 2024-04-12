@@ -91,6 +91,17 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           fetch-depth: 0
+      
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
 
       - name: Setup Minikube
         uses: manusa/actions-setup-minikube@e2f60d2f9e42413a916781a805284e79ccabaf54 # v2.10.0
@@ -99,7 +110,7 @@ jobs:
           kubernetes version: ${{ env.KUBERNETES_VERSION }}
           driver: "docker"
           github token: ${{ secrets.GITHUB_TOKEN }}
-          start args: "--addons=ingress"
+          start args: "--addons=ingress ${{ env.MINIKUBE_RESOURCES }}"
 
       - name: Install odo v2
         uses: redhat-actions/openshift-tools-installer@2de9a80cf012ad0601021515481d433b91ef8fd5 # v1
@@ -119,11 +130,23 @@ jobs:
   odov3:
     name: with odo v3
     runs-on: ubuntu-latest
+    needs: [odov2, non-terminating, validate-devfile-schema]
     steps:
       - name: Checkout
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           fetch-depth: 0
+
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: false
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
 
       - name: Setup Minikube
         uses: manusa/actions-setup-minikube@e2f60d2f9e42413a916781a805284e79ccabaf54 # v2.10.0
@@ -132,7 +155,7 @@ jobs:
           kubernetes version: ${{ env.KUBERNETES_VERSION }}
           driver: "docker"
           github token: ${{ secrets.GITHUB_TOKEN }}
-          start args: "--addons=ingress"
+          start args: "--addons=ingress ${{ env.MINIKUBE_RESOURCES }}"
 
       - name: Install Go
         uses: actions/setup-go@0c52d547c9bc32b1aa3301fd7a9cb496313a4491 # v5.0.0
