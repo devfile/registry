@@ -29,6 +29,7 @@ concurrency:
 
 env:
   MINIKUBE_VERSION: "v1.29.0"
+  MINIKUBE_RESOURCES: "--memory 14gb --cpus 4"
   KUBERNETES_VERSION: "v1.25.2"
   TEST_DELTA: false
 
@@ -73,7 +74,7 @@ jobs:
           kubernetes version: ${{ env.KUBERNETES_VERSION }}
           driver: "docker"
           github token: ${{ secrets.GITHUB_TOKEN }}
-          start args: "--addons=ingress"
+          start args: "--addons=ingress ${{ env.MINIKUBE_RESOURCES }}"
 
       - name: Test delta if on a pull request
         if: ${{ github.event_name == 'pull_request' }}
