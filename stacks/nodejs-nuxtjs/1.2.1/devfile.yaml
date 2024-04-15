@@ -25,7 +25,7 @@ components:
         - name: https-nuxtjs
           protocol: https
           targetPort: 3000
-      image: registry.access.redhat.com/ubi8/nodejs-18:1-94
+      image: registry.access.redhat.com/ubi8/nodejs-18:1-102
       args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
     name: runtime
