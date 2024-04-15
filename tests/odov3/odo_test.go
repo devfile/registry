@@ -315,7 +315,7 @@ func waitForHttp(url string, expectedCode int) error {
 func waitForPort(devError chan error) ([]ForwardedPort, error) {
 	args := []string{"describe", "component", "-o", "json"}
 
-	maxTries := 20
+	maxTries := 50
 	delay := 10 * time.Second
 
 	stdout := []byte{}
