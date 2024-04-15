@@ -24,7 +24,7 @@ components:
       memoryLimit: 768Mi
       mountSources: true
       endpoints:
-        - name: https-springboot
+        - name: https-springbt
           targetPort: 8080
           protocol: https
         - exposure: none
