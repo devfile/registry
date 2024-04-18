@@ -39,8 +39,7 @@ ginkgo run --procs 2 \
   --skip="stack: java-wildfly" \
   --skip="stack: java-openliberty" \
   --skip="stack: java-websphereliberty" \
-  --skip="stack: java-quarkus version: 1.3.0 starter: community" \
-  --skip="stack: java-quarkus version: 1.4.0 starter: community" \
+  --skip="stack: java-quarkus" \
   --slow-spec-threshold 120s \
   --timeout 3h \
   tests/odov3 -- -stacksPath "$(pwd)"/stacks -stackDirs "$stackDirs"
