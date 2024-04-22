@@ -165,7 +165,7 @@ jobs:
 
       - name: Install odo latest version
         run: |
-          curl -L https://s3.eu-de.cloud-object-storage.appdomain.cloud/odo-nightly-builds/odo-linux-amd64.sha256 -o odo
+          curl -L https://s3.eu-de.cloud-object-storage.appdomain.cloud/odo-nightly-builds/odo-linux-amd64 -o odo
           sudo install -m 0755 odo /usr/local/bin/odo
           mkdir -p $HOME/bin 
           cp ./odo $HOME/bin/odo
