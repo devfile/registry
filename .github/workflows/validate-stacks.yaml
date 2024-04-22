@@ -91,7 +91,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
         with:
           fetch-depth: 0
-      
+
       - name: Free Disk Space
         uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be #v1.3.1
         with:
@@ -163,16 +163,17 @@ jobs:
         with:
           go-version: "1.19"
 
-      - name: Install odo v3
-        uses: redhat-actions/openshift-tools-installer@2de9a80cf012ad0601021515481d433b91ef8fd5 # v1
-        with:
-          odo: "3.15.0"
+      - name: Install odo latest version
+        run: |
+          curl -L https://s3.eu-de.cloud-object-storage.appdomain.cloud/odo-nightly-builds/odo-linux-amd64.sha256 -o odo.sha256
+          echo "$(<odo.sha256)  odo" | shasum -a 256 --check
+          sudo apt install -m 0755 odo /usr/local/bin/odo
+          mkdir -p $HOME/bin 
+          cp ./odo $HOME/bin/odo
+          export PATH=$PATH:$HOME/bin
 
       - name: Install Ginkgo
         run: go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@v2.13.0
-
-      - name: Check odo version
-        run: odo version
 
       - name: Test delta if on a pull request
         if: ${{ github.event_name == 'pull_request' }}
