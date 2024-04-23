@@ -15,7 +15,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-schemaVersion: 2.1.0
+schemaVersion: 2.2.2
 metadata:
   name: java-websphereliberty
   displayName: WebSphere Liberty Maven
@@ -31,7 +31,7 @@ metadata:
     - s390x
   language: Java
   projectType: WebSphere Liberty
-  version: 0.9.0
+  version: 0.10.0
   alpha.build-dockerfile: https://github.com/OpenLiberty/devfile-stack/releases/download/websphere-liberty-maven-0.8.1/Dockerfile
   alpha.deployment-manifest: https://github.com/OpenLiberty/devfile-stack/releases/download/websphere-liberty-maven-0.8.1/app-deploy.yaml
 starterProjects:
@@ -55,9 +55,9 @@ components:
       endpoints:
         - exposure: public
           path: /
-          name: http-websphere
+          name: https-websphere
           targetPort: 9080
-          protocol: http
+          protocol: https
         - exposure: none
           name: debug
           targetPort: 5858
