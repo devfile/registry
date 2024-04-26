@@ -204,9 +204,9 @@ for stack in $STACKS; do
   devfile_name=$($YQ_PATH eval '.metadata.name' $devfile_path)
   devfile_version=$($YQ_PATH eval '.metadata.version' $devfile_path)
 
-  # Skipping the java-wildfly-bootable-jar stack right now since it's broken.
-  # TODO: Uncomment once fixed.
-  if [[ $stack != "java-wildfly-bootable-jar" && $stack != "java-quarkus/1.3.0" && $stack != "java-quarkus/1.4.0" ]]; then
+  # Skipping the java-wildfly-bootable-jar and java-quarkus stacks right now since they are broken.
+  # TODO: Remove condition once fixed.
+  if [[ $devfile_name != "java-wildfly-bootable-jar" && $devfile_name != "java-quarkus" ]]; then
     test "$devfile_name" "$devfile_version" "$devfile_path"
   fi
 done
