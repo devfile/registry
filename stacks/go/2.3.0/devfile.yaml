@@ -30,8 +30,8 @@ components:
     kubernetes:
       uri: kubernetes/deploy.yaml
       endpoints:
-      - name: http-8080
-        targetPort: 8080
+      - name: http-8081
+        targetPort: 8081
   - container:
       endpoints:
         - name: http-go
