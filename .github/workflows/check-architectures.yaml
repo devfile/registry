@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4.1.1
+        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
       - name: Install yq command
         uses: redhat-actions/openshift-tools-installer@2de9a80cf012ad0601021515481d433b91ef8fd5 # v1
         with:
@@ -53,7 +53,7 @@ jobs:
         continue-on-error: true
         run: bash tests/check_architectures.sh "${{ env.GIT_DIFF }}" yq >> ./pr/output
       - name: Find Comment in PR
-        uses: peter-evans/find-comment@d5fe37641ad8451bdd80312415672ba26c86575e # v3.0.0
+        uses: peter-evans/find-comment@3eae4d37986fb5a8592848f6a574fdf654e61f9e # v3.1.0
         id: find
         with:
           issue-number: ${{ github.event.number }}
@@ -62,7 +62,7 @@ jobs:
       - name: Save Comment ID
         if: ${{ steps.find.outputs.comment-id != '' }}
         run: echo ${{ steps.find.outputs.comment-id }} > ./pr/commentid
-      - uses: actions/upload-artifact@5d5d22a31266ced268874388b861e4b58bb5c2f3 # v4.3.1
+      - uses: actions/upload-artifact@65462800fd760344b1a7b4382951275a0abb4808 # v4.3.3
         with:
           name: pr
           path: pr/
