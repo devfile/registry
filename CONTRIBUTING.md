@@ -68,6 +68,16 @@ Updating an existing devfile stack is relatively straightforward:
     - Minimally, testing with odo v2 (`odo create`, `odo push`, etc) and odo v3 (`odo init`, `odo dev`, etc) is recommended, however if your Devfile is used with other tools, it's recommended to test there as well.
 5) Open a pull request against this repository with your changes.
 
+### Registry Stack Review Process
+
+For every PR, containing updates for registry stacks the review process is: 
+
+* All CODEOWNERS related with the stack are requested to provide their review.
+* The PR should be first approved from the stack owner & one eclipse che team member.
+* A devfile-services team member should confirm that the PR has the required reviews and if yes, merge it.
+
+For more informations about stack owners please take a look at the [CODEOWNERS](./.github/CODEOWNERS) file.
+
 ### Automatic Stack Image Update
 
 As images used inside the stacks need to be up-to-date and in order to avoid using the `latest` tag, the renovate bot runs periodically ensuring that all images used from stacks (for example, inside components) have the latest version. As a result, all images used inside a devfile of a stack need to have a fixed version (e.g `1.1.0`) instead of `latest`.
@@ -159,19 +169,19 @@ To update a sample:
 3) Make the necessary changes.
 4) Open a pull request against this repository with your changes.
 
-### How to Test Changes
+## How to Test Changes
 
-#### Odo
+### Odo
 
 odo v2: `odo create` and `odo push` to test devfile changes. See [odo v2 Doc](https://odo.dev/docs/2.5.0/using-odo/create-component) for more details.
 
 odo V3: `odo init` and `odo dev` to test devfile changes. See [odo v3 Doc](https://odo.dev/docs/command-reference/init) for more details.
 
-#### Che
+### Che
 
 Opening the URL `https://workspaces.openshift.com/#<repository_url>` in your browser should start a workspace where `exec` commands run successfully. Type `task+<space>` in the IDE command palette to see the list of available commands.
 
-#### Console
+### Console
 
 In developer view, create an application via `Import from Git`. Provide git repository Url and verify if the application can be built and ran successfully.
 Note: Currently Console only works with devfile v2.2.0 samples with outer loop support.
