@@ -91,7 +91,7 @@ jobs:
         uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
         with:
           fetch-depth: 0
-      
+
       - name: Free Disk Space
         uses: jlumbroso/free-disk-space@54081f138730dfa15788a46383842cd2f914a1be #v1.3.1
         with:
@@ -163,10 +163,10 @@ jobs:
         with:
           go-version: "1.19"
 
-      - name: Install odo v3
-        uses: redhat-actions/openshift-tools-installer@2de9a80cf012ad0601021515481d433b91ef8fd5 # v1
-        with:
-          odo: "3.15.0"
+      - name: Install odo latest version
+        run: |
+          curl -L https://s3.eu-de.cloud-object-storage.appdomain.cloud/odo-nightly-builds/odo-linux-amd64 -o odo
+          sudo install -m 0755 odo /usr/local/bin/odo
 
       - name: Install Ginkgo
         run: go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@v2.13.0
