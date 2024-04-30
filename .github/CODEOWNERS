@@ -1,11 +1,52 @@
-# Devfile owned stacks
-/stacks/nodejs-angular/ @devfile/devfile-services-team
-/stacks/python-django/ @devfile/devfile-services-team
-/stacks/go/ @devfile/devfile-services-team
-/stacks/php-laravel/ @devfile/devfile-services-team
-/stacks/nodejs-nextjs/ @devfile/devfile-services-team
-/stacks/nodejs-nuxtjs/ @devfile/devfile-services-team
-/stacks/python/ @devfile/devfile-services-team
-/stacks/nodejs-react/ @devfile/devfile-services-team
-/stacks/nodejs-svelte/ @devfile/devfile-services-team
-/stacks/nodejs-vue/ @devfile/devfile-services-team
+# Global owners:
+# The /devfile/devfile-services-team is the global owner for all files in the repo
+# unless another mention takes precedence.
+*   @devfile/devfile-services-team
+
+# Stack owners:
+# 1. The devfile/che-team is mentioned as an owner because a review is required
+# for every PR that updates stacks.
+# 2. As you may notice some stacks are owned by the devfile/devfile-services-team
+# directly.
+# 3. All the owner mentions follow the format below:  
+# <path-to-the-stack-dir> @owner @reviwer-team
+
+# .Net stacks
+/stacks/dotnet50/       @kadel @devfile/che-team
+/stacks/dotnet60/       @kadel @devfile/che-team
+/stacks/dotnetcore31/   @kadel @devfile/che-team
+
+# Golang stacks
+/stacks/go/     @devfile/devfile-services-team @devfile/che-team
+
+# Java stacks
+/stacks/java-maven/                      @kadel @devfile/che-team
+/stacks/java-openliberty/                @kadel @devfile/che-team
+/stacks/java-openliberty-gradle/         @ajm01 @devfile/che-team
+/stacks/java-quarkus/                    @maxandersen @devfile/che-team
+/stacks/java-springboot/                 @kadel @devfile/che-team
+/stacks/java-vertx/                      @kadel @devfile/che-team
+/stacks/java-websphereliberty/           @ajm01 @devfile/che-team
+/stacks/java-websphereliberty-gradle/    @ajm01 @devfile/che-team
+/stacks/java-wildfly/                    @ehsavoie @devfile/che-team
+/stacks/java-wildfly-bootable-jar/       @ehsavoie @devfile/che-team
+
+# Node.js stacks
+/stacks/nodejs/         @BethGriggs @devfile/che-team
+/stacks/nodejs-angular/ @devfile/devfile-services-team @devfile/che-team
+/stacks/nodejs-nextjs/  @devfile/devfile-services-team @devfile/che-team
+/stacks/nodejs-nuxtjs/  @devfile/devfile-services-team @devfile/che-team
+/stacks/nodejs-react/   @devfile/devfile-services-team @devfile/che-team
+/stacks/nodejs-svelte/  @devfile/devfile-services-team @devfile/che-team
+/stacks/nodejs-vue/     @devfile/devfile-services-team @devfile/che-team
+
+# PHP stacks
+/stacks/php-laravel/    @devfile/devfile-services-team @devfile/che-team
+
+# Python stacks
+/stacks/python/         @devfile/devfile-services-team @devfile/che-team
+/stacks/python-django/  @devfile/devfile-services-team @devfile/che-team
+
+# Other stacks
+# *The udi stack has two owners
+/stacks/udi             @ibuziuk @l0rd @devfile/che-team
