@@ -21,7 +21,7 @@ starterProjects:
 components:
   - name: tools
     container:
-      image: registry.access.redhat.com/ubi8/openjdk-17:1.18-2
+      image: registry.access.redhat.com/ubi8/openjdk-17:1.19-4.1715070735
       args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi ## default app nowhere needs this but leaving room for expansion.
       mountSources: true
