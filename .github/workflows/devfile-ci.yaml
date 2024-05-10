@@ -36,13 +36,13 @@ jobs:
       ODO_PUSH_IMAGES: false
     steps:
       - name: Check out code
-        uses: actions/checkout@0ad4b8fadaa221de15dcec353f45205ec38ea70b # v4.1.4
+        uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b # v4.1.5
       - name: Install odo v3
         uses: redhat-actions/openshift-tools-installer@2de9a80cf012ad0601021515481d433b91ef8fd5 # v1
         with:
           odo: ${{ env.ODOV3_VERSION }}
       - name: Setup Minikube
-        uses: manusa/actions-setup-minikube@e2f60d2f9e42413a916781a805284e79ccabaf54 # v2.10.0
+        uses: manusa/actions-setup-minikube@92af4db914ab207f837251cd53eb7060e6477614 # v2.11.0
         with:
           minikube version: 'v1.31.2'
           kubernetes version: 'v1.26.3'
