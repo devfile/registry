@@ -92,7 +92,7 @@ starterProjects:
 components:
   - name: jaeger
     container:
-      image: quay.io/jaegertracing/all-in-one:1.54
+      image: quay.io/jaegertracing/all-in-one:1.57
       memoryLimit: 128Mi
       endpoints:
         - name: tracing-ui-jar
