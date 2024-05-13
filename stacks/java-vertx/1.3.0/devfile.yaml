@@ -99,7 +99,7 @@ components:
         - exposure: none
           name: debug
           targetPort: 5858
-      image: registry.access.redhat.com/ubi8/openjdk-11:1.18-2.1705602259
+      image: registry.access.redhat.com/ubi8/openjdk-11:1.19-4.1715070694
       command: ["tail", "-f", "/dev/null"]
       memoryLimit: 512Mi
       mountSources: true
