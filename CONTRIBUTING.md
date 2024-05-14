@@ -65,8 +65,18 @@ Updating an existing devfile stack is relatively straightforward:
     - When updating a stack with a newer version of the devfile specification (e.g., 2.1.0 -> 2.2.0), the previous version of the stack **must** be kept for a minimum of one (1) year.
 4) Test your changes:
 
-    - Minimally, testing with odo v2 (`odo create`, `odo push`, etc) and odo v3 (`odo init`, `odo dev`, etc) is recommended, however if your Devfile is used with other tools, it's recommended to test there as well.
+    - Minimally, testing with odo v2 (`odo create`, `odo push`, etc), odo v3 (`odo init`, `odo dev`, etc) and che (see [How to Test Changes > Che](https://github.com/devfile/registry/blob/main/CONTRIBUTING.md#che)) is recommended, however if your Devfile is used with other tools, it's recommended to test there as well.
 5) Open a pull request against this repository with your changes.
+
+### Registry Stack Review Process
+
+For every PR, containing updates for registry stacks the review process is: 
+
+* All CODEOWNERS related with the stack are requested to provide their review.
+* The PR should be first approved from the stack owner & one eclipse che team member.
+* A devfile-services team member should confirm that the PR has the required reviews and if yes, merge it.
+
+For more informations about stack owners please take a look at the [CODEOWNERS](./.github/CODEOWNERS) file.
 
 ### Automatic Stack Image Update
 
@@ -159,19 +169,19 @@ To update a sample:
 3) Make the necessary changes.
 4) Open a pull request against this repository with your changes.
 
-### How to Test Changes
+## How to Test Changes
 
-#### Odo
+### Odo
 
 odo v2: `odo create` and `odo push` to test devfile changes. See [odo v2 Doc](https://odo.dev/docs/2.5.0/using-odo/create-component) for more details.
 
 odo V3: `odo init` and `odo dev` to test devfile changes. See [odo v3 Doc](https://odo.dev/docs/command-reference/init) for more details.
 
-#### Che
+### Che
 
-Opening the URL `https://workspaces.openshift.com/#<repository_url>` in your browser should start a workspace where `exec` commands run successfully. Type `task+<space>` in the IDE command palette to see the list of available commands.
+Opening the URL https://workspaces.openshift.com/#<repository_url> in your browser should start a workspace where exec commands run successfully. Type `task devfile` and press the `Enter` key in the IDE command palette to see the list of available devfile commands. Then, run all devfile commands one by one, to ensure they are executed successfully.
 
-#### Console
+### Console
 
 In developer view, create an application via `Import from Git`. Provide git repository Url and verify if the application can be built and ran successfully.
 Note: Currently Console only works with devfile v2.2.0 samples with outer loop support.
