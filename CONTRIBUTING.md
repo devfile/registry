@@ -179,7 +179,7 @@ odo V3: `odo init` and `odo dev` to test devfile changes. See [odo v3 Doc](https
 
 ### Che
 
-Opening the URL `https://workspaces.openshift.com/#<repository_url>` in your browser should start a workspace where `exec` commands run successfully. Type `task+<space>` in the IDE command palette to see the list of available commands.
+Opening the URL https://workspaces.openshift.com/#<repository_url> in your browser should start a workspace where exec commands run successfully. Type `task devfile` and press the `Enter` key in the IDE command palette to see the list of available devfile commands. Then, run all devfile commands one by one, to ensure they are executed successfully.
 
 ### Console
 
