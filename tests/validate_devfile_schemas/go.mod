@@ -3,7 +3,7 @@ module github.com/devfile/registry/tests/validate_devfiles
 go 1.19
 
 require (
-	github.com/devfile/library/v2 v2.2.2-0.20240315205431-44ca18d63cf4
+	github.com/devfile/library/v2 v2.2.2
 	github.com/onsi/ginkgo/v2 v2.13.0
 	github.com/onsi/gomega v1.29.0
 )
@@ -21,9 +21,9 @@ require (
 	github.com/containerd/log v0.1.0 // indirect
 	github.com/cyphar/filepath-securejoin v0.2.4 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
-	github.com/devfile/api/v2 v2.2.1 // indirect
+	github.com/devfile/api/v2 v2.2.2 // indirect
 	github.com/devfile/registry-support/index/generator v0.0.0-20240311135803-6215550f93d4 // indirect
-	github.com/devfile/registry-support/registry-library v0.0.0-20240311160550-e51ee8934746 // indirect
+	github.com/devfile/registry-support/registry-library v0.0.0-20240328155806-7c89891a72ce // indirect
 	github.com/distribution/distribution/v3 v3.0.0-20221208165359-362910506bc2 // indirect
 	github.com/distribution/reference v0.5.0 // indirect
 	github.com/docker/cli v25.0.1+incompatible // indirect
