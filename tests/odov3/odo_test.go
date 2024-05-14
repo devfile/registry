@@ -153,12 +153,6 @@ var _ = Describe("test starter projects from devfile stacks", func() {
 	for _, stack := range stacks {
 		stack := stack
 
-		// TEMP: ignore testing schema versions 2.2.2 & 2.2.1 due to odo incompatibility
-		// related issue: https://github.com/devfile/api/issues/1494
-		if stack.schemaVersion == "2.2.1" || stack.schemaVersion == "2.2.2" {
-			continue
-		}
-
 		if len(stack.starterProjects) == 0 {
 			It(fmt.Sprintf("stack: %s version: %s no_starter", stack.name, stack.version), func() {
 				// No starter projects defined in Devfile => let's start a Dev Session with --no-commands
