@@ -65,7 +65,7 @@ Updating an existing devfile stack is relatively straightforward:
     - When updating a stack with a newer version of the devfile specification (e.g., 2.1.0 -> 2.2.0), the previous version of the stack **must** be kept for a minimum of one (1) year.
 4) Test your changes:
 
-    - Minimally, testing with odo v2 (`odo create`, `odo push`, etc) and odo v3 (`odo init`, `odo dev`, etc) is recommended, however if your Devfile is used with other tools, it's recommended to test there as well.
+    - Minimally, testing with odo v2 (`odo create`, `odo push`, etc), odo v3 (`odo init`, `odo dev`, etc) and che (see [How to Test Changes > Che](https://github.com/devfile/registry/blob/main/CONTRIBUTING.md#che)) is recommended, however if your Devfile is used with other tools, it's recommended to test there as well.
 5) Open a pull request against this repository with your changes.
 
 ### Registry Stack Review Process
