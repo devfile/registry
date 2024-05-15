@@ -1,4 +1,4 @@
-schemaVersion: 2.2.0
+schemaVersion: 2.2.2
 metadata:
   name: nodejs-angular
   displayName: Angular
@@ -25,6 +25,7 @@ components:
   - container:
       endpoints:
         - name: http-angular
+          protocol: https
           targetPort: 4200
       image: registry.access.redhat.com/ubi8/nodejs-18:1-102
       args: ["tail", "-f", "/dev/null"]
