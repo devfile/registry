@@ -22,7 +22,7 @@ starterProjects:
 components:
   - name: py-web
     container:
-      image: registry.access.redhat.com/ubi9/python-39:1-172.1712567222
+      image: registry.access.redhat.com/ubi9/python-39:1-182.1714671018
       args: ["tail", "-f", "/dev/null"]
       mountSources: true
       endpoints:
