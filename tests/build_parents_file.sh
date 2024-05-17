@@ -7,6 +7,8 @@ samples_dir=$(pwd)/samples/.cache
 # default stacks directory
 stacks_dir=${STACKS:-"$(pwd)/stacks"}
 parents_file=$(pwd)/parents.yaml
+# Base directory path
+base_path=$(realpath $(dirname $(dirname $0)))
 
 # YAML query cmd path
 YQ_PATH=${YQ_PATH:-yq}
@@ -16,34 +18,6 @@ YQ_PATH=${YQ_PATH:-yq}
 if [ ! -z "${1}" ]; then
     samples_file=${1}
 fi
-
-# Clones remote samples into cache directory
-clone_samples() {
-    samples_len=$($YQ_PATH eval '.samples | length' ${samples_file})
-
-    # Removes old cached samples directory
-    if [ -d ${samples_dir} ]; then
-        rm -rf ${samples_dir}
-    fi
-
-    for ((s_idx=0;s_idx<${samples_len};s_idx++)); do
-        name=$($YQ_PATH eval .samples.${s_idx}.name ${samples_file})
-        versions=($($YQ_PATH eval .samples.${s_idx}.versions.[].version ${samples_file}))
-
-        # Iterate through sample versions if sample has multi version support
-        if [ ${#versions[@]} -ne 0 ]; then
-            for ((v_idx=0;v_idx<${#versions[@]};v_idx++)); do
-                remote_url=$($YQ_PATH eval .samples.${s_idx}.versions.${v_idx}.git.remotes.origin ${samples_file})
-
-                git clone --depth=1 ${remote_url} ${samples_dir}/${name}/${versions[$v_idx]}
-            done
-        else
-            remote_url=$($YQ_PATH eval .samples.${s_idx}.git.remotes.origin ${samples_file})
-
-            git clone --depth=1 ${remote_url} ${samples_dir}/${name}
-        fi
-    done
-}
 
 get_parent_version() {
     devfile=$1
@@ -229,7 +203,12 @@ get_children_of_parents() {
     echo ${children[@]}
 }
 
-clone_samples
+if [ ! -d ${base_path}/registry-support ]
+then
+    git clone https://github.com/devfile/registry-support ${base_path}/registry-support
+fi
+
+bash ${base_path}/registry-support/build-tools/cache_samples.sh ${samples_file} ${samples_dir}
 
 if [ -f ${parents_file} ]; then
     rm ${parents_file}
@@ -237,4 +216,4 @@ fi
 
 build_parents_file
 
-echo $(get_children_of_parents)
+get_children_of_parents
