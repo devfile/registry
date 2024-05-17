@@ -35,7 +35,7 @@ components:
         - name: ASPNETCORE_URLS
           value: http://*:8080
       endpoints:
-        - name: http-dotnetcore
+        - name: https-dotnetcore
           protocol: https
           targetPort: 8080
 commands:
