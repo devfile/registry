@@ -29,7 +29,9 @@ concurrency:
 
 env:
   MINIKUBE_VERSION: "v1.29.0"
+  MINIKUBE_RESOURCES: "--memory 14gb --cpus 4"
   KUBERNETES_VERSION: "v1.25.2"
+  YQ_VERSION: "v4.44.1"
   TEST_DELTA: false
 
 jobs:
@@ -49,6 +51,9 @@ jobs:
 
       - name: Install Ginkgo
         run: go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@v2.5.0
+
+      - name: Install yq
+        run: curl -sL -O https://github.com/mikefarah/yq/releases/download/${{ env.YQ_VERSION }}/yq_linux_amd64 -o /usr/local/bin/yq && mv ./yq_linux_amd64 /usr/local/bin/yq && chmod +x /usr/local/bin/yq
 
       - name: Test delta if on a pull request
         if: ${{ github.event_name == 'pull_request' }}
