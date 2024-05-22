@@ -40,17 +40,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@44c2b7a8a4ea60a981eaca3cf939b5f4305c123b # v4.1.5
         with:
           fetch-depth: 0
 
       - name: Install Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@cdcb36043654635271a94b9a6d1392de5bb323a7 # v5.0.1
         with:
           go-version: "1.19"
 
       - name: Install Ginkgo
-        run: go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@v2.5.0
+        run: go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@v2.13.0
 
       - name: Install yq
         run: curl -sL -O https://github.com/mikefarah/yq/releases/download/${{ env.YQ_VERSION }}/yq_linux_amd64 -o /usr/local/bin/yq && mv ./yq_linux_amd64 /usr/local/bin/yq && chmod +x /usr/local/bin/yq
