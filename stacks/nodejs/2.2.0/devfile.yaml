@@ -1,4 +1,4 @@
-schemaVersion: 2.1.0
+schemaVersion: 2.2.0
 metadata:
   name: nodejs
   displayName: Node.js Runtime
@@ -27,8 +27,9 @@ components:
         - name: DEBUG_PORT
           value: '5858'
       endpoints:
-        - name: http-node
+        - name: https-node
           targetPort: 3000
+          protocol: https
         - exposure: none
           name: debug
           targetPort: 5858
