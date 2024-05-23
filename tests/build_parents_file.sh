@@ -1,5 +1,27 @@
 #!/bin/bash
 
+POSITIONAL_ARGS=()
+VERBOSE="false"
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -v|--verbose)
+      VERBOSE="true"
+      shift # past argument
+      ;;
+    -*|--*)
+      echo "Unknown option $1"
+      exit 1
+      ;;
+    *)
+      POSITIONAL_ARGS+=("$1") # save positional arg
+      shift # past argument
+      ;;
+  esac
+done
+
+set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
+
 # default samples file path
 samples_file=$(pwd)/extraDevfileEntries.yaml
 # Cached remote samples directory
@@ -205,10 +227,20 @@ get_children_of_parents() {
 
 if [ ! -d ${base_path}/registry-support ]
 then
-    git clone https://github.com/devfile/registry-support ${base_path}/registry-support
+    if [ "$VERBOSE" == "true" ]
+    then
+        git clone https://github.com/devfile/registry-support ${base_path}/registry-support
+    else
+        git clone -q https://github.com/devfile/registry-support ${base_path}/registry-support
+    fi
 fi
 
-bash ${base_path}/registry-support/build-tools/cache_samples.sh ${samples_file} ${samples_dir}
+if [ "$VERBOSE" == "true" ]
+then
+    bash ${base_path}/registry-support/build-tools/cache_samples.sh ${samples_file} ${samples_dir}
+else
+    bash ${base_path}/registry-support/build-tools/cache_samples.sh ${samples_file} ${samples_dir} > /dev/null 2>&- echo
+fi
 
 if [ -f ${parents_file} ]; then
     rm ${parents_file}
