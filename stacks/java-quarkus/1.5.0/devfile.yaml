@@ -1,0 +1,70 @@
+schemaVersion: 2.2.0
+metadata:
+  name: java-quarkus
+  displayName: Quarkus Java
+  description: Java application using Quarkus and OpenJDK 21
+  icon: https://design.jboss.org/quarkus/logo/final/SVG/quarkus_icon_rgb_default.svg
+  tags:
+    - Java
+    - Quarkus
+  projectType: Quarkus
+  language: Java
+  version: 1.5.0
+  website: https://quarkus.io
+starterProjects:
+  - name: community
+    zip:
+      location: https://code.quarkus.io/d?e=io.quarkus%3Aquarkus-resteasy&e=io.quarkus%3Aquarkus-micrometer&e=io.quarkus%3Aquarkus-smallrye-health&e=io.quarkus%3Aquarkus-openshift&cn=devfile&j=21
+  - name: redhat-product
+    zip:
+      location: https://code.quarkus.redhat.com/d?e=io.quarkus%3Aquarkus-resteasy&e=io.quarkus%3Aquarkus-smallrye-health&e=io.quarkus%3Aquarkus-openshift&j=21
+components:
+  - name: tools
+    container:
+      image: registry.access.redhat.com/ubi8/openjdk-21:1.19-1
+      args: ['tail', '-f', '/dev/null']
+      memoryLimit: 1024Mi ## default app nowhere needs this but leaving room for expansion.
+      mountSources: true
+      volumeMounts:
+        - name: m2
+          path: /home/user/.m2
+      endpoints:
+        - name: https-quarkus
+          targetPort: 8080
+          protocol: https
+        - exposure: none
+          name: debug
+          targetPort: 5858
+      env:
+        - name: DEBUG_PORT
+          value: '5858'
+  - name: m2
+    volume:
+      size: 3Gi
+commands:
+  - id: init-compile
+    exec:
+      component: tools
+      commandLine: './mvnw -Dmaven.repo.local=/home/user/.m2/repository compile'
+      workingDir: ${PROJECT_SOURCE}
+  - id: dev-run
+    exec:
+      component: tools
+      commandLine: './mvnw -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager'
+      hotReloadCapable: true
+      group:
+        kind: run
+        isDefault: true
+      workingDir: ${PROJECT_SOURCE}
+  - id: dev-debug
+    exec:
+      component: tools
+      commandLine: './mvnw -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager -Ddebug=${DEBUG_PORT}'
+      hotReloadCapable: true
+      group:
+        kind: debug
+        isDefault: true
+      workingDir: ${PROJECT_SOURCE}
+events:
+  postStart:
+    - init-compile
