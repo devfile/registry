@@ -28,9 +28,6 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  MINIKUBE_VERSION: "v1.29.0"
-  MINIKUBE_RESOURCES: "--memory 14gb --cpus 4"
-  KUBERNETES_VERSION: "v1.25.2"
   YQ_VERSION: "v4.44.1"
   TEST_DELTA: false
 
