@@ -90,8 +90,8 @@ child_index() {
     fi
 }
 
-# Builds sample parents
-build_parents() {
+# Builds sample parent
+build_parent() {
     parent_name=$1
     parent_version=$2
 
@@ -131,8 +131,8 @@ build_parents() {
     fi
 }
 
-# Builds children of parent stacks
-build_children() {
+# Builds a child of a parent stack
+build_child() {
     parent_name=$1
     parent_version=$2
     sample_name=$3
@@ -172,20 +172,20 @@ build_parents_file() {
                 devfile=${samples_dir}/${sample_name}/${sample_versions[$v_idx]}/devfile.yaml
                 parent_name=$($YQ_PATH eval .parent.id ${devfile})
                 parent_version=$(get_parent_version ${devfile} ${parent_name})
-                build_parents ${parent_name} ${parent_version}
+                build_parent ${parent_name} ${parent_version}
 
                 if [ $? -eq 0 ]; then
-                    build_children "${parent_name}" "${parent_version}" "${sample_name}" "${sample_versions[$v_idx]}"
+                    build_child "${parent_name}" "${parent_version}" "${sample_name}" "${sample_versions[$v_idx]}"
                 fi
             done
         else
             devfile=${samples_dir}/${sample_name}/devfile.yaml
             parent_name=$($YQ_PATH eval .parent.id ${devfile})
             parent_version=$(get_parent_version ${devfile} ${parent_name})
-            build_parents ${parent_name} ${parent_version}
+            build_parent ${parent_name} ${parent_version}
 
             if [ $? -eq 0 ]; then
-                build_children "${parent_name}" "${parent_version}" "${sample_name}" ""
+                build_child "${parent_name}" "${parent_version}" "${sample_name}" ""
             fi
         fi
     done
