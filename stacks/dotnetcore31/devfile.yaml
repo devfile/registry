@@ -1,4 +1,4 @@
-schemaVersion: 2.1.0
+schemaVersion: 2.2.2
 metadata:
   name: dotnetcore31
   displayName: .NET Core 3.1
@@ -35,7 +35,8 @@ components:
         - name: ASPNETCORE_URLS
           value: http://*:8080
       endpoints:
-        - name: http-dotnetcore
+        - name: https-dotnet
+          protocol: https
           targetPort: 8080
 commands:
   - id: build
