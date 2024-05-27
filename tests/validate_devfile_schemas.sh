@@ -2,11 +2,16 @@
 
 POSITIONAL_ARGS=()
 SAMPLES="false"
+VERBOSE="false"
 
 while [[ $# -gt 0 ]]; do
   case $1 in
     -s|--samples)
       SAMPLES="true"
+      shift # past argument
+      ;;
+    -v|--verbose)
+      VERBOSE="true"
       shift # past argument
       ;;
     -*|--*)
@@ -33,9 +38,15 @@ fi
 
 # Unzip resource files if samples
 if [ "${SAMPLES}" == "true" ]; then
-  for sample_dir in $(ls $stacksDir); do
-    unzip -n $stacksDir/$sample_dir/sampleName.zip -d $stacksDir
-  done
+  if [ "${VERBOSE}" == "true" ]; then
+    for sample_dir in $(ls $stacksDir); do
+      unzip -n $stacksDir/$sample_dir/sampleName.zip -d $stacksDir
+    done
+  else
+    for sample_dir in $(ls $stacksDir); do
+      unzip -q -n $stacksDir/$sample_dir/sampleName.zip -d $stacksDir
+    done
+  fi
 fi
 
 ginkgo run --procs 2 \
