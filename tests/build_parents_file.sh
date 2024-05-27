@@ -25,7 +25,7 @@ set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
 # default samples file path
 samples_file=$(pwd)/extraDevfileEntries.yaml
 # Cached remote samples directory
-samples_dir=$(pwd)/samples/.cache
+samples_dir=$(pwd)/.cache/samples
 # default stacks directory
 stacks_dir=${STACKS:-"$(pwd)/stacks"}
 parents_file=$(pwd)/parents.yaml
