@@ -61,4 +61,4 @@ jobs:
 
       - name: Validate samples
         if: ${{ env.STACKS != '' }}
-        run: STACKS_DIR=$(pwd)/samples/.cache bash tests/validate_devfile_schemas.sh --samples
+        run: STACKS_DIR=$(pwd)/.cache/samples bash tests/validate_devfile_schemas.sh --samples
