@@ -21,7 +21,7 @@
 - One can test the child samples using the [validate_devfile_schemas](./validate_devfile_schemas/) test suite by performing the following:
 ```sh
 export STACKS=$(bash tests/build_parents_file.sh)
-STACKS_DIR=samples/.cache bash tests/validate_devfile_schemas.sh --samples
+STACKS_DIR=.cache/samples bash tests/validate_devfile_schemas.sh --samples
 ```
 
 ## Validating non-terminating images
