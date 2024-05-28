@@ -4,3 +4,5 @@ registry-support/
 devfile-web/
 vendor/
 .odo
+.cache
+parents.yaml
