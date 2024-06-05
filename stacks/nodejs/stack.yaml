@@ -5,4 +5,5 @@ icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main
 versions:
   - version: 2.1.1
   - version: 2.2.0
+  - version: 2.2.1
     default: true # should have one and only one default version
