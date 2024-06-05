@@ -13,7 +13,7 @@ samples:
     versions:
       - version: 3.0.0
         default: true
-        schemaVersion: 2.2.0
+        schemaVersion: 2.2.2
         git:
           revision: main
           remotes:
