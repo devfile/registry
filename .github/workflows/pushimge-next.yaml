@@ -42,13 +42,13 @@ jobs:
         uses: actions/setup-go@cdcb36043654635271a94b9a6d1392de5bb323a7 # v5.0.1
         with:
           go-version: 1.13
+      - name: Set up QEMU # Enables arm64 image building
+        uses: docker/setup-qemu-action@68827325e0b33c7199eb31dd4e31fbe9023e06e3 
       - name: Login to Quay
         uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
-      - name: Build the devfile-index docker image
-        run: bash registry-repo/.ci/build.sh
-      - name: Push the devfile-index docker image
-        run: bash registry-support/build-tools/push.sh quay.io/devfile/devfile-index:next
+      - name: Build and push the devfile-index docker image
+        run: bash registry-repo/.ci/build-multi-arch.sh

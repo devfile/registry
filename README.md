@@ -30,7 +30,16 @@ If you are a stack owner and need to request an urgent refresh of <https://regis
 
 ### Build
 
-To build this devfile registry into a container image run `bash .ci/build.sh`. A container image will be built using the [devfile registry build tools](https://github.com/devfile/registry-support/tree/master/build-tools). By default these scripts will use `docker`, if you want to use `podman` you should first run `export USE_PODMAN=true` before executing the build script.
+To build this devfile registry into a container image run `bash .ci/build.sh`. A container image will be built using the [devfile registry build tools](https://github.com/devfile/registry-support/tree/master/build-tools). By default these scripts will use `docker` and be built for the `linux/amd64` architecture. 
+
+To build using `podman` first run:
+```
+export USE_PODMAN=true
+```
+To build for `linux/arm64` run:
+```
+bash .ci/build.sh linux/arm64
+```
 
 From there, push the container image to a container registry of your choice and deploy using a [devfile adopted devtool](https://devfile.io/docs/2.2.0/developing-with-devfiles#tools-that-provide-devfile-support) or one of the methods outlined [here](https://github.com/devfile/registry-support#deploy).
 
