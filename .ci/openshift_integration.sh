@@ -34,15 +34,27 @@ YQ_VERSION=${YQ_VERSION:-v4.44.1}
 IMG="$(echo $REGISTRY_IMAGE | cut -d':' -f1)"
 TAG="$(echo $REGISTRY_IMAGE | cut -d':' -f2)"
 
+# Allow for yq dependency to be set based off desired architecture
+DEFAULT_ARCH="amd64"
+
+# Check if different architecture was passed for image build
+# Will default to $DEFAULT_ARCH if unset
+if [ ! -z "$1" ]
+  then
+    arch="$1"
+else
+    arch="$DEFAULT_ARCH"
+fi
+
 # Create a project/namespace for running the tests in
 oc new-project devfile-registry-test
 
 # Install yq
-curl -sL https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 -o yq && chmod +x yq
+curl -sL https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${arch} -o yq && chmod +x yq
 YQ_PATH=$(realpath yq)
 
 # Download odo
-curl -sL https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/v2.5.1/odo-linux-amd64 -o odo && chmod +x odo
+curl -sL https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/v2.5.1/odo-linux-${arch} -o odo && chmod +x odo
 export GLOBALODOCONFIG=$(pwd)/preferences.yaml
 
 # Install the devfile registry
