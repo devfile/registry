@@ -17,12 +17,11 @@ FROM registry.access.redhat.com/ubi8/go-toolset:1.21 AS builder
 # Set user as root
 USER root
 
-# Automatically set when --platform flag is set, will default to amd64 if no platform is given
-ARG TARGETARCH=amd64
+ARG BUILDARCH
 
 # Install yq
 ENV YQ_VERSION=v4.44.1
-RUN curl -sL -O https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${TARGETARCH} -o /usr/local/bin/yq && mv ./yq_linux_${TARGETARCH} /usr/local/bin/yq && chmod +x /usr/local/bin/yq
+RUN curl -sL -O https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${BUILDARCH} -o /usr/local/bin/yq && mv ./yq_linux_${BUILDARCH} /usr/local/bin/yq && chmod +x /usr/local/bin/yq
 
 COPY . /registry
 
