@@ -27,6 +27,9 @@ set -x
 # Disable telemtry for odo
 export ODO_DISABLE_TELEMETRY=true
 
+# Set yq version
+YQ_VERSION=${YQ_VERSION:-v4.44.1}
+
 # Split the registry image and image tag from the REGISTRY_IMAGE env variable
 IMG="$(echo $REGISTRY_IMAGE | cut -d':' -f1)"
 TAG="$(echo $REGISTRY_IMAGE | cut -d':' -f2)"
@@ -35,7 +38,7 @@ TAG="$(echo $REGISTRY_IMAGE | cut -d':' -f2)"
 oc new-project devfile-registry-test
 
 # Install yq
-curl -sL https://github.com/mikefarah/yq/releases/download/v4.9.5/yq_linux_amd64 -o yq && chmod +x yq
+curl -sL https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_amd64 -o yq && chmod +x yq
 YQ_PATH=$(realpath yq)
 
 # Download odo
