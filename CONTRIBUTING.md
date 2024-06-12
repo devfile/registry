@@ -32,7 +32,7 @@ Once you set your user.name and user.email in your git config, you can sign your
 
 For issues relating to a specific devfile stack in this repository, please reach out to the devfile stack maintainer to determine where to open an issue.
 
-For issues relating to the hosted devfile registry service (<https://registry.devfile.io>), or devfile registries in general, please use the [devfile/api](https://github.com/devfile/api/) issue tracker for opening issues. Apply the `area/registry` label to registry issues for better visibility.
+For issues relating to the hosted devfile registry service (<https://registry.devfile.io>), or devfile registries in general, please use the [devfile/api](https://github.com/devfile/api/issues) issue tracker for opening issues. Apply the `area/registry` label to registry issues for better visibility.
 
 ### Submitting Pull Request
 
