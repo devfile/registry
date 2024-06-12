@@ -1,4 +1,4 @@
-# Contributing to this registry
+# Contributing
 
 This document outlines the requirements for contributing a devfile stack or sample to this repository.
 
@@ -6,16 +6,56 @@ The [devfile registry structure](https://github.com/devfile/api/blob/main/docs/p
 
 When onboarding a new stack or sample, the  `Stack Provider` should read and agree to follow their roles and responsibilities outlined in the [Lifecycle](LIFECYCLE.md) doc.
 
-## Prerequisites
+## Code of Conduct
+
+Before contributing to this repository for the first time, please review our project's [Code of Conduct](https://github.com/devfile/api/blob/main/CODE_OF_CONDUCT.md).
+
+## Certificate of Origin
+
+By contributing to this project you agree to the Developer Certificate of
+Origin (DCO). This document was created by the Linux Kernel community and is a
+simple statement that you, as a contributor, have the legal right to make the
+contribution. See the [DCO](DCO) file for details.
+
+In order to show your agreement with the DCO you should include at the end of the commit message,
+the following line:
+
+```console
+Signed-off-by: Firstname Lastname <email@email.com>
+```
+
+Once you set your user.name and user.email in your git config, you can sign your commit automatically with `git commit -s`.
+
+## How to Contribute:
+
+### Issues
+
+For issues relating to a specific devfile stack in this repository, please reach out to the devfile stack maintainer to determine where to open an issue.
+
+For issues relating to the hosted devfile registry service (<https://registry.devfile.io>), or devfile registries in general, please use the [devfile/api](https://github.com/devfile/api/issues) issue tracker for opening issues. Apply the `area/registry` label to registry issues for better visibility.
+
+### Submitting Pull Request
+
+When you think the code is ready for review, create a pull request and link the issue associated with it.
+
+Owners of the repository will watch out for new PRs and provide reviews to them.
+
+If comments have been given in a review, they have to be addressed before merging.
+
+After addressing review comments, don't forget to add a comment in the PR with the reviewer mentioned afterward, so they get notified by Github to provide a re-review.
+
+See [Registry Stack Review Process](#registry-stack-review-process) for more information about the review process of devfile registry content.
+
+### Prerequisites
 
 The following are required to build the devfile index container image containing your stack or sample:
 
-- Docker 17.06 or later
+- Docker or Podman
 - Git
 
-## Instructions
+### Instructions for new registry entries
 
-1. Open an issue in the [devfile/api](https://github.com/devfile/api) repo to track adding a new stack or sample
+1. Open an [issue](#issues) to track adding a new stack or sample
 2. Avoid using container images (check for references in the Devfile and Dockerfile) from registries (like DockerHub) that impose rate limiting.  To workaround this, you can mirror the images to quay.io by using a similar approach to what the Devfile team has: https://github.com/devfile-samples/image-mirror/
 
 ### Stacks
@@ -51,6 +91,8 @@ The following are required to build the devfile index container image containing
 
     - This will also validate the devfiles in this repository, making sure they conform to a minimum standard.
     - This step will also be run in the PR build for the repository.
+    - Run `.ci/build.sh offline` to package online resources into
+    the image for offline / air gap environments.
 
 8) Open a pull request against this repository with a brief description of the change.
 
@@ -68,21 +110,21 @@ Updating an existing devfile stack is relatively straightforward:
     - Minimally, testing with odo v2 (`odo create`, `odo push`, etc), odo v3 (`odo init`, `odo dev`, etc) and che (see [How to Test Changes > Che](https://github.com/devfile/registry/blob/main/CONTRIBUTING.md#che)) is recommended, however if your Devfile is used with other tools, it's recommended to test there as well.
 5) Open a pull request against this repository with your changes.
 
+#### Automatic Stack Image Update
+
+As images used inside the stacks need to be up-to-date and in order to avoid using the `latest` tag, the renovate bot runs periodically ensuring that all images used from stacks (for example, inside components) have the latest version. As a result, all images used inside a devfile of a stack need to have a fixed version (e.g `1.1.0`) instead of `latest`.
+
 ### Registry Stack Review Process
 
 For every PR, containing updates for registry stacks the review process is: 
 
-* All CODEOWNERS related with the stack are requested to provide their review.
+* All [CODEOWNERS](./.github/CODEOWNERS) related with the stack are requested to provide their review.
 * The PR should be first approved from the stack owner & one eclipse che team member.
 * A devfile-services team member should confirm that the PR has the required reviews and if yes, merge it.
 
 For more informations about stack owners please take a look at the [CODEOWNERS](./.github/CODEOWNERS) file.
 
-### Automatic Stack Image Update
-
-As images used inside the stacks need to be up-to-date and in order to avoid using the `latest` tag, the renovate bot runs periodically ensuring that all images used from stacks (for example, inside components) have the latest version. As a result, all images used inside a devfile of a stack need to have a fixed version (e.g `1.1.0`) instead of `latest`.
-
-## Samples
+### Samples
 
 #### Contributing
 
@@ -115,7 +157,7 @@ The devfile samples used in this devfile registry are stored in the `extraDevfil
 5) Fill in the fields in the angle brackets based on your sample. Note that there must be only one git remote for the devfile sample.
 6) Open a pull request against this repository with your changes.
 
-### Adding a new version
+#### Adding a new version
 
 In case you want to add another version to a new devfile sample you can update the existing sample inside the `extraDevfileEntries.yaml` file:
 
@@ -169,19 +211,23 @@ To update a sample:
 3) Make the necessary changes.
 4) Open a pull request against this repository with your changes.
 
-## How to Test Changes
+### How to Test Changes
 
-### Odo
+#### Odo
 
 odo v2: `odo create` and `odo push` to test devfile changes. See [odo v2 Doc](https://odo.dev/docs/2.5.0/using-odo/create-component) for more details.
 
 odo V3: `odo init` and `odo dev` to test devfile changes. See [odo v3 Doc](https://odo.dev/docs/command-reference/init) for more details.
 
-### Che
+#### Che
 
 Opening the URL https://workspaces.openshift.com/#<repository_url> in your browser should start a workspace where exec commands run successfully. Type `task devfile` and press the `Enter` key in the IDE command palette to see the list of available devfile commands. Then, run all devfile commands one by one, to ensure they are executed successfully.
 
-### Console
+#### Console
 
 In developer view, create an application via `Import from Git`. Provide git repository Url and verify if the application can be built and ran successfully.
 Note: Currently Console only works with devfile v2.2.0 samples with outer loop support.
+
+# Contact us
+
+If you have any questions, please visit us the `#devfile` channel under the [Kubernetes Slack](https://slack.k8s.io) workspace.
