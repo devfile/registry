@@ -3,11 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"math/rand"
 	"path/filepath"
 	"strings"
 	"testing"
-	"time"
 
 	"github.com/devfile/library/v2/pkg/devfile"
 	"github.com/devfile/library/v2/pkg/devfile/parser"
@@ -19,7 +17,6 @@ var stacksPath string
 var stackDirs string
 
 func init() {
-	rand.Seed(time.Now().UnixNano())
 	flag.StringVar(&stacksPath, "stacksPath", "../../stacks", "The path to the directory containing the stacks")
 	flag.StringVar(&stackDirs, "stackDirs", "", "The stacks to test as a string separated by spaces")
 }

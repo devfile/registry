@@ -53,7 +53,7 @@ STACKS_DIR=.cache/samples bash tests/validate_devfile_schemas.sh --samples
     - `minikube start --memory 8gb` is a good starting point.
     - The `none` driver **cannot** be used. Any other driver (`docker`, `hyperkit`, etc) should suffice.
 - odo v3.0.0-rc2 or later.
-- Go 1.19 or later installed
+- Go 1.21 or later installed
   - `$GOPATH/bin` should be in your `$PATH` or you will have to modify `check_with_odov3.sh` to find `ginkgo` binary.
 - Ginkgo CLI installed (`go install github.com/onsi/ginkgo/v2/ginkgo@latest`)
 
