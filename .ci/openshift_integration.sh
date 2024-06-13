@@ -39,7 +39,7 @@ DEFAULT_ARCH="amd64"
 
 # Check if different architecture was passed for image build
 # Will default to $DEFAULT_ARCH if unset
-if [ ! -z "$1" ]
+if [ $# -gt 0 ]
   then
     arch="$1"
 else
