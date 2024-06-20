@@ -36,7 +36,7 @@ grab_stacks() {
             # Get the last commit that modified the file
             last_commit=$(git log -1 --format="%aI" -- "$filename")
 
-            stack_data+=("{\"stack\": \"${stack}\",\"version\": \"${version}\",\"last_modified\": \"${last_commit}\"}") 
+            stack_data+=("{\"name\": \"${stack}\",\"version\": \"${version}\",\"lastModified\": \"${last_commit}\"}") 
         fi
     done
 }
@@ -60,7 +60,7 @@ grab_samples(){
         cd $repo_name
         last_commit=$(git log -1 --format="%aI")
         cd $TEMP_DIR
-        sample_data+=("{\"name\": \"${name}\",\"version\": \"${version}\",\"last_modified\": \"${last_commit}\"}")
+        sample_data+=("{\"name\": \"${name}\",\"version\": \"${version}\",\"lastModified\": \"${last_commit}\"}")
     done < <(jq -r '.samples[] | "\(.name) \(.versions[] | "\(.version) \(.git.revision) \(.git.remotes.origin)")"' $PARENT_DIR/data.json)
     cd $PARENT_DIR
     
