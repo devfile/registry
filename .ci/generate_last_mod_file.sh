@@ -24,11 +24,11 @@ grab_stacks() {
     # look through git tree for all devfiles under stacks/
     for filename in $(git ls-tree -r --name-only HEAD); do
         if [[ $filename == *"stacks/"*"/devfile"* ]]; then
+            directory=$(dirname "$filename")
             version=$(yq -r .metadata.name $filename)
             stack=$(yq -r .metadata.version $filename)
-
-            # Get the last commit that modified the file
-            last_commit=$(git log -1 --format="%aI" -- "$filename")
+            # last commit that modified the entire directory that contains a devfile
+            last_commit=$(git log -1 --format="%aI" -- "$directory")
 
             stack_data+=("{\"name\": \"${stack}\",\"version\": \"${version}\",\"lastModified\": \"${last_commit}\"}") 
         fi
@@ -60,8 +60,8 @@ grab_samples(){
     
     # cleanup of temp files and temp data store
     echo "Cleaning up temp files"
-    rm -r $PARENT_DIR/temp
-    rm -r $PARENT_DIR/data.json
+    rm -rf $PARENT_DIR/temp
+    rm $PARENT_DIR/data.json
     
 }
 
