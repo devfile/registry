@@ -11,55 +11,6 @@ metadata:
     - Starcoder2
   projectType: universal
   language: Polyglot
-  version: 1.0.0
-projects:
-  - name: cde-ollama-continue
-    git:
-      remotes:
-        origin: 'https://github.com/redhat-developer-demos/cde-ollama-continue'
-      checkoutFrom:
-        revision: main
-components:
-- name: udi
-  container:
-    image: quay.io/devfile/universal-developer-image:ubi8-98224a3
-    memoryLimit: 4Gi
-    memoryRequest: 2Gi
-    cpuLimit: 4000m
-    cpuRequest: 1000m
-    mountSources: true
-    sourceMapping: /projects
-- name: ollama
-  attributes:
-    container-overrides:
-      resources:
-        limits:
-          cpu: 4000m
-          memory: 12Gi
-          # nvidia.com/gpu: 1 # Uncomment this if the pod shall be scheduled only on a GPU node
-        requests:
-          cpu: 1000m
-          memory: 8Gi
-          # nvidia.com/gpu: 1 # Uncomment this if the pod shall be scheduled only on a GPU node
-  container:
-    image: docker.io/ollama/ollama:0.1.34
-    mountSources: true
-    sourceMapping: /.ollama
-commands:
-  - id: pullmodel
-    exec:
-      component: ollama
-      commandLine: "ollama pull llama3:8b"
-  - id: pullautocompletemodel
-    exec:
-      component: ollama
-      commandLine: "ollama pull starcoder2:3b"
-  - id: copyconfig
-    exec:
-      component: udi
-      commandLine: "mkdir /home/user/.continue && cp /projects/cde-ollama-continue/continue-config.json /home/user/.continue/config.json"
-events:
-  postStart:
-    - pullmodel
-    - pullautocompletemodel
-    - copyconfig
+  version: 1.0.1
+parent:
+  uri: https://raw.githubusercontent.com/redhat-developer-demos/cde-ollama-continue/main/devfile.yaml
