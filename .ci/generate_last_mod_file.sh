@@ -24,14 +24,8 @@ grab_stacks() {
     # look through git tree for all devfiles under stacks/
     for filename in $(git ls-tree -r --name-only HEAD); do
         if [[ $filename == *"stacks/"*"/devfile"* ]]; then
-            directory=$(dirname "$filename")
-            version=$(basename "$directory")
-            stack=$(basename "$(dirname "$directory")")
-
-            if ! [[ $version =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-                stack=$version
-                version="-1"
-            fi
+            version=$(yq -r .metadata.name $filename)
+            stack=$(yq -r .metadata.version $filename)
 
             # Get the last commit that modified the file
             last_commit=$(git log -1 --format="%aI" -- "$filename")
