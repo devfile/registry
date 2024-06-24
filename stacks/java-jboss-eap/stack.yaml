@@ -1,0 +1,8 @@
+name: java-jboss-eap
+description: 'JakartaEE  application using JBoss EAP 8.0'
+displayName: JBoss EAP 8.0
+icon: https://catalog.redhat.com/img/svg/Red-Hat-Logo.svg
+versions:
+  - version: 1.0.0
+    default: true
+ 

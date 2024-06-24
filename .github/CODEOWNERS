@@ -20,6 +20,7 @@
 /stacks/go/     @devfile/devfile-services-team @devfile/che-team
 
 # Java stacks
+/stacks/java-jboss-eap/                  @ehsavoie @devfile/che-team
 /stacks/java-maven/                      @kadel @devfile/che-team
 /stacks/java-openliberty/                @kadel @devfile/che-team
 /stacks/java-openliberty-gradle/         @ajm01 @devfile/che-team
