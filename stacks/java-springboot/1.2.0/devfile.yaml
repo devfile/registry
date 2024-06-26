@@ -15,7 +15,7 @@ starterProjects:
   - name: springbootproject
     git:
       remotes:
-        origin: "https://github.com/odo-devfiles/springboot-ex.git"
+        origin: "https://github.com/devfile-samples/springboot-ex.git"
 components:
   - name: tools
     container:
