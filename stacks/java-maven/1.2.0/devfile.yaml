@@ -2,7 +2,7 @@ schemaVersion: 2.1.0
 metadata:
   name: java-maven
   displayName: Maven Java
-  description: Java application based on Maven 3.6 and OpenJDK 11
+  description: Java application based on Maven 3.8 and OpenJDK 11
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/java-maven.jpg
   tags:
     - Java
