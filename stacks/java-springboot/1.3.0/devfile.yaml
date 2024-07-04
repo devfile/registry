@@ -2,7 +2,7 @@ schemaVersion: 2.1.0
 metadata:
   name: java-springboot
   displayName: Spring Boot®
-  description: Java application using Spring Boot® and OpenJDK 11
+  description: Java application using Spring Boot® and OpenJDK 17
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/spring.svg
   tags:
     - Java
