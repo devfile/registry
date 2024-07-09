@@ -25,8 +25,8 @@ grab_stacks() {
     for filename in $(git ls-tree -r --name-only HEAD); do
         if [[ $filename == *"stacks/"*"/devfile"* ]]; then
             directory=$(dirname "$filename")
-            version=$(yq -r .metadata.name $filename)
-            stack=$(yq -r .metadata.version $filename)
+            stack=$(yq -r .metadata.name $filename)
+            version=$(yq -r .metadata.version $filename)
             # last commit that modified the entire directory that contains a devfile
             last_commit=$(git log -1 --format="%aI" -- "$directory")
 
