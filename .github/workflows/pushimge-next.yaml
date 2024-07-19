@@ -45,7 +45,7 @@ jobs:
       - name: Set up QEMU # Enables arm64 image building
         uses: docker/setup-qemu-action@fcfabe005416080c2016468f7082c2a191cdeea3 
       - name: Login to Quay
-        uses: docker/login-action@0d4c9c5ea7693da7b068278f7b52bda2a190a446 # v3.2.0
+        uses: docker/login-action@343f7c4344506bcbf9b4de18042ae17996df046d # v3.0.0
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
