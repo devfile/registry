@@ -131,7 +131,7 @@ components:
           targetPort: 5858
   - name: jaeger
     container:
-      image: quay.io/jaegertracing/all-in-one:1.58
+      image: quay.io/jaegertracing/all-in-one:1.59
       memoryLimit: 128Mi
       endpoints:
         - name: tracing-ui-jar
