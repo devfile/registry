@@ -9,7 +9,7 @@ metadata:
     - .NET 8.0
   projectType: dotnet
   language: .NET
-  version: 1.0.3
+  version: 1.0.0
 starterProjects:
   - name: dotnet80-example
     git:
