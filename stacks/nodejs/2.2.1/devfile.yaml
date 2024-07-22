@@ -14,8 +14,10 @@ metadata:
 starterProjects:
   - name: nodejs-starter
     git:
+      checkoutFrom:
+        revision: main
       remotes:
-        origin: 'https://github.com/odo-devfiles/nodejs-ex.git'
+        origin: 'https://github.com/nodeshift-starters/devfile-sample.git'
 components:
   - name: runtime
     container:
