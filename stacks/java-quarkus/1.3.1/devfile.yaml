@@ -49,7 +49,7 @@ commands:
   - id: dev-run
     exec:
       component: tools
-      commandLine: './mvnw -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager'
+      commandLine: './mvnw -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0'
       hotReloadCapable: true
       group:
         kind: run
@@ -58,7 +58,7 @@ commands:
   - id: dev-debug
     exec:
       component: tools
-      commandLine: './mvnw -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0 -Djava.util.logging.manager=org.jboss.logmanager.LogManager -Ddebug=${DEBUG_PORT}'
+      commandLine: './mvnw -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0 -Ddebug=${DEBUG_PORT}'
       hotReloadCapable: true
       group:
         kind: debug
