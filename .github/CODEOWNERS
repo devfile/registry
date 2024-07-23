@@ -14,7 +14,7 @@
 # .Net stacks
 /stacks/dotnet50/       @kadel @devfile/che-team
 /stacks/dotnet60/       @kadel @devfile/che-team
-/stacks/dotnet80/       @msivasub @devfile/che-team
+/stacks/dotnet80/       @msivasubramaniaan @devfile/che-team
 /stacks/dotnetcore31/   @kadel @devfile/che-team
 
 # Golang stacks
