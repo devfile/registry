@@ -8,12 +8,13 @@
 # for every PR that updates stacks.
 # 2. As you may notice some stacks are owned by the devfile/devfile-services-team
 # directly.
-# 3. All the owner mentions follow the format below:  
+# 3. All the owner mentions follow the format below:
 # <path-to-the-stack-dir> @owner @reviwer-team
 
 # .Net stacks
 /stacks/dotnet50/       @kadel @devfile/che-team
 /stacks/dotnet60/       @kadel @devfile/che-team
+/stacks/dotnet80/       @msivasubramaniaan @devfile/che-team
 /stacks/dotnetcore31/   @kadel @devfile/che-team
 
 # Golang stacks
