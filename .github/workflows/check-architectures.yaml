@@ -30,7 +30,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
       - name: Install yq command
-        uses: redhat-actions/openshift-tools-installer@2de9a80cf012ad0601021515481d433b91ef8fd5 # v1
+        uses: redhat-actions/openshift-tools-installer@bee649bbedc67b5bfc2f2de4b19498e11c2e8775 # v1
         with:
           source: 'github'
           github_pat: ${{ secrets.GITHUB_TOKEN }}
