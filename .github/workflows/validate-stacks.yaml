@@ -113,7 +113,7 @@ jobs:
           start args: "--addons=ingress ${{ env.MINIKUBE_RESOURCES }}"
 
       - name: Install odo v2
-        uses: redhat-actions/openshift-tools-installer@2de9a80cf012ad0601021515481d433b91ef8fd5 # v1
+        uses: redhat-actions/openshift-tools-installer@bee649bbedc67b5bfc2f2de4b19498e11c2e8775 # v1
         with:
           odo: "2.5.1"
 
