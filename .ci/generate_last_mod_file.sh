@@ -30,6 +30,11 @@ grab_stacks() {
             # last commit that modified the entire directory that contains a devfile
             last_commit=$(git log -1 --format="%aI" -- "$directory")
 
+            # replace null -> undefined for consistency with sample handling
+            if [[ $version == "null" ]]; then
+                version="undefined"
+            fi
+
             stack_data+=("{\"name\": \"${stack}\",\"version\": \"${version}\",\"lastModified\": \"${last_commit}\"}") 
         fi
     done
@@ -48,7 +53,7 @@ grab_samples(){
         version=$(echo "$line" | cut -d ' ' -f 2)
         revision=$(echo "$line" | cut -d ' ' -f 3)
         git_origin=$(echo "$line" | cut -d ' ' -f 4)
-        if [[ $revision == "null" ]]; then
+        if [[ $revision == "undefined" ]]; then
             repo_name="$name"
             git clone -q $git_origin $repo_name
         else
@@ -67,9 +72,9 @@ grab_samples(){
         "\(.name) \(.versions[] | "\(.version) \(.git.revision) \(.git.remotes.origin)")" 
     elif .git.revision != null 
     then 
-        "\(.name) null \(.git.revision) \(.git.remotes.origin)" 
+        "\(.name) undefined \(.git.revision) \(.git.remotes.origin)" 
     else 
-        "\(.name) null null \(.git.remotes.origin)" 
+        "\(.name) undefined undefined \(.git.remotes.origin)" 
     end
     ' $PARENT_DIR/data.json)
 
