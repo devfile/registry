@@ -30,6 +30,11 @@ grab_stacks() {
             # last commit that modified the entire directory that contains a devfile
             last_commit=$(git log -1 --format="%aI" -- "$directory")
 
+            # replace null -> undefined for consistency with sample handling
+            if [[ $version == "null" ]]; then
+                version="undefined"
+            fi
+
             stack_data+=("{\"name\": \"${stack}\",\"version\": \"${version}\",\"lastModified\": \"${last_commit}\"}") 
         fi
     done
@@ -48,21 +53,38 @@ grab_samples(){
         version=$(echo "$line" | cut -d ' ' -f 2)
         revision=$(echo "$line" | cut -d ' ' -f 3)
         git_origin=$(echo "$line" | cut -d ' ' -f 4)
-        repo_name="$name"-"$revision"
-
-        git clone -q -b $revision $git_origin $repo_name
+        if [[ $revision == "undefined" ]]; then
+            repo_name="$name"
+            git clone -q $git_origin $repo_name
+        else
+            repo_name="$name"-"$revision"
+            git clone -q -b $revision $git_origin $repo_name
+        fi
+        
         cd $repo_name
         last_commit=$(git log -1 --format="%aI")
         cd $TEMP_DIR
         sample_data+=("{\"name\": \"${name}\",\"version\": \"${version}\",\"lastModified\": \"${last_commit}\"}")
-    done < <(jq -r '.samples[] | "\(.name) \(.versions[] | "\(.version) \(.git.revision) \(.git.remotes.origin)")"' $PARENT_DIR/data.json)
+    done < <(jq -r '
+    .samples[] | 
+    if has("versions") 
+    then 
+        "\(.name) \(.versions[] | "\(.version) \(.git.revision) \(.git.remotes.origin)")" 
+    elif .git.revision != null 
+    then 
+        "\(.name) undefined \(.git.revision) \(.git.remotes.origin)" 
+    else 
+        "\(.name) undefined undefined \(.git.remotes.origin)" 
+    end
+    ' $PARENT_DIR/data.json)
+
     cd $PARENT_DIR
     
     # cleanup of temp files and temp data store
     echo "Cleaning up temp files"
     rm -rf $PARENT_DIR/temp
     rm $PARENT_DIR/data.json
-    
+
 }
 
 create_last_modified_file() {
