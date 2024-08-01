@@ -1,5 +1,5 @@
 name: java-quarkus
-description: Java application using Quarkus and OpenJDK 17
+description: Java application using Quarkus and OpenJDK 21
 displayName: Quarkus Java
 icon: https://design.jboss.org/quarkus/logo/final/SVG/quarkus_icon_rgb_default.svg
 versions:
