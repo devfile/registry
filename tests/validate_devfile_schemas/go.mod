@@ -3,7 +3,7 @@ module github.com/devfile/registry/tests/validate_devfiles
 go 1.21
 
 require (
-	github.com/devfile/library/v2 v2.2.3-0.20240612082351-45a4cc4d3504
+	github.com/devfile/library/v2 v2.3.0
 	github.com/onsi/ginkgo/v2 v2.13.0
 	github.com/onsi/gomega v1.29.0
 )
@@ -28,7 +28,7 @@ require (
 	github.com/distribution/reference v0.5.0 // indirect
 	github.com/docker/cli v25.0.1+incompatible // indirect
 	github.com/docker/distribution v2.8.3+incompatible // indirect
-	github.com/docker/docker v25.0.1+incompatible // indirect
+	github.com/docker/docker v25.0.6+incompatible // indirect
 	github.com/docker/docker-credential-helpers v0.7.0 // indirect
 	github.com/docker/go-connections v0.5.0 // indirect
 	github.com/docker/go-metrics v0.0.1 // indirect
