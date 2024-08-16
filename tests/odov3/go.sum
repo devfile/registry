@@ -64,8 +64,8 @@ github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc h1:U9qPSI2PIWSS1
 github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/devfile/api/v2 v2.3.0 h1:3LG0c5Z2jZuI8ReCf4OQMHfiKxsOgxTxz5c1Y9CqUYI=
 github.com/devfile/api/v2 v2.3.0/go.mod h1:lVyGiwv71WQpJwcwCweXOVcTnknEg7CwhFS5EgwiqVQ=
-github.com/devfile/library/v2 v2.2.3-0.20240612082351-45a4cc4d3504 h1:XrKC0aE7arCbsMil5tVDqNkbjJK0Xl4KSrd6O3Y0Nk0=
-github.com/devfile/library/v2 v2.2.3-0.20240612082351-45a4cc4d3504/go.mod h1:c71o0rxg+muOLZb0o763xjTzgX5asQO7NNx8/qCo8TA=
+github.com/devfile/library/v2 v2.3.0 h1:dl9eVl7cLxjZul0HlhZ6mFRgO15CPhQXSuNl7d3oCII=
+github.com/devfile/library/v2 v2.3.0/go.mod h1:sSJDrTXKqBBxfpXxhBQjopNJOcmcnPBsQM+tbRlgkoQ=
 github.com/devfile/registry-support/index/generator v0.0.0-20240419194226-cca4c9a81f8d h1:XE1N4HVssY72KLp2omW3xoZ89vnIJ2w5/abp+3oWTaA=
 github.com/devfile/registry-support/index/generator v0.0.0-20240419194226-cca4c9a81f8d/go.mod h1:X/YcXBDg6PF+k/2yVRwnEVfQtNFGeVZOIGCyCkaBWO8=
 github.com/devfile/registry-support/registry-library v0.0.0-20240521161747-89fc566cb024 h1:rJZVQV/z6CzsjeHQmrC4ClP2hE0ad5hNCmI7ctN9ibo=

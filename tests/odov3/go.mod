@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/devfile/api/v2 v2.3.0
-	github.com/devfile/library/v2 v2.2.3-0.20240612082351-45a4cc4d3504
+	github.com/devfile/library/v2 v2.3.0
 	github.com/onsi/ginkgo/v2 v2.13.0
 	github.com/onsi/gomega v1.29.0
 )
