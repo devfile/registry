@@ -22,7 +22,7 @@ starterProjects:
 components:
   - name: dotnet
     container:
-      image: registry.access.redhat.com/ubi8/dotnet-80:8.0-9
+      image: registry.access.redhat.com/ubi8/dotnet-80:8.0-10
       args: ["tail", "-f", "/dev/null"]
       mountSources: true
       env:
