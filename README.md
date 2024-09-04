@@ -114,6 +114,10 @@ the [Telemetry Data Collection Notice](TELEMETRY.md)
 
 Please reference [GOVERNANCE.md](https://github.com/devfile/api/blob/main/GOVERNANCE.md) for more information.
 
+## Security
+
+Further information for the devfile organization security policy can be found [here](https://github.com/devfile/api/blob/main/SECURITY.md).
+
 ## Users
 
 A list of users that use this project can be found by referencing [USERS.md](USERS.md)
