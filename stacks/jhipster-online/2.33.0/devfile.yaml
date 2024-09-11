@@ -11,6 +11,7 @@ metadata:
     - JHipster
     - Angular
     - Spring
+  language: Java    
 projects:
   - name: jhipster-online
     git:
