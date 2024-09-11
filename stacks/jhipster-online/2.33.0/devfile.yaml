@@ -11,9 +11,6 @@ metadata:
     - JHipster
     - Angular
     - Spring
-  versions:
-    - version: 2.33.0
-      default: true
 projects:
   - name: jhipster-online
     git:
