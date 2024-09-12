@@ -111,7 +111,7 @@ commands:
       commandLine: 'chmod 777 ./mvnw && ./mvnw'
       group:
         kind: run
-        isDefault: true
+        isDefault: false
 events:
   postStart:
     - oc-add-mysql
