@@ -12,7 +12,7 @@ metadata:
     - Angular
     - Spring
   language: Java
-  projectType: 'springboot'      
+  projectType: springboot      
 projects:
   - name: jhipster-online
     git:
@@ -23,7 +23,7 @@ projects:
 components:
   - name: tools
     container:
-      image: 'quay.io/maximilianopizarro/jhipster-devspace'
+      image: 'quay.io/maximilianopizarro/jhipster-devspace@sha256:c27aefcf6ce158479bafae63758c1f0993c430a6ee15f76cf369fc889e54eae5'
       mountSources: true
       cpuLimit: '4'
       cpuRequest: '1'
@@ -41,18 +41,18 @@ components:
           name: backend
           protocol: https
           targetPort: 8080
-        - exposure: none
+        - exposure: public
           name: debug
           targetPort: 4200
-        - exposure: none
+        - exposure: public
           name: frontend
           protocol: https
           targetPort: 9000
-        - exposure: none
+        - exposure: public
           name: debug-frontend
           protocol: https
           targetPort: 9001
-        - exposure: none
+        - exposure: public
           name: browser-sync
           protocol: https
           targetPort: 3001                    
@@ -73,21 +73,46 @@ components:
     volume:
       size: 512Mi
 commands:
-  - id: build-jh-studio
+  - id: kubectl-add-mysql
     exec:
-      label: 'Package the application with yarn and create MariaDB Instance'
+      label: 'Kubernetes apply MariaDB Instance (Kubernetes cluster)'
       component: tools
       workingDir: ${PROJECT_SOURCE}
-      commandLine: 'oc apply -f src/main/kubernetes/mysql.yaml && yarn install && chmod 777 ./mvnw && echo "do not kill this task, run ./mvnw in other tasks" && yarn start'
-  - id: run-jh-studio
+      commandLine: 'kubectl apply -f src/main/kubernetes/mysql.yaml'
+  - id: oc-add-mysql
     exec:
-      label: 'Run ./mvnw'
+      label: 'OpenShift apply MariaDB Instance (OpenShift cluster)'
       component: tools
       workingDir: ${PROJECT_SOURCE}
-      commandLine: './mvnw'
+      commandLine: 'oc apply -f src/main/kubernetes/mysql.yaml'      
+  - id: yarn-install
+    exec:
+      label: 'Package the application'
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: 'yarn install'
+      group:
+        kind: build
+        isDefault: true      
+  - id: start-frontend
+    exec:
+      label: 'Start Frontend'
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: 'yarn start'
+      group:
+        kind: run
+        isDefault: true                        
+  - id: start-backend
+    exec:
+      label: 'Start JHipster Online'
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: 'chmod 777 ./mvnw && ./mvnw'
       group:
         kind: run
         isDefault: true
 events:
   postStart:
-    - build-jh-studio
+    - oc-add-mysql
+    - yarn-install 
