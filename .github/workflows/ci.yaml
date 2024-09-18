@@ -38,7 +38,7 @@ jobs:
         with:
           go-version: 1.21
       - name: Set up QEMU # Enables arm64 image building
-        uses: docker/setup-qemu-action@49b3bc8e6bdd4a60e6116a5414239cba5943d3cf 
+        uses: docker/setup-qemu-action@719c55c4a5a93233ce33aa9366dc90396d60e0ee 
 
       - name: Check if devfile registry build is working
         run: bash registry-repo/.ci/build.sh && bash registry-repo/.ci/build.sh linux/arm64
