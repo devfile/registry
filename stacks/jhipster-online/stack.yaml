@@ -1,0 +1,8 @@
+name: jhipster-online
+version: 2.33.0
+description: Stack with the JHipster Online on DevSpaces Red Hat OpenShift
+displayName: JHipster Online
+icon: https://raw.githubusercontent.com/maximilianoPizarro/ecommerce-oracle/main/jhipster-icon.png
+versions:
+  - version: 2.33.0
+    default: true
