@@ -16,6 +16,8 @@ The following sections describe the steps that can happen in the lifecycle of a 
 ## [Onboarding](CONTRIBUTING.md)
 When a `Stack Provider` is ready to share their devfile to the public registry, they must follow the steps in the [contributing guide](CONTRIBUTING.md) to ensure there’s basic information that identifies the version, owner, description, etc. of the stack or sample. They must also ensure the stack or sample meets minimal testing requirements against the supported clients.
 
+In some cases new `Stack Providers` may be accepted on a trial basis. In this case, the owner listed in [`.github/CODEOWNERS`](./.github/CODEOWNERS) will be the `Devfile Team` to limit the number of users with repository write-acess. These `Stack Providers` will begin on a 3-month trial basis where the `Devfile Team` reserves the right to deprecate if they feel the stack is not properly maintained.
+
 | Role             | Responsibilities                                                                                                                                                                                                                                                                                                           |
 |:-----------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `Stack Provider` | <ul>Follow the [contributing guide](CONTRIBUTING.md) and ensure stack or sample is tested against the supported clients </ul>                                                                                                                                                                                                        |
@@ -45,6 +47,7 @@ When a stack or sample is no longer maintained due to inactivity, lack of timely
 
 * Deprecated devfiles will remain in the community registry for 1 year before it’s removed.
 
+The only exception to the above rules regarding deprecation are in the case that the `Stack Provider` is still within their trial period. In that case the `Devfile Team` reserves the right to deprecate the stack without agreement from the `Stack Provider`.
 
 | Role              | Responsibilities                                                                                                                                                                            |
 |:------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
