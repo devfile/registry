@@ -1,0 +1,81 @@
+schemaVersion: 2.2.0
+metadata:
+  name: camel
+  displayName: Apache Camel Basics
+  description: Gain familiarity with Apache Camel by getting hands-on following documented guidelines.
+  icon: https://raw.githubusercontent.com/apache/camel/refs/heads/main/docs/img/logo-d.svg
+  tags:
+    - Java
+    - Quarkus
+    - Spring
+    - Camel
+  projectType: Camel
+  language: Camel
+  version: 1.0.0
+  website: https://camel.apache.org/
+starterProjects:
+  - name: devsandbox-camel
+    git:
+      checkoutFrom:
+        revision: main
+      remotes:
+        origin: 'https://github.com/RedHat-Middleware-Workshops/devsandbox-camel.git'
+components:
+  - name: tools
+    container:
+      image: quay.io/devfile/universal-developer-image:ubi8-304d6d4
+      memoryLimit: 3Gi
+      env:
+        - name: JAVA_HOME_TEST
+          value: /home/tooling/.sdkman/candidates/java/17.0.3-tem
+      endpoints:
+        - exposure: none
+          name: debug
+          protocol: tcp
+          targetPort: 5005
+        - exposure: public
+          name: 8080-tcp
+          protocol: http
+          targetPort: 8080
+      volumeMounts:
+        - name: m2
+          path: /home/user/.m2
+  - name: webapp
+    container:
+      image: quay.io/redhatintegration/tutorial-web-app:2.28.4-workshop-ubi8-nodejs12
+      env:
+        - name: NODE_ENV
+          value: production
+        - name: THREESCALE_WILDCARD_DOMAIN
+          value: local.localdomain
+        - name: OPENSHIFT_VERSION
+          value: '4'
+        - name: WALKTHROUGH_LOCATIONS
+          value: >-
+            https://github.com/RedHat-Middleware-Workshops/devsandbox-camel?walkthroughsFolder=/docs/labs
+      endpoints:
+        - name: tutorial
+          exposure: public
+          targetPort: 5001
+          protocol: https
+          secure: true
+      memoryLimit: 512Mi
+      mountSources: true
+      volumeMounts:
+        - name: tutorial-storage
+          path: /opt/user-walkthroughs
+  - name: m2
+    volume:
+      size: 1G
+  - name: tutorial-storage
+    volume:
+      size: 256Mi
+events:
+  postStart:
+    - set-camel-cli
+commands:
+  - id: set-camel-cli
+    exec:
+      commandLine: 'source ~/.bashrc && jbang trust add https://github.com/apache/camel/ && jbang app install -Dcamel.jbang.version=4.8.0 camel@apache/camel && jbang camel@apache/camel plugin add kubernetes'
+      component: tools
+
