@@ -25,9 +25,6 @@ components:
     container:
       image: quay.io/devfile/universal-developer-image:ubi8-304d6d4
       memoryLimit: 3Gi
-      env:
-        - name: JAVA_HOME_TEST
-          value: /home/tooling/.sdkman/candidates/java/17.0.3-tem
       endpoints:
         - exposure: none
           name: debug
