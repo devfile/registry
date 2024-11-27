@@ -18,7 +18,7 @@
 /stacks/dotnetcore31/   @kadel @devfile/che-team
 
 # Camel stacks
-/stacks/camel/     @brunoNetId @devfile/che-team
+/stacks/camel/     @devfile/devfile-services-team @devfile/che-team
 
 # Golang stacks
 /stacks/go/     @devfile/devfile-services-team @devfile/che-team
