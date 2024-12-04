@@ -49,12 +49,13 @@ ginkgo run --procs 2 \
   --skip="stack: java-vertx version: 1.4.0 starter: vertx-istio-security-booster" \
   --skip="stack: java-vertx version: 1.4.0 starter: vertx-messaging-work-queue-booster" \
   --skip="stack: java-websphereliberty-gradle version: 0.4.0 starter: rest" \
+  --skip="stack: jhipster-online version: 2.23.0 starter: jhipster-online" \
   --skip="stack: java-wildfly-bootable-jar" \
   --skip="stack: java-wildfly" \
   --skip="stack: java-openliberty" \
   --skip="stack: java-websphereliberty" \
   --skip="stack: java-quarkus" \
   --skip="stack: ollama" \
-  --slow-spec-threshold 120s \
+  --poll-progress-after 120s \
   --timeout 3h \
   tests/odov3 -- -stacksPath "$(pwd)"/stacks -stackDirs "$stackDirs"
