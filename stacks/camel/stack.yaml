@@ -1,0 +1,7 @@
+name: camel
+description: Gain familiarity with Apache Camel by getting hands-on following documented guidelines.
+displayName: Apache Camel Basics
+icon: https://raw.githubusercontent.com/apache/camel/refs/heads/main/docs/img/logo-d.svg
+versions:
+  - version: 1.0.0
+    default: true # should have one and only one default version
