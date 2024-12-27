@@ -24,7 +24,7 @@ components:
       endpoints:
         - name: http-react
           targetPort: 3000
-      image: registry.access.redhat.com/ubi8/nodejs-18:1-102
+      image: registry.access.redhat.com/ubi8/nodejs-18:1-135
       args: ['tail', '-f', '/dev/null']
       memoryLimit: 1024Mi
     name: runtime
