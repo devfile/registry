@@ -30,6 +30,9 @@ export ODO_DISABLE_TELEMETRY=true
 # Set yq version
 YQ_VERSION=${YQ_VERSION:-v4.44.1}
 
+# Set odo version
+ODO_VERSION=${ODO_VERSION:-v3.16.1}
+
 # Split the registry image and image tag from the REGISTRY_IMAGE env variable
 IMG="$(echo $REGISTRY_IMAGE | cut -d':' -f1)"
 TAG="$(echo $REGISTRY_IMAGE | cut -d':' -f2)"
@@ -42,7 +45,7 @@ curl -sL https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linu
 YQ_PATH=$(realpath yq)
 
 # Download odo
-curl -sL https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/v2.5.1/odo-linux-amd64 -o odo && chmod +x odo
+curl -sL https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/${ODO_VERSION}/odo-linux-amd64 -o odo && chmod +x odo
 export GLOBALODOCONFIG=$(pwd)/preferences.yaml
 
 # Install the devfile registry
@@ -65,8 +68,8 @@ REGISTRY_HOSTNAME=$(oc get route devfile-registry -o jsonpath="{.spec.host}")
 echo $REGISTRY_HOSTNAME
 
 # Delete the default devfile registry and add the test one we just stood up
-$(realpath odo) registry delete DefaultDevfileRegistry -f
-$(realpath odo) registry add TestDevfileRegistry http://$REGISTRY_HOSTNAME
+$(realpath odo) preference remove registry DefaultDevfileRegistry -f
+$(realpath odo) preference add registry TestDevfileRegistry http://$REGISTRY_HOSTNAME
 
 # Run the devfile validation tests
-ENV=openshift REGISTRY=remote ENABLE_TLS="false" tests/check_odov2.sh $(realpath odo) $YQ_PATH
+ENV=openshift REGISTRY=remote tests/check_odov3.sh $(realpath odo) $YQ_PATH
