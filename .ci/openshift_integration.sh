@@ -55,11 +55,11 @@ GINKGO_VERSION="$(cd $BASE_DIR/tests/odov3 && go list -m -json all | ${YQ_PATH} 
 go install github.com/onsi/ginkgo/v2/ginkgo@${GINKGO_VERSION}
 
 # Install the devfile registry
-oc process -f .ci/deploy/devfile-registry.yaml -p DEVFILE_INDEX_IMAGE=$IMG -p IMAGE_TAG=$TAG -p REPLICAS=3 -p ANALYTICS_WRITE_KEY= | \
+oc process -f $BASE_DIR/.ci/deploy/devfile-registry.yaml -p DEVFILE_INDEX_IMAGE=$IMG -p IMAGE_TAG=$TAG -p REPLICAS=3 -p ANALYTICS_WRITE_KEY= | \
   oc apply -f -
 
 # Deploy the routes for the registry
-oc process -f .ci/deploy/route.yaml | oc apply -f -
+oc process -f $BASE_DIR/.ci/deploy/route.yaml | oc apply -f -
 
 # Wait for the registry to become ready
 oc wait deploy/devfile-registry --for=condition=Available --timeout=600s
