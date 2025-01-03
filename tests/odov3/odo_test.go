@@ -434,7 +434,7 @@ func runOdo(args ...string) ([]byte, []byte, error) {
 	// Clean given path
 	filepath.Clean(odoPath)
 
-	GinkgoWriter.Printf("Executing: %s %s\n", odoPath, strings.Join(args, " "))
+	GinkgoWriter.Println("Executing: odo", strings.Join(args, " "))
 	cmd := exec.Command(odoPath, args...)
 
 	stdout, err := cmd.StdoutPipe()
