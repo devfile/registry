@@ -3,6 +3,11 @@
 set -x
 
 stackDirs=$(bash "$(pwd)/tests/get_stacks.sh")
+args=""
+
+if [ ! -z "${1}" ]; then
+  args="-odoPath ${1} ${args}"
+fi
 
 ginkgo run --procs 2 \
   --skip="stack: java-openliberty-gradle version: 0.4.0 starter: rest" \
@@ -58,4 +63,4 @@ ginkgo run --procs 2 \
   --skip="stack: ollama" \
   --slow-spec-threshold 120s \
   --timeout 3h \
-  tests/odov3 -- -stacksPath "$(pwd)"/stacks -stackDirs "$stackDirs"
+  tests/odov3 -- -stacksPath "$(pwd)"/stacks -stackDirs "$stackDirs" ${args}
