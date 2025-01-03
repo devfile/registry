@@ -18,7 +18,7 @@
 set -x
 DEVFILES_DIR="$(pwd)/stacks"
 FAILED_TESTS=()
-ENABLE_TLS=${ENABLE_TLS:-"true"}
+ENABLE_TLS_VERIFY=${ENABLE_TLS_VERIFY:-"true"}
 
 # The stacks to test as a string separated by spaces
 STACKS=$(bash "$(pwd)/tests/get_stacks.sh")
@@ -58,10 +58,10 @@ waitForHTTPStatus() {
 
   for i in $(seq 1 10); do
     echo "try: $i"
-    if [[ $ENABLE_TLS == "true" ]]
+    if [[ $ENABLE_TLS_VERIFY == "true" ]]
     then
       content=$(curl -i "$url")
-    elif [[ $ENABLE_TLS == "false" ]]
+    elif [[ $ENABLE_TLS_VERIFY == "false" ]]
     then
       content=$(curl -i --insecure "$url")
     else

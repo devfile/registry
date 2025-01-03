@@ -78,4 +78,4 @@ $(realpath odo) preference remove registry DefaultDevfileRegistry -f
 $(realpath odo) preference add registry TestDevfileRegistry http://$REGISTRY_HOSTNAME
 
 # Run the devfile validation tests
-ENV=openshift REGISTRY=remote tests/check_odov3.sh $(realpath odo) $YQ_PATH
+ENV=openshift REGISTRY=remote ENABLE_TLS_VERIFY="false" $BASE_DIR/tests/check_odov3.sh $(realpath odo)
