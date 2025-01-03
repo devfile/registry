@@ -10,6 +10,9 @@ ginkgo run --focus "stack: java-vertx starter: vertx-http-example"  -- -stacksPa
 
 test all starter project in a specific stack:
 ginkgo run --focus "stack: java-vertx"  -- -stacksPath ../../stacks
+
+specifying odo path:
+ginkgo run -v  -- -odoPath <path/to/odo/binary>
 */
 
 package main
@@ -37,10 +40,12 @@ import (
 
 var stacksPath string
 var stackDirs string
+var odoPath string
 
 func init() {
 	flag.StringVar(&stacksPath, "stacksPath", "../../stacks", "The path to the directory containing the stacks")
 	flag.StringVar(&stackDirs, "stackDirs", "", "The stacks to test as a string separated by spaces")
+	flag.StringVar(&odoPath, "odoPath", "odo", "The path to the odo binary, defaults to path symbol")
 }
 
 // all stacks to be tested
@@ -404,7 +409,7 @@ func runOdoDev(additionalArgs ...string) (io.ReadCloser, io.ReadCloser, *exec.Cm
 	args := []string{"dev", "--random-ports"}
 	args = append(args, additionalArgs...)
 	GinkgoWriter.Println("Executing odo " + strings.Join(args, " "))
-	cmd := exec.Command("odo", args...)
+	cmd := exec.Command(odoPath, args...)
 
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
@@ -426,8 +431,11 @@ func runOdoDev(additionalArgs ...string) (io.ReadCloser, io.ReadCloser, *exec.Cm
 // run odo commands
 // returns stdout, stderr, and error
 func runOdo(args ...string) ([]byte, []byte, error) {
-	GinkgoWriter.Println("Executing: odo", strings.Join(args, " "))
-	cmd := exec.Command("odo", args...)
+	// Clean given path
+	filepath.Clean(odoPath)
+
+	GinkgoWriter.Printf("Executing: %s %s\n", odoPath, strings.Join(args, " "))
+	cmd := exec.Command(odoPath, args...)
 
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {

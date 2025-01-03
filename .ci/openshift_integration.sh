@@ -24,6 +24,8 @@ set -u
 # print each command before executing it
 set -x
 
+BASE_DIR="$(realpath $(dirname ${BASH_SOURCE[0]})/..)"
+
 # Disable telemtry for odo
 export ODO_DISABLE_TELEMETRY=true
 
@@ -47,6 +49,10 @@ YQ_PATH=$(realpath yq)
 # Download odo
 curl -sL https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift-v4/clients/odo/${ODO_VERSION}/odo-linux-amd64 -o odo && chmod +x odo
 export GLOBALODOCONFIG=$(pwd)/preferences.yaml
+
+# Download & Install Ginkgo
+GINKGO_VERSION="$(cd $BASE_DIR/tests/odov3 && go list -m -json all | ${YQ_PATH} 'select(.Path == "github.com/onsi/ginkgo/v2") | .Version' -Mr -p=json)"
+go install github.com/onsi/ginkgo/v2/ginkgo@${GINKGO_VERSION}
 
 # Install the devfile registry
 oc process -f .ci/deploy/devfile-registry.yaml -p DEVFILE_INDEX_IMAGE=$IMG -p IMAGE_TAG=$TAG -p REPLICAS=3 -p ANALYTICS_WRITE_KEY= | \
