@@ -1,4 +1,4 @@
-schemaVersion: 2.2.2
+schemaVersion: 2.3.0
 metadata:
   name: ollama
   displayName: Ollama
