@@ -3,7 +3,7 @@ metadata:
   name: jhipster-online
   description: Stack with JHipster Online on Red Hat OpenShift Dev Spaces
   displayName: JHipster Online
-  icon: https://raw.githubusercontent.com/maximilianoPizarro/ecommerce-oracle/main/jhipster-icon.png
+  icon: https://raw.githubusercontent.com/redhat-developer-demos/jhipster-online/main/jhipster-icon.png
   website: https://start.jhipster.tech
   tags:
     - Java
@@ -17,13 +17,13 @@ projects:
   - name: jhipster-online
     git:
       remotes:
-        origin: 'https://github.com/maximilianoPizarro/jhipster-online'
+        origin: 'https://github.com/redhat-developer-demos/jhipster-online'
       checkoutFrom:
-        revision: openshift
+        revision: main
 components:
   - name: tools
     container:
-      image: 'quay.io/maximilianopizarro/jhipster-devspace@sha256:c27aefcf6ce158479bafae63758c1f0993c430a6ee15f76cf369fc889e54eae5'
+      image: 'quay.io/devfile/jhipster-online@sha256:254c710006b1582b2ebc48cc74ae080a9e10caa99dc1b62c1adb3341f072aede'
       mountSources: true
       cpuLimit: '4'
       cpuRequest: '1'
