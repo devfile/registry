@@ -6,8 +6,8 @@
     ":gitSignOff"
   ],
   "timezone": "America/Toronto",
-  "schedule": ["on the 2nd and 4th day instance on thursday after 9pm"],
-  "enabledManagers": ["regex", "github-actions"],
+  "schedule": ["after 9pm on tuesday and thursday"],
+  "enabledManagers": ["regex", "github-actions", "tekton"],
   "regexManagers": [
     {
       "fileMatch": [
@@ -21,12 +21,12 @@
     }
   ],
   "packageRules": [
-      {
-        "matchManagers": ["github-actions"],
-        "groupName": "github actions",
-        "groupSlug": "github-actions",
-        "commitMessageTopic": "{{depName}}"
-      }
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "github actions",
+      "groupSlug": "github-actions",
+      "commitMessageTopic": "{{depName}}"
+    }
   ],
   "ignorePaths": [
     "**/docker/**",
