@@ -1,7 +1,8 @@
 schemaVersion: 2.2.2
 metadata:
   name: jhipster-online
-  description: Stack with JHipster Online on Red Hat OpenShift Dev Spaces. JHipster 8.1.0.
+  version: 2.33.1
+  description: Stack with the JHipster Online on Red Hat OpenShift Dev Spaces. JHipster 8.8.0. generator-jhipster-micronau 3.6.0. generator-jhipster-quarkus 3.4.0. generator-jhipster-dotnetcore 4.2.0.
   displayName: JHipster Online
   icon: https://raw.githubusercontent.com/redhat-developer-demos/jhipster-online/main/jhipster-icon.png
   website: https://start.jhipster.tech
@@ -10,9 +11,10 @@ metadata:
     - JHipster
     - Angular
     - Spring
+    - Quarkus
+    - Micronaut
   language: Java
   projectType: springboot
-  version: 2.33.0        
 projects:
   - name: jhipster-online
     git:
@@ -23,7 +25,7 @@ projects:
 components:
   - name: tools
     container:
-      image: 'quay.io/devfile/jhipster-online@sha256:254c710006b1582b2ebc48cc74ae080a9e10caa99dc1b62c1adb3341f072aede'
+      image: 'quay.io/devfile/jhipster-online@sha256:1d34f067a20d87d7cfa5e304fef23556f865656dfa1c01cb8501ea078a03157e'
       mountSources: true
       cpuLimit: '4'
       cpuRequest: '1'
@@ -55,7 +57,7 @@ components:
         - exposure: public
           name: browser-sync
           protocol: https
-          targetPort: 3001                    
+          targetPort: 3001
       env:
         - value: '-XX:MaxRAMPercentage=50.0 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xms20m -Djava.security.egd=file:/dev/./urandom -Duser.home=/home/jboss'
           name: JAVA_OPTS
@@ -84,7 +86,13 @@ commands:
       label: 'OpenShift apply MariaDB Instance (OpenShift cluster)'
       component: tools
       workingDir: ${PROJECT_SOURCE}
-      commandLine: 'oc apply -f src/main/kubernetes/mysql.yaml'      
+      commandLine: 'oc apply -f src/main/kubernetes/mysql.yaml'
+  - id: oc-remove-mysql
+    exec:
+      label: 'OpenShift remove MariaDB Instance (OpenShift cluster)'
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: 'oc delete all --selector app=mariadb'
   - id: yarn-install
     exec:
       label: 'Package the application'
@@ -93,7 +101,7 @@ commands:
       commandLine: 'yarn install'
       group:
         kind: build
-        isDefault: true      
+        isDefault: true
   - id: start-frontend
     exec:
       label: 'Start Frontend'
@@ -102,7 +110,7 @@ commands:
       commandLine: 'yarn start'
       group:
         kind: run
-        isDefault: true                        
+        isDefault: true
   - id: start-backend
     exec:
       label: 'Start JHipster Online'
@@ -115,4 +123,4 @@ commands:
 events:
   postStart:
     - oc-add-mysql
-    - yarn-install 
+    - yarn-install

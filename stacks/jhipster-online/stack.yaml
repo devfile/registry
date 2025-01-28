@@ -1,7 +1,8 @@
 name: jhipster-online
-description: Stack with JHipster Online on Red Hat OpenShift Dev Spaces
+description: Stack with JHipster Online on Red Hat OpenShift Dev Spaces. JHipster 8.8.0. generator-jhipster-micronau 3.6.0. generator-jhipster-quarkus 3.4.0. generator-jhipster-dotnetcore 4.2.0.
 displayName: JHipster Online
-icon: https://raw.githubusercontent.com/maximilianoPizarro/ecommerce-oracle/main/jhipster-icon.png
+icon: https://raw.githubusercontent.com/redhat-developer-demos/jhipster-online/main/jhipster-icon.png
 versions:
   - version: 2.33.0
+  - version: 2.33.1
     default: true
