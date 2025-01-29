@@ -119,4 +119,4 @@ commands:
 events:
   postStart:
     - oc-add-mysql
-    - yarn-install 
+    - yarn-install
