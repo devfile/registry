@@ -3,7 +3,7 @@ metadata:
   name: jhipster-online
   description: "Stack with JHipster Online on Red Hat OpenShift Dev Spaces. 
     This stack include:
-    - JHipster 8.1.0.
+    - JHipster 8.1.0 for generate Spring Boot projects.
     Watch the demo video:
     - https://youtu.be/b7xbcTAGNIQ?si=snE57Th4S3gPv_Vn"  
   displayName: JHipster Online
@@ -23,11 +23,11 @@ projects:
       remotes:
         origin: 'https://github.com/redhat-developer-demos/jhipster-online'
       checkoutFrom:
-        revision: main
+        revision: 2.33.0
 components:
   - name: tools
     container:
-      image: 'quay.io/devfile/jhipster-online@sha256:1d34f067a20d87d7cfa5e304fef23556f865656dfa1c01cb8501ea078a03157e'
+      image: 'quay.io/devfile/jhipster-online@sha256:254c710006b1582b2ebc48cc74ae080a9e10caa99dc1b62c1adb3341f072aede'
       mountSources: true
       cpuLimit: '4'
       cpuRequest: '1'

@@ -4,12 +4,12 @@ metadata:
   version: 2.33.1
   description: "Stack with JHipster Online on Red Hat OpenShift Dev Spaces. 
     This stack include:
-    - JHipster 8.8.0. 
-    - generator-jhipster-micronaut 3.6.0. 
-    - generator-jhipster-quarkus 3.4.0.
-    - generator-jhipster-dotnetcore 4.2.0.
+    - JHipster 8.8.0. for generate Spring Boot 3.4.1 projects.
+    - generator-jhipster-micronaut 3.6.0 for generate Micronaut 4.7.2 projects.
+    - generator-jhipster-quarkus 3.4.0 for generate Quarkus 3.11.1 projects.
+    - generator-jhipster-dotnetcore 4.2.0 for generate .Net 8.0 projects.
     Watch the demo video:
-    - https://youtu.be/b7xbcTAGNIQ?si=snE57Th4S3gPv_Vn"  
+    - https://youtu.be/b7xbcTAGNIQ?si=snE57Th4S3gPv_Vn"    
   displayName: JHipster Online
   icon: https://raw.githubusercontent.com/redhat-developer-demos/jhipster-online/main/jhipster-icon.png
   website: https://start.jhipster.tech
