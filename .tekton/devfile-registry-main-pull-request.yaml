@@ -467,11 +467,6 @@ spec:
       - name: source
         workspace: workspace
     - name: coverity-availability-check
-      params:
-      - name: image-digest
-        value: $(tasks.build-container.results.IMAGE_DIGEST)
-      - name: image-url
-        value: $(tasks.build-container.results.IMAGE_URL)
       runAfter:
       - build-image-index
       taskRef:
@@ -488,9 +483,6 @@ spec:
         operator: in
         values:
         - "false"
-      workspaces:
-      - name: workspace
-        workspace: workspace
     - name: sast-shell-check
       params:
       - name: image-digest
