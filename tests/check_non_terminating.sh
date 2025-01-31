@@ -8,7 +8,7 @@ DEVFILES_DIR="$(pwd)/stacks"
 STACKS=$(bash "$(pwd)/tests/get_stacks.sh")
 
 # Path to the check_non_terminating go package
-NON_TERMINATING_MODULE_DIR="$(pwd)/tests/check_non_terminating"
+NON_TERMINATING_MODULE_BIN="$(pwd)/tests/check_non_terminating/./check_non_terminating"
 
 replaceVariables() {
   image=$1
@@ -139,8 +139,11 @@ fi
 for stack in $STACKS; do
   devfile_path="$DEVFILES_DIR/$stack/devfile.yaml"
 
-  # flatten the devfile in case of parent
-  bash "$NON_TERMINATING_MODULE_DIR"/main "$devfile_path"
+  # if devfile in path has a parent flatten it
+  if $YQ_PATH eval 'has("parent")' "$devfile_path" -r | grep -q "true"; then
+    echo "INFO:: Found parent for $devfile_path"
+    "$NON_TERMINATING_MODULE_BIN" "$devfile_path"
+  fi
 
   if [ ! -f "$devfile_path" ]; then
     echo "WARN: Devfile not found at path $devfile_path"
