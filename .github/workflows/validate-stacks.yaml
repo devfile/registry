@@ -82,7 +82,7 @@ jobs:
 
       - name: Check that containers components are non terminating
         run: |
-          go build -C tests/check_non_terminating
+          go build -C tests/check_non_terminating -o flatten-parent
           bash tests/check_non_terminating.sh
 
   odov2:

@@ -8,7 +8,8 @@ DEVFILES_DIR="$(pwd)/stacks"
 STACKS=$(bash "$(pwd)/tests/get_stacks.sh")
 
 # Path to the check_non_terminating go package
-NON_TERMINATING_MODULE_BIN="$(pwd)/tests/check_non_terminating/./check_non_terminating"
+BIN_NAME=${BIN_NAME:-"flatten-parent"}
+NON_TERMINATING_MODULE_BIN="$(pwd)/tests/check_non_terminating/$BIN_NAME"
 
 replaceVariables() {
   image=$1
