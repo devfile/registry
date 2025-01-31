@@ -7,6 +7,9 @@ DEVFILES_DIR="$(pwd)/stacks"
 # The stacks to test as a string separated by spaces
 STACKS=$(bash "$(pwd)/tests/get_stacks.sh")
 
+# Path to the check_non_terminating go package
+NON_TERMINATING_MODULE_DIR="$(pwd)/tests/check_non_terminating"
+
 replaceVariables() {
   image=$1
   VAR_KEYS=(liberty-version)
@@ -135,6 +138,9 @@ fi
 
 for stack in $STACKS; do
   devfile_path="$DEVFILES_DIR/$stack/devfile.yaml"
+
+  # flatten the devfile in case of parent
+  bash "$NON_TERMINATING_MODULE_DIR" "$devfile_path"
 
   if [ ! -f "$devfile_path" ]; then
     echo "WARN: Devfile not found at path $devfile_path"
