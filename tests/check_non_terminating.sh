@@ -140,7 +140,7 @@ for stack in $STACKS; do
   devfile_path="$DEVFILES_DIR/$stack/devfile.yaml"
 
   # flatten the devfile in case of parent
-  bash "$NON_TERMINATING_MODULE_DIR" "$devfile_path"
+  bash "$NON_TERMINATING_MODULE_DIR"/main "$devfile_path"
 
   if [ ! -f "$devfile_path" ]; then
     echo "WARN: Devfile not found at path $devfile_path"
