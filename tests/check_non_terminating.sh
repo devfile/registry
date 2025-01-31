@@ -7,6 +7,10 @@ DEVFILES_DIR="$(pwd)/stacks"
 # The stacks to test as a string separated by spaces
 STACKS=$(bash "$(pwd)/tests/get_stacks.sh")
 
+# Path to the check_non_terminating go package
+BIN_NAME=${BIN_NAME:-"flatten-parent"}
+NON_TERMINATING_MODULE_BIN="$(pwd)/tests/check_non_terminating/$BIN_NAME"
+
 replaceVariables() {
   image=$1
   VAR_KEYS=(liberty-version)
@@ -135,6 +139,12 @@ fi
 
 for stack in $STACKS; do
   devfile_path="$DEVFILES_DIR/$stack/devfile.yaml"
+
+  # if devfile in path has a parent flatten it
+  if $YQ_PATH eval 'has("parent")' "$devfile_path" -r | grep -q "true"; then
+    echo "INFO:: Found parent for $devfile_path"
+    "$NON_TERMINATING_MODULE_BIN" "$devfile_path"
+  fi
 
   if [ ! -f "$devfile_path" ]; then
     echo "WARN: Devfile not found at path $devfile_path"

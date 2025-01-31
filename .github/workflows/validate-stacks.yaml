@@ -81,7 +81,9 @@ jobs:
         run: echo "TEST_DELTA=true" >> $GITHUB_ENV
 
       - name: Check that containers components are non terminating
-        run: bash tests/check_non_terminating.sh
+        run: |
+          go build -C tests/check_non_terminating -o flatten-parent
+          bash tests/check_non_terminating.sh
 
   odov2:
     name: with odo v2
