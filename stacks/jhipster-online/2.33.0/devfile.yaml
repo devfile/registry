@@ -116,7 +116,3 @@ commands:
       group:
         kind: run
         isDefault: false
-events:
-  postStart:
-    - oc-add-mysql
-    - yarn-install

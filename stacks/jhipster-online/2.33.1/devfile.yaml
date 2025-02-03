@@ -1,4 +1,4 @@
-schemaVersion: 2.2.0
+schemaVersion: 2.2.2
 metadata:
   name: jhipster-online
   version: 2.33.1
@@ -127,7 +127,3 @@ commands:
       group:
         kind: run
         isDefault: false
-events:
-  postStart:
-    - oc-add-mysql
-    - yarn-install
