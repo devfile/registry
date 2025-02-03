@@ -32,7 +32,7 @@ projects:
 components:
   - name: tools
     container:
-      image: 'quay.io/devfile/jhipster-online@sha256:1d34f067a20d87d7cfa5e304fef23556f865656dfa1c01cb8501ea078a03157e'
+      image: 'quay.io/devfile/jhipster-online@sha256:1f284df66c8ef209ea2cd1a10516e9ba424508a11341eead650e88027858d3ee'
       mountSources: true
       cpuLimit: '4'
       cpuRequest: '1'
