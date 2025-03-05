@@ -98,7 +98,7 @@ commands:
       commandLine: 'yarn workspace @kaoto/kaoto run build'
       group:
         kind: build
-        isDefault: true
+        isDefault: false
   - id: build-public-componets
     exec:
       label: 'build the public components'
@@ -107,7 +107,7 @@ commands:
       commandLine: 'yarn workspace @kaoto/kaoto run build:lib'
       group:
         kind: build
-        isDefault: true
+        isDefault: false
   - id: build-camel-catalog-supporting-schemas
     exec:
       label: 'build the Camel Catalog and the supporting schemas'
@@ -116,7 +116,7 @@ commands:
       commandLine: 'yarn workspace @kaoto/camel-catalog run build'
       group:
         kind: build
-        isDefault: true
+        isDefault: false
   - id: start-development-server
     exec:
       label: 'start the development server'
