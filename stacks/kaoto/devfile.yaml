@@ -24,7 +24,7 @@ projects:
 components:
   - name: tools
     container:
-      image: quay.io/devfile/universal-developer-image:latest
+      image: quay.io/devfile/universal-developer-image@sha256:08cf567a02fa70043cad4c1bc6a98e04a7e3f108d2f145929bed80d248fd94fa
       memoryLimit: 8Gi
       memoryRequest: 1Gi
       cpuLimit: "2"
