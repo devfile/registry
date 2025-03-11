@@ -52,15 +52,15 @@ components:
           protocol: tcp
           targetPort: 2475
         - exposure: public
-          name: http-booster
-          protocol: http
+          name: kaoto-podman
+          protocol: https
           targetPort: 8080
           attributes:
             discoverable: true
             urlRewriteSupported: true
         - exposure: public
           name: kaoto
-          protocol: http
+          protocol: https
           targetPort: 4173
           attributes:
             discoverable: true
