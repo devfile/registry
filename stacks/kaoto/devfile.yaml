@@ -137,7 +137,7 @@ commands:
         isDefault: false
   - id: start-with-docker
     exec:
-      label: '(optional). Running kaoto with Docker'
+      label: '(optional). Running kaoto with Podman'
       component: tools
       workingDir: ${PROJECT_SOURCE}
       commandLine: 'podman run --rm -p 8080:8080 --name kaoto quay.io/kaotoio/kaoto-app:main'
