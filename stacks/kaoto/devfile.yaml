@@ -83,52 +83,52 @@ components:
 commands:
   - id: yarn-install
     exec:
-      label: 'Install Dependencies'
+      label: '1. Install Dependencies'
       component: tools
       workingDir: ${PROJECT_SOURCE}
       commandLine: 'yarn install'
       group:
         kind: build
         isDefault: true
-  - id: build
-    exec:
-      label: 'Build'
-      component: tools
-      workingDir: ${PROJECT_SOURCE}
-      commandLine: 'yarn workspace @kaoto/kaoto run build'
-      group:
-        kind: build
-        isDefault: false
-  - id: build-public-componets
-    exec:
-      label: 'build the public components'
-      component: tools
-      workingDir: ${PROJECT_SOURCE}
-      commandLine: 'yarn workspace @kaoto/kaoto run build:lib'
-      group:
-        kind: build
-        isDefault: false
   - id: build-camel-catalog-supporting-schemas
     exec:
-      label: 'build the Camel Catalog and the supporting schemas'
+      label: '2. Build the Camel Catalog and the supporting schemas'
       component: tools
       workingDir: ${PROJECT_SOURCE}
       commandLine: 'yarn workspace @kaoto/camel-catalog run build'
       group:
         kind: build
         isDefault: false
+  - id: build
+    exec:
+      label: '3. Build'
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: 'yarn workspace @kaoto/kaoto run build'
+      group:
+        kind: build
+        isDefault: false
   - id: start-development-server
     exec:
-      label: 'start the development server'
+      label: '4. Start the development server'
       component: tools
       workingDir: ${PROJECT_SOURCE}
       commandLine: 'yarn workspace @kaoto/kaoto run start --host'
       group:
         kind: run
         isDefault: true
+  - id: build-public-componets
+    exec:
+      label: '(optional). Build the public components'
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: 'yarn workspace @kaoto/kaoto run build:lib'
+      group:
+        kind: build
+        isDefault: false
   - id: start-storybook
     exec:
-      label: 'run the storybook'
+      label: '(optional). Run the storybook'
       component: tools
       workingDir: ${PROJECT_SOURCE}
       commandLine: 'yarn workspace @kaoto/kaoto-tests storybook'
@@ -137,7 +137,7 @@ commands:
         isDefault: false
   - id: start-with-docker
     exec:
-      label: 'Running kaoto with Docker'
+      label: '(optional). Running kaoto with Docker'
       component: tools
       workingDir: ${PROJECT_SOURCE}
       commandLine: 'podman run --rm -p 8080:8080 --name kaoto quay.io/kaotoio/kaoto-app:main'
