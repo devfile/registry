@@ -55,3 +55,6 @@
 
 # JHipster stacks - On trial
 /stacks/jhipster-online/ @devfile/devfile-services-team @devfile/che-team
+
+# Kaoto stacks
+/stacks/kaoto/ @devfile/devfile-services-team @devfile/che-team
