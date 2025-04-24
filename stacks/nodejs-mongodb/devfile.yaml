@@ -1,0 +1,77 @@
+schemaVersion: 2.2.2
+metadata:
+  name: nodejs-mongodb
+  displayName: Node.js MongoDB
+  description: NodeJS web application which communicates with MongoDB
+  icon: https://github.com/che-samples/nodejs-mongodb-sample/raw/main/nodejs-mongodb.png
+  tags:
+    - Node.js
+    - MongoDB
+    - ubi9
+  projectType: universal
+  language: Polyglot
+  version: 1.0.0
+projects:
+  - name: nodejs-mongodb-sample
+    git:
+      remotes:
+        origin: 'https://github.com/che-samples/nodejs-mongodb-sample'
+      checkoutFrom:
+        revision: main
+components:
+  - name: tools
+    container:
+      # quay.io/devfile/universal-developer-image:ubi9-dd1f49f
+      image: quay.io/devfile/universal-developer-image@sha256:c7ef40c8e6997d8961572a0e9088aec6735b4df0dedae2361085a44260b8c12f
+      env:
+      # The values below are used to set up the environment for running the application
+        - name: SECRET
+          value: 220fd770-c028-480d-8f95-f84353c7d55a 
+        - name: NODE_ENV
+          value: production
+      endpoints:
+        - exposure: public
+          name: nodejs
+          targetPort: 8080
+          protocol: https
+      memoryLimit: 1G
+      mountSources: true
+
+  - name: mongo
+    container:
+      # bitnami/mongodb:8.0.8
+      image: bitnami/mongodb@sha256:b3bd5b6be9a0734dfa027c866ba17c42fd4c4325c973669e5e77a354c30e84a3
+      env:
+        - name: MONGODB_USERNAME
+          value: user
+        - name: MONGODB_PASSWORD
+          value: password
+        - name: MONGODB_DATABASE
+          value: guestbook
+        - name: MONGODB_ROOT_PASSWORD
+          value: password
+      endpoints:
+        - name: mongodb
+          exposure: internal
+          targetPort: 27017
+          attributes:
+            discoverable: 'true'
+      memoryLimit: 512Mi
+      mountSources: true
+      volumeMounts:
+        - name: mongo-storage
+          path: /bitnami/mongodb
+
+  - name: mongo-storage
+    volume:
+      size: 256Mi
+
+commands:
+  - id: run-application
+    exec:
+      label: "Run the application"
+      component: tools
+      workingDir: ${PROJECT_SOURCE}
+      commandLine: "npm install && node --inspect=9229 app.js"
+      group:
+        kind: run
