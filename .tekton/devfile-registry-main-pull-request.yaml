@@ -30,6 +30,8 @@ spec:
     value: .ci/Dockerfile
   - name: path-context
     value: .
+  - name: build-args-file
+    value: .ci/konflux.argfile.conf
   pipelineSpec:
     description: |
       This pipeline is ideal for building container images from a Containerfile while reducing network traffic.

@@ -16,6 +16,8 @@ shopt -s expand_aliases
 
 ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 USE_PODMAN=${USE_PODMAN:-false}
+# Base index server image
+BASE_IMAGE=${BASE_IMAGE:-'quay.io/devfile/devfile-index-base:next'}
 DEFAULT_ARCH="linux/amd64"
 
 # Check if different architecture was passed for image build
@@ -34,7 +36,7 @@ fi
 
 if [ $# -eq 1 ] && [ $1 == "offline" ]
 then
-    docker build --no-cache --platform "${arch}" -t devfile-index -f $ABSOLUTE_PATH/Dockerfile.offline $ABSOLUTE_PATH/..
+    docker build --no-cache --platform "${arch}" -t devfile-index --build-arg BASE_IMAGE=${BASE_IMAGE} -f $ABSOLUTE_PATH/Dockerfile.offline $ABSOLUTE_PATH/..
 else
-    docker build --no-cache --platform "${arch}" -t devfile-index -f $ABSOLUTE_PATH/Dockerfile $ABSOLUTE_PATH/..
+    docker build --no-cache --platform "${arch}" -t devfile-index --build-arg BASE_IMAGE=${BASE_IMAGE} -f $ABSOLUTE_PATH/Dockerfile $ABSOLUTE_PATH/..
 fi
