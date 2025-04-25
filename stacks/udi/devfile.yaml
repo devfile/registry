@@ -14,14 +14,14 @@ metadata:
     - Go
     - Python
     - Pip
-    - ubi8
+    - ubi9
   projectType: universal
   language: Polyglot
   version: 1.0.0
 components:
   - name: tools
     container:
-      image: quay.io/devfile/universal-developer-image:ubi8-latest
+      image: quay.io/devfile/universal-developer-image:ubi9-latest
       memoryLimit: 6G
       memoryRequest: 512Mi
       cpuRequest: 1000m
