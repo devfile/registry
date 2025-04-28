@@ -1,4 +1,4 @@
-schemaVersion: 2.2.2
+schemaVersion: 2.3.0
 metadata:
   name: nodejs-mongodb
   displayName: Node.js MongoDB
@@ -26,7 +26,7 @@ components:
       env:
       # The values below are used to set up the environment for running the application
         - name: SECRET
-          value: 220fd770-c028-480d-8f95-f84353c7d55a 
+          value: dummy-value 
         - name: NODE_ENV
           value: production
       endpoints:
