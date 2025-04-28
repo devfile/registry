@@ -220,9 +220,9 @@ for stack in $STACKS; do
     continue
   fi
 
-  # skip devfiles that use 2.2
+  # skip devfiles that use 2.2+
   devfile_schema_version=$($YQ_PATH eval '.schemaVersion' $devfile_path)
-  if [[ $devfile_schema_version == "2.2."* ]]; then
+  if [[ $devfile_schema_version == "2.2."* ]] || [[ $devfile_schema_version == "2.3."* ]]; then
     continue
   fi
 
