@@ -11,7 +11,7 @@ metadata:
   projectType: universal
   language: Polyglot
   version: 1.0.0
-projects:
+starterProjects:
   - name: nodejs-mongodb-sample
     git:
       remotes:
