@@ -50,7 +50,7 @@ commands:
   - id: dev-run
     exec:
       component: tools
-      commandLine: 'mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0'
+      commandLine: 'mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0 -Dquarkus.analytics.disabled=true'
       hotReloadCapable: true
       group:
         kind: run
@@ -59,7 +59,7 @@ commands:
   - id: dev-debug
     exec:
       component: tools
-      commandLine: 'mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0 -Ddebug=${DEBUG_PORT}'
+      commandLine: 'mvn -Dmaven.repo.local=/home/user/.m2/repository quarkus:dev -Dquarkus.http.host=0.0.0.0 -Dquarkus.analytics.disabled=true -Ddebug=${DEBUG_PORT}'
       hotReloadCapable: true
       group:
         kind: debug
