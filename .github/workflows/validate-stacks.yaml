@@ -165,10 +165,10 @@ jobs:
         with:
           go-version: "1.23"
 
-      - name: Install odo latest version
-        run: |
-          curl -L https://s3.eu-de.cloud-object-storage.appdomain.cloud/odo-nightly-builds/odo-linux-amd64 -o odo
-          sudo install -m 0755 odo /usr/local/bin/odo
+      - name: Install odo latest version v3
+        uses: redhat-actions/openshift-tools-installer@2de9a80cf012ad0601021515481d433b91ef8fd5 # v1
+        with:
+          odo: "3.16.1"
 
       - name: Install Ginkgo
         run: go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@v2.13.0
