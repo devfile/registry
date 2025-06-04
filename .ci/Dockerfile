@@ -14,7 +14,7 @@
 #   limitations under the License.
 ARG BASE_IMAGE=quay.io/devfile/devfile-index-base:next
 
-FROM registry.access.redhat.com/ubi8/go-toolset:1.21 AS builder
+FROM registry.access.redhat.com/ubi8/go-toolset:1.24 AS builder
 
 # Set user as root
 USER root
