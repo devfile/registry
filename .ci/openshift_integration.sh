@@ -51,7 +51,7 @@ curl -sL https://developers.redhat.com/content-gateway/rest/mirror/pub/openshift
 export GLOBALODOCONFIG=$(pwd)/preferences.yaml
 
 # Download & Install Ginkgo
-GINKGO_VERSION="$(cd $BASE_DIR/tests/odov3 && go list -m -json all | ${YQ_PATH} 'select(.Path == "github.com/onsi/ginkgo/v2") | .Version' -Mr -p=json)"
+GINKGO_VERSION="$(cd $BASE_DIR/tests/odov3 && go list -m -mod=readonly -json all | ${YQ_PATH} 'select(.Path == "github.com/onsi/ginkgo/v2") | .Version' -Mr -p=json)"
 go install github.com/onsi/ginkgo/v2/ginkgo@${GINKGO_VERSION}
 
 # Install the devfile registry
