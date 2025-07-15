@@ -9,7 +9,7 @@ if [ ! -z "${1}" ]; then
   args="-odoPath ${1} ${args}"
 fi
 
-ginkgo run --procs 2 \
+ginkgo run --mod=readonly --procs 2 \
   --skip="stack: java-openliberty-gradle version: 0.4.0 starter: rest" \
   --skip="stack: java-vertx version: 1.2.0 starter: vertx-cache-example-redhat" \
   --skip="stack: java-vertx version: 1.2.0 starter: vertx-cache-example" \

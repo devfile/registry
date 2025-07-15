@@ -49,5 +49,5 @@ if [ "${SAMPLES}" == "true" ]; then
   fi
 fi
 
-ginkgo run --procs 2 \
+ginkgo run --mod=readonly --procs 2 \
   tests/validate_devfile_schemas -- -stacksPath ${stacksDir} -stackDirs "$stackDirs"
