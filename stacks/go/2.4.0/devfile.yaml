@@ -15,7 +15,7 @@ starterProjects:
     description: A Go project with a simple HTTP server
     git:
       checkoutFrom:
-        revision: main
+        revision: v2.4.0
       remotes:
         origin: https://github.com/devfile-samples/devfile-stack-go.git
 components:
