@@ -9,7 +9,7 @@ metadata:
   projectType: Go
   language: Go
   provider: Red Hat
-  version: 2.4.0
+  version: 2.5.0
 starterProjects:
   - name: go-starter
     description: A Go project with a simple HTTP server
