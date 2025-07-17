@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Source shared utilities
+source "$(dirname "$0")/get_paths.sh"
+
 POSITIONAL_ARGS=()
 SAMPLES="false"
 VERBOSE="false"
@@ -14,6 +17,16 @@ while [[ $# -gt 0 ]]; do
       VERBOSE="true"
       shift # past argument
       ;;
+    --stackDirs)
+      stackDirs=$2
+      shift # past argument
+      shift
+      ;;
+    --stacksPath)
+      stacksPath=$2
+      shift # past argument
+      shift
+      ;;
     -*|--*)
       echo "Unknown option $1"
       exit 1
@@ -25,11 +38,21 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
+# Restore positional parameters
+restore_positional_args POSITIONAL_ARGS
+
 set -x
 
-stacksDir=${STACKS_DIR:-stacks}
-stackDirs=${STACKS:-"$(bash "$(pwd)/tests/get_stacks.sh")"}
+# Set defaults for stack arguments, with backward compatibility for environment variables
+if [ -z "$stacksPath" ]; then
+  stacksPath=${STACKS_DIR:-stacks}
+fi
+
+if [ -z "$stackDirs" ]; then
+  stackDirs=${STACKS:-"$(bash "$(pwd)/tests/get_stacks.sh")"}
+fi
+
+stacksDir="$stacksPath"
 
 # Use pwd if relative path
 if [[ ! ${stacksDir} = /* ]]; then

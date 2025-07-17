@@ -2,10 +2,44 @@
 set -o nounset
 set -o errexit
 
-DEVFILES_DIR="$(pwd)/stacks"
+# Source shared utilities
+source "$(dirname "$0")/get_paths.sh"
+
+POSITIONAL_ARGS=()
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --stackDirs)
+      stackDirs=$2
+      shift # past argument
+      shift
+      ;;
+    --stacksPath)
+      stacksPath=$2
+      shift # past argument
+      shift
+      ;;
+    -*|--*)
+      echo "Unknown option $1"
+      exit 1
+      ;;
+    *)
+      POSITIONAL_ARGS+=("$1") # save positional arg
+      shift # past argument
+      ;;
+  esac
+done
+
+# Restore positional parameters
+restore_positional_args POSITIONAL_ARGS
+
+# Set defaults for stack arguments
+set_stack_defaults
+
+DEVFILES_DIR="$stacksPath"
 
 # The stacks to test as a string separated by spaces
-STACKS=$(bash "$(pwd)/tests/get_stacks.sh")
+STACKS="$stackDirs"
 
 # Path to the check_non_terminating go package
 BIN_NAME=${BIN_NAME:-"flatten-parent"}

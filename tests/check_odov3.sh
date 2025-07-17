@@ -2,7 +2,41 @@
 
 set -x
 
-stackDirs=$(bash "$(pwd)/tests/get_stacks.sh")
+# Source shared utilities
+source "$(dirname "$0")/get_paths.sh"
+
+POSITIONAL_ARGS=()
+VERBOSE="false"
+
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    --stackDirs)
+      stackDirs=$2
+      shift # past argument
+      shift
+      ;;
+    --stacksPath)
+      stacksPath=$2
+      shift # past argument
+      shift
+      ;;
+    -*|--*)
+      echo "Unknown option $1"
+      exit 1
+      ;;
+    *)
+      POSITIONAL_ARGS+=("$1") # save positional arg
+      shift # past argument
+      ;;
+  esac
+done
+
+# Restore positional parameters
+restore_positional_args POSITIONAL_ARGS
+
+# Set defaults for stack arguments
+set_stack_defaults
+
 args=""
 
 if [ ! -z "${1}" ]; then
@@ -63,4 +97,4 @@ ginkgo run --mod=readonly --procs 2 \
   --skip="stack: ollama" \
   --slow-spec-threshold 120s \
   --timeout 3h \
-  tests/odov3 -- -stacksPath "$(pwd)"/stacks -stackDirs "$stackDirs" ${args}
+  tests/odov3 -- -stacksPath "$stacksPath" -stackDirs "$stackDirs" ${args}
