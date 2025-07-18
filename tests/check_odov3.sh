@@ -3,36 +3,13 @@
 set -x
 
 # Source shared utilities
-source "$(dirname "$0")/get_paths.sh"
+source "$(dirname "$0")/paths_util.sh"
 
-POSITIONAL_ARGS=()
-VERBOSE="false"
-
-while [[ $# -gt 0 ]]; do
-  case $1 in
-    --stackDirs)
-      stackDirs=$2
-      shift # past argument
-      shift
-      ;;
-    --stacksPath)
-      stacksPath=$2
-      shift # past argument
-      shift
-      ;;
-    -*|--*)
-      echo "Unknown option $1"
-      exit 1
-      ;;
-    *)
-      POSITIONAL_ARGS+=("$1") # save positional arg
-      shift # past argument
-      ;;
-  esac
-done
+# Parse all arguments
+parse_arguments "$@"
 
 # Restore positional parameters
-restore_positional_args POSITIONAL_ARGS
+set -- "${POSITIONAL_ARGS[@]}"
 
 # Set defaults for stack arguments
 set_stack_defaults
