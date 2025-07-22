@@ -1,35 +1,48 @@
 #!/usr/bin/env bash
 
-POSITIONAL_ARGS=()
+# Source shared utilities
+source "$(dirname "$0")/paths_util.sh"
+
 SAMPLES="false"
 VERBOSE="false"
 
-while [[ $# -gt 0 ]]; do
-  case $1 in
-    -s|--samples)
-      SAMPLES="true"
-      shift # past argument
-      ;;
-    -v|--verbose)
-      VERBOSE="true"
-      shift # past argument
-      ;;
-    -*|--*)
-      echo "Unknown option $1"
-      exit 1
-      ;;
-    *)
-      POSITIONAL_ARGS+=("$1") # save positional arg
-      shift # past argument
-      ;;
-  esac
-done
+handle_additional_args() {
+    case $1 in
+        -s|--samples)
+            SAMPLES="true"
+            echo 1
+            return 0
+            ;;
+        -v|--verbose)
+            VERBOSE="true"
+            echo 1
+            return 0 
+            ;;
+        *)
+            echo 0
+            return 1
+            ;;
+    esac
+}
 
-set -- "${POSITIONAL_ARGS[@]}" # restore positional parameters
+# Parse all arguments
+parse_arguments "$@"
+
+# Restore positional parameters
+set -- "${POSITIONAL_ARGS[@]}"
+
 set -x
 
-stacksDir=${STACKS_DIR:-stacks}
-stackDirs=${STACKS:-"$(bash "$(pwd)/tests/get_stacks.sh")"}
+# Set defaults for stack arguments, with backward compatibility for environment variables
+if [ -z "$stacksPath" ]; then
+  stacksPath=${STACKS_DIR:-stacks}
+fi
+
+if [ -z "$stackDirs" ]; then
+  stackDirs=${STACKS:-"$(bash "$(pwd)/tests/get_stacks.sh")"}
+fi
+
+stacksDir="$stacksPath"
 
 # Use pwd if relative path
 if [[ ! ${stacksDir} = /* ]]; then
