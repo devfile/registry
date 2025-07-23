@@ -2,10 +2,22 @@
 set -o nounset
 set -o errexit
 
-DEVFILES_DIR="$(pwd)/stacks"
+# Source shared utilities
+source "$(dirname "$0")/paths_util.sh"
+
+# Parse all arguments
+parse_arguments "$@"
+
+# Restore positional parameters
+set -- "${POSITIONAL_ARGS[@]}"
+
+# Set defaults for stack arguments
+set_stack_defaults
+
+DEVFILES_DIR="$stacksPath"
 
 # The stacks to test as a string separated by spaces
-STACKS=$(bash "$(pwd)/tests/get_stacks.sh")
+STACKS="$stackDirs"
 
 # Path to the check_non_terminating go package
 BIN_NAME=${BIN_NAME:-"flatten-parent"}

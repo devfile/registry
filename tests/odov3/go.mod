@@ -1,6 +1,6 @@
 module github.com/devfile/registry/tests/odov3
 
-go 1.21
+go 1.23
 
 require (
 	github.com/devfile/api/v2 v2.3.0

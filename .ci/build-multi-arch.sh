@@ -20,6 +20,8 @@ ABSOLUTE_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # Due to command differences between podman and docker we need to separate the process
 # for creating and adding images to a multi-arch manifest
 podman=${USE_PODMAN:-false}
+# Base index server image
+BASE_IMAGE=${BASE_IMAGE:-'quay.io/devfile/devfile-index-base:next'}
 # Base Repository
 BASE_REPO="quay.io/devfile/devfile-index"
 BASE_TAG="next"
@@ -32,7 +34,7 @@ if [ ${podman} == true ]; then
 
   podman manifest create "$DEFAULT_IMG"
 
-  podman build --platform="$PLATFORMS" --manifest "$DEFAULT_IMG" --no-cache -f $ABSOLUTE_PATH/Dockerfile $ABSOLUTE_PATH/..
+  podman build --platform="$PLATFORMS" --manifest "$DEFAULT_IMG" --no-cache --build-arg BASE_IMAGE=${BASE_IMAGE} -f $ABSOLUTE_PATH/Dockerfile $ABSOLUTE_PATH/..
 
   podman manifest push "$DEFAULT_IMG"
 
@@ -45,7 +47,7 @@ else
 
   docker buildx use index-builder
 
-  docker buildx build --push --platform="$PLATFORMS" --tag "$DEFAULT_IMG" --provenance=false --no-cache -f $ABSOLUTE_PATH/Dockerfile $ABSOLUTE_PATH/..
+  docker buildx build --push --platform="$PLATFORMS" --tag "$DEFAULT_IMG" --provenance=false --no-cache --build-arg BASE_IMAGE=${BASE_IMAGE} -f $ABSOLUTE_PATH/Dockerfile $ABSOLUTE_PATH/..
 
   docker buildx rm index-builder
 

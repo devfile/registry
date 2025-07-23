@@ -12,7 +12,9 @@
 #   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
-FROM registry.access.redhat.com/ubi8/go-toolset:1.21 AS builder
+ARG BASE_IMAGE=quay.io/devfile/devfile-index-base:next
+
+FROM registry.access.redhat.com/ubi8/go-toolset:1.23 AS builder
 
 # Set user as root
 USER root
@@ -42,6 +44,6 @@ RUN bash /registry-support/build-tools/build.sh /registry /build
 # Set user as non-root
 USER 1001
 
-FROM quay.io/devfile/devfile-index-base:next
+FROM ${BASE_IMAGE}
 
 COPY --from=builder /build /registry

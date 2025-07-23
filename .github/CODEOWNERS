@@ -35,6 +35,7 @@
 # Node.js stacks
 /stacks/nodejs/         @BethGriggs @devfile/che-team
 /stacks/nodejs-angular/ @devfile/devfile-services-team @devfile/che-team
+/stacks/nodejs-mongodb/ @svor @devfile/che-team
 /stacks/nodejs-nextjs/  @devfile/devfile-services-team @devfile/che-team
 /stacks/nodejs-nuxtjs/  @devfile/devfile-services-team @devfile/che-team
 /stacks/nodejs-react/   @devfile/devfile-services-team @devfile/che-team
