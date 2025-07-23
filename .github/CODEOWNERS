@@ -55,7 +55,7 @@
 /stacks/ollama          @ibuziuk @manhah @devfile/che-team
 
 # JHipster stacks - On trial
-/stacks/jhipster-online/ @devfile/devfile-services-team @devfile/che-team
+/stacks/jhipster-online/ @maximilianoPizarro @devfile/che-team
 
 # Kaoto stacks
-/stacks/kaoto/ @devfile/devfile-services-team @devfile/che-team
+/stacks/kaoto/ @maximilianoPizarro @devfile/che-team
