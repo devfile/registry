@@ -111,7 +111,7 @@ samples:
   - name: dotnet-basic
     displayName: Basic .NET
     description: MVC .NET 6.0 application
-    icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
+    icon: https://raw.githubusercontent.com/dotnet/brand/main/logo/dotnet-logo.png
     tags:
       - .NET
     projectType: dotnet
