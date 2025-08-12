@@ -25,7 +25,7 @@ ARG TARGETARCH=amd64
 # Install yq and jq
 ENV YQ_VERSION=v4.44.1
 ENV JQ_VERSION=1.6
-RUN curl -sL -O https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${TARGETARCH} -o /usr/local/bin/yq && mv ./yq_linux_${TARGETARCH} /usr/local/bin/yq && chmod +x /usr/local/bin/yq
+RUN curl -sL https://github.com/mikefarah/yq/releases/download/${YQ_VERSION}/yq_linux_${TARGETARCH} -o /usr/local/bin/yq && chmod +x /usr/local/bin/yq
 RUN yum install -y jq-${JQ_VERSION}
 
 COPY . /registry

@@ -3,7 +3,7 @@ metadata:
   name: dotnet60
   displayName: .NET 6.0
   description: .NET 6.0 application
-  icon: https://github.com/dotnet/brand/raw/main/logo/dotnet-logo.png
+  icon: https://raw.githubusercontent.com/dotnet/brand/main/logo/dotnet-logo.png
   tags:
     - .NET
     - .NET 6.0
