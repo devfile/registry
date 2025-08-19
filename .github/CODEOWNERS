@@ -12,10 +12,7 @@
 # <path-to-the-stack-dir> @owner @reviwer-team
 
 # .Net stacks
-/stacks/dotnet50/       @kadel @devfile/che-team
-/stacks/dotnet60/       @kadel @devfile/che-team
 /stacks/dotnet80/       @msivasubramaniaan @devfile/che-team
-/stacks/dotnetcore31/   @kadel @devfile/che-team
 
 # Golang stacks
 /stacks/go/     @devfile/devfile-services-team @devfile/che-team
