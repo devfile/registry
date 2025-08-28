@@ -108,20 +108,3 @@ samples:
           revision: v2.0.0
           remotes:
             origin: https://github.com/devfile-samples/devfile-sample-go-basic.git
-  - name: dotnet-basic
-    displayName: Basic .NET
-    description: MVC .NET 6.0 application
-    icon: https://raw.githubusercontent.com/dotnet/brand/main/logo/dotnet-logo.png
-    tags:
-      - .NET
-    projectType: dotnet
-    language: .NET
-    provider: Red Hat
-    versions:
-      - version: 1.1.1
-        default: true
-        schemaVersion: 2.2.0
-        git:
-          revision: main
-          remotes:
-            origin: https://github.com/devfile-samples/devfile-sample-dotnet60-basic.git
