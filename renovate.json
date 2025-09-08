@@ -6,7 +6,7 @@
     ":gitSignOff"
   ],
   "timezone": "America/Toronto",
-  "schedule": ["on the 2nd and 4th day instance on thursday after 9pm"],
+  "schedule": ["* 19-23,0-2 */2,4 * 4"],
   "enabledManagers": ["regex", "github-actions", "tekton"],
   "regexManagers": [
     {
@@ -28,9 +28,9 @@
       "commitMessageTopic": "{{depName}}"
     },
     {
-      "description": "Schedule Konflux tekton task updates Tuesday and Thursday nights (9 PM - 12 AM)",
+      "description": "Schedule Konflux tekton task updates Tuesday and Thursday nights (7 PM - 2 AM)",
       "matchManagers": ["tekton"],
-      "schedule": ["* 21-23 * * 2,4"]
+      "schedule": ["* 19-23,0-2 * * 2,4"]
     }
   ],
   "ignorePaths": [
