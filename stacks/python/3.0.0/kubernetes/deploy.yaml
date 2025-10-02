@@ -4,10 +4,10 @@ metadata:
   name: my-python
 spec:
   ports:
-    - name: http-8081
-      port: 8081
+    - name: http-8080
+      port: 8080
       protocol: TCP
-      targetPort: 8081
+      targetPort: 8080
   selector:
     app: python-app
 ---
@@ -30,7 +30,7 @@ spec:
           image: python-image:latest
           ports:
             - name: http
-              containerPort: 8081
+              containerPort: 8080
               protocol: TCP
           resources:
             requests:
