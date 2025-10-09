@@ -27,7 +27,7 @@ components:
         - name: https-angular
           protocol: https
           targetPort: 4200
-      image: registry.access.redhat.com/ubi8/nodejs-18:1-137.1742991061
+      image: registry.access.redhat.com/ubi8/nodejs-18:1-140
       args: ["tail", "-f", "/dev/null"]
       memoryLimit: 1024Mi
     name: runtime
