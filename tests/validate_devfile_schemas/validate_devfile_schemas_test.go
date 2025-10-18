@@ -47,8 +47,10 @@ var _ = Describe("validate stacks follow the schema", func() {
 		It(fmt.Sprintf("stack: %s", dir), func() {
 			path := filepath.Join(stacksPath, dir, "devfile.yaml")
 
+			convertKubernetesContentInUri := false
 			parserArgs := parser.ParserArgs{
-				Path: path,
+				Path:                          path,
+				ConvertKubernetesContentInUri: &convertKubernetesContentInUri,
 			}
 
 			GinkgoWriter.Println(parserArgs)
