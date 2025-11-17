@@ -28,7 +28,7 @@ components:
         - name: https-laravel
           targetPort: 8000
           protocol: https
-      image: quay.io/devfile/composer:2.5.8
+      image: quay.io/devfile/universal-developer-image:ubi9-latest
       args: ["tail", "-f", "/dev/null"]
       memoryLimit: 1024Mi
       mountSources: true
