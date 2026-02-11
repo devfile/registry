@@ -22,7 +22,7 @@ components:
   - name: tools
     container:
       # quay.io/devfile/universal-developer-image:ubi9-dd1f49f
-      image: quay.io/devfile/universal-developer-image@sha256:c7ef40c8e6997d8961572a0e9088aec6735b4df0dedae2361085a44260b8c12f
+      image: quay.io/devfile/universal-developer-image@sha256:99d87fc6f1c9114db7456c419fa4556f63c1c057b6bffde57a1f7429652c7b56
       env:
       # The values below are used to set up the environment for running the application
         - name: SECRET
