@@ -3,7 +3,7 @@ metadata:
   name: nodejs-mongodb
   displayName: Node.js MongoDB
   description: NodeJS web application which communicates with MongoDB
-  icon: https://github.com/che-samples/nodejs-mongodb-sample/raw/main/nodejs-mongodb.png
+  icon: https://github.com/devfile-samples/nodejs-mongodb-sample/raw/main/nodejs-mongodb.png
   tags:
     - Node.js
     - MongoDB
@@ -15,7 +15,7 @@ starterProjects:
   - name: nodejs-mongodb-sample
     git:
       remotes:
-        origin: 'https://github.com/che-samples/nodejs-mongodb-sample'
+        origin: 'https://github.com/devfile-samples/nodejs-mongodb-sample'
       checkoutFrom:
         revision: main
 components:
