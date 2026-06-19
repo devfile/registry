@@ -1,0 +1,7 @@
+name: hermes
+displayName: Hermes AI Agent
+description: A self-improving AI agent with tool-calling, web dashboard, and 50+ integrations. By Nous Research.
+icon: https://raw.githubusercontent.com/NousResearch/hermes-agent/main/apps/desktop/assets/icon.png
+versions:
+  - version: 1.0.0
+    default: true
