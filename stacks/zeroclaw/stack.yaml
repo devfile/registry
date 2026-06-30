@@ -1,0 +1,7 @@
+name: zeroclaw
+displayName: ZeroClaw AI Agent Runtime
+description: A fast, lightweight AI agent runtime. 50+ integrations, webhooks, websockets, and a web UI — all in one binary.
+icon: https://raw.githubusercontent.com/zeroclaw-labs/zeroclaw/master/apps/tauri/icons/icon.png
+versions:
+  - version: 1.0.0
+    default: true
