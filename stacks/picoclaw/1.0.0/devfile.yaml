@@ -1,0 +1,99 @@
+# PicoClaw — Personal AI Agent Stack
+#
+# PicoClaw is an open-source personal AI assistant (Go, MIT).
+# Repo: https://github.com/sipeed/picoclaw
+#
+# The launcher container provides:
+#   - Web UI (picoclaw-launcher) on port 18800 — configure agents, channels, etc.
+#   - Gateway HTTP server on port 18790 — webhook endpoint for chat channels
+#
+# The editor (VS Code, ttyd, etc.) is chosen separately in the dashboard
+# and injected into the tools container.
+#
+# First boot: open the web UI endpoint and run `picoclaw onboard`
+# in the terminal to configure your API key, then restart the workspace.
+
+schemaVersion: 2.2.2
+metadata:
+  name: picoclaw
+  displayName: PicoClaw Personal AI Agent
+  description: A personal AI agent running in your workspace. Connect to 30+ LLM providers and interact via web UI or terminal.
+  icon: https://raw.githubusercontent.com/sipeed/picoclaw/main/web/frontend/public/favicon.svg
+  tags:
+    - AI
+    - Agent
+    - Terminal
+    - PicoClaw
+  projectType: AI
+  language: Polyglot
+  version: 1.0.0
+
+attributes:
+  controller.devfile.io/storage-type: per-workspace
+
+components:
+  - name: tools
+    container:
+      image: quay.io/devfile/universal-developer-image:ubi9-latest
+      memoryLimit: 1Gi
+      memoryRequest: 256Mi
+      mountSources: true
+
+  # PicoClaw launcher container.
+  # Runs the web UI (port 18800) and gateway (port 18790).
+  # Config persists in the PVC at /home/user/.picoclaw.
+  - name: picoclaw
+    container:
+      image: docker.io/sipeed/picoclaw:launcher
+      mountSources: false
+      memoryRequest: 128Mi
+      memoryLimit: 512Mi
+      env:
+        - name: HOME
+          value: /home/user
+        - name: PICOCLAW_GATEWAY_HOST
+          value: "0.0.0.0"
+      endpoints:
+        - name: webui
+          targetPort: 18800
+          exposure: public
+          protocol: https
+          attributes:
+            cookiesAuthEnabled: true
+            discoverable: false
+            urlRewriteSupported: false
+        - name: gateway
+          targetPort: 18790
+          exposure: public
+          protocol: https
+          attributes:
+            cookiesAuthEnabled: true
+            discoverable: false
+            urlRewriteSupported: false
+      volumeMounts:
+        - name: picoclaw-data
+          path: /home/user/.picoclaw
+
+  - name: picoclaw-data
+    volume:
+      size: 1Gi
+
+commands:
+  - id: onboard
+    exec:
+      label: "Configure PicoClaw (onboard)"
+      component: picoclaw
+      commandLine: picoclaw onboard
+      workingDir: /home/user
+  - id: status
+    exec:
+      label: "Show PicoClaw status"
+      component: picoclaw
+      commandLine: picoclaw status
+      workingDir: /home/user
+  - id: start-gateway
+    exec:
+      label: "Start PicoClaw gateway"
+      component: picoclaw
+      commandLine: picoclaw gateway --host '[::]'
+      workingDir: /home/user
