@@ -1,0 +1,117 @@
+# Hermes — Self-Improving AI Agent Stack
+#
+# Hermes Agent is a self-improving AI agent by Nous Research.
+# Repo: https://github.com/NousResearch/hermes-agent
+#
+# The hermes container runs the agent runtime which provides:
+#   - Dashboard web UI on port 9119
+#   - Messaging gateway for Telegram, Discord, Slack, etc.
+#   - TUI and CLI chat interfaces
+#
+# The editor (VS Code, ttyd, etc.) is chosen separately in the dashboard
+# and injected into the tools container.
+#
+# First boot: run `hermes setup` in the terminal to configure
+# your API key and model.
+
+schemaVersion: 2.2.2
+metadata:
+  name: hermes
+  displayName: Hermes AI Agent
+  description: A self-improving AI agent with tool-calling, web dashboard, and 50+ integrations. By Nous Research.
+  icon: https://raw.githubusercontent.com/NousResearch/hermes-agent/main/apps/desktop/assets/icon.png
+  tags:
+    - AI
+    - Agent
+    - Hermes
+    - NousResearch
+  projectType: AI
+  language: Polyglot
+  version: 1.0.0
+
+attributes:
+  controller.devfile.io/storage-type: per-workspace
+
+components:
+  - name: tools
+    container:
+      image: quay.io/devfile/universal-developer-image:ubi9-latest
+      memoryLimit: 1Gi
+      memoryRequest: 256Mi
+      mountSources: true
+
+  # Hermes Agent container.
+  # Runs the agent runtime with dashboard on port 9119.
+  # The official image uses s6-overlay which requires root, so we
+  # bypass it and run the setup + dashboard directly.
+  # Config persists in the PVC at /opt/data (HERMES_HOME).
+  - name: hermes
+    container:
+      image: docker.io/nousresearch/hermes-agent:v2026.6.5
+      mountSources: false
+      memoryRequest: 512Mi
+      memoryLimit: 2Gi
+      command: ["/bin/bash", "-c"]
+      args:
+        - |
+          if ! whoami &>/dev/null; then
+            echo "user:x:$(id -u):0:user:/opt/data:/bin/bash" >> /etc/passwd
+          fi
+          export HOME=/opt/data
+          cd /opt/data
+
+          . /opt/hermes/.venv/bin/activate
+
+          for d in cron sessions logs hooks memories skills skins plans workspace home; do
+            mkdir -p /opt/data/$d
+          done
+          [ ! -f /opt/data/.env ] && cp /opt/hermes/.env.example /opt/data/.env 2>/dev/null && chmod 600 /opt/data/.env
+          [ ! -f /opt/data/config.yaml ] && cp /opt/hermes/cli-config.yaml.example /opt/data/config.yaml 2>/dev/null
+          [ ! -f /opt/data/SOUL.md ] && cp /opt/hermes/docker/SOUL.md /opt/data/SOUL.md 2>/dev/null
+
+          python /opt/hermes/tools/skills_sync.py 2>/dev/null || true
+
+          hermes dashboard --host 0.0.0.0 --no-open --insecure &
+          exec tail -f /dev/null
+      endpoints:
+        - name: dashboard
+          targetPort: 9119
+          exposure: public
+          protocol: https
+          attributes:
+            cookiesAuthEnabled: true
+            discoverable: false
+            urlRewriteSupported: false
+      volumeMounts:
+        - name: hermes-data
+          path: /opt/data
+
+  - name: hermes-data
+    volume:
+      size: 10Gi
+
+commands:
+  - id: setup
+    exec:
+      label: "Configure Hermes (setup wizard)"
+      component: hermes
+      commandLine: hermes setup
+      workingDir: /opt/data
+  - id: status
+    exec:
+      label: "Show Hermes status"
+      component: hermes
+      commandLine: hermes status
+      workingDir: /opt/data
+  - id: doctor
+    exec:
+      label: "Run diagnostics"
+      component: hermes
+      commandLine: hermes doctor
+      workingDir: /opt/data
+  - id: restart-dashboard
+    exec:
+      label: "Restart Hermes dashboard"
+      component: hermes
+      commandLine: hermes dashboard --stop 2>/dev/null; hermes dashboard --host 0.0.0.0 --no-open --insecure
+      workingDir: /opt/data
