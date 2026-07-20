@@ -87,7 +87,7 @@ samples:
             origin: https://github.com/devfile-samples/devfile-sample-python-basic.git
   - name: go-basic
     displayName: Basic Go
-    description: Go 1.16 application
+    description: Go is an open source programming language that makes it easy to build simple, reliable, and efficient software.
     icon: https://go.dev/blog/go-brand/Go-Logo/SVG/Go-Logo_Blue.svg
     tags:
       - Go
