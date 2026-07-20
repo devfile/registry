@@ -1,0 +1,91 @@
+# ZeroClaw — AI Agent Gateway/Runtime Stack
+#
+# ZeroClaw is an open-source Rust-based AI agent gateway/runtime.
+# Repo: https://github.com/zeroclaw-labs/zeroclaw
+#
+# The daemon container runs the zeroclaw daemon which provides:
+#   - Gateway server on port 42617 — webhooks, websockets, web UI
+#
+# The editor (VS Code, ttyd, etc.) is chosen separately in the dashboard
+# and injected into the tools container.
+#
+# First boot: run `zeroclaw quickstart` in the terminal to create
+# your first agent, then restart the workspace.
+
+schemaVersion: 2.2.2
+metadata:
+  name: zeroclaw
+  displayName: ZeroClaw AI Agent Runtime
+  description: A fast, lightweight AI agent runtime. 50+ integrations, webhooks, websockets, and a web UI — all in one binary.
+  icon: https://raw.githubusercontent.com/zeroclaw-labs/zeroclaw/master/apps/tauri/icons/icon.png
+  tags:
+    - AI
+    - Agent
+    - Gateway
+    - ZeroClaw
+  projectType: AI
+  language: Polyglot
+  version: 1.0.0
+
+attributes:
+  controller.devfile.io/storage-type: per-workspace
+
+components:
+  - name: tools
+    container:
+      image: quay.io/devfile/universal-developer-image:ubi9-latest
+      memoryLimit: 1Gi
+      memoryRequest: 256Mi
+      mountSources: true
+
+  # ZeroClaw daemon container.
+  # Runs the daemon (gateway on port 42617).
+  # Config persists in the PVC at /home/user/.zeroclaw.
+  - name: zeroclaw
+    container:
+      image: quay.io/che-incubator/zeroclaw-image:latest
+      mountSources: false
+      memoryRequest: 256Mi
+      memoryLimit: 1Gi
+      args: ["daemon", "--host", "0.0.0.0"]
+      env:
+        - name: HOME
+          value: /home/user
+        - name: ZEROCLAW_DATA_DIR
+          value: /home/user/.zeroclaw/data
+      endpoints:
+        - name: gateway
+          targetPort: 42617
+          exposure: public
+          protocol: https
+          attributes:
+            cookiesAuthEnabled: true
+            discoverable: false
+            urlRewriteSupported: false
+      volumeMounts:
+        - name: zeroclaw-data
+          path: /home/user/.zeroclaw
+
+  - name: zeroclaw-data
+    volume:
+      size: 1Gi
+
+commands:
+  - id: quickstart
+    exec:
+      label: "Create your first agent (quickstart)"
+      component: zeroclaw
+      commandLine: zeroclaw quickstart
+      workingDir: /home/user
+  - id: status
+    exec:
+      label: "Show ZeroClaw status"
+      component: zeroclaw
+      commandLine: zeroclaw status
+      workingDir: /home/user
+  - id: doctor
+    exec:
+      label: "Run diagnostics"
+      component: zeroclaw
+      commandLine: zeroclaw doctor
+      workingDir: /home/user
