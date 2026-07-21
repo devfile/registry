@@ -1,0 +1,151 @@
+# OpenClaw — Personal AI Assistant Stack
+#
+# OpenClaw is a multi-channel AI assistant gateway by the OpenClaw project.
+# Repo: https://github.com/openclaw/openclaw
+#
+# The openclaw container runs the Gateway service which provides:
+#   - Control UI on port 18789
+#   - Multi-channel messaging (WhatsApp, Telegram, Slack, Discord, 25+ channels)
+#   - Agent tools, skills, cron jobs, webhooks
+#
+# State is relocated to /opt/data via OPENCLAW_CONFIG_DIR to handle
+# OpenShift arbitrary UIDs (the official image uses uid 1000 with 700 perms).
+#
+# First boot: run `openclaw setup` in the terminal to configure
+# your API key and model provider.
+
+schemaVersion: 2.2.2
+metadata:
+  name: openclaw
+  displayName: OpenClaw AI Assistant
+  description: Personal AI assistant with multi-channel messaging gateway. WhatsApp, Telegram, Slack, Discord, and 25+ channels.
+  icon: https://raw.githubusercontent.com/openclaw/openclaw/main/ui/public/favicon.svg
+  tags:
+    - AI
+    - Assistant
+    - Gateway
+    - OpenClaw
+  projectType: AI
+  language: TypeScript
+  version: 1.0.0
+
+attributes:
+  controller.devfile.io/storage-type: per-workspace
+
+components:
+  - name: tools
+    container:
+      image: quay.io/devfile/universal-developer-image:ubi9-latest
+      memoryLimit: 1Gi
+      memoryRequest: 256Mi
+      mountSources: true
+
+  # OpenClaw Gateway container.
+  # Runs the gateway service with Control UI on port 18789.
+  # State is relocated from /home/node/.openclaw (uid 1000, 700 perms)
+  # to /opt/data on a writable PVC for OpenShift arbitrary-UID compat.
+  - name: openclaw
+    container:
+      image: docker.io/openclaw/openclaw:2026.7.1
+      mountSources: false
+      memoryRequest: 2Gi
+      memoryLimit: 3Gi
+      env:
+        - name: HOME
+          value: /opt/data/home
+        - name: OPENCLAW_CONFIG_DIR
+          value: /opt/data/config
+        - name: OPENCLAW_WORKSPACE_DIR
+          value: /opt/data/config/workspace
+        - name: OPENCLAW_GATEWAY_BIND
+          value: lan
+        - name: OPENCLAW_SKIP_ONBOARDING
+          value: "1"
+      command: ["/bin/bash", "-c"]
+      args:
+        - |
+          if ! whoami &>/dev/null; then
+            echo "openclaw:x:$(id -u):0:OpenClaw:${HOME}:/bin/bash" >> /etc/passwd
+          fi
+
+          mkdir -p "${HOME}" "${OPENCLAW_CONFIG_DIR}" "${OPENCLAW_WORKSPACE_DIR}"
+
+          TOKEN_FILE="${OPENCLAW_CONFIG_DIR}/.gateway-token"
+          if [ ! -f "${TOKEN_FILE}" ]; then
+            TOKEN=$(head -c 32 /dev/urandom | base64 | tr -dc 'a-zA-Z0-9' | head -c 48)
+            echo "${TOKEN}" > "${TOKEN_FILE}"
+            chmod 600 "${TOKEN_FILE}"
+            echo "============================================"
+            echo "  Gateway token: ${TOKEN}"
+            echo "  Run 'show-token' command to see it again."
+            echo "============================================"
+          fi
+          export OPENCLAW_GATEWAY_TOKEN=$(cat "${TOKEN_FILE}")
+
+          exec tini -s -- node /app/openclaw.mjs gateway
+      endpoints:
+        - name: control-ui
+          targetPort: 18789
+          exposure: public
+          protocol: https
+          attributes:
+            cookiesAuthEnabled: true
+            discoverable: false
+            urlRewriteSupported: false
+      volumeMounts:
+        - name: openclaw-data
+          path: /opt/data
+
+  - name: openclaw-data
+    volume:
+      size: 10Gi
+
+commands:
+  - id: setup
+    exec:
+      label: "Configure OpenClaw (onboarding wizard)"
+      component: openclaw
+      commandLine: openclaw onboard
+      workingDir: /opt/data/config
+  - id: status
+    exec:
+      label: "Check gateway health"
+      component: openclaw
+      commandLine: |
+        echo "--- Health ---"
+        curl -fsS http://127.0.0.1:18789/healthz && echo " OK" || echo " FAIL"
+        echo "--- Readiness ---"
+        curl -fsS http://127.0.0.1:18789/readyz && echo " OK" || echo " FAIL"
+      workingDir: /opt/data/config
+  - id: show-token
+    exec:
+      label: "Display gateway access token"
+      component: openclaw
+      commandLine: cat "${OPENCLAW_CONFIG_DIR}/.gateway-token"
+      workingDir: /opt/data/config
+  - id: doctor
+    exec:
+      label: "Run diagnostics"
+      component: openclaw
+      commandLine: |
+        echo "=== Environment ==="
+        echo "HOME=${HOME}"
+        echo "OPENCLAW_CONFIG_DIR=${OPENCLAW_CONFIG_DIR}"
+        echo "UID=$(id -u) GID=$(id -g) Groups=$(id -G)"
+        echo ""
+        echo "=== Directory Permissions ==="
+        ls -la /opt/data/ 2>/dev/null
+        ls -la "${OPENCLAW_CONFIG_DIR}/" 2>/dev/null
+        echo ""
+        echo "=== Gateway Health ==="
+        curl -fsS http://127.0.0.1:18789/healthz 2>&1 || echo "Gateway not responding"
+        echo ""
+        echo "=== Token ==="
+        [ -f "${OPENCLAW_CONFIG_DIR}/.gateway-token" ] && echo "Token file exists" || echo "Token file MISSING"
+      workingDir: /opt/data/config
+  - id: restart-gateway
+    exec:
+      label: "Restart gateway process"
+      component: openclaw
+      commandLine: kill -TERM 1
+      workingDir: /opt/data/config
