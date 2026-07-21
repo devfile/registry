@@ -82,6 +82,10 @@ components:
           fi
           export OPENCLAW_GATEWAY_TOKEN=$(cat "${TOKEN_FILE}")
 
+          openclaw config set gateway.mode local 2>/dev/null || true
+          openclaw config set gateway.controlUi.allowedOrigins '["*"]' 2>/dev/null || true
+          openclaw config set gateway.trustedProxies '["10.0.0.0/8","172.16.0.0/12","192.168.0.0/16"]' 2>/dev/null || true
+
           exec tini -s -- node /app/openclaw.mjs gateway
       endpoints:
         - name: control-ui
@@ -127,21 +131,7 @@ commands:
     exec:
       label: "Run diagnostics"
       component: openclaw
-      commandLine: |
-        echo "=== Environment ==="
-        echo "HOME=${HOME}"
-        echo "OPENCLAW_CONFIG_DIR=${OPENCLAW_CONFIG_DIR}"
-        echo "UID=$(id -u) GID=$(id -g) Groups=$(id -G)"
-        echo ""
-        echo "=== Directory Permissions ==="
-        ls -la /opt/data/ 2>/dev/null
-        ls -la "${OPENCLAW_CONFIG_DIR}/" 2>/dev/null
-        echo ""
-        echo "=== Gateway Health ==="
-        curl -fsS http://127.0.0.1:18789/healthz 2>&1 || echo "Gateway not responding"
-        echo ""
-        echo "=== Token ==="
-        [ -f "${OPENCLAW_CONFIG_DIR}/.gateway-token" ] && echo "Token file exists" || echo "Token file MISSING"
+      commandLine: openclaw doctor
       workingDir: /opt/data/config
   - id: restart-gateway
     exec:
