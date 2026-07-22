@@ -72,7 +72,7 @@ components:
 
           TOKEN_FILE="${OPENCLAW_CONFIG_DIR}/.gateway-token"
           if [ ! -f "${TOKEN_FILE}" ]; then
-            TOKEN=$(head -c 32 /dev/urandom | base64 | tr -dc 'a-zA-Z0-9' | head -c 48)
+            TOKEN=$(head -c 48 /dev/urandom | base64 | tr -dc 'a-zA-Z0-9' | head -c 48)
             echo "${TOKEN}" > "${TOKEN_FILE}"
             chmod 600 "${TOKEN_FILE}"
             echo "============================================"
@@ -137,5 +137,5 @@ commands:
     exec:
       label: "Restart gateway process"
       component: openclaw
-      commandLine: kill -TERM 1
+      commandLine: openclaw gateway stop 2>/dev/null; openclaw gateway
       workingDir: /opt/data/config
