@@ -29,23 +29,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout registry build tools
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: devfile/registry-support
           persist-credentials: false
           path: registry-support
       - name: Check out code
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           path: registry-repo
       - name: Setup Go environment
-        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5.6.0
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
         with:
           go-version: 1.26
       - name: Set up QEMU # Enables arm64 image building
         uses: docker/setup-qemu-action@8b562efa09ec1557a9e26f25a7c6292838acea94
       - name: Login to Quay
-        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3.7.0
+        uses: docker/login-action@af1e73f918a031802d376d3c8bbc3fe56130a9b0 # v4.4.0
         with:
           registry: quay.io
           username: ${{ secrets.QUAY_USERNAME }}
