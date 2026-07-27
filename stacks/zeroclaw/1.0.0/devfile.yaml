@@ -12,7 +12,7 @@
 # First boot: run `zeroclaw quickstart` in the terminal to create
 # your first agent, then restart the workspace.
 
-schemaVersion: 2.2.2
+schemaVersion: 2.3.0
 metadata:
   name: zeroclaw
   displayName: ZeroClaw AI Agent Runtime
