@@ -14,7 +14,7 @@
 # First boot: run `openclaw setup` in the terminal to configure
 # your API key and model provider.
 
-schemaVersion: 2.2.2
+schemaVersion: 2.3.0
 metadata:
   name: openclaw
   displayName: OpenClaw AI Assistant
