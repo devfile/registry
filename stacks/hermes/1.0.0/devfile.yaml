@@ -14,7 +14,7 @@
 # First boot: run `hermes setup` in the terminal to configure
 # your API key and model.
 
-schemaVersion: 2.2.2
+schemaVersion: 2.3.0
 metadata:
   name: hermes
   displayName: Hermes AI Agent
