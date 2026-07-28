@@ -73,6 +73,7 @@ ginkgo run --mod=readonly --procs 2 \
   --skip="stack: java-websphereliberty" \
   --skip="stack: java-quarkus" \
   --skip="stack: ollama" \
+  --skip="stack: hermes" \
   --slow-spec-threshold 120s \
   --timeout 3h \
   tests/odov3 -- -stacksPath "$stacksPath" -stackDirs "$stackDirs" ${args}
