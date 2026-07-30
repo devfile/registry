@@ -62,3 +62,6 @@
 
 # OpenClaw stacks
 /stacks/openclaw/ @akurinnoy
+
+# ZeroClaw stacks
+/stacks/zeroclaw/ @akurinnoy
