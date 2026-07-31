@@ -1,0 +1,7 @@
+name: picoclaw
+displayName: PicoClaw Personal AI Agent
+description: A personal AI agent running in your workspace. Connect to 30+ LLM providers and interact via web UI or terminal.
+icon: https://raw.githubusercontent.com/sipeed/picoclaw/main/web/frontend/public/favicon.svg
+versions:
+  - version: 1.0.0
+    default: true

@@ -76,6 +76,7 @@ ginkgo run --mod=readonly --procs 2 \
   --skip="stack: hermes" \
   --skip="stack: openclaw" \
   --skip="stack: zeroclaw" \
+  --skip="stack: picoclaw" \
   --slow-spec-threshold 120s \
   --timeout 3h \
   tests/odov3 -- -stacksPath "$stacksPath" -stackDirs "$stackDirs" ${args}
