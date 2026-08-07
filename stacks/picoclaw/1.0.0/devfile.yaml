@@ -31,6 +31,12 @@ metadata:
 attributes:
   controller.devfile.io/storage-type: per-workspace
 
+starterProjects:
+  - name: picoclaw
+    git:
+      remotes:
+        origin: https://github.com/sipeed/picoclaw.git
+
 components:
   - name: tools
     container:
