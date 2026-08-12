@@ -30,6 +30,12 @@ metadata:
 attributes:
   controller.devfile.io/storage-type: per-workspace
 
+starterProjects:
+  - name: zeroclaw
+    git:
+      remotes:
+        origin: https://github.com/zeroclaw-labs/zeroclaw.git
+
 components:
   - name: tools
     container:

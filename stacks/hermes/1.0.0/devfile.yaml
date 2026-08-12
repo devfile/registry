@@ -32,6 +32,12 @@ metadata:
 attributes:
   controller.devfile.io/storage-type: per-workspace
 
+starterProjects:
+  - name: hermes-agent
+    git:
+      remotes:
+        origin: https://github.com/che-incubator/hermes-placeholder.git
+
 components:
   - name: tools
     container:
