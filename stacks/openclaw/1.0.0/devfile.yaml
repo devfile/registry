@@ -52,7 +52,7 @@ components:
   # to /opt/data on a writable PVC for OpenShift arbitrary-UID compat.
   - name: openclaw
     container:
-      image: docker.io/openclaw/openclaw:2026.7.1
+      image: docker.io/openclaw/openclaw:2026.8.1
       mountSources: false
       memoryRequest: 2Gi
       memoryLimit: 3Gi
