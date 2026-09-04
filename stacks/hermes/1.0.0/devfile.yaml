@@ -53,7 +53,7 @@ components:
   # Config persists in the PVC at /opt/data (HERMES_HOME).
   - name: hermes
     container:
-      image: docker.io/nousresearch/hermes-agent:v2026.6.5
+      image: docker.io/nousresearch/hermes-agent:v2026.8.31
       mountSources: false
       memoryRequest: 512Mi
       memoryLimit: 2Gi
