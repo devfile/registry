@@ -41,7 +41,7 @@ jobs:
       - name: Setup Go environment
         uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5.6.0
         with:
-          go-version: 1.26
+          go-version: 1.27
       - name: Set up QEMU # Enables arm64 image building
         uses: docker/setup-qemu-action@8b562efa09ec1557a9e26f25a7c6292838acea94
       - name: Login to Quay
