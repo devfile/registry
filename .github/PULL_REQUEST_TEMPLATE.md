@@ -18,6 +18,9 @@ _Does any documentation need to be updated with your changes?_
 - [ ] Check Tools Provider
 
 _Have you tested the changes with existing tools, i.e. Odo, Che, Console? (See [devfile registry contributing guide](https://github.com/devfile/registry/blob/main/CONTRIBUTING.md) on how to test changes)_
+- [ ] [AI Governance](https://github.com/devfile/api/blob/main/GOVERNANCE.md#ai-governance) (if applicable)
+
+_AI-assisted contributions must comply with the project's review, licensing, and attribution requirements._
 
 
 # Tests Performed
