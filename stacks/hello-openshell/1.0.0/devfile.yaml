@@ -1,0 +1,269 @@
+schemaVersion: 2.2.2
+metadata:
+  name: hello-openshell
+  displayName: OpenShell on Developer Sandbox
+  description: >-
+    Two journeys in Terminal → Run Task. Shared 1–2, then A Fedora minikube or B RHEL MicroShift.
+    Clean is the first step of each path. Interactive arcade:
+    https://interact.redhat.com/share/q93rshDfGDW5iCpPeAd8
+  icon: https://raw.githubusercontent.com/NVIDIA/OpenShell/main/docs/brand/assets/openshell-mark.svg
+  version: 1.0.0
+  website: https://docs.nvidia.com/openshell/latest/
+  supportUrl: https://github.com/maximilianoPizarro/hello-openshell/issues
+  language: Python
+  projectType: openshell
+  tags:
+    - OpenShift
+    - OpenShell
+    - Python
+    - Minikube
+    - MicroShift
+  architectures:
+    - amd64
+attributes:
+  controller.devfile.io/storage-type: ephemeral
+projects:
+  - name: hello-openshell
+    git:
+      remotes:
+        origin: https://github.com/maximilianoPizarro/hello-openshell
+      checkoutFrom:
+        revision: main
+components:
+  - name: tools
+    container:
+      image: quay.io/devfile/universal-developer-image:ubi9-latest
+      memoryRequest: 512Mi
+      memoryLimit: 4Gi
+      cpuRequest: 200m
+      cpuLimit: "2"
+      mountSources: true
+      sourceMapping: /projects
+      endpoints:
+        - name: openshell-ui
+          targetPort: 7681
+          exposure: public
+          protocol: http
+          path: /
+          secure: true
+          attributes:
+            cookiesAuthEnabled: true
+            discoverable: true
+            urlRewriteSupported: false
+commands:
+  - id: install-openshell-cli
+    exec:
+      component: tools
+      commandLine: bash scripts/install-openshell-cli.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: "1. Install OpenShell CLI"
+      group:
+        kind: run
+        isDefault: true
+  - id: project-status
+    exec:
+      component: tools
+      commandLine: bash scripts/sandbox-status.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: "2. Project status"
+      group:
+        kind: run
+        isDefault: false
+  - id: clean-minikube-path
+    exec:
+      component: tools
+      commandLine: bash scripts/sandbox-down.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: "A1. Clean"
+      group:
+        kind: run
+        isDefault: false
+  - id: start-minikube-vm
+    exec:
+      component: tools
+      commandLine: bash scripts/sandbox-vm-up.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: "A2. Start minikube VM and Ollama"
+      group:
+        kind: run
+        isDefault: false
+  - id: connect-minikube-gateway
+    exec:
+      component: tools
+      commandLine: bash scripts/sandbox-vm-connect.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: "A3. Connect minikube gateway"
+      group:
+        kind: run
+        isDefault: false
+  - id: create-minikube-sandbox
+    exec:
+      component: tools
+      commandLine: env SANDBOX_GATEWAY=minikube bash scripts/sandbox-vm-sandbox.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: "A4. Create minikube sandbox"
+      group:
+        kind: run
+        isDefault: false
+  - id: ask-minikube-curl
+    exec:
+      component: tools
+      commandLine: env SANDBOX_GATEWAY=minikube bash scripts/sandbox-ask.sh curl
+      workingDir: ${PROJECT_SOURCE}
+      label: "A5. Ask from the sandbox"
+      group:
+        kind: run
+        isDefault: false
+  - id: ask-minikube-python
+    exec:
+      component: tools
+      commandLine: env SANDBOX_GATEWAY=minikube bash scripts/sandbox-ask.sh python
+      workingDir: ${PROJECT_SOURCE}
+      label: "A6. Ask with ask.py"
+      group:
+        kind: run
+        isDefault: false
+  - id: openshell-ui-minikube
+    exec:
+      component: tools
+      commandLine: env SANDBOX_GATEWAY=minikube bash scripts/sandbox-openshell-ui.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: "A7. OpenShell UI"
+      group:
+        kind: run
+        isDefault: false
+  - id: inspect-minikube
+    exec:
+      component: tools
+      commandLine: env SANDBOX_GATEWAY=minikube bash scripts/sandbox-vm-inspect.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: "A8. Inspect cluster"
+      group:
+        kind: run
+        isDefault: false
+  - id: ask-minikube-turns
+    exec:
+      component: tools
+      commandLine: env SANDBOX_GATEWAY=minikube bash scripts/sandbox-ask.sh turns
+      workingDir: ${PROJECT_SOURCE}
+      label: "A9. Ask two turns"
+      group:
+        kind: run
+        isDefault: false
+  - id: delete-minikube-sandboxes
+    exec:
+      component: tools
+      commandLine: env SANDBOX_GATEWAY=minikube bash scripts/sandbox-delete.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: "A10. Delete sandboxes"
+      group:
+        kind: run
+        isDefault: false
+  - id: clean-microshift-path
+    exec:
+      component: tools
+      commandLine: bash scripts/sandbox-down.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: "B1. Clean"
+      group:
+        kind: run
+        isDefault: false
+  - id: start-rhel-vm
+    exec:
+      component: tools
+      commandLine: bash scripts/sandbox-rhel-up.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: "B2. Start RHEL VM and Ollama"
+      group:
+        kind: run
+        isDefault: false
+  - id: connect-microshift
+    exec:
+      component: tools
+      commandLine: bash scripts/sandbox-rhel-connect.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: "B3. Connect MicroShift"
+      group:
+        kind: run
+        isDefault: false
+  - id: create-microshift-sandbox
+    exec:
+      component: tools
+      commandLine: env SANDBOX_GATEWAY=microshift bash scripts/sandbox-vm-sandbox.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: "B4. Create MicroShift sandbox"
+      group:
+        kind: run
+        isDefault: false
+  - id: ask-microshift-curl
+    exec:
+      component: tools
+      commandLine: env SANDBOX_GATEWAY=microshift bash scripts/sandbox-ask.sh curl
+      workingDir: ${PROJECT_SOURCE}
+      label: "B5. Ask from the sandbox"
+      group:
+        kind: run
+        isDefault: false
+  - id: ask-microshift-python
+    exec:
+      component: tools
+      commandLine: env SANDBOX_GATEWAY=microshift bash scripts/sandbox-ask.sh python
+      workingDir: ${PROJECT_SOURCE}
+      label: "B6. Ask with ask.py"
+      group:
+        kind: run
+        isDefault: false
+  - id: openshell-ui-microshift
+    exec:
+      component: tools
+      commandLine: env SANDBOX_GATEWAY=microshift bash scripts/sandbox-openshell-ui.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: "B7. OpenShell UI"
+      group:
+        kind: run
+        isDefault: false
+  - id: inspect-microshift
+    exec:
+      component: tools
+      commandLine: env SANDBOX_GATEWAY=microshift bash scripts/sandbox-vm-inspect.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: "B8. Inspect cluster"
+      group:
+        kind: run
+        isDefault: false
+  - id: ask-microshift-turns
+    exec:
+      component: tools
+      commandLine: env SANDBOX_GATEWAY=microshift bash scripts/sandbox-ask.sh turns
+      workingDir: ${PROJECT_SOURCE}
+      label: "B9. Ask two turns"
+      group:
+        kind: run
+        isDefault: false
+  - id: delete-microshift-sandboxes
+    exec:
+      component: tools
+      commandLine: env SANDBOX_GATEWAY=microshift bash scripts/sandbox-delete.sh
+      workingDir: ${PROJECT_SOURCE}
+      label: "B10. Delete sandboxes"
+      group:
+        kind: run
+        isDefault: false
+  - id: openshell-version
+    exec:
+      component: tools
+      commandLine: bash -lc 'bash scripts/install-openshell-cli.sh && openshell --version; openshell status || true'
+      workingDir: ${PROJECT_SOURCE}
+      label: OpenShell version
+      group:
+        kind: run
+        isDefault: false
+  - id: install-openshell-cli-on-start
+    exec:
+      component: tools
+      commandLine: bash -c 'i=0; while [ ! -f scripts/install-openshell-cli.sh ] && [ "$i" -lt 15 ]; do i=$((i+1)); sleep 2; done; bash scripts/install-openshell-cli.sh || echo "OpenShell CLI was not installed. Run task 1. Install OpenShell CLI."'
+      workingDir: ${PROJECT_SOURCE}
+      label: Install OpenShell CLI on start
+events:
+  postStart:
+    - install-openshell-cli-on-start

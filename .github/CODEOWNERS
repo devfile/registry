@@ -57,6 +57,9 @@
 # Kaoto stacks
 /stacks/kaoto/ @maximilianoPizarro @devfile/che-team
 
+# OpenShell stacks
+/stacks/hello-openshell/ @maximilianoPizarro @devfile/che-team
+
 # Hermes stacks
 /stacks/hermes/ @akurinnoy
 
