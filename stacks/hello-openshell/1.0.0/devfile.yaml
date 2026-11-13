@@ -58,7 +58,7 @@ commands:
       label: "1. Install OpenShell CLI"
       group:
         kind: run
-        isDefault: false
+        isDefault: true
   - id: project-status
     exec:
       component: tools
