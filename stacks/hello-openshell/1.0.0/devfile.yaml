@@ -20,8 +20,8 @@ metadata:
     - MicroShift
   architectures:
     - amd64
-  attributes:
-    controller.devfile.io/storage-type: ephemeral
+attributes:
+  controller.devfile.io/storage-type: ephemeral
 projects:
   - name: hello-openshell
     git:
