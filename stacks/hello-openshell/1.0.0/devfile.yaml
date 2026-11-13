@@ -45,8 +45,9 @@ components:
           exposure: public
           protocol: http
           path: /
-          secure: false
+          secure: true
           attributes:
+            cookiesAuthEnabled: true
             discoverable: true
             urlRewriteSupported: false
 commands:
