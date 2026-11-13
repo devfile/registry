@@ -1,0 +1,10 @@
+name: hello-openshell
+displayName: OpenShell on Developer Sandbox
+description: >-
+  Two journeys in Terminal → Run Task. Shared 1–2, then A Fedora minikube or B RHEL MicroShift.
+  Clean is the first step of each path. Interactive arcade:
+  https://interact.redhat.com/share/q93rshDfGDW5iCpPeAd8
+icon: https://raw.githubusercontent.com/NVIDIA/OpenShell/main/docs/brand/assets/openshell-mark.svg
+versions:
+  - version: 1.0.0
+    default: true
